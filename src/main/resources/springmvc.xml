@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      				http://www.springframework.org/schema/beans/spring-beans.xsd
+      				http://www.springframework.org/schema/context
+      				http://www.springframework.org/schema/context/spring-context.xsd
+      				http://www.springframework.org/schema/mvc
+      				http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <context:component-scan base-package="com.xxz" use-default-filters="false">
+        <!-- 只扫描控制器 -->
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 试图解析器,方便页面返回信息 -->
+    <!--   	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+               <property name="prefix" value="/WEB-INF/views/"></property>
+               <property name="suffix" value=".jsp"></property>
+           </bean>
+        -->
+    <!--Spring5整合thymeleaf核心库依赖提供-->
+    <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="order" value="1"></property>
+        <property name="characterEncoding" value="UTF-8"></property>
+        <!--关闭缓存-->
+        <property name="cache" value="false"></property>
+        <property name="templateEngine">
+            <bean class="org.thymeleaf.spring5.SpringTemplateEngine">
+                <property name="templateResolver">
+                    <bean class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+                        <!--视图前缀-->
+                        <property name="prefix" value="/templates/"></property>
+                        <!--视图后缀-->
+                        <property name="suffix" value=".html"></property>
+                        <property name="templateMode" value="HTML5"></property>
+                        <property name="characterEncoding" value="UTF-8"></property>
+                        <!--关闭缓存-->
+                        <property name="cacheable" value="false"></property>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <!--
+        如果控制器中无其他逻辑，仅用于处理视图、则可以直接定义仅用于处理视图的配置、无需定义控制器方法
+        注意：当定义了view-controller标签后，dispatcher前端控制器则不会看你controller定义的控制器了
+        ，相当于开启了控制器的xml配置功能、则controller包下的注解@RequestMapping所有控制器及其方法都将失效
+        、如需开启controller注解生效、则需要在该xml配置文件中配置开启注解驱动<mvc:annotation-driven/>
+    -->
+    <mvc:view-controller path="/" view-name="login"></mvc:view-controller>
+    <mvc:annotation-driven/>
+
+    <!--让前端控制器放掉，静态资源的请求，交给公共web.xml配置的默认的Servlet，
+    配合<mvc:default-servlet-handler/>、则标识先让前端控制器处理，处理不了在将请求给到default-->
+    <mvc:default-servlet-handler/>
+
+    <!-- 静态资源需要单独处理，不需要dispatcherservlet -->
+    <!--    <mvc:resources location="/css/" mapping="/css/**"></mvc:resources>
+        <mvc:resources location="/img/" mapping="/img/**"></mvc:resources>
+        <mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
+        &lt;!&ndash; 图片  &ndash;&gt;
+        <mvc:resources location="file:d:/upload/" mapping="/upload/**"></mvc:resources>-->
+
+    <!-- 文件上传解析器：将上传的目标文件解析到MultipartFile对象中，不配置解析器则会报nullPoint错误 -->
+<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+<!--        &lt;!&ndash; 配置上传默认编码 &ndash;&gt;-->
+<!--        <property name="defaultEncoding" value="utf-8"></property>-->
+<!--        <property name="maxUploadSize" value="104857600"></property>-->
+<!--    </bean>-->
+
+    <!--mvc拦截器配置-->
+<!--    <mvc:interceptors>-->
+<!--        &lt;!&ndash;方式一：bean&ndash;&gt;-->
+<!--        <bean class="com.xxz.interceptor.FirstInterceptor"></bean>-->
+<!--        &lt;!&ndash;方式二：res（通过id值获取，或者@Component注解识别mvc拦截器实现类）&ndash;&gt;-->
+<!--        &lt;!&ndash;	<ref bean="firstInterceptor"></ref>&ndash;&gt;-->
+<!--        &lt;!&ndash;方式三：精确mvc:interceptor&ndash;&gt;-->
+<!--        <mvc:interceptor>-->
+<!--            &lt;!&ndash;-->
+<!--                配置拦截路径：-->
+<!--                (1)/*：表示上下文根下的一级请求(/xxx)，二级请求(/xxx/xxx)无法识别-->
+<!--                (2)/**：表示上下文根的多级请求(多少层都可以匹配，即任意请求路径)-->
+<!--            &ndash;&gt;-->
+<!--            <mvc:mapping path="/*"/>-->
+<!--            &lt;!&ndash;配置要排除的路径&ndash;&gt;-->
+<!--            <mvc:exclude-mapping path="/before"/>-->
+<!--            &lt;!&ndash;定义使用的拦截器：bean、ref方式&ndash;&gt;-->
+<!--            <bean class="com.xxz.interceptor.FirstInterceptor"></bean>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
+
+    <!--SpringMVC提供自定义异常处理器SimpleMappingExceptionResolver
+        当控制器方法执行业务过程中出现异常，可以通过配置的自定义异常处理器捕获解决，
+        并且返回一个新的ModelAndView给到视图解析器解析响应、[MV]
+        注意：即使不进行配置、SpringMVC也是使用了默认的异常解析器。
+        一般HandlerException接口异常处理器的实现类有：
+        (1)SpringMVC提供的自定义异常解析器：简单映射异常处理器SimpleMAppingExceptinoREsolver
+        (2)SpringMVC的提供的默认异常处理器：DefaultHandlerExceptionResolver
+    -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!--[View]异常处理映射-->
+        <property name="exceptionMappings">
+            <props>
+                <!--
+                    properties的键表示处理器方法执行过程中出现的异常(异常)
+                    properties的值表示若出现指定异常时，设置一个新的视图名称，跳转到指定页面(逻辑视图)
+                 -->
+                <prop key="java.lang.ArithmeticException" >error1</prop>
+                <prop key="java.lang.NullPointerException">error2</prop>
+            </props>
+        </property>
+        <!--[Model]异常处理参数：将异常信息共享到请求域中、value表示请求域中的属性名ex.msg..-->
+        <property name="exceptionAttribute" value="ex"></property>
+    </bean>
+</beans>

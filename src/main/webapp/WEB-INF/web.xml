@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <!--dispatcher前端控制器到控制器Controller的控制器方法获取参数时会出现请求数据乱码问题
+可以通过配置编码过滤器，由于编码过滤器时位于jar包中，文件形式为.class字节码，因此只能通过xml配置
+或者继承该过滤器，实现乱码解决 ，及其拓展 -->
+    <filter>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <!--追源码得知，这只forceEncoding相当于设置了req、resp(setCharacterEncoding-api)请求相应的编码为UTF-8-->
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--
+    处理请求方式过滤器，因为form表单仅支持get、post请求
+    控制器方法无法识别put、delete方式请求
+    配置隐藏http请求过滤器后、使用方式：
+    <form th:action="@{/user}" method="post">
+        //关键信息标签
+        <input type="hidden" name="_method" value="put">
+        <input type="submit" value="修改">
+    </form>
+    -->
+    <filter>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--前端控制器-->
+    <servlet>
+        <servlet-name>DispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:springmvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <!-- [default]
+        即表示tomcat的web.xml配置的servlet，
+        叫默认的servlet，用于处理当前静态资源的
+        当请求为非接口数据，而是静态资源时，即交给default默认的servlet来处理
+        <servlet-name>default</servlet-name>
+        [tomcat中的公共web.xml中配置的一个default默认的servlet专门用于处理静态资源，
+        作用于当前服务器中部署的所有工程、并且为什么会自动找index.html/jsp，
+        也是因为tomcat的conf目录下的公共web.xml配置了]-->
+        <servlet-name>DispatcherServlet</servlet-name>
+        <!--请求路径映射:
+            (1)可以为/(建议使用/，接收其他请求路径映射到控制层接口、不包括.jsp)、
+            (2)/*(包括了对.jsp的访问，但jsp的请求是由JSPServlet处理，前端控制器不建议用/*)
+            (3)*.do等后缀匹配，后续也是会经常用的
+        -->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+
+    <listener>
+        <!--
+            配置Spring的监听器，在服务器启动时加载Spring的配置文件
+            Spring配置文件默认位置和名称：/WEB-INF/applicationContext.xml
+            如需自定义：可通过上下文参数context-param自定义配置文件的位置和名称
+        -->
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!--自定义Sprng配置文件的位置和名称-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+
+
+</web-app>

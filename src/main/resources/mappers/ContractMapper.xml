@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxz.mapper.ContractMapper" >
+  <resultMap id="BaseResultMap" type="com.xxz.bean.Contract" >
+    <id column="ct_id" property="ctId" jdbcType="INTEGER" />
+    <result column="ct_contract_amount" property="ctContractAmount" jdbcType="VARCHAR" />
+    <result column="ct_contract_docment" property="ctContractDocment" jdbcType="VARCHAR" />
+    <result column="ct_tender_amount" property="ctTenderAmount" jdbcType="VARCHAR" />
+    <result column="ct_tender_docment" property="ctTenderDocment" jdbcType="VARCHAR" />
+    <result column="ct_payment_back" property="ctPaymentBack" jdbcType="VARCHAR" />
+    <result column="ct_order" property="ctOrder" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ct_id, ct_contract_amount, ct_contract_docment, ct_tender_amount, ct_tender_docment, 
+    ct_payment_back, ct_order
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xxz.bean.ContractExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract
+    where ct_id = #{ctId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from contract
+    where ct_id = #{ctId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xxz.bean.ContractExample" >
+    delete from contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xxz.bean.Contract" >
+    insert into contract (ct_id, ct_contract_amount, ct_contract_docment, 
+      ct_tender_amount, ct_tender_docment, ct_payment_back, 
+      ct_order)
+    values (#{ctId,jdbcType=INTEGER}, #{ctContractAmount,jdbcType=VARCHAR}, #{ctContractDocment,jdbcType=VARCHAR}, 
+      #{ctTenderAmount,jdbcType=VARCHAR}, #{ctTenderDocment,jdbcType=VARCHAR}, #{ctPaymentBack,jdbcType=VARCHAR}, 
+      #{ctOrder,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xxz.bean.Contract" >
+    insert into contract
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ctId != null" >
+        ct_id,
+      </if>
+      <if test="ctContractAmount != null" >
+        ct_contract_amount,
+      </if>
+      <if test="ctContractDocment != null" >
+        ct_contract_docment,
+      </if>
+      <if test="ctTenderAmount != null" >
+        ct_tender_amount,
+      </if>
+      <if test="ctTenderDocment != null" >
+        ct_tender_docment,
+      </if>
+      <if test="ctPaymentBack != null" >
+        ct_payment_back,
+      </if>
+      <if test="ctOrder != null" >
+        ct_order,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ctId != null" >
+        #{ctId,jdbcType=INTEGER},
+      </if>
+      <if test="ctContractAmount != null" >
+        #{ctContractAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="ctContractDocment != null" >
+        #{ctContractDocment,jdbcType=VARCHAR},
+      </if>
+      <if test="ctTenderAmount != null" >
+        #{ctTenderAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="ctTenderDocment != null" >
+        #{ctTenderDocment,jdbcType=VARCHAR},
+      </if>
+      <if test="ctPaymentBack != null" >
+        #{ctPaymentBack,jdbcType=VARCHAR},
+      </if>
+      <if test="ctOrder != null" >
+        #{ctOrder,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xxz.bean.ContractExample" resultType="java.lang.Integer" >
+    select count(*) from contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update contract
+    <set >
+      <if test="record.ctId != null" >
+        ct_id = #{record.ctId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ctContractAmount != null" >
+        ct_contract_amount = #{record.ctContractAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctContractDocment != null" >
+        ct_contract_docment = #{record.ctContractDocment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctTenderAmount != null" >
+        ct_tender_amount = #{record.ctTenderAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctTenderDocment != null" >
+        ct_tender_docment = #{record.ctTenderDocment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctPaymentBack != null" >
+        ct_payment_back = #{record.ctPaymentBack,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctOrder != null" >
+        ct_order = #{record.ctOrder,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update contract
+    set ct_id = #{record.ctId,jdbcType=INTEGER},
+      ct_contract_amount = #{record.ctContractAmount,jdbcType=VARCHAR},
+      ct_contract_docment = #{record.ctContractDocment,jdbcType=VARCHAR},
+      ct_tender_amount = #{record.ctTenderAmount,jdbcType=VARCHAR},
+      ct_tender_docment = #{record.ctTenderDocment,jdbcType=VARCHAR},
+      ct_payment_back = #{record.ctPaymentBack,jdbcType=VARCHAR},
+      ct_order = #{record.ctOrder,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxz.bean.Contract" >
+    update contract
+    <set >
+      <if test="ctContractAmount != null" >
+        ct_contract_amount = #{ctContractAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="ctContractDocment != null" >
+        ct_contract_docment = #{ctContractDocment,jdbcType=VARCHAR},
+      </if>
+      <if test="ctTenderAmount != null" >
+        ct_tender_amount = #{ctTenderAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="ctTenderDocment != null" >
+        ct_tender_docment = #{ctTenderDocment,jdbcType=VARCHAR},
+      </if>
+      <if test="ctPaymentBack != null" >
+        ct_payment_back = #{ctPaymentBack,jdbcType=VARCHAR},
+      </if>
+      <if test="ctOrder != null" >
+        ct_order = #{ctOrder,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ct_id = #{ctId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xxz.bean.Contract" >
+    update contract
+    set ct_contract_amount = #{ctContractAmount,jdbcType=VARCHAR},
+      ct_contract_docment = #{ctContractDocment,jdbcType=VARCHAR},
+      ct_tender_amount = #{ctTenderAmount,jdbcType=VARCHAR},
+      ct_tender_docment = #{ctTenderDocment,jdbcType=VARCHAR},
+      ct_payment_back = #{ctPaymentBack,jdbcType=VARCHAR},
+      ct_order = #{ctOrder,jdbcType=VARCHAR}
+    where ct_id = #{ctId,jdbcType=INTEGER}
+  </update>
+</mapper>
