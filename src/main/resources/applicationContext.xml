@@ -10,11 +10,9 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-
     <!--扫描组件（除控制层）-->
-    <context:component-scan base-package="com.xxz">
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
+    <context:component-scan base-package="com.xxz.service"/>
+
 
     <!--引入jdbc.properties文件-->
     <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
@@ -26,70 +24,26 @@
         <property name="password" value="${jdbc.password}"></property>
     </bean>
 
-    <!--配置事务管理器transaction-->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <!--给事务管理器提供数据源：因为事务开启与回滚都是基于connection对象的-->
-        <property name="dataSource" ref="dataSource"></property>
-    </bean>
-
-    <!--开启事务的注解驱动
-    使@Transaction标识的方法、类(含盖该类所有方法)的事务控制生效[环绕通知方式]
-    即@Transaction注解的地方就是连接点，通过注解定位(相当于使用切入表达式定位)后进行增强、成为切入点(增强点)
-    -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <!--Spring、Mybatsi整合配置-->
-    <!--
-        [工厂Bean对象，获取工厂]配置SqlSessionFactoryBean，可以直接在Spring的IOC中获取SqlSessionFactory
-        作用：提供SqlSessionFactory对象，并且可以基于该Bean标签，配置mybatis-config.xml中的配置内容，
-        由于大多数都是配置在Spring核心文件中，因此，在我们的mybatis-config.xml文件中只配置一些关键性内容即可。
-        (1)设置SqlSessionFactory的核心文件(mybatis-config)==>加载mybatis的核心配置文件。
-        (2)给SqlSessionFactory注入数据库[由于Spring核心文件配置了数据源(该配置文件)，即直接引用即可]。
-        (3)扫描mapper文件、mapper包，用于与目标持久层接口绑定生成代理实现类交给ioc容器管理
-        ()其他：配置别名、插件、等。
-        注意：这里只是配置了sqlSessionFactory对象，如果只配置SqlSessionFactory对象，则在mapper接口、dao接口层
-        (1)还是需要用到@Repositry交给ioc容器
-        (2)需要自动装配SqlSessionFactory对象
-        @Autowired
-        private SqlSessionFactory sqlSessionFactory;//用sqlSessionFactory创建sqlSession会话对象
-        因此：需要配置<bean class="MapperScannerConfigurer">整合该SqlSessionFactory配置
-    -->
+    <!--把Mybatis的工厂交给Spring管理-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <!--设置Mybatis的核心配置文件的路径-->
         <property name="configLocation" value="classpath:mybatis-config.xml"></property>
-        <!--设置数据源-->
         <property name="dataSource" ref="dataSource"></property>
-        <!--设置类型别名所对应的包-->
-<!--        <property name="typeAliasesPackage" value="com.xxz.bean"></property>-->
-        <!--[设置映射文件xxxmapper.xml所在的包]
-            将目标配置文件吸附到namespace目标接口，达成xml与Mapper接口的绑定，
-            （1）当通过Ioc注解@Repository交给容器、
-            （2）通过MapperScannerConfiguration的Bean配置到spring核心文件进行mapper接口持久层的包扫描交给ioc容器
-            结果：基于mybatis-config.xml的加载解析后，经过xxxMapper.xml(命名空间)绑定的Mapper持久层接口，就不是普通
-            的加入到ioc容器，xml绑定后的Mapper接口交给ioc的是该Mapper接口的代理实现类，所以当我们调用接口方法时，调用的
-            其实是代理实现类的方法，因此调用接口也能实现持久层业务操作。
-            -->
         <property name="mapperLocations" value="classpath:mappers/*.xml"></property>
-        <!--设置plugins分页插件-->
-<!--        <property name="plugins">-->
-<!--            <array>-->
-<!--                <bean class="com.github.pagehelper.PageInterceptor"></bean>-->
-<!--            </array>-->
-<!--        </property>-->
     </bean>
 
-    <!--
-        mapper扫描配置：即将属性配置的basePackage包com.xxz.mapper(持久层接口包)进行扫描，
-        并通过上面的SqlSessionFactory所提供的SqlSession对象来创建这些Mapper(Dao)持久层接口的代理实现类对象
-        然后交给ioc容器管理(此时ioc容器所管理的则是这些Mapper接口的代理实现对象)，因此无需装配SqlSessionFactory
-        直接通过自动装配Mapper接口的代理对象即可，通过注入的Mapper代理实现对像调用其接口方法即可实现业务处理。
-    -->
+    <!---->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <!--配置扫描mapper接口(dao层)所在的包，交给spring容器ico管理
-        [表示该包为持久层接口包，用于整合sqlSession生成代理实现对象]-->
         <property name="basePackage" value="com.xxz.mapper"></property>
-        <!--配置会话工厂，如果没有未SqlSessionFactoryBean定义其他的class名称，则可以不用配置-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
     </bean>
+
+
+    <!--配置事务管理器transaction-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!--开启事务的注解驱动-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>
