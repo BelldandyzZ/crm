@@ -245,23 +245,23 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="pwd">姓名</label>
-                                            <input type="text" id="pwd" class="form-control" placeholder="姓名">
+                                            <label for="con_rename">姓名</label>
+                                            <input type="text" id="con_rename" name="rename" class="form-control" placeholder="姓名">
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <!-- text input -->
 
                                         <div class="form-group">
-                                            <label for="11">岗位性质</label>
-                                            <select class="form-control" id="11">
-                                                <option>全部</option>
-                                                <option>售前</option>
-                                                <option>售后</option>
-                                                <option>销售</option>
-                                                <option>商务</option>
-                                                <option>财务</option>
-                                                <option>其他</option>
+                                            <label for="con_eJob">岗位性质</label>
+                                            <select id="con_eJob" name="eJob" class="form-control">
+                                                <option value="">全部</option>
+                                                <option class="eJobItem" value="售前">售前</option>
+                                                <option class="eJobItem" value="售后">售后</option>
+                                                <option class="eJobItem" value="销售">销售</option>
+                                                <option class="eJobItem" value="商务">商务</option>
+                                                <option class="eJobItem" value="财务">财务</option>
+                                                <option class="eJobItem" value="其他">其他</option>
                                             </select>
                                         </div>
                                     </div>
@@ -269,18 +269,16 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="22">入司时间</label>
-                                            <input type="date" id="22" class="form-control" placeholder="入司时间">
+                                            <label for="con_eBirthday">入司时间</label>
+                                            <input type="date" id="con_eBirthday" name="eBirthday" class="form-control" placeholder="入司时间">
                                         </div>
                                     </div>
-
-
 
                                     <div class="col-sm-1">
                                         <!--这个label没用，纯当作占位符用来布局-->
                                         <label style="color: white">.</label>
                                         <div class="form-group">
-                                            <button type="button" class="btn btn-block btn-default">搜索</button>
+                                            <button type="button" id="conditionBtn"  class="btn btn-block btn-default">搜索</button>
                                         </div>
                                     </div>
 
@@ -293,8 +291,6 @@
                                             </button>
                                         </div>
                                     </div>
-
-
                                 </div>
                                 <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
                             </div>
@@ -388,6 +384,18 @@
 <script>
     //自动生成分页信息的插件，执行初始化代码
     $(function () {
+
+        //条件查询
+        $('#conditionBtn').click(function (){
+            let rename = $('#con_rename').val();
+            let eJob = $('#con_eJob').val();
+            let eBirthday = $('#con_eBirthday').val();
+            console.log(rename + "-" + eJob + "-" + eBirthday)
+            location.href = "/crm/emp/emps?rename="+rename+"&eJob="+eJob+"&eBirthday="+eBirthday;
+        })
+        // $('#conditionBtn').click(function (){
+        //     $('#conForm').submit();
+        // })
 
         //删除的确定弹窗
         $(".confirms").click(function () {

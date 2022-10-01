@@ -11,7 +11,15 @@
       				http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!--SpringMVC注解驱动-->
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 注解请求映射
+            默认是ISO-88859-1，避免乱码这里设置为UTF-8 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value="text/html;charset=UTF-8" />
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
     <!--静态文件的处理-->
     <mvc:default-servlet-handler/>
@@ -22,7 +30,7 @@
     <!--视图跳转控制器-->
     <mvc:view-controller path="/" view-name="login"></mvc:view-controller>
     <mvc:view-controller path="/customer/toIndex" view-name="customer/customer"/>
-    <mvc:view-controller path="/interview/toIndex" view-name="interview/interview"/>
+
 
     <!--Spring5整合thymeleaf核心库依赖提供-->
     <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
@@ -43,8 +51,6 @@
             </bean>
         </property>
     </bean>
-
-
 
     <!-- 静态资源需要单独处理，不需要dispatcherservlet -->
     <!--    <mvc:resources location="/css/" mapping="/css/**"></mvc:resources>
@@ -97,8 +103,8 @@
                     properties的键表示处理器方法执行过程中出现的异常(异常)
                     properties的值表示若出现指定异常时，设置一个新的视图名称，跳转到指定页面(逻辑视图)
                  -->
-                <prop key="java.lang.ArithmeticException" >error1</prop>
-                <prop key="java.lang.NullPointerException">error2</prop>
+                <prop key="java.lang.ArithmeticException" >error/error1</prop>
+                <prop key="java.lang.NullPointerException">error/error2</prop>
             </props>
         </property>
         <!--[Model]异常处理参数：将异常信息共享到请求域中、value表示请求域中的属性名ex.msg..-->

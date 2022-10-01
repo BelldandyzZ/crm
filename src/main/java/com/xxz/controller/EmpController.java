@@ -1,7 +1,7 @@
 package com.xxz.controller;
 
-import com.sun.deploy.net.HttpResponse;
 import com.xxz.bean.Employee;
+import com.xxz.bean.EmployeeExample;
 import com.xxz.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +32,26 @@ public class EmpController {
 
     //条件查询
     @RequestMapping("/emps")
-    public String queryAll(Model model, String rename, String eJob){
-        System.out.println("queryAll emp ....");
-        List<Employee> employeeList = employeeMapper.selectByExample(null);
-        System.out.println(employeeList);
+    public String queryAll(Model model,String rename, String eJob, String eBirthday) throws UnsupportedEncodingException {
+//        System.out.println(URLEncoder.encode(eJob,"utf-8"));
+        System.out.println("queryAll emp by confition:" + rename + "-" + eJob + "-" + eBirthday);
+        //样本
+        EmployeeExample employeeExample = new EmployeeExample();
+        //条件盒子
+        EmployeeExample.Criteria criteria = employeeExample.createCriteria();
+        //追加条件
+        if (rename != null){
+            criteria.andRenameLike("%" + rename + "%");
+        }
+        if(eJob != null && !eJob.equals("")){
+            criteria.andEJobEqualTo(eJob);
+        }
+        if(eBirthday != null && !eBirthday.equals("")){
+            criteria.andEBirthdayEqualTo(eBirthday);
+        }
+        //查询
+        List<Employee> employeeList = employeeMapper.selectByExample(employeeExample);
+        System.out.println("条件查询结果：" + employeeList);
         model.addAttribute("empList", employeeList);
         return "employees/employee";
     }
