@@ -1,5 +1,6 @@
 package com.xxz.controller;
 
+import com.sun.deploy.net.HttpResponse;
 import com.xxz.bean.Employee;
 import com.xxz.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/emp")
@@ -31,6 +38,18 @@ public class EmpController {
         System.out.println(employeeList);
         model.addAttribute("empList", employeeList);
         return "employees/employee";
+    }
+
+    //条件查询
+    @RequestMapping("/queryById/{eId}")
+    @ResponseBody
+    public void queryById(@PathVariable("eId") Integer eId, HttpServletResponse response) throws IOException {
+        Employee employee = employeeMapper.selectByPrimaryKey(eId);
+        Map<String, Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("code","200");
+        stringObjectHashMap.put("data",employee);
+        response.getWriter().println(stringObjectHashMap);
+//        return stringObjectHashMap;
     }
 
     //新增员工
