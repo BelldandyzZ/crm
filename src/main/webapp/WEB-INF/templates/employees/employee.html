@@ -13,8 +13,6 @@
     <link rel="stylesheet" th:href="@{https://cdn.bootcdn.net/ajax/libs/ionicons/2.0.1/css/ionicons.min.css}">
     <!-- 主题样式 -->
     <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
-    <!--Jquery-->
-    <script th:src="@{/dist/js/jquery.min.js}"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -247,13 +245,16 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="姓名">
+                                            <label for="pwd">姓名</label>
+                                            <input type="text" id="pwd" class="form-control" placeholder="姓名">
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <!-- text input -->
+
                                         <div class="form-group">
-                                            <select class="form-control">
+                                            <label for="11">岗位性质</label>
+                                            <select class="form-control" id="11">
                                                 <option>全部</option>
                                                 <option>售前</option>
                                                 <option>售后</option>
@@ -265,26 +266,37 @@
                                         </div>
                                     </div>
 
-                                    <!--入司时间范围-->
-                                    <!--                  <div class="col-sm-3">-->
-                                    <!--                    &lt;!&ndash; text input &ndash;&gt;-->
-                                    <!--                    <div class="form-group">-->
-                                    <!--                      <input type="date" class="form-control" placeholder="入司时间">-->
-                                    <!--                    </div>-->
-                                    <!--                  </div>-->
-                                    <div class="col-sm-1">
-                                        <button type="button" class="btn btn-block btn-default">搜索</button>
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label for="22">入司时间</label>
+                                            <input type="date" id="22" class="form-control" placeholder="入司时间">
+                                        </div>
                                     </div>
+
+
+
                                     <div class="col-sm-1">
-                                        <button  class="btn btn-primary" data-toggle="modal" data-target="#add_emp">
-                                            <span class="fa fa-plus" aria-hidden="true"></span> 添加
-                                        </button>
+                                        <!--这个label没用，纯当作占位符用来布局-->
+                                        <label style="color: white">.</label>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-block btn-default">搜索</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-1">
+                                        <!--这个label没用，纯当作占位符用来布局-->
+                                        <label style="color: white">.</label>
+                                        <div class="form-group">
+                                            <button  class="btn btn-primary" data-toggle="modal" data-target="#add_emp">
+                                                <span class="fa fa-plus" aria-hidden="true"></span> 添加
+                                            </button>
+                                        </div>
                                     </div>
 
 
                                 </div>
                                 <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
-
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -306,7 +318,7 @@
                                 <!--                  <h1 th:text="${empList}"></h1>-->
                                 <!--                  <h1 th:text="${session.emp}"></h1>-->
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
-                                <table id="example2" class="table table-bordered table-hover">
+                                <table id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>姓名</th>
@@ -331,15 +343,9 @@
                                         <td th:text="${emp.eHonor}"></td>
                                         <td th:text="${emp.eRemark}"></td>
                                         <td>
-                                            <button type="button" th:data-empId="${emp.eId}" class="btn  btn-danger btn-sm empDelBtn">删除</button>
-                                            <button type="button" class="btn  btn-sm btn-info" data-toggle="modal" data-target="#update_emp">修改</button>
+                                            <button type="button" th:tar-id="${emp.eId}" class="btn  btn-danger btn-sm confirms">删除</button>
+                                            <button type="button" th:tar-id="${emp.eId}" class="btn  btn-sm btn-info updateEmpBtn" data-toggle="modal" data-target="#update_emp">修改</button>
                                         </td>
-                                        <script>
-                                            $('.empDelBtn').on('click', function (){
-                                                //阻止
-                                                alert("888")
-                                            })
-                                        </script>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -368,9 +374,9 @@
 </div>
 <!-- ./wrapper -->
 
-
-<!-- Bootstrap 4 --><!-- jQuery -->
+<!-- jQuery -->
 <script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
 <script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 <!-- DataTables  & Plugins -->
@@ -378,38 +384,64 @@
 <script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
 <!-- AdminLTE App -->
 <script th:src="@{/dist/js/adminlte.min.js}"></script>
+
 <script>
     //自动生成分页信息的插件，执行初始化代码
     $(function () {
-        $('#example2').DataTable(
-            {
-                "language": {
-                    "sProcessing": "处理中...",
-                    "sLengthMenu": "显示 _MENU_ 项结果",
-                    "sZeroRecords": "没有匹配结果",
-                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                    "sInfoPostFix": "",
-                    "sSearch": "搜索:",
-                    "sUrl": "",
-                    "sEmptyTable": "表中数据为空",
-                    "sLoadingRecords": "载入中...",
-                    "sInfoThousands": ",",
-                    "oPaginate":{
-                        "sFirst": "首页",
-                        "sPrevious": "上页",
-                        "sNext": "下页",
-                        "sLast": "末页"
-                    }
-                },
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
+
+        //删除的确定弹窗
+        $(".confirms").click(function () {
+            if(confirm("确定删除该记录？")){
+                let empId = $(this).attr("tar-id");
+                location.href = "/crm/emp/del/" + empId;
+            }
+
+        })
+
+        //修改按钮
+        $('.updateEmpBtn').click(function (){
+            let empId = $(this).attr("tar-id");
+            $.ajax({
+                url: "/crm/emp/queryById/" + empId,
+                type: "get",
+                success: function (res){
+                    console.log(res);
+                    let emp = JSON.parse(res);
+                    console.log(emp);
+                }
+            })
+        })
+
+        // //数据的分页
+        // $('#table_data').DataTable(
+        //   {
+        //   "language": {
+        //     "sProcessing": "处理中...",
+        //    "sLengthMenu": "显示 _MENU_ 项结果",
+        //    "sZeroRecords": "没有匹配结果",
+        //    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        //    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        //    "sInfoPostFix": "",
+        //    "sSearch": "搜索:",
+        //    "sUrl": "",
+        //    "sEmptyTable": "表中数据为空",
+        //    "sLoadingRecords": "载入中...",
+        //    "sInfoThousands": ",",
+        //     "oPaginate":{
+        //       "sFirst": "首页",
+        //        "sPrevious": "上页",
+        //        "sNext": "下页",
+        //        "sLast": "末页"
+        //     }
+        //     },
+        //   "paging": true,
+        //   "lengthChange": false,
+        //   "searching": false,
+        //   "ordering": true,
+        //   "info": true,
+        //   "autoWidth": false,
+        //   "responsive": true,
+        // });
     });
 </script>
 </body>
