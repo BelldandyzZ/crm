@@ -40,16 +40,16 @@ public class EmpController {
         return "employees/employee";
     }
 
-    //条件查询
+    //id查询
     @RequestMapping("/queryById/{eId}")
     @ResponseBody
-    public void queryById(@PathVariable("eId") Integer eId, HttpServletResponse response) throws IOException {
+    public Map<String,Object> queryById(@PathVariable("eId") Integer eId, HttpServletResponse response) throws IOException {
         Employee employee = employeeMapper.selectByPrimaryKey(eId);
         Map<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("code","200");
         stringObjectHashMap.put("data",employee);
-        response.getWriter().println(stringObjectHashMap);
-//        return stringObjectHashMap;
+//        response.getWriter().println(employee);
+        return stringObjectHashMap;
     }
 
     //新增员工
