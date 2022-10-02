@@ -1,24 +1,31 @@
 package com.xxz.bean;
 
+import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
+import com.alibaba.excel.annotation.ExcelProperty;
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
+@ExcelIgnoreUnannotated
 public class Customer implements Serializable {
+    @ExcelProperty(value = "客户编号", index = 0)
     private Integer cId;
-
+    @ExcelProperty(value = "客户姓名", index = 1)
     private String cRename;
-
+    @ExcelProperty(value = "单位", index = 2)
     private String cName;
-
+    @ExcelProperty(value = "部门", index = 3)
     private String cDepart;
-
+    @ExcelProperty(value = "职位", index = 4)
     private String cJob;
-
+    @ExcelProperty(value = "电话", index = 5)
     private String cTele;
-
+    @ExcelProperty(value = "邮箱", index = 6)
     private String cPost;
-
+    @ExcelProperty(value = "爱好", index = 7)
     private String cHobby;
-
+    @ExcelProperty(value = "备注", index = 8)
     private String cRemark;
 
     private static final long serialVersionUID = 1L;

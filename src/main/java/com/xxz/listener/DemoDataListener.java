@@ -2,8 +2,10 @@ package com.xxz.listener;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
+import com.xxz.bean.Customer;
 import com.xxz.bean.Employee;
 import com.xxz.mapper.EmployeeMapper;
+import com.xxz.service.CustomerService;
 import com.xxz.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,8 @@ import java.util.Map;
 public class DemoDataListener<E> extends AnalysisEventListener<E> {
 
     private EmpService empService = new EmpService();
+
+    private CustomerService customerService = new CustomerService();
 
     // 3.读表头内容
     @Override
@@ -34,12 +38,20 @@ public class DemoDataListener<E> extends AnalysisEventListener<E> {
     // 2.一行一行的读取内容（list集合），但是不读表头。
     @Override
     public void invoke(E e, AnalysisContext analysisContext) {
-        System.out.println("==============Mapper：" + empService);
+//        System.out.println("==============Mapper：" + empService);
         //一般在这里进行导入集合操作（在项目中，一般所有业务操作，都在这个方法中进行）
         //EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet().doRead();
         System.out.println("正在添加：" + e);
-        int state = empService.insertEmp((Employee) e);
-        System.out.println(state > 0 ? "插入成功！" : "插入失败！");
+        if(e instanceof Employee){
+            //员工业务类
+            int state = empService.insertEmp((Employee) e);
+            System.out.println(state > 0 ? "插入成功！" : "插入失败！");
+        }else if(e instanceof Customer){
+            //客户业务类
+            int state = customerService.insertCus((Customer) e);
+            System.out.println(state > 0 ? "插入成功！" : "插入失败！");
+        }
+
     }
 }
 

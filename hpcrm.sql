@@ -61,16 +61,26 @@ CREATE TABLE `customer` (
   `c_hobby` varchar(255) DEFAULT NULL COMMENT '爱好',
   `c_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 /*Data for the table `customer` */
 
 insert  into `customer`(`c_id`,`c_rename`,`c_name`,`c_depart`,`c_job`,`c_tele`,`c_post`,`c_hobby`,`c_remark`) values 
-(1,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(1,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好123123'),
 (2,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
 (3,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
 (4,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
-(5,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好');
+(5,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(9,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好123123'),
+(10,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(11,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(12,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(13,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(14,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好123123'),
+(15,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(16,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(17,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(18,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好');
 
 /*Table structure for table `employee` */
 
@@ -89,7 +99,7 @@ CREATE TABLE `employee` (
   `e_honor` varchar(255) DEFAULT NULL COMMENT '社会荣誉',
   `e_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`e_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
 
 /*Data for the table `employee` */
 
@@ -99,7 +109,9 @@ insert  into `employee`(`e_id`,`rename`,`e_name`,`e_pwd`,`e_birthday`,`e_school`
 (76,'marry','marry','123','2002-02-10','张家界航院','售后','2002-02-10','党员','团员-无','良好'),
 (77,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好'),
 (78,'marry','marry','123','2002-02-10','张家界航院','售后','2002-02-10','党员','团员-无','良好'),
-(79,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好');
+(79,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好'),
+(80,'marry','marry','123','2002-02-10','张家界航院','售后','2002-02-10','党员','团员-无','良好'),
+(81,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好');
 
 /*Table structure for table `interview` */
 
