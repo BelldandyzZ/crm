@@ -1,5 +1,9 @@
 package com.xxz.utils;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
+import com.alibaba.druid.proxy.DruidDriver;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,20 +18,32 @@ public class JdbcUtil {
 	private static String password = "root";
 	
 	public static Connection getConnection() {
-		
+
+//根据所加载的配置信息创建连接池
+		DruidDataSource druid = new DruidDataSource();
 		Connection conn = null;
 		try {
-			// 1.��������
 			Class.forName(drivername);
-			// 2.�������ݿ�
-			conn =DriverManager.getConnection(url, username, password);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			druid.setUrl(url);
+			druid.setUsername(username);
+			druid.setPassword(password);
+			conn = druid.getConnection();
+		} catch (Exception throwables) {
+			throwables.printStackTrace();
 		}
+//		Connection conn = null;
+//		try {
+//			// 1.��������
+//			Class.forName(drivername);
+//			// 2.�������ݿ�
+//			conn =DriverManager.getConnection(url, username, password);
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		return conn;
 	}
 	

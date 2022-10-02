@@ -30,7 +30,6 @@
     <!--视图跳转控制器-->
     <mvc:view-controller path="/" view-name="login"></mvc:view-controller>
 <!--    <mvc:view-controller path="/customer/toIndex" view-name="customer/customer"/>-->
-    <mvc:view-controller path="/interview/toIndex" view-name="interview/interview"/>
 
 
     <!--Spring5整合thymeleaf核心库依赖提供-->
@@ -69,22 +68,18 @@
 
     <!--mvc拦截器配置-->
 <!--    <mvc:interceptors>-->
-<!--        &lt;!&ndash;方式一：bean&ndash;&gt;-->
-<!--        <bean class="com.xxz.interceptor.FirstInterceptor"></bean>-->
-<!--        &lt;!&ndash;方式二：res（通过id值获取，或者@Component注解识别mvc拦截器实现类）&ndash;&gt;-->
-<!--        &lt;!&ndash;	<ref bean="firstInterceptor"></ref>&ndash;&gt;-->
-<!--        &lt;!&ndash;方式三：精确mvc:interceptor&ndash;&gt;-->
 <!--        <mvc:interceptor>-->
 <!--            &lt;!&ndash;-->
 <!--                配置拦截路径：-->
 <!--                (1)/*：表示上下文根下的一级请求(/xxx)，二级请求(/xxx/xxx)无法识别-->
 <!--                (2)/**：表示上下文根的多级请求(多少层都可以匹配，即任意请求路径)-->
 <!--            &ndash;&gt;-->
-<!--            <mvc:mapping path="/*"/>-->
+<!--            &lt;!&ndash;[登录拦截]&ndash;&gt;-->
+<!--            <mvc:mapping path="/emp/*"/>-->
 <!--            &lt;!&ndash;配置要排除的路径&ndash;&gt;-->
-<!--            <mvc:exclude-mapping path="/before"/>-->
+<!--            <mvc:exclude-mapping path="/emp/login"/>-->
 <!--            &lt;!&ndash;定义使用的拦截器：bean、ref方式&ndash;&gt;-->
-<!--            <bean class="com.xxz.interceptor.FirstInterceptor"></bean>-->
+<!--            <bean class="com.xxz.interceptor.LoginInterceptor"></bean>-->
 <!--        </mvc:interceptor>-->
 <!--    </mvc:interceptors>-->
 

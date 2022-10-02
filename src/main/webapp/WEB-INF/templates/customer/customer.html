@@ -17,11 +17,49 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
 
+<!--上传-->
 <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
+<div class="modal fade" id="cusInportModel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="empInputForm" th:action="@{/customer/excelInport}" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div>
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h3 class="card-title">文件上传</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                  <span class="col-sm-6 col-md-6">
+                                       <div class="form-group">
+                                          <label>文件</label>
+                                          <input type="file" name="importFile" class="form-control">
+                                      </div>
+                                  </span>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">上传</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--   新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗-->
+
+
+    <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
 <div class="modal fade" id="add_emp">
   <div class="modal-dialog modal-lg">
       <div class="modal-content">
-          <form id=""  method="post" class="nav-link">
+          <form th:action="@{/customer/add}" method="post" class="nav-link">
               <div class="modal-body">
                   <div>
                       <div class="card card-default">
@@ -32,78 +70,72 @@
                               <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="rename">姓名</label>
-                                          <input type="text" id="rename" name="rename" class="form-control">
+                                          <label >姓名</label>
+                                          <input type="text" name="cRename" class="form-control">
                                       </div>
                                   </span>
                                   <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="eBirthday">出生年月</label>
-                                          <input type="date" id="eBirthday" name="eBirthday" class="form-control">
+                                          <label>单位</label>
+<!--                                          <input type="date" id="eBirthday" name="eBirthday" class="form-control">-->
+                                            <select name="cName" class="form-control custom-select">
+                                                <option value="学校">学校</option>
+                                                <option value="国企">国企</option>
+                                                <option value="政府机构">政府机构</option>
+                                                <option value="名气外企">名气外企</option>
+                                                <option value="其他">其他</option>
+                                            </select>
                                       </div>
                                   </span>
                               </div>
                               <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="eName">用户名</label>
-                                          <input type="text" id="eName" name="eName" class="form-control">
+                                          <label for="">部门</label>
+                                          <input type="text"  name="cDepart" class="form-control">
                                       </div>
                                   </span>
                                       <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="ePwd">密码</label>
-                                          <input type="text" id="ePwd" name="ePwd" class="form-control">
+                                          <label for="">岗位</label>
+<!--                                          <input type="text" name="cJob" class="form-control">-->
+                                      <select name="cJob" class="form-control custom-select">
+                                         <option value="售前">售前</option>
+                                         <option value="售后">售后</option>
+                                         <option value="销售">销售</option>
+                                         <option value="商务">商务</option>
+                                         <option value="财务">财务</option>
+                                         <option value="其他">其他</option>
+                                      </select>
                                       </div>
                                   </span>
                               </div>
                               <div class="row">
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="eSchool">毕业院校</label>
-                                      <input type="text" id="eSchool" name="eSchool" class="form-control">
+                                      <label>电话</label>
+                                      <input type="text"  name="cTele" class="form-control">
                                   </div>
                               </span>
                                   <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="eSocialPosition">社会职务</label>
-                                      <input type="text" id="eSocialPosition" name="eSocialPosition" class="form-control" placeholder="岗位性质">
+                                      <label>邮箱</label>
+                                      <input type="text" name="cPost" class="form-control" placeholder="邮箱">
                                   </div>
                               </span>
                               </div>
                               <div class="row">
                                 <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                     <label for="eStartTime">入司时间</label>
-                                     <input type="date" id="eStartTime" name="eStartTime" class="form-control" >
+                                     <label>爱好</label>
+                                     <input type="text" name="cHobby" class="form-control" placeholder="爱好">
                                  </div>
                              </span>
                               </span>
                                   <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="eJob">岗位性质</label>
-                                      <select id="eJob" name="eJob" class="form-control custom-select">
-                                         <option>售前</option>
-                                         <option >售后</option>
-                                         <option >销售</option>
-                                         <option >商务</option>
-                                         <option >财务</option>
-                                         <option >其他</option>
-                                      </select>
-                                  </div>
-                              </span>
-                              </div>
-                              <div class="row">
-                              <span class="col-sm-6 col-md-6">
-                                   <div class="form-group">
-                                      <label for="eHonor">荣誉</label>
-                                      <input type="text" id="eHonor" name="eHonor" class="form-control" >
-                                  </div>
-                              </span>
-                                  <span class="col-sm-6 col-md-6">
-                                  <div class="form-group">
-                                      <label for="eRemark">备注</label>
-                                      <input type="text" id="eRemark" name="eRemark" class="form-control" >
+                                      <label>备注</label>
+                                 <input type="text" name="cRemark" class="form-control" placeholder="备注" >
                                   </div>
                               </span>
                               </div>
@@ -127,90 +159,85 @@
 <div class="modal fade" id="update_emp">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form id="" th:action="@{/emp/update}" method="post" class="nav-link">
+            <form th:action="@{/customer/update}" method="post">
                 <div class="modal-body">
                     <div>
                         <div class="card card-default">
                             <div class="card-header">
-                                <h3 class="card-title">修改客户</h3>
+                                <h3 class="card-title">添加客户</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="rename">姓名</label>
-                                           <input type="hidden" name="eId">
-                                          <input type="text" id="rename" name="rename" class="form-control">
+                                          <label >姓名</label>
+                                           <!--发送id-->
+                                           <input type="text" id="cId" name="cId">
+                                          <input type="text" id="cRename" name="cRename" class="form-control">
                                       </div>
                                   </span>
                                     <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="eBirthday">出生年月</label>
-                                          <input type="date" id="eBirthday" name="eBirthday" class="form-control">
+                                          <label>单位</label>
+                                          <!--                                          <input type="date" id="eBirthday" name="eBirthday" class="form-control">-->
+                                            <select id="cName" name="cName" class="form-control custom-select">
+                                                <option value="学校">学校</option>
+                                                <option value="国企">国企</option>
+                                                <option value="政府机构">政府机构</option>
+                                                <option value="名气外企">名气外企</option>
+                                                <option value="其他">其他</option>
+                                            </select>
                                       </div>
                                   </span>
                                 </div>
                                 <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="eName">用户名</label>
-                                          <input type="text" id="eName" name="eName" class="form-control">
+                                          <label for="">部门</label>
+                                          <input type="text" id="cDepart"  name="cDepart" class="form-control">
                                       </div>
                                   </span>
                                     <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="ePwd">密码</label>
-                                          <input type="text" id="ePwd" name="ePwd" class="form-control">
+                                          <label for="">岗位</label>
+                                          <!--                                          <input type="text" name="cJob" class="form-control">-->
+                                      <select id="cJob" name="cJob" class="form-control custom-select">
+                                         <option value="售前">售前</option>
+                                         <option value="售后">售后</option>
+                                         <option value="销售">销售</option>
+                                         <option value="商务">商务</option>
+                                         <option value="财务">财务</option>
+                                         <option value="其他">其他</option>
+                                      </select>
                                       </div>
                                   </span>
                                 </div>
                                 <div class="row">
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="eSchool">毕业院校</label>
-                                      <input type="text" id="eSchool" name="eSchool" class="form-control">
+                                      <label>电话</label>
+                                      <input type="text" id="cTele"  name="cTele" class="form-control">
                                   </div>
                               </span>
                                     <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="eSocialPosition">社会职务</label>
-                                      <input type="text" id="eSocialPosition" name="eSocialPosition" class="form-control" placeholder="岗位性质">
+                                      <label>邮箱</label>
+                                      <input type="text" id="cPost" name="cPost" class="form-control" placeholder="邮箱">
                                   </div>
                               </span>
                                 </div>
                                 <div class="row">
                                 <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                     <label for="eStartTime">入司时间</label>
-                                     <input type="date" id="eStartTime" name="eStartTime" class="form-control" >
+                                     <label>爱好</label>
+                                     <input type="text" id="cHobby" name="cHobby" class="form-control" placeholder="爱好">
                                  </div>
                              </span>
                                     </span>
                                     <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="eJob">岗位性质</label>
-                                      <select id="eJob" name="eJob" class="form-control custom-select">
-                                         <option>售前</option>
-                                         <option >售后</option>
-                                         <option >销售</option>
-                                         <option >商务</option>
-                                         <option >财务</option>
-                                         <option >其他</option>
-                                      </select>
-                                  </div>
-                              </span>
-                                </div>
-                                <div class="row">
-                              <span class="col-sm-6 col-md-6">
-                                   <div class="form-group">
-                                      <label for="eHonor">荣誉</label>
-                                      <input type="text" id="eHonor" name="eHonor" class="form-control" >
-                                  </div>
-                              </span>
-                                    <span class="col-sm-6 col-md-6">
-                                  <div class="form-group">
-                                      <label for="eRemark">备注</label>
-                                      <input type="text" id="eRemark" name="eRemark" class="form-control" >
+                                      <label>备注</label>
+                                 <input type="text" id="cRemark" name="cRemark" class="form-control" placeholder="备注" >
                                   </div>
                               </span>
                                 </div>
@@ -220,11 +247,11 @@
                         <!-- /.card -->
                     </div>
                 </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
             </form>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="">关闭</button>
-                <button type="button" class="btn btn-primary" id="">保存</button>
-            </div>
         </div>
     </div>
 </div>
@@ -245,15 +272,24 @@
                   <div class="col-sm-3">
                     <!-- text input -->
                     <div class="form-group">
-                        <label for="pwd">客户姓名</label>
-                      <input type="text" id="pwd" class="form-control" placeholder="姓名">
+                        <label for="con_cRename">客户姓名</label>
+                      <input type="text" id="con_cRename" name="cRename" class="form-control" placeholder="姓名">
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <!-- text input -->
                       <div class="form-group">
-                          <label for="phone">电话</label>
-                          <input type="text" id="phone" class="form-control" placeholder="电话">
+                          <label for="con_cJob">岗位</label>
+<!--                          <input type="text" id="phone" class="form-control" placeholder="电话">-->
+                          <select id="con_cJob" name="cJob" class="form-control custom-select">
+                              <option value="">全部</option>
+                              <option value="售前">售前</option>
+                              <option value="售后">售后</option>
+                              <option value="销售">销售</option>
+                              <option value="商务">商务</option>
+                              <option value="财务">财务</option>
+                              <option value="其他">其他</option>
+                          </select>
                       </div>
 
                   </div>
@@ -261,15 +297,15 @@
                   <div class="col-sm-3">
                     <!-- text input -->
                     <div class="form-group">
-                        <label for="cJob">所在单位</label>
+                        <label for="con_cName">所在单位</label>
 <!--                      <input type="text" id="22" class="form-control" placeholder="所在单位">-->
-                            <select id="cJob" name="cJob" class="form-control custom-select">
-                                <option>全部</option>
-                                <option >学校</option>
-                                <option >国企</option>
-                                <option >政府机构</option>
-                                <option >名气外企</option>
-                                <option >其他</option>
+                            <select id="con_cName" name="cName" class="form-control custom-select">
+                                <option value="">全部</option>
+                                <option value="学校">学校</option>
+                                <option value="国企">国企</option>
+                                <option value="政府机构">政府机构</option>
+                                <option value="名气外企">名气外企</option>
+                                <option value="其他">其他</option>
                             </select>
                     </div>
                   </div>
@@ -280,7 +316,7 @@
                       <!--这个label没用，纯当作占位符用来布局-->
                       <label style="color: white">.</label>
                       <div class="form-group">
-                          <button type="button" class="btn btn-block btn-default">搜索</button>
+                          <button type="button" id="cusConditionBtn" class="btn btn-block btn-default">搜索</button>
                       </div>
                   </div>
 
@@ -303,13 +339,13 @@
                 <div class="row">
                   <div class="col-sm-8"></div>
                   <div class="col-sm-2 ">
-                    <button type="button" class="btn btn-block btn-default">
+                    <button type="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#cusInportModel">
                       <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                      导入客户信息
                     </button>
                   </div>
                   <div class="col-sm-2">
-                    <button type="button" class="btn btn-block btn-default">
+                    <button type="button" id="cusExcelOutputBtn" class="btn btn-block btn-default">
                       <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>导出客户信息
                     </button>
                   </div>
@@ -345,8 +381,8 @@
                    <td th:text="${cus.cHobby}">1</td>
                    <td th:text="${cus.cRemark}">1</td>
                     <td>
-                      <button type="button" class="btn  btn-danger btn-sm confirms">删除</button>
-                      <button type="button" class="btn  btn-sm btn-info" data-toggle="modal" data-target="#update_emp">修改</button>
+                      <button type="button" th:tar-id="${cus.cId}" class="btn  btn-danger btn-sm confirmsCus">删除</button>
+                      <button type="button" th:tar-id="${cus.cId}" class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button>
                     </td>
                   </tr>
                   </tbody>
@@ -391,9 +427,65 @@
   //自动生成分页信息的插件，执行初始化代码
     $(function () {
 
+        //excel导出(emp)
+        $('#cusExcelOutputBtn').click(function (){
+            location.href = "/crm/customer/excelOutput";
+        })
+
+        //条件查询
+        $('#cusConditionBtn').click(function (){
+            let cName = $('#con_cName').val();
+            let cJob = $('#con_cJob').val();
+            let cRename = $('#con_cRename').val();
+            console.log(cRename + "-" + cJob + "-" + cName)
+            location.href = "/crm/customer/customers?cRename="+cRename+"&cJob="+cJob+"&cName="+cName;
+        })
+        // $('#conditionBtn').click(function (){
+        //     $('#conForm').submit();
+        // })
+
         //删除的确定弹窗
-        $(".confirms").click(function () {
-            confirm("确定删除该记录？")
+        $(".confirmsCus").click(function () {
+            if(confirm("确定删除该记录？")){
+                let cId = $(this).attr("tar-id");
+                location.href = "/crm/customer/del/" + cId;
+            }
+
+        })
+
+        //修改
+        //修改按钮
+        $('.updateCusBtn').click(function (){
+            let cId = $(this).attr("tar-id");
+
+            /*
+            *             <td th:text="${cus.cRename}">1</td>
+                   <td th:text="${cus.cName}">1</td>
+                   <td th:text="${cus.cDepart}">1</td>
+                   <td th:text="${cus.cJob}">1</td>
+                   <td th:text="${cus.cTele}">1</td>
+                   <td th:text="${cus.cPost}">1</td>
+                   <td th:text="${cus.cHobby}">1</td>
+                   <td th:text="${cus.cRemark}">1</td>*/
+
+            $.ajax({
+                url: "/crm/customer/queryById/" + cId,
+                type: "get",
+                datatype: "json",
+                success: function (res){
+                    console.log(res);
+                    let cus = res.data;
+                    $('#cId').val(cus.cId);
+                    $('#cRename').val(cus.cRename);
+                    $('#cName').val(cus.cName);
+                    $('#cDepart').val(cus.cDepart);
+                    $('#cJob').val(cus.cJob);
+                    $('#cTele').val(cus.cTele);
+                    $('#cPost').val(cus.cPost);
+                    $('#cHobby').val(cus.cHobby);
+                    $('#cRemark').val(cus.cRemark);
+                }
+            })
         })
 
         //数据的分页
