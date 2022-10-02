@@ -30,6 +30,7 @@
     <!--视图跳转控制器-->
     <mvc:view-controller path="/" view-name="login"></mvc:view-controller>
 <!--    <mvc:view-controller path="/customer/toIndex" view-name="customer/customer"/>-->
+    <mvc:view-controller path="/interview/toIndex" view-name="interview/interview"/>
 
 
     <!--Spring5整合thymeleaf核心库依赖提供-->
