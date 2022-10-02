@@ -72,21 +72,21 @@
         </javaClientGenerator>
 
         <!-- table可以有多个,每个数据库中的表都可以写一个table，tableName表示要匹配的数据库表,也可以在tableName属性中通过使用%通配符来匹配所有数据库表,只有匹配的表才会自动生成文件 enableSelectByPrimaryKey相应的配置表示是否生成相应的接口 -->
-        <table tableName="contract"
+<!--        <table tableName="contract"-->
+<!--        > <property name="useActualColumnNames" value="false"/></table>-->
 
-        > <property name="useActualColumnNames" value="false"/></table>
         <table tableName="customer" domainObjectName="Customer"
-
         > <property name="useActualColumnNames" value="false"/></table>
-        <table tableName="employee" domainObjectName="Employee"
 
-        > <property name="useActualColumnNames" value="false"/></table>
-        <table tableName="interview" domainObjectName="Interview"
 
-        > <property name="useActualColumnNames" value="false"/></table>
-        <table tableName="project" domainObjectName="Project"
+<!--        <table tableName="employee" domainObjectName="Employee"-->
+<!--        > <property name="useActualColumnNames" value="false"/></table>-->
 
-        > <property name="useActualColumnNames" value="false"/></table>
+<!--        <table tableName="interview" domainObjectName="Interview"-->
+<!--        > <property name="useActualColumnNames" value="false"/></table>-->
+
+<!--        <table tableName="project" domainObjectName="Project"-->
+<!--        > <property name="useActualColumnNames" value="false"/></table>-->
 
         <!--
             domainObjectName="Contract"

@@ -52,6 +52,7 @@ DROP TABLE IF EXISTS `customer`;
 
 CREATE TABLE `customer` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT,
+  `c_rename` varchar(50) DEFAULT NULL COMMENT '客户名称',
   `c_name` varchar(50) DEFAULT NULL COMMENT '单位类型：对应字典表的值',
   `c_depart` varchar(50) DEFAULT NULL COMMENT '客户所在公司的部门',
   `c_job` varchar(50) DEFAULT NULL COMMENT '客户职务',
@@ -60,9 +61,16 @@ CREATE TABLE `customer` (
   `c_hobby` varchar(255) DEFAULT NULL COMMENT '爱好',
   `c_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `customer` */
+
+insert  into `customer`(`c_id`,`c_rename`,`c_name`,`c_depart`,`c_job`,`c_tele`,`c_post`,`c_hobby`,`c_remark`) values 
+(1,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(2,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(3,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(4,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
+(5,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好');
 
 /*Table structure for table `employee` */
 
@@ -81,12 +89,12 @@ CREATE TABLE `employee` (
   `e_honor` varchar(255) DEFAULT NULL COMMENT '社会荣誉',
   `e_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`e_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 
 /*Data for the table `employee` */
 
 insert  into `employee`(`e_id`,`rename`,`e_name`,`e_pwd`,`e_birthday`,`e_school`,`e_job`,`e_start_time`,`e_social_position`,`e_honor`,`e_remark`) values 
-(32,'marry','marry','123','2002-01-12','张家界航院','销售','2002-01-12','党员','团员-无','良好'),
+(32,'marry','marry','123','2002-02-10','张家界航院','售后','2002-02-10','党员','团员-无','良好'),
 (33,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好');
 
 /*Table structure for table `interview` */

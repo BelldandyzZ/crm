@@ -164,6 +164,76 @@ public class CustomerExample {
             return (Criteria) this;
         }
 
+        public Criteria andCRenameIsNull() {
+            addCriterion("c_rename is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameIsNotNull() {
+            addCriterion("c_rename is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameEqualTo(String value) {
+            addCriterion("c_rename =", value, "cRename");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameNotEqualTo(String value) {
+            addCriterion("c_rename <>", value, "cRename");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameGreaterThan(String value) {
+            addCriterion("c_rename >", value, "cRename");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameGreaterThanOrEqualTo(String value) {
+            addCriterion("c_rename >=", value, "cRename");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameLessThan(String value) {
+            addCriterion("c_rename <", value, "cRename");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameLessThanOrEqualTo(String value) {
+            addCriterion("c_rename <=", value, "cRename");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameLike(String value) {
+            addCriterion("c_rename like", value, "cRename");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameNotLike(String value) {
+            addCriterion("c_rename not like", value, "cRename");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameIn(List<String> values) {
+            addCriterion("c_rename in", values, "cRename");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameNotIn(List<String> values) {
+            addCriterion("c_rename not in", values, "cRename");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameBetween(String value1, String value2) {
+            addCriterion("c_rename between", value1, value2, "cRename");
+            return (Criteria) this;
+        }
+
+        public Criteria andCRenameNotBetween(String value1, String value2) {
+            addCriterion("c_rename not between", value1, value2, "cRename");
+            return (Criteria) this;
+        }
+
         public Criteria andCNameIsNull() {
             addCriterion("c_name is null");
             return (Criteria) this;

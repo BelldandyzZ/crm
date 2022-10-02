@@ -261,8 +261,16 @@
                   <div class="col-sm-3">
                     <!-- text input -->
                     <div class="form-group">
-                        <label for="22">所在单位</label>
-                      <input type="text" id="22" class="form-control" placeholder="所在单位">
+                        <label for="cJob">所在单位</label>
+<!--                      <input type="text" id="22" class="form-control" placeholder="所在单位">-->
+                            <select id="cJob" name="cJob" class="form-control custom-select">
+                                <option>全部</option>
+                                <option >学校</option>
+                                <option >国企</option>
+                                <option >政府机构</option>
+                                <option >名气外企</option>
+                                <option >其他</option>
+                            </select>
                     </div>
                   </div>
 
@@ -325,15 +333,17 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                   <td>1</td>
-                   <td>1</td>
-                   <td>1</td>
-                   <td>1</td>
-                   <td>1</td>
-                   <td>1</td>
-                   <td>1</td>
-                   <td>1</td>
+                  <tr th:each="cus,cusState : ${customerList}">
+<!--                   <td th:text="${cusState.index}">1</td>-->
+<!--                   <td th:text="${cus.cId}">1</td>-->
+                   <td th:text="${cus.cRename}">1</td>
+                   <td th:text="${cus.cName}">1</td>
+                   <td th:text="${cus.cDepart}">1</td>
+                   <td th:text="${cus.cJob}">1</td>
+                   <td th:text="${cus.cTele}">1</td>
+                   <td th:text="${cus.cPost}">1</td>
+                   <td th:text="${cus.cHobby}">1</td>
+                   <td th:text="${cus.cRemark}">1</td>
                     <td>
                       <button type="button" class="btn  btn-danger btn-sm confirms">删除</button>
                       <button type="button" class="btn  btn-sm btn-info" data-toggle="modal" data-target="#update_emp">修改</button>
