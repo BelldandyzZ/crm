@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class Customer implements Serializable {
     private Integer cId;
 
+    private String cRename;
+
     private String cName;
 
     private String cDepart;
@@ -27,6 +29,14 @@ public class Customer implements Serializable {
 
     public void setcId(Integer cId) {
         this.cId = cId;
+    }
+
+    public String getcRename() {
+        return cRename;
+    }
+
+    public void setcRename(String cRename) {
+        this.cRename = cRename == null ? null : cRename.trim();
     }
 
     public String getcName() {
@@ -92,6 +102,7 @@ public class Customer implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", cId=").append(cId);
+        sb.append(", cRename=").append(cRename);
         sb.append(", cName=").append(cName);
         sb.append(", cDepart=").append(cDepart);
         sb.append(", cJob=").append(cJob);

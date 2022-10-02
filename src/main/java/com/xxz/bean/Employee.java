@@ -1,28 +1,38 @@
 package com.xxz.bean;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
+import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
+import com.alibaba.excel.annotation.ExcelProperty;
+import lombok.Data;
+
 import java.io.Serializable;
 
+
+@Data
+@ExcelIgnoreUnannotated
 public class Employee implements Serializable {
+
+    @ExcelProperty(value = "员工编号", index = 0)
     private Integer eId;
-
+    @ExcelProperty(value = "姓名", index = 1)
     private String rename;
-
+    @ExcelProperty(value = "员工账号", index = 2)
     private String eName;
-
+    @ExcelProperty(value = "密码", index = 3)
     private String ePwd;
-
+    @ExcelProperty(value = "出生年月", index = 4)
     private String eBirthday;
-
+    @ExcelProperty(value = "毕业院校", index = 5)
     private String eSchool;
-
+    @ExcelProperty(value = "职位", index = 6)
     private String eJob;
-
+    @ExcelProperty(value = "入司时间", index = 7)
     private String eStartTime;
-
+    @ExcelProperty(value = "社会职位", index = 8)
     private String eSocialPosition;
-
+    @ExcelProperty(value = "荣誉", index = 9)
     private String eHonor;
-
+    @ExcelProperty(value = "备注", index = 10)
     private String eRemark;
 
     private static final long serialVersionUID = 1L;

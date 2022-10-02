@@ -17,11 +17,49 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
 
+    <!--上传-->
+    <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
+    <div class="modal fade" id="empInportModel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="empInputForm" th:action="@{/emp/excelInport}" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div>
+                            <div class="card card-default">
+                                <div class="card-header">
+                                    <h3 class="card-title">文件上传</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                      <span class="col-sm-6 col-md-6">
+                                           <div class="form-group">
+                                              <label>文件</label>
+                                              <input type="file" name="importFile" class="form-control">
+                                          </div>
+                                      </span>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">上传</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--   新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗-->
+
+
     <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
     <div class="modal fade" id="add_emp">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form id="" th:action="@{/emp/add}" method="post" class="nav-link">
+                <form th:action="@{/emp/add}" method="post" class="nav-link">
                     <div class="modal-body">
                         <div>
                             <div class="card card-default">
@@ -33,13 +71,13 @@
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
                                           <label for="rename">姓名</label>
-                                          <input type="text" id="rename" name="rename" class="form-control">
+                                          <input type="text"  name="rename" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label for="eBirthday">出生年月</label>
-                                          <input type="date" id="eBirthday" name="eBirthday" class="form-control">
+                                          <input type="date"  name="eBirthday" class="form-control">
                                       </div>
                                   </span>
                                     </div>
@@ -47,13 +85,13 @@
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
                                           <label for="eName">用户名</label>
-                                          <input type="text" id="eName" name="eName" class="form-control">
+                                          <input type="text"  name="eName" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label for="ePwd">密码</label>
-                                          <input type="text" id="ePwd" name="ePwd" class="form-control">
+                                          <input type="text"  name="ePwd" class="form-control">
                                       </div>
                                   </span>
                                     </div>
@@ -61,13 +99,13 @@
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label for="eSchool">毕业院校</label>
-                                      <input type="text" id="eSchool" name="eSchool" class="form-control">
+                                      <input type="text"  name="eSchool" class="form-control">
                                   </div>
                               </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label for="eSocialPosition">社会职务</label>
-                                      <input type="text" id="eSocialPosition" name="eSocialPosition" class="form-control" placeholder="岗位性质">
+                                      <input type="text"  name="eSocialPosition" class="form-control" placeholder="岗位性质">
                                   </div>
                               </span>
                                     </div>
@@ -75,14 +113,14 @@
                                 <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                      <label for="eStartTime">入司时间</label>
-                                     <input type="date" id="eStartTime" name="eStartTime" class="form-control" >
+                                     <input type="date"  name="eStartTime" class="form-control" >
                                  </div>
                              </span>
                                         </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label for="eJob">岗位性质</label>
-                                      <select id="eJob" name="eJob" class="form-control custom-select">
+                                      <select  name="eJob" class="form-control custom-select">
                                          <option>售前</option>
                                          <option >售后</option>
                                          <option >销售</option>
@@ -97,13 +135,13 @@
                               <span class="col-sm-6 col-md-6">
                                    <div class="form-group">
                                       <label for="eHonor">荣誉</label>
-                                      <input type="text" id="eHonor" name="eHonor" class="form-control" >
+                                      <input type="text"  name="eHonor" class="form-control" >
                                   </div>
                               </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label for="eRemark">备注</label>
-                                      <input type="text" id="eRemark" name="eRemark" class="form-control" >
+                                      <input type="text"  name="eRemark" class="form-control" >
                                   </div>
                               </span>
                                     </div>
@@ -139,7 +177,7 @@
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
                                           <label for="rename">姓名</label>
-                                           <input type="hidden" name="eId">
+                                           <input type="hidden" id="eId" name="eId">
                                           <input type="text" id="rename" name="rename" class="form-control">
                                       </div>
                                   </span>
@@ -220,11 +258,11 @@
                             <!-- /.card -->
                         </div>
                     </div>
-                </form>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="">关闭</button>
-                    <button type="button" class="btn btn-primary" id="">保存</button>
+                    <button type="submit" class="btn btn-primary" id="">保存</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -245,23 +283,23 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="pwd">姓名</label>
-                                            <input type="text" id="pwd" class="form-control" placeholder="姓名">
+                                            <label for="con_rename">姓名</label>
+                                            <input type="text" id="con_rename" name="rename" class="form-control" placeholder="姓名">
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <!-- text input -->
 
                                         <div class="form-group">
-                                            <label for="11">岗位性质</label>
-                                            <select class="form-control" id="11">
-                                                <option>全部</option>
-                                                <option>售前</option>
-                                                <option>售后</option>
-                                                <option>销售</option>
-                                                <option>商务</option>
-                                                <option>财务</option>
-                                                <option>其他</option>
+                                            <label for="con_eJob">岗位性质</label>
+                                            <select id="con_eJob" name="eJob" class="form-control">
+                                                <option value="">全部</option>
+                                                <option class="eJobItem" value="售前">售前</option>
+                                                <option class="eJobItem" value="售后">售后</option>
+                                                <option class="eJobItem" value="销售">销售</option>
+                                                <option class="eJobItem" value="商务">商务</option>
+                                                <option class="eJobItem" value="财务">财务</option>
+                                                <option class="eJobItem" value="其他">其他</option>
                                             </select>
                                         </div>
                                     </div>
@@ -269,18 +307,16 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="22">入司时间</label>
-                                            <input type="date" id="22" class="form-control" placeholder="入司时间">
+                                            <label for="con_eBirthday">入司时间</label>
+                                            <input type="date" id="con_eBirthday" name="eBirthday" class="form-control" placeholder="入司时间">
                                         </div>
                                     </div>
-
-
 
                                     <div class="col-sm-1">
                                         <!--这个label没用，纯当作占位符用来布局-->
                                         <label style="color: white">.</label>
                                         <div class="form-group">
-                                            <button type="button" class="btn btn-block btn-default">搜索</button>
+                                            <button type="button" id="conditionBtn"  class="btn btn-block btn-default">搜索</button>
                                         </div>
                                     </div>
 
@@ -293,8 +329,6 @@
                                             </button>
                                         </div>
                                     </div>
-
-
                                 </div>
                                 <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
                             </div>
@@ -303,13 +337,13 @@
                                 <div class="row">
                                     <div class="col-sm-8"></div>
                                     <div class="col-sm-2 ">
-                                        <button type="button" class="btn btn-block btn-default">
+                                        <button type="button" data-toggle="modal" data-target="#empInportModel" class="btn btn-block btn-default">
                                             <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                                             导入员工信息
                                         </button>
                                     </div>
                                     <div class="col-sm-2">
-                                        <button type="button" class="btn btn-block btn-default">
+                                        <button type="button" id="empExcelOutputBtn" class="btn btn-block btn-default">
                                             <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>导出员工信息
                                         </button>
                                     </div>
@@ -389,6 +423,27 @@
     //自动生成分页信息的插件，执行初始化代码
     $(function () {
 
+        //excel导出(emp)
+        $('#empExcelOutputBtn').click(function (){
+            location.href = "/crm/emp/excelOutput";
+        })
+        //excel导入(emp)
+        // $('#empExcelInportBtn').click(function (){
+        //     $('#empInputForm').submit();
+        // })
+
+        //条件查询
+        $('#conditionBtn').click(function (){
+            let rename = $('#con_rename').val();
+            let eJob = $('#con_eJob').val();
+            let eBirthday = $('#con_eBirthday').val();
+            console.log(rename + "-" + eJob + "-" + eBirthday)
+            location.href = "/crm/emp/emps?rename="+rename+"&eJob="+eJob+"&eBirthday="+eBirthday;
+        })
+        // $('#conditionBtn').click(function (){
+        //     $('#conForm').submit();
+        // })
+
         //删除的确定弹窗
         $(".confirms").click(function () {
             if(confirm("确定删除该记录？")){
@@ -404,44 +459,55 @@
             $.ajax({
                 url: "/crm/emp/queryById/" + empId,
                 type: "get",
+                datatype: "json",
                 success: function (res){
                     console.log(res);
-                    let emp = JSON.parse(res);
-                    console.log(emp);
+                    let emp = res.data;
+                    $('#eId').val(emp.eId);
+                    $('#rename').val(emp.rename);
+                    $('#eName').val(emp.eName);
+                    $('#ePwd').val(emp.ePwd);
+                    $('#eBirthday').val(emp.eBirthday);
+                    $('#eSchool').val(emp.eSchool);
+                    $('#eJob').val(emp.eJob);
+                    $('#eStartTime').val(emp.eStartTime);
+                    $('#eSocialPosition').val(emp.eSocialPosition);
+                    $('#eHonor').val(emp.eHonor);
+                    $('#eRemark').val(emp.eRemark);
                 }
             })
         })
 
-        // //数据的分页
-        // $('#table_data').DataTable(
-        //   {
-        //   "language": {
-        //     "sProcessing": "处理中...",
-        //    "sLengthMenu": "显示 _MENU_ 项结果",
-        //    "sZeroRecords": "没有匹配结果",
-        //    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-        //    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-        //    "sInfoPostFix": "",
-        //    "sSearch": "搜索:",
-        //    "sUrl": "",
-        //    "sEmptyTable": "表中数据为空",
-        //    "sLoadingRecords": "载入中...",
-        //    "sInfoThousands": ",",
-        //     "oPaginate":{
-        //       "sFirst": "首页",
-        //        "sPrevious": "上页",
-        //        "sNext": "下页",
-        //        "sLast": "末页"
-        //     }
-        //     },
-        //   "paging": true,
-        //   "lengthChange": false,
-        //   "searching": false,
-        //   "ordering": true,
-        //   "info": true,
-        //   "autoWidth": false,
-        //   "responsive": true,
-        // });
+        //数据的分页
+        $('#table_data').DataTable(
+          {
+          "language": {
+            "sProcessing": "处理中...",
+           "sLengthMenu": "显示 _MENU_ 项结果",
+           "sZeroRecords": "没有匹配结果",
+           "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+           "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+           "sInfoPostFix": "",
+           "sSearch": "搜索:",
+           "sUrl": "",
+           "sEmptyTable": "表中数据为空",
+           "sLoadingRecords": "载入中...",
+           "sInfoThousands": ",",
+            "oPaginate":{
+              "sFirst": "首页",
+               "sPrevious": "上页",
+               "sNext": "下页",
+               "sLast": "末页"
+            }
+            },
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+        });
     });
 </script>
 </body>
