@@ -92,4 +92,16 @@ public class CustomerController {
         return "redirect:/customer/customers";
     }
 
+    /*excel导入导出*/
+    @RequestMapping("excelInport")
+    public String excelInport(){
+
+        return "redirect:/customer/customers";
+    }
+
+    @RequestMapping("excelOutput")
+    public String excelOutput(){
+        return "redirect:/customer/customers";
+    }
+
 }

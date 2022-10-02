@@ -1,18 +1,26 @@
 package com.xxz.controller;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.read.metadata.ReadSheet;
 import com.xxz.bean.Employee;
 import com.xxz.bean.EmployeeExample;
+import com.xxz.listener.DemoDataListener;
 import com.xxz.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import javax.servlet.http.HttpSession;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,5 +105,50 @@ public class EmpController {
         //重定向到empMenu界面
         return "redirect:/emp/emps";
     }
+
+    /*excel导入导出*/
+    @RequestMapping(value = "/excelInport", method = RequestMethod.POST)
+    public String excelInport(MultipartFile importFile){
+        System.out.println("文件名：" + importFile.getOriginalFilename());
+//        System.out.println("input.........................");
+//        String fileName = "E:\\员工信息表.xlsx";
+//        //EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet().doRead();
+//        EasyExcel.read(fileName, Employee.class, new DemoDataListener()).sheet().doRead();
+        // 解析Excel
+        ExcelReader excelReader = null;
+        try {
+            excelReader = EasyExcelFactory.read(importFile.getInputStream(), Employee.class, new DemoDataListener<Employee>()).build();
+            ReadSheet readSheet = EasyExcelFactory.readSheet(0).build();
+            excelReader.read(readSheet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (excelReader != null) {
+                excelReader.finish();
+            }
+        }
+        //重定向到empMenu界面
+        return "redirect:/emp/emps";
+    }
+
+    //导出
+    @RequestMapping("/excelOutput") //ResponseEntity<byte[]>
+    public void excelOutput(HttpSession session,HttpServletResponse response) throws IOException {
+        //获取本机桌面地址
+//        File desktopDir = FileSystemView.getFileSystemView() .getHomeDirectory();
+//        String PATH = desktopDir.getAbsolutePath() + "\\";
+//        String fileName = PATH + "员工信息表.xlsx";
+        //设置响应头和响应体格式，告诉浏览器是什么文件，对应解析
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename="
+                + URLEncoder.encode("员工信息", "UTF-8") + ".xlsx");
+        //获取目标数据
+        List<Employee> employees = employeeMapper.selectByExample(null);
+        //响应到浏览器
+        EasyExcel.write(response.getOutputStream(), Employee.class).sheet("模板").doWrite(employees);
+        System.out.println("excelOutput.................");
+    }
+
 
 }

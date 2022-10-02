@@ -17,6 +17,44 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
 
+    <!--上传-->
+    <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
+    <div class="modal fade" id="empInportModel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="empInputForm" th:action="@{/emp/excelInport}" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div>
+                            <div class="card card-default">
+                                <div class="card-header">
+                                    <h3 class="card-title">文件上传</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                      <span class="col-sm-6 col-md-6">
+                                           <div class="form-group">
+                                              <label>文件</label>
+                                              <input type="file" name="importFile" class="form-control">
+                                          </div>
+                                      </span>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">上传</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--   新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗-->
+
+
     <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
     <div class="modal fade" id="add_emp">
         <div class="modal-dialog modal-lg">
@@ -299,13 +337,13 @@
                                 <div class="row">
                                     <div class="col-sm-8"></div>
                                     <div class="col-sm-2 ">
-                                        <button type="button" class="btn btn-block btn-default">
+                                        <button type="button" data-toggle="modal" data-target="#empInportModel" class="btn btn-block btn-default">
                                             <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                                             导入员工信息
                                         </button>
                                     </div>
                                     <div class="col-sm-2">
-                                        <button type="button" class="btn btn-block btn-default">
+                                        <button type="button" id="empExcelOutputBtn" class="btn btn-block btn-default">
                                             <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>导出员工信息
                                         </button>
                                     </div>
@@ -384,6 +422,15 @@
 <script>
     //自动生成分页信息的插件，执行初始化代码
     $(function () {
+
+        //excel导出(emp)
+        $('#empExcelOutputBtn').click(function (){
+            location.href = "/crm/emp/excelOutput";
+        })
+        //excel导入(emp)
+        // $('#empExcelInportBtn').click(function (){
+        //     $('#empInputForm').submit();
+        // })
 
         //条件查询
         $('#conditionBtn').click(function (){

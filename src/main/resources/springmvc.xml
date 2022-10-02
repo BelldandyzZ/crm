@@ -60,11 +60,11 @@
         <mvc:resources location="file:d:/upload/" mapping="/upload/**"></mvc:resources>-->
 
     <!-- 文件上传解析器：将上传的目标文件解析到MultipartFile对象中，不配置解析器则会报nullPoint错误 -->
-<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
-<!--        &lt;!&ndash; 配置上传默认编码 &ndash;&gt;-->
-<!--        <property name="defaultEncoding" value="utf-8"></property>-->
-<!--        <property name="maxUploadSize" value="104857600"></property>-->
-<!--    </bean>-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 配置上传默认编码 -->
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="maxUploadSize" value="104857600"></property>
+    </bean>
 
     <!--mvc拦截器配置-->
 <!--    <mvc:interceptors>-->
@@ -104,7 +104,7 @@
                     properties的值表示若出现指定异常时，设置一个新的视图名称，跳转到指定页面(逻辑视图)
                  -->
                 <prop key="java.lang.ArithmeticException" >error/error1</prop>
-                <prop key="java.lang.NullPointerException">error/error2</prop>
+<!--                <prop key="java.lang.NullPointerException">error/error2</prop>-->
             </props>
         </property>
         <!--[Model]异常处理参数：将异常信息共享到请求域中、value表示请求域中的属性名ex.msg..-->

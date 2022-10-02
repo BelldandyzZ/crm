@@ -89,13 +89,17 @@ CREATE TABLE `employee` (
   `e_honor` varchar(255) DEFAULT NULL COMMENT '社会荣誉',
   `e_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`e_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
 
 /*Data for the table `employee` */
 
 insert  into `employee`(`e_id`,`rename`,`e_name`,`e_pwd`,`e_birthday`,`e_school`,`e_job`,`e_start_time`,`e_social_position`,`e_honor`,`e_remark`) values 
 (32,'marry','marry','123','2002-02-10','张家界航院','售后','2002-02-10','党员','团员-无','良好'),
-(33,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好');
+(33,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好'),
+(76,'marry','marry','123','2002-02-10','张家界航院','售后','2002-02-10','党员','团员-无','良好'),
+(77,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好'),
+(78,'marry','marry','123','2002-02-10','张家界航院','售后','2002-02-10','党员','团员-无','良好'),
+(79,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好');
 
 /*Table structure for table `interview` */
 
