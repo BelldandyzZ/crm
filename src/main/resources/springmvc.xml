@@ -32,6 +32,9 @@
 <!--    <mvc:view-controller path="/customer/toIndex" view-name="customer/customer"/>-->
     <mvc:view-controller path="/interview/toIndex" view-name="interview/interview"/>
     <mvc:view-controller path="/project/toIndex" view-name="project/project"/>
+    <mvc:view-controller path="/project/contract/toIndex" view-name="project/contract/contract"/>
+    <mvc:view-controller path="/project/interview_record/toIndex" view-name="project/interview_record/interview_record"/>
+    <mvc:view-controller path="/project/payment_back/toIndex" view-name="project/payment_back/payment_back"/>
 
 
     <!--Spring5整合thymeleaf核心库依赖提供-->
