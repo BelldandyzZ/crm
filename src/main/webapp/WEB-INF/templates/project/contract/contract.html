@@ -170,15 +170,24 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>合同金额20w</td>
-                                        <td><a href="javascrupt:;">合同文件下载</a></td>
-                                        <td>招标金额20w</td>
-                                        <td><a href="javascrupt:;">招标文件下载</a></td>
+                                    <tr th:each="con,conState:${contractList}">
+                                        <td th:text="${con.ctContractAmount}">合同金额20w</td>
+                                        <td><a th:href="@{'/project/download/'+${con.ctContractDocment}}">合同文件下载</a></td>
+                                        <td th:text="${con.ctTenderAmount}">招标金额20w</td>
+                                        <td><a th:href="@{'/project/download/'+${con.ctTenderDocment}}">招标文件下载</a></td>
                                         <td>
                                             <button type="button"  class="btn  btn-sm btn-info updateEmpBtn" data-toggle="modal" data-target="#update_emp">修改暂时不做，业务问题</button>
                                         </td>
                                     </tr>
+<!--                                    <tr>-->
+<!--                                        <td>合同金额20w</td>-->
+<!--                                        <td><a href="javascrupt:;">合同文件下载</a></td>-->
+<!--                                        <td>招标金额20w</td>-->
+<!--                                        <td><a href="javascrupt:;">招标文件下载</a></td>-->
+<!--                                        <td>-->
+<!--                                            <button type="button"  class="btn  btn-sm btn-info updateEmpBtn" data-toggle="modal" data-target="#update_emp">修改暂时不做，业务问题</button>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
                                     </tbody>
                                 </table>
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->

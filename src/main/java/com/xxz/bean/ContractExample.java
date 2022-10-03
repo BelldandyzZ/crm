@@ -444,143 +444,63 @@ public class ContractExample {
             return (Criteria) this;
         }
 
-        public Criteria andCtPaymentBackIsNull() {
-            addCriterion("ct_payment_back is null");
+        public Criteria andPIdIsNull() {
+            addCriterion("p_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andCtPaymentBackIsNotNull() {
-            addCriterion("ct_payment_back is not null");
+        public Criteria andPIdIsNotNull() {
+            addCriterion("p_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCtPaymentBackEqualTo(String value) {
-            addCriterion("ct_payment_back =", value, "ctPaymentBack");
+        public Criteria andPIdEqualTo(Integer value) {
+            addCriterion("p_id =", value, "pId");
             return (Criteria) this;
         }
 
-        public Criteria andCtPaymentBackNotEqualTo(String value) {
-            addCriterion("ct_payment_back <>", value, "ctPaymentBack");
+        public Criteria andPIdNotEqualTo(Integer value) {
+            addCriterion("p_id <>", value, "pId");
             return (Criteria) this;
         }
 
-        public Criteria andCtPaymentBackGreaterThan(String value) {
-            addCriterion("ct_payment_back >", value, "ctPaymentBack");
+        public Criteria andPIdGreaterThan(Integer value) {
+            addCriterion("p_id >", value, "pId");
             return (Criteria) this;
         }
 
-        public Criteria andCtPaymentBackGreaterThanOrEqualTo(String value) {
-            addCriterion("ct_payment_back >=", value, "ctPaymentBack");
+        public Criteria andPIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("p_id >=", value, "pId");
             return (Criteria) this;
         }
 
-        public Criteria andCtPaymentBackLessThan(String value) {
-            addCriterion("ct_payment_back <", value, "ctPaymentBack");
+        public Criteria andPIdLessThan(Integer value) {
+            addCriterion("p_id <", value, "pId");
             return (Criteria) this;
         }
 
-        public Criteria andCtPaymentBackLessThanOrEqualTo(String value) {
-            addCriterion("ct_payment_back <=", value, "ctPaymentBack");
+        public Criteria andPIdLessThanOrEqualTo(Integer value) {
+            addCriterion("p_id <=", value, "pId");
             return (Criteria) this;
         }
 
-        public Criteria andCtPaymentBackLike(String value) {
-            addCriterion("ct_payment_back like", value, "ctPaymentBack");
+        public Criteria andPIdIn(List<Integer> values) {
+            addCriterion("p_id in", values, "pId");
             return (Criteria) this;
         }
 
-        public Criteria andCtPaymentBackNotLike(String value) {
-            addCriterion("ct_payment_back not like", value, "ctPaymentBack");
+        public Criteria andPIdNotIn(List<Integer> values) {
+            addCriterion("p_id not in", values, "pId");
             return (Criteria) this;
         }
 
-        public Criteria andCtPaymentBackIn(List<String> values) {
-            addCriterion("ct_payment_back in", values, "ctPaymentBack");
+        public Criteria andPIdBetween(Integer value1, Integer value2) {
+            addCriterion("p_id between", value1, value2, "pId");
             return (Criteria) this;
         }
 
-        public Criteria andCtPaymentBackNotIn(List<String> values) {
-            addCriterion("ct_payment_back not in", values, "ctPaymentBack");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtPaymentBackBetween(String value1, String value2) {
-            addCriterion("ct_payment_back between", value1, value2, "ctPaymentBack");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtPaymentBackNotBetween(String value1, String value2) {
-            addCriterion("ct_payment_back not between", value1, value2, "ctPaymentBack");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderIsNull() {
-            addCriterion("ct_order is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderIsNotNull() {
-            addCriterion("ct_order is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderEqualTo(String value) {
-            addCriterion("ct_order =", value, "ctOrder");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderNotEqualTo(String value) {
-            addCriterion("ct_order <>", value, "ctOrder");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderGreaterThan(String value) {
-            addCriterion("ct_order >", value, "ctOrder");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderGreaterThanOrEqualTo(String value) {
-            addCriterion("ct_order >=", value, "ctOrder");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderLessThan(String value) {
-            addCriterion("ct_order <", value, "ctOrder");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderLessThanOrEqualTo(String value) {
-            addCriterion("ct_order <=", value, "ctOrder");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderLike(String value) {
-            addCriterion("ct_order like", value, "ctOrder");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderNotLike(String value) {
-            addCriterion("ct_order not like", value, "ctOrder");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderIn(List<String> values) {
-            addCriterion("ct_order in", values, "ctOrder");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderNotIn(List<String> values) {
-            addCriterion("ct_order not in", values, "ctOrder");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderBetween(String value1, String value2) {
-            addCriterion("ct_order between", value1, value2, "ctOrder");
-            return (Criteria) this;
-        }
-
-        public Criteria andCtOrderNotBetween(String value1, String value2) {
-            addCriterion("ct_order not between", value1, value2, "ctOrder");
+        public Criteria andPIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("p_id not between", value1, value2, "pId");
             return (Criteria) this;
         }
     }

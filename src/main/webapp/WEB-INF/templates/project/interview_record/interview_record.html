@@ -51,36 +51,29 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
+                                    <tr th:each="itw,itwState:${currentInterviewList}">
+                                        <td th:text="${itw.iCompany}">1</td>
+                                        <!--cId-->
+                                        <td th:text="${itw.cRename}">1</td>
+                                        <td th:text="${itw.iVisitTime}">1</td>
+                                        <!--pId-->
+                                        <td th:text="${itw.pName}">1</td>
+                                        <!--eId-->
+                                        <td th:text="${itw.eRename}">1</td>
+                                        <td th:text="${itw.iOthers}">1</td>
+                                        <td th:text="${itw.iContent}">1</td>
+                                        <td th:text="${itw.iNext}">1</td>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
+<!--                                    <tr>-->
+<!--                                        <td>1</td>-->
+<!--                                        <td>1</td>-->
+<!--                                        <td>1</td>-->
+<!--                                        <td>1</td>-->
+<!--                                        <td>1</td>-->
+<!--                                        <td>1</td>-->
+<!--                                        <td>1</td>-->
+<!--                                        <td>1</td>-->
+<!--                                    </tr>-->
                                     </tbody>
                                 </table>
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->

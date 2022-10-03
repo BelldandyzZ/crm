@@ -85,9 +85,14 @@
 <!--        <table tableName="interview" domainObjectName="Interview"-->
 <!--        > <property name="useActualColumnNames" value="false"/></table>-->
 
-        <table tableName="project" domainObjectName="Project"
-        > <property name="useActualColumnNames" value="false"/></table>
+<!--        <table tableName="project" domainObjectName="Project"-->
+<!--        > <property name="useActualColumnNames" value="false"/></table>-->
 
+<!--        <table tableName="cus_pro" domainObjectName="CusPro"-->
+<!--        > <property name="useActualColumnNames" value="false"/></table>-->
+
+        <table tableName="payment_back" domainObjectName="PaymentBack"
+        > <property name="useActualColumnNames" value="false"/></table>
         <!--
             domainObjectName="Contract"
                enableCountByExample="false"

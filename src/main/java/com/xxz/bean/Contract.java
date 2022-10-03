@@ -13,9 +13,7 @@ public class Contract implements Serializable {
 
     private String ctTenderDocment;
 
-    private String ctPaymentBack;
-
-    private String ctOrder;
+    private Integer pId;
 
     private static final long serialVersionUID = 1L;
 
@@ -59,20 +57,12 @@ public class Contract implements Serializable {
         this.ctTenderDocment = ctTenderDocment == null ? null : ctTenderDocment.trim();
     }
 
-    public String getCtPaymentBack() {
-        return ctPaymentBack;
+    public Integer getpId() {
+        return pId;
     }
 
-    public void setCtPaymentBack(String ctPaymentBack) {
-        this.ctPaymentBack = ctPaymentBack == null ? null : ctPaymentBack.trim();
-    }
-
-    public String getCtOrder() {
-        return ctOrder;
-    }
-
-    public void setCtOrder(String ctOrder) {
-        this.ctOrder = ctOrder == null ? null : ctOrder.trim();
+    public void setpId(Integer pId) {
+        this.pId = pId;
     }
 
     @Override
@@ -86,8 +76,7 @@ public class Contract implements Serializable {
         sb.append(", ctContractDocment=").append(ctContractDocment);
         sb.append(", ctTenderAmount=").append(ctTenderAmount);
         sb.append(", ctTenderDocment=").append(ctTenderDocment);
-        sb.append(", ctPaymentBack=").append(ctPaymentBack);
-        sb.append(", ctOrder=").append(ctOrder);
+        sb.append(", pId=").append(pId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

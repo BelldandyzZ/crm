@@ -14,6 +14,19 @@ public class Project implements Serializable {
     private String pOwner;
 
     private Integer cpId;
+    //业务设置列------------------------------------
+    private Integer cId;
+    public Integer getcId() {return cId;}
+    public void setcId(Integer cId) {this.cId = cId;}
+    //----------------------------------------------
+    //业务设置列------------------------------------
+    private String cRename;
+    public String getcRename() {return cRename;}
+    public void setcRename(String cRename) {this.cRename = cRename;}
+    //----------------------------------------------
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     private Integer pbId;
 

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxz.mapper.PaymentBackMapper" >
+  <resultMap id="BaseResultMap" type="com.xxz.bean.PaymentBack" >
+    <result column="pb_id" property="pbId" jdbcType="INTEGER" />
+    <result column="pb_money" property="pbMoney" jdbcType="INTEGER" />
+    <result column="pb_order" property="pbOrder" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pb_id, pb_money, pb_order
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xxz.bean.PaymentBackExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from payment_back
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.xxz.bean.PaymentBackExample" >
+    delete from payment_back
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xxz.bean.PaymentBack" >
+    insert into payment_back (pb_id, pb_money, pb_order
+      )
+    values (#{pbId,jdbcType=INTEGER}, #{pbMoney,jdbcType=INTEGER}, #{pbOrder,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xxz.bean.PaymentBack" >
+    insert into payment_back
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pbId != null" >
+        pb_id,
+      </if>
+      <if test="pbMoney != null" >
+        pb_money,
+      </if>
+      <if test="pbOrder != null" >
+        pb_order,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pbId != null" >
+        #{pbId,jdbcType=INTEGER},
+      </if>
+      <if test="pbMoney != null" >
+        #{pbMoney,jdbcType=INTEGER},
+      </if>
+      <if test="pbOrder != null" >
+        #{pbOrder,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xxz.bean.PaymentBackExample" resultType="java.lang.Integer" >
+    select count(*) from payment_back
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update payment_back
+    <set >
+      <if test="record.pbId != null" >
+        pb_id = #{record.pbId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pbMoney != null" >
+        pb_money = #{record.pbMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.pbOrder != null" >
+        pb_order = #{record.pbOrder,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update payment_back
+    set pb_id = #{record.pbId,jdbcType=INTEGER},
+      pb_money = #{record.pbMoney,jdbcType=INTEGER},
+      pb_order = #{record.pbOrder,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

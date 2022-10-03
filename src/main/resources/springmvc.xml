@@ -33,7 +33,7 @@
 <!--    <mvc:view-controller path="/interview/toIndex" view-name="interview/interview"/>-->
 <!--    <mvc:view-controller path="/project/toIndex" view-name="project/project"/>-->
     <mvc:view-controller path="/project/contract/toIndex" view-name="project/contract/contract"/>
-    <mvc:view-controller path="/project/interview_record/toIndex" view-name="project/interview_record/interview_record"/>
+<!--    <mvc:view-controller path="/project/interview_record/toIndex" view-name="project/interview_record/interview_record"/>-->
     <mvc:view-controller path="/project/payment_back/toIndex" view-name="project/payment_back/payment_back"/>
     <mvc:view-controller path="/echarts/toIndex" view-name="echarts/echartsMenu"/>
 

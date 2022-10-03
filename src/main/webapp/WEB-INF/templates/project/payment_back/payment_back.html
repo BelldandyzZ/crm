@@ -146,16 +146,26 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>2（第二次回款）</td>
-                                        <td>回款6w</td>
+                                    <tr th:each="payback,paybackState:${paymentBackList}">
+                                        <td th:text="${paybackState.index+1}">2（第二次回款）</td>
+                                        <td th:text="${payback.pbMoney}">回款6w</td>
                                         <td><button type="button"  class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button></td>
                                     </tr>
-                                    <tr>
-                                        <td>1（第一次回款）</td>
-                                        <td>回款5w</td>
-                                        <td><button type="button"  class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button></td>
-                                    </tr>
+<!--                                    <tr>-->
+<!--                                        <td>1（第一次回款）</td>-->
+<!--                                        <td>回款5w</td>-->
+<!--                                        <td><button type="button"  class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td>2（第二次回款）</td>-->
+<!--                                        <td>回款6w</td>-->
+<!--                                        <td><button type="button"  class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td>1（第一次回款）</td>-->
+<!--                                        <td>回款5w</td>-->
+<!--                                        <td><button type="button"  class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button></td>-->
+<!--                                    </tr>-->
 
 
                                     </tbody>

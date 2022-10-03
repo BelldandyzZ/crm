@@ -287,13 +287,15 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="pro,proState:${projectList}">
-                                        <td><a th:href=" @{/project/contract/toIndex}" class="card-link" th:text="${pro.pName}">工地项目(点击查看对应的合同表)</a></td>
+                                        <td><a th:href=" @{'/project/contract_record?pId=' + ${pro.pId}}" class="card-link" th:text="${pro.pName}">工地项目(点击查看对应的合同表)</a></td>
                                         <td th:text="${pro.pMoeny}">100w</td>
                                         <td th:text="${pro.pProgress}">招标</td>
                                         <td th:text="${pro.pOwner}">我是员工A</td>
-                                        <td th:text="${pro.cpId}">张三|李四|王五</td>
-                                        <td><a th:href="@{/project/interview_record/toIndex}">拜访记录（点击查看详情）</a></td>
-                                        <td><a th:href="@{/project/payment_back/toIndex}" class="card-link">回款金额之和：55w(点击查看对应的回款记录)</a>
+                                        <!--cpId-->
+                                        <td th:text="${pro.cRename}">张三|李四|王五</td>
+<!--                                        <td><a th:href="@{'/interview/interviews?cRename=' + ${pro.cRename}}">拜访记录（点击查看详情）</a></td>-->
+                                        <td><a th:href="@{'/project/interview_record?cId=' + ${pro.cId}}">拜访记录（点击查看详情）</a></td>
+                                        <td><a th:href="@{'/project/payment_back?pbId=' + ${pro.pbId}}" class="card-link">回款金额之和：55w(点击查看对应的回款记录)</a>
                                         </td>
                                         <td>
                                             <button type="button" class="btn  btn-sm btn-info updateEmpBtn"
