@@ -41,9 +41,12 @@ CREATE TABLE `cus_pro` (
   `p_id` int(11) DEFAULT NULL COMMENT '项目id',
   `c_id` int(11) DEFAULT NULL COMMENT '用户id',
   PRIMARY KEY (`cp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `cus_pro` */
+
+insert  into `cus_pro`(`cp_id`,`p_id`,`c_id`) values 
+(1,1,1);
 
 /*Table structure for table `customer` */
 
@@ -66,9 +69,9 @@ CREATE TABLE `customer` (
 /*Data for the table `customer` */
 
 insert  into `customer`(`c_id`,`c_rename`,`c_name`,`c_depart`,`c_cie_type`,`c_job`,`c_tele`,`c_post`,`c_hobby`,`c_remark`) values 
-(1,'jack','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),
-(2,'jack','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),
-(4,'jack','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好');
+(1,'张三','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),
+(2,'李四','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),
+(4,'王五','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好');
 
 /*Table structure for table `employee` */
 
@@ -160,12 +163,14 @@ CREATE TABLE `interview` (
   `i_content` varchar(255) DEFAULT NULL COMMENT '内容摘要',
   `i_next` varchar(255) DEFAULT NULL COMMENT '下一步计划',
   PRIMARY KEY (`i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 /*Data for the table `interview` */
 
 insert  into `interview`(`i_id`,`i_company`,`c_id`,`i_visit_time`,`p_id`,`e_id`,`i_others`,`i_content`,`i_next`) values 
-(1,'张家界航院',1,'2022-10-11',1,5,'肖某|王某','农村致富','下乡');
+(1,'张家界航院',1,'2022-10-11',1,5,'肖某|王某','农村致富','下乡'),
+(13,'厚朴公司',2,'2022-10-03',1,4,'jack|marry','牛逼','揍你'),
+(14,'厚朴公司',1,'2022-10-03',1,4,'jack|marry','牛逼','揍你');
 
 /*Table structure for table `payment_back` */
 
@@ -176,9 +181,13 @@ CREATE TABLE `payment_back` (
   `pb_money` int(11) NOT NULL COMMENT '回款金额',
   `pb_order` int(11) NOT NULL AUTO_INCREMENT COMMENT '录入顺序，自增',
   KEY `pb_order` (`pb_order`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `payment_back` */
+
+insert  into `payment_back`(`pb_id`,`pb_money`,`pb_order`) values 
+(1001,8000,1),
+(1001,12000,2);
 
 /*Table structure for table `project` */
 
@@ -193,9 +202,12 @@ CREATE TABLE `project` (
   `cp_id` int(11) DEFAULT NULL COMMENT '客户参与人员，多人',
   `pb_id` int(11) DEFAULT NULL COMMENT '回款表的id，要回款5次需要一张新表',
   PRIMARY KEY (`p_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `project` */
+
+insert  into `project`(`p_id`,`p_name`,`p_moeny`,`p_progress`,`p_owner`,`cp_id`,`pb_id`) values 
+(1,'工地项目(点击查看对应的合同表)','100w','招标','jack',1,1001);
 
 /*Table structure for table `type_dic` */
 

@@ -286,12 +286,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td><a th:href=" @{/project/contract/toIndex}" class="card-link">工地项目(点击查看对应的合同表)</a></td>
-                                        <td>100w</td>
-                                        <td>招标</td>
-                                        <td>我是员工A</td>
-                                        <td>张三|李四|王五</td>
+                                    <tr th:each="pro,proState:${projectList}">
+                                        <td><a th:href=" @{/project/contract/toIndex}" class="card-link" th:text="${pro.pName}">工地项目(点击查看对应的合同表)</a></td>
+                                        <td th:text="${pro.pMoeny}">100w</td>
+                                        <td th:text="${pro.pProgress}">招标</td>
+                                        <td th:text="${pro.pOwner}">我是员工A</td>
+                                        <td th:text="${pro.cpId}">张三|李四|王五</td>
                                         <td><a th:href="@{/project/interview_record/toIndex}">拜访记录（点击查看详情）</a></td>
                                         <td><a th:href="@{/project/payment_back/toIndex}" class="card-link">回款金额之和：55w(点击查看对应的回款记录)</a>
                                         </td>
@@ -301,6 +301,21 @@
                                             </button>
                                         </td>
                                     </tr>
+<!--                                    <tr>-->
+<!--                                        <td><a th:href=" @{/project/contract/toIndex}" class="card-link">工地项目(点击查看对应的合同表)</a></td>-->
+<!--                                        <td>100w</td>-->
+<!--                                        <td>招标</td>-->
+<!--                                        <td>我是员工A</td>-->
+<!--                                        <td>张三|李四|王五</td>-->
+<!--                                        <td><a th:href="@{/project/interview_record/toIndex}">拜访记录（点击查看详情）</a></td>-->
+<!--                                        <td><a th:href="@{/project/payment_back/toIndex}" class="card-link">回款金额之和：55w(点击查看对应的回款记录)</a>-->
+<!--                                        </td>-->
+<!--                                        <td>-->
+<!--                                            <button type="button" class="btn  btn-sm btn-info updateEmpBtn"-->
+<!--                                                    data-toggle="modal" data-target="#update_emp">修改-->
+<!--                                            </button>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
                                     </tbody>
                                 </table>
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->

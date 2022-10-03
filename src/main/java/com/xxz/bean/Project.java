@@ -11,9 +11,11 @@ public class Project implements Serializable {
 
     private String pProgress;
 
+    private String pOwner;
+
     private Integer cpId;
 
-    private Integer ctId;
+    private Integer pbId;
 
     private static final long serialVersionUID = 1L;
 
@@ -49,6 +51,14 @@ public class Project implements Serializable {
         this.pProgress = pProgress == null ? null : pProgress.trim();
     }
 
+    public String getpOwner() {
+        return pOwner;
+    }
+
+    public void setpOwner(String pOwner) {
+        this.pOwner = pOwner == null ? null : pOwner.trim();
+    }
+
     public Integer getCpId() {
         return cpId;
     }
@@ -57,12 +67,12 @@ public class Project implements Serializable {
         this.cpId = cpId;
     }
 
-    public Integer getCtId() {
-        return ctId;
+    public Integer getPbId() {
+        return pbId;
     }
 
-    public void setCtId(Integer ctId) {
-        this.ctId = ctId;
+    public void setPbId(Integer pbId) {
+        this.pbId = pbId;
     }
 
     @Override
@@ -75,8 +85,9 @@ public class Project implements Serializable {
         sb.append(", pName=").append(pName);
         sb.append(", pMoeny=").append(pMoeny);
         sb.append(", pProgress=").append(pProgress);
+        sb.append(", pOwner=").append(pOwner);
         sb.append(", cpId=").append(cpId);
-        sb.append(", ctId=").append(ctId);
+        sb.append(", pbId=").append(pbId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

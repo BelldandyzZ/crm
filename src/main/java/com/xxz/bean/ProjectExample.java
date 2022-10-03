@@ -374,6 +374,76 @@ public class ProjectExample {
             return (Criteria) this;
         }
 
+        public Criteria andPOwnerIsNull() {
+            addCriterion("p_owner is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerIsNotNull() {
+            addCriterion("p_owner is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerEqualTo(String value) {
+            addCriterion("p_owner =", value, "pOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerNotEqualTo(String value) {
+            addCriterion("p_owner <>", value, "pOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerGreaterThan(String value) {
+            addCriterion("p_owner >", value, "pOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerGreaterThanOrEqualTo(String value) {
+            addCriterion("p_owner >=", value, "pOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerLessThan(String value) {
+            addCriterion("p_owner <", value, "pOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerLessThanOrEqualTo(String value) {
+            addCriterion("p_owner <=", value, "pOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerLike(String value) {
+            addCriterion("p_owner like", value, "pOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerNotLike(String value) {
+            addCriterion("p_owner not like", value, "pOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerIn(List<String> values) {
+            addCriterion("p_owner in", values, "pOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerNotIn(List<String> values) {
+            addCriterion("p_owner not in", values, "pOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerBetween(String value1, String value2) {
+            addCriterion("p_owner between", value1, value2, "pOwner");
+            return (Criteria) this;
+        }
+
+        public Criteria andPOwnerNotBetween(String value1, String value2) {
+            addCriterion("p_owner not between", value1, value2, "pOwner");
+            return (Criteria) this;
+        }
+
         public Criteria andCpIdIsNull() {
             addCriterion("cp_id is null");
             return (Criteria) this;
@@ -434,63 +504,63 @@ public class ProjectExample {
             return (Criteria) this;
         }
 
-        public Criteria andCtIdIsNull() {
-            addCriterion("ct_id is null");
+        public Criteria andPbIdIsNull() {
+            addCriterion("pb_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andCtIdIsNotNull() {
-            addCriterion("ct_id is not null");
+        public Criteria andPbIdIsNotNull() {
+            addCriterion("pb_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCtIdEqualTo(Integer value) {
-            addCriterion("ct_id =", value, "ctId");
+        public Criteria andPbIdEqualTo(Integer value) {
+            addCriterion("pb_id =", value, "pbId");
             return (Criteria) this;
         }
 
-        public Criteria andCtIdNotEqualTo(Integer value) {
-            addCriterion("ct_id <>", value, "ctId");
+        public Criteria andPbIdNotEqualTo(Integer value) {
+            addCriterion("pb_id <>", value, "pbId");
             return (Criteria) this;
         }
 
-        public Criteria andCtIdGreaterThan(Integer value) {
-            addCriterion("ct_id >", value, "ctId");
+        public Criteria andPbIdGreaterThan(Integer value) {
+            addCriterion("pb_id >", value, "pbId");
             return (Criteria) this;
         }
 
-        public Criteria andCtIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("ct_id >=", value, "ctId");
+        public Criteria andPbIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("pb_id >=", value, "pbId");
             return (Criteria) this;
         }
 
-        public Criteria andCtIdLessThan(Integer value) {
-            addCriterion("ct_id <", value, "ctId");
+        public Criteria andPbIdLessThan(Integer value) {
+            addCriterion("pb_id <", value, "pbId");
             return (Criteria) this;
         }
 
-        public Criteria andCtIdLessThanOrEqualTo(Integer value) {
-            addCriterion("ct_id <=", value, "ctId");
+        public Criteria andPbIdLessThanOrEqualTo(Integer value) {
+            addCriterion("pb_id <=", value, "pbId");
             return (Criteria) this;
         }
 
-        public Criteria andCtIdIn(List<Integer> values) {
-            addCriterion("ct_id in", values, "ctId");
+        public Criteria andPbIdIn(List<Integer> values) {
+            addCriterion("pb_id in", values, "pbId");
             return (Criteria) this;
         }
 
-        public Criteria andCtIdNotIn(List<Integer> values) {
-            addCriterion("ct_id not in", values, "ctId");
+        public Criteria andPbIdNotIn(List<Integer> values) {
+            addCriterion("pb_id not in", values, "pbId");
             return (Criteria) this;
         }
 
-        public Criteria andCtIdBetween(Integer value1, Integer value2) {
-            addCriterion("ct_id between", value1, value2, "ctId");
+        public Criteria andPbIdBetween(Integer value1, Integer value2) {
+            addCriterion("pb_id between", value1, value2, "pbId");
             return (Criteria) this;
         }
 
-        public Criteria andCtIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("ct_id not between", value1, value2, "ctId");
+        public Criteria andPbIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("pb_id not between", value1, value2, "pbId");
             return (Criteria) this;
         }
     }

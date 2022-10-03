@@ -75,8 +75,8 @@
 <!--        <table tableName="contract"-->
 <!--        > <property name="useActualColumnNames" value="false"/></table>-->
 
-        <table tableName="customer" domainObjectName="Customer"
-        > <property name="useActualColumnNames" value="false"/></table>
+<!--        <table tableName="customer" domainObjectName="Customer"-->
+<!--        > <property name="useActualColumnNames" value="false"/></table>-->
 
 
 <!--        <table tableName="employee" domainObjectName="Employee"-->
@@ -85,8 +85,8 @@
 <!--        <table tableName="interview" domainObjectName="Interview"-->
 <!--        > <property name="useActualColumnNames" value="false"/></table>-->
 
-<!--        <table tableName="project" domainObjectName="Project"-->
-<!--        > <property name="useActualColumnNames" value="false"/></table>-->
+        <table tableName="project" domainObjectName="Project"
+        > <property name="useActualColumnNames" value="false"/></table>
 
         <!--
             domainObjectName="Contract"
