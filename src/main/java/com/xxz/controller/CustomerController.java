@@ -6,7 +6,6 @@ import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.xxz.bean.Customer;
 import com.xxz.bean.CustomerExample;
-import com.xxz.bean.Employee;
 import com.xxz.listener.DemoDataListener;
 import com.xxz.mapper.CustomerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +37,14 @@ public class CustomerController {
     @RequestMapping("/customers")
     public String queryAll(Model model, String cRename, String cName, String cJob) throws UnsupportedEncodingException {
 //        System.out.println(URLEncoder.encode(eJob,"utf-8"));
-        System.out.println("queryAll emp by confition:" + cRename + "-" + cName + "-" + cJob);
+        System.out.println("queryAll-customers-confition:" + cRename + "-" + cName + "-" + cJob);
         //样本
         CustomerExample customerExample = new CustomerExample();
         //条件盒子
         CustomerExample.Criteria criteria = customerExample.createCriteria();
         //追加条件
         if (cRename != null){
-            criteria.andCNameLike("%" + cRename + "%");
+            criteria.andCRenameLike("%" + cRename + "%");
         }
         if(cJob != null && !cJob.equals("")){
             criteria.andCJobEqualTo(cJob);

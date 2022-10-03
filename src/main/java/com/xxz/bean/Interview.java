@@ -1,24 +1,50 @@
 package com.xxz.bean;
 
+import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
+import com.alibaba.excel.annotation.ExcelProperty;
+import lombok.Data;
+
 import java.io.Serializable;
 
+@Data
+@ExcelIgnoreUnannotated
 public class Interview implements Serializable {
+    @ExcelProperty(value = "访谈编号", index = 0)
     private Integer iId;
-
+    @ExcelProperty(value = "访谈单位", index = 1)
     private String iCompany;
-
+    @ExcelProperty(value = "客户人员编号", index = 2)
     private Integer cId;
 
+    //业务设置列------------------------------------
+    @ExcelProperty(value = "客户姓名", index = 3)
+    private String cRename;
+    public String getcRename() {return cRename;}
+    public void setcRename(String cRename) {this.cRename = cRename;}
+    //-------------------------------------------
+    @ExcelProperty(value = "拜访时间", index = 4)
     private String iVisitTime;
-
+    @ExcelProperty(value = "拜访类型编号", index = 5)
     private Integer pId;
-
+    //业务设置列------------------------------------
+    @ExcelProperty(value = "拜访项目", index = 6)
+    private String pName;
+    public String getpName() {return pName;}
+    public void setpName(String pName) {this.pName = pName;}
+    //-------------------------------------------
+    @ExcelProperty(value = "我方员工编号", index = 7)
     private Integer eId;
-
+    //业务设置列------------------------------------
+    @ExcelProperty(value = "我方员工姓名", index = 8)
+    private String eRename;
+    public String geteRename() {return eRename;}
+    public void seteRename(String eRename) {this.eRename = eRename;}
+    //-------------------------------------------
+    @ExcelProperty(value = "其他参与成员", index = 9)
     private String iOthers;
-
+    @ExcelProperty(value = "拜访内容", index = 10)
     private String iContent;
-
+    @ExcelProperty(value = "下一步计划", index = 11)
     private String iNext;
 
     private static final long serialVersionUID = 1L;

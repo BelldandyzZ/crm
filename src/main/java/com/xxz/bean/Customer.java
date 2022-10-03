@@ -13,19 +13,21 @@ public class Customer implements Serializable {
     private Integer cId;
     @ExcelProperty(value = "客户姓名", index = 1)
     private String cRename;
-    @ExcelProperty(value = "单位", index = 2)
+    @ExcelProperty(value = "单位名称", index = 2)
     private String cName;
-    @ExcelProperty(value = "部门", index = 3)
+    @ExcelProperty(value = "所在部门", index = 3)
     private String cDepart;
-    @ExcelProperty(value = "职位", index = 4)
+    @ExcelProperty(value = "单位类型", index = 4)
+    private String cCieType;
+    @ExcelProperty(value = "客户职务", index = 5)
     private String cJob;
-    @ExcelProperty(value = "电话", index = 5)
+    @ExcelProperty(value = "客户电话", index = 6)
     private String cTele;
-    @ExcelProperty(value = "邮箱", index = 6)
+    @ExcelProperty(value = "客户邮箱", index = 7)
     private String cPost;
-    @ExcelProperty(value = "爱好", index = 7)
+    @ExcelProperty(value = "客户爱好", index = 8)
     private String cHobby;
-    @ExcelProperty(value = "备注", index = 8)
+    @ExcelProperty(value = "备注", index = 9)
     private String cRemark;
 
     private static final long serialVersionUID = 1L;
@@ -60,6 +62,14 @@ public class Customer implements Serializable {
 
     public void setcDepart(String cDepart) {
         this.cDepart = cDepart == null ? null : cDepart.trim();
+    }
+
+    public String getcCieType() {
+        return cCieType;
+    }
+
+    public void setcCieType(String cCieType) {
+        this.cCieType = cCieType == null ? null : cCieType.trim();
     }
 
     public String getcJob() {
@@ -112,6 +122,7 @@ public class Customer implements Serializable {
         sb.append(", cRename=").append(cRename);
         sb.append(", cName=").append(cName);
         sb.append(", cDepart=").append(cDepart);
+        sb.append(", cCieType=").append(cCieType);
         sb.append(", cJob=").append(cJob);
         sb.append(", cTele=").append(cTele);
         sb.append(", cPost=").append(cPost);

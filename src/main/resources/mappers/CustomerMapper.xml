@@ -6,6 +6,7 @@
     <result column="c_rename" property="cRename" jdbcType="VARCHAR" />
     <result column="c_name" property="cName" jdbcType="VARCHAR" />
     <result column="c_depart" property="cDepart" jdbcType="VARCHAR" />
+    <result column="c_cie_type" property="cCieType" jdbcType="VARCHAR" />
     <result column="c_job" property="cJob" jdbcType="VARCHAR" />
     <result column="c_tele" property="cTele" jdbcType="CHAR" />
     <result column="c_post" property="cPost" jdbcType="VARCHAR" />
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    c_id, c_rename, c_name, c_depart, c_job, c_tele, c_post, c_hobby, c_remark
+    c_id, c_rename, c_name, c_depart, c_cie_type, c_job, c_tele, c_post, c_hobby, c_remark
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xxz.bean.CustomerExample" >
     select
@@ -105,13 +106,13 @@
   </delete>
   <insert id="insert" parameterType="com.xxz.bean.Customer" >
     insert into customer (c_id, c_rename, c_name, 
-      c_depart, c_job, c_tele, 
-      c_post, c_hobby, c_remark
-      )
+      c_depart, c_cie_type, c_job, 
+      c_tele, c_post, c_hobby, 
+      c_remark)
     values (#{cId,jdbcType=INTEGER}, #{cRename,jdbcType=VARCHAR}, #{cName,jdbcType=VARCHAR}, 
-      #{cDepart,jdbcType=VARCHAR}, #{cJob,jdbcType=VARCHAR}, #{cTele,jdbcType=CHAR}, 
-      #{cPost,jdbcType=VARCHAR}, #{cHobby,jdbcType=VARCHAR}, #{cRemark,jdbcType=VARCHAR}
-      )
+      #{cDepart,jdbcType=VARCHAR}, #{cCieType,jdbcType=VARCHAR}, #{cJob,jdbcType=VARCHAR}, 
+      #{cTele,jdbcType=CHAR}, #{cPost,jdbcType=VARCHAR}, #{cHobby,jdbcType=VARCHAR}, 
+      #{cRemark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xxz.bean.Customer" >
     insert into customer
@@ -127,6 +128,9 @@
       </if>
       <if test="cDepart != null" >
         c_depart,
+      </if>
+      <if test="cCieType != null" >
+        c_cie_type,
       </if>
       <if test="cJob != null" >
         c_job,
@@ -156,6 +160,9 @@
       </if>
       <if test="cDepart != null" >
         #{cDepart,jdbcType=VARCHAR},
+      </if>
+      <if test="cCieType != null" >
+        #{cCieType,jdbcType=VARCHAR},
       </if>
       <if test="cJob != null" >
         #{cJob,jdbcType=VARCHAR},
@@ -195,6 +202,9 @@
       <if test="record.cDepart != null" >
         c_depart = #{record.cDepart,jdbcType=VARCHAR},
       </if>
+      <if test="record.cCieType != null" >
+        c_cie_type = #{record.cCieType,jdbcType=VARCHAR},
+      </if>
       <if test="record.cJob != null" >
         c_job = #{record.cJob,jdbcType=VARCHAR},
       </if>
@@ -221,6 +231,7 @@
       c_rename = #{record.cRename,jdbcType=VARCHAR},
       c_name = #{record.cName,jdbcType=VARCHAR},
       c_depart = #{record.cDepart,jdbcType=VARCHAR},
+      c_cie_type = #{record.cCieType,jdbcType=VARCHAR},
       c_job = #{record.cJob,jdbcType=VARCHAR},
       c_tele = #{record.cTele,jdbcType=CHAR},
       c_post = #{record.cPost,jdbcType=VARCHAR},
@@ -241,6 +252,9 @@
       </if>
       <if test="cDepart != null" >
         c_depart = #{cDepart,jdbcType=VARCHAR},
+      </if>
+      <if test="cCieType != null" >
+        c_cie_type = #{cCieType,jdbcType=VARCHAR},
       </if>
       <if test="cJob != null" >
         c_job = #{cJob,jdbcType=VARCHAR},
@@ -265,6 +279,7 @@
     set c_rename = #{cRename,jdbcType=VARCHAR},
       c_name = #{cName,jdbcType=VARCHAR},
       c_depart = #{cDepart,jdbcType=VARCHAR},
+      c_cie_type = #{cCieType,jdbcType=VARCHAR},
       c_job = #{cJob,jdbcType=VARCHAR},
       c_tele = #{cTele,jdbcType=CHAR},
       c_post = #{cPost,jdbcType=VARCHAR},

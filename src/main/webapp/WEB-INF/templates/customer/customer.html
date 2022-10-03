@@ -314,7 +314,7 @@
                     <!-- text input -->
                     <div class="form-group">
                         <label for="con_cName">所在单位名称</label>
-                      <input type="text" id="22" class="form-control" placeholder="所在单位">
+                      <input type="text" id="con_cName" name="cName" class="form-control" placeholder="所在单位">
                     </div>
                   </div>
 
@@ -364,50 +364,52 @@
                 <table id="table_data" class="table table-bordered table-hover">
                   <thead>
                       <tr>
-                        <th>姓名</th>
-                        <th>单位名称</th>
-                          <th>单位类型</th>
-                        <th>部门</th>
-                        <th>职务</th>
-                        <th>联系电话</th>
-                        <th>邮箱</th>
-                        <th>爱好</th>
-                        <th>备注</th>
+                        <th>客户姓名</th>
+                        <th>单位名称/客户单位</th>
+                        <th>单位类型/客户单位类型</th>
+                        <th>部门/客户所在部门</th>
+                        <th>职务/客户所任职务</th>
+                        <th>联系电话/客户联系</th>
+                        <th>客户邮箱</th>
+                        <th>客户爱好</th>
+                        <th>客户备注</th>
                         <th>操作</th>
                       </tr>
                   </thead>
                   <tbody>
-                  <!--                  <tr th:each="cus,cusState : ${customerList}">-->
-                  <!--                   <td th:text="${cusState.index}">1</td>-->
-                  <!--                   <td th:text="${cus.cId}">1</td>-->
-                  <!--                   <td th:text="${cus.cRename}">1</td>-->
-                  <!--                   <td th:text="${cus.cName}">1</td>-->
-                  <!--                   <td th:text="${cus.cDepart}">1</td>-->
-                  <!--                   <td th:text="${cus.cJob}">1</td>-->
-                  <!--                   <td th:text="${cus.cTele}">1</td>-->
-                  <!--                   <td th:text="${cus.cPost}">1</td>-->
-                  <!--                   <td th:text="${cus.cHobby}">1</td>-->
-                  <!--                   <td th:text="${cus.cRemark}">1</td>-->
-<!--                                          <td>-->
-<!--                                              <button type="button" th:tar-id="${cus.cId}" class="btn  btn-danger btn-sm confirmsCus">删除</button>-->
-<!--                                              <button type="button" th:tar-id="${cus.cId}" class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button>-->
-<!--                                          </td>-->
-                  <tr>
-                      <td>Jack</td>
-                      <td>张家界航院</td>
-                      <td>学校</td>
-                      <td>教务处</td>
-                      <td>教务处主任</td>
-                      <td>10086</td>
-                      <td>10086@qq.com</td>
-                      <td>rap</td>
-                      <td>爱好rap</td>
-                      <td>
-                          <!---->
-                          <button type="button" class="btn  btn-danger btn-sm confirmsCus">删除</button>
-                          <button type="button"  class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button>
-                      </td>
-                  </tr>
+                    <tr th:each="cus,cusState : ${customerList}">
+<!--                     <td th:text="${cusState.index}">1</td>-->
+<!--                     <td th:text="${cus.cId}">1</td>-->
+                     <td th:text="${cus.cRename}">1</td>
+                     <td th:text="${cus.cName}">1</td>
+                     <td th:text="${cus.cDepart}">1</td>
+                     <td th:text="${cus.cCieType}">1</td>
+                     <td th:text="${cus.cJob}">1</td>
+                     <td th:text="${cus.cTele}">1</td>
+                     <td th:text="${cus.cPost}">1</td>
+                     <td th:text="${cus.cHobby}">1</td>
+                     <td th:text="${cus.cRemark}">1</td>
+                          <td>
+                              <button type="button" th:tar-id="${cus.cId}" class="btn  btn-danger btn-sm confirmsCus">删除</button>
+                              <button type="button" th:tar-id="${cus.cId}" class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button>
+                          </td>
+                    </tr>
+<!--                  <tr>-->
+<!--                      <td>Jack</td>-->
+<!--                      <td>张家界航院</td>-->
+<!--                      <td>学校</td>-->
+<!--                      <td>教务处</td>-->
+<!--                      <td>教务处主任</td>-->
+<!--                      <td>10086</td>-->
+<!--                      <td>10086@qq.com</td>-->
+<!--                      <td>rap</td>-->
+<!--                      <td>爱好rap</td>-->
+<!--                      <td>-->
+<!--                          &lt;!&ndash;&ndash;&gt;-->
+<!--                          <button type="button" class="btn  btn-danger btn-sm confirmsCus">删除</button>-->
+<!--                          <button type="button"  class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button>-->
+<!--                      </td>-->
+<!--                  </tr>-->
                   </tbody>
                 </table>
                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->

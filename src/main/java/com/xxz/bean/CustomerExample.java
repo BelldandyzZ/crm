@@ -374,6 +374,76 @@ public class CustomerExample {
             return (Criteria) this;
         }
 
+        public Criteria andCCieTypeIsNull() {
+            addCriterion("c_cie_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeIsNotNull() {
+            addCriterion("c_cie_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeEqualTo(String value) {
+            addCriterion("c_cie_type =", value, "cCieType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeNotEqualTo(String value) {
+            addCriterion("c_cie_type <>", value, "cCieType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeGreaterThan(String value) {
+            addCriterion("c_cie_type >", value, "cCieType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("c_cie_type >=", value, "cCieType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeLessThan(String value) {
+            addCriterion("c_cie_type <", value, "cCieType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeLessThanOrEqualTo(String value) {
+            addCriterion("c_cie_type <=", value, "cCieType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeLike(String value) {
+            addCriterion("c_cie_type like", value, "cCieType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeNotLike(String value) {
+            addCriterion("c_cie_type not like", value, "cCieType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeIn(List<String> values) {
+            addCriterion("c_cie_type in", values, "cCieType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeNotIn(List<String> values) {
+            addCriterion("c_cie_type not in", values, "cCieType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeBetween(String value1, String value2) {
+            addCriterion("c_cie_type between", value1, value2, "cCieType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCCieTypeNotBetween(String value1, String value2) {
+            addCriterion("c_cie_type not between", value1, value2, "cCieType");
+            return (Criteria) this;
+        }
+
         public Criteria andCJobIsNull() {
             addCriterion("c_job is null");
             return (Criteria) this;

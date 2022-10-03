@@ -136,15 +136,23 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="pwd">客户单位</label>
-                                            <input type="text" id="pwd" class="form-control" placeholder="客户单位" value="">
+                                            <label for="con_iCompany">客户单位</label>
+<!--                                            <input type="text" id="con_iCompany" name="iCompany" class="form-control" placeholder="客户单位" value="">-->
+                                            <select id="con_iCompany" name="iCompany" class="form-control">
+                                                <option value="">全部</option>
+                                                <option th:each="company,cusState:${companySet}" th:text="${company}" th:value="${company}">全部</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="phone">客户名称</label>
-                                            <input type="text" id="phone" class="form-control" placeholder="客户名称">
+                                            <label for="con_cRename">客户名称</label>
+<!--                                            <input type="text" id="con_cRename" name="cRename" class="form-control" placeholder="客户名称">-->
+                                            <select id="con_cRename" name="cRename" class="form-control">
+                                                <option value="">全部</option>
+                                                <option th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}">全部</option>
+                                            </select>
                                         </div>
 
                                     </div>
@@ -152,11 +160,10 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="22">我方人员</label>
-                                            <select id="22" name="eJob" class="form-control custom-select" >
-                                                <option>姓名按照a-z的首字母排，添加一样</option>
-                                                <option>1</option>
-                                                <option>1</option>
+                                            <label for="con_eRename">我方人员</label>
+                                            <select id="con_eRename" name="eRename" class="form-control custom-select" >
+                                                <option value="">姓名按照a-z的首字母排，添加一样</option>
+                                                <option th:each="eRename,empState:${eRenameSet}" th:text="${eRename}" th:value="${eRename}">全部</option>
                                             </select>
                                         </div>
                                     </div>
@@ -167,7 +174,7 @@
                                         <!--这个label没用，纯当作占位符用来布局-->
                                         <label style="color: white">.</label>
                                         <div class="form-group">
-                                            <button type="button" class="btn btn-block btn-default">搜索</button>
+                                            <button type="button" id="itwConditionBtn" class="btn btn-block btn-default">搜索</button>
                                         </div>
                                     </div>
 
@@ -190,7 +197,7 @@
                                 <div class="row">
                                     <div class="col-sm-8"></div>
                                     <div class="col-sm-2">
-                                        <button type="button" class="btn btn-block btn-default">
+                                        <button type="button" id="outputExcelBtn" class="btn btn-block btn-default">
                                             <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>导出访谈信息
                                         </button>
                                     </div>
@@ -202,26 +209,29 @@
                                 <table id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>客户单位</th>
-                                        <th>客户人员</th>
+                                        <th>拜访公司/客户单位</th>
+                                        <th>拜访客户/客户人员</th>
                                         <th>拜访时间</th>
-                                        <th>拜访类型</th>
-                                        <th>我方人员</th>
-                                        <th>其他人员</th>
-                                        <th>内容摘要</th>
-                                        <th>下一步计划</th>
+                                        <th>拜访类型/pid</th>
+                                        <th>我方人员/eid</th>
+                                        <th>其他人员/others</th>
+                                        <th>内容摘要/content</th>
+                                        <th>下一步计划/next</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
+                                    <tr th:each="itw,itwState:${interviewList}">
+                                        <td th:text="${itw.iCompany}">1</td>
+                                        <!--cId-->
+                                        <td th:text="${itw.cRename}">1</td>
+                                        <td th:text="${itw.iVisitTime}">1</td>
+                                        <!--pId-->
+                                        <td th:text="${itw.pName}">1</td>
+                                        <!--eId-->
+                                        <td th:text="${itw.eRename}">1</td>
+                                        <td th:text="${itw.iOthers}">1</td>
+                                        <td th:text="${itw.iContent}">1</td>
+                                        <td th:text="${itw.iNext}">1</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -265,6 +275,20 @@
 <script th:src="@{/dist/js/adminlte.min.js}"></script>
 
 <script>
+
+    //excel导出
+    $('#outputExcelBtn').click(function (){
+        location.href = "/crm/interview/excelOutput";
+    })
+
+    //条件查询
+    $('#itwConditionBtn').click(function (){
+        let iCompany = $('#con_iCompany').val();
+        let cRename = $('#con_cRename').val();
+        let eRename = $('#con_eRename').val();
+        console.log(iCompany + "-" + cRename + "-" + eRename)
+        location.href = "/crm/interview/interviews?iCompany="+iCompany+"&cRename="+cRename+"&eRename=" + eRename;
+    })
 
     //初始化 Select2 元素
     $('.select2').select2()

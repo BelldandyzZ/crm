@@ -26,8 +26,7 @@ CREATE TABLE `contract` (
   `ct_contract_docment` varchar(100) DEFAULT NULL COMMENT '合同文件url',
   `ct_tender_amount` varchar(50) DEFAULT NULL COMMENT '招标金额',
   `ct_tender_docment` varchar(100) DEFAULT NULL COMMENT '标书文件url',
-  `ct_payment_back` varchar(50) DEFAULT NULL COMMENT '回款金额',
-  `ct_order` varchar(10) DEFAULT NULL COMMENT '第几次回款',
+  `p_id` int(11) DEFAULT NULL COMMENT '项目合同相关信息对应的项目',
   PRIMARY KEY (`ct_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -52,35 +51,24 @@ DROP TABLE IF EXISTS `customer`;
 
 CREATE TABLE `customer` (
   `c_id` int(11) NOT NULL AUTO_INCREMENT,
-  `c_rename` varchar(50) DEFAULT NULL COMMENT '客户名称',
-  `c_name` varchar(50) DEFAULT NULL COMMENT '单位类型：对应字典表的值',
-  `c_depart` varchar(50) DEFAULT NULL COMMENT '客户所在公司的部门',
+  `c_rename` varchar(255) DEFAULT NULL COMMENT '客户姓名',
+  `c_name` varchar(50) DEFAULT NULL COMMENT '单位名称',
+  `c_depart` varchar(50) DEFAULT NULL COMMENT '所在部门',
+  `c_cie_type` varchar(255) DEFAULT NULL COMMENT '单位类型',
   `c_job` varchar(50) DEFAULT NULL COMMENT '客户职务',
   `c_tele` char(11) DEFAULT NULL COMMENT '电话',
   `c_post` varchar(50) DEFAULT NULL COMMENT '邮箱',
   `c_hobby` varchar(255) DEFAULT NULL COMMENT '爱好',
   `c_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `customer` */
 
-insert  into `customer`(`c_id`,`c_rename`,`c_name`,`c_depart`,`c_job`,`c_tele`,`c_post`,`c_hobby`,`c_remark`) values 
-(1,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好123123'),
-(2,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
-(3,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
-(4,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
-(5,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
-(9,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好123123'),
-(10,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
-(11,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
-(12,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
-(13,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
-(14,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好123123'),
-(15,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
-(16,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
-(17,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好'),
-(18,'jack','学校','就业部','售前','123','123@qq.com','篮球','良好');
+insert  into `customer`(`c_id`,`c_rename`,`c_name`,`c_depart`,`c_cie_type`,`c_job`,`c_tele`,`c_post`,`c_hobby`,`c_remark`) values 
+(1,'jack','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),
+(2,'jack','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),
+(4,'jack','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好');
 
 /*Table structure for table `employee` */
 
@@ -99,19 +87,63 @@ CREATE TABLE `employee` (
   `e_honor` varchar(255) DEFAULT NULL COMMENT '社会荣誉',
   `e_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`e_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
 /*Data for the table `employee` */
 
 insert  into `employee`(`e_id`,`rename`,`e_name`,`e_pwd`,`e_birthday`,`e_school`,`e_job`,`e_start_time`,`e_social_position`,`e_honor`,`e_remark`) values 
-(32,'marry','marry','123','2002-02-10','张家界航院','售后','2002-02-10','党员','团员-无','良好'),
-(33,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好'),
-(76,'marry','marry','123','2002-02-10','张家界航院','售后','2002-02-10','党员','团员-无','良好'),
-(77,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好'),
-(78,'marry','marry','123','2002-02-10','张家界航院','售后','2002-02-10','党员','团员-无','良好'),
-(79,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好'),
-(80,'marry','marry','123','2002-02-10','张家界航院','售后','2002-02-10','党员','团员-无','良好'),
-(81,'tom','tom','123','2002-12-09','张家界航院','销售','2002-12-09','党员','群众-无123','良好');
+(2,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(3,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(4,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(5,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(6,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(7,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(8,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(9,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(10,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(11,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(12,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(13,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(14,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(15,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(16,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(17,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(18,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(19,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(20,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(21,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(22,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(23,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(24,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(26,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(27,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(28,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(29,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(30,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(31,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(32,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(33,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(34,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(35,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(36,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(37,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(38,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(39,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(40,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(41,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(42,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(43,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(44,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(45,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(46,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(47,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(48,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(49,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(50,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(51,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好'),
+(52,'jack','jack','123','2002.05.59','张家界学院','销售','2010.12.11','党员','党员-省赛一等奖','良好'),
+(53,'marry','marry','123','2002.05.59','张家界航院','销售','2002.01.12','党员','团员-无','良好'),
+(54,'tom','tom','123','2002.05.59','张家界航院','销售','2002.12.09','党员','群众-无','良好');
 
 /*Table structure for table `interview` */
 
@@ -128,9 +160,25 @@ CREATE TABLE `interview` (
   `i_content` varchar(255) DEFAULT NULL COMMENT '内容摘要',
   `i_next` varchar(255) DEFAULT NULL COMMENT '下一步计划',
   PRIMARY KEY (`i_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `interview` */
+
+insert  into `interview`(`i_id`,`i_company`,`c_id`,`i_visit_time`,`p_id`,`e_id`,`i_others`,`i_content`,`i_next`) values 
+(1,'张家界航院',1,'2022-10-11',1,5,'肖某|王某','农村致富','下乡');
+
+/*Table structure for table `payment_back` */
+
+DROP TABLE IF EXISTS `payment_back`;
+
+CREATE TABLE `payment_back` (
+  `pb_id` int(11) NOT NULL,
+  `pb_money` int(11) NOT NULL COMMENT '回款金额',
+  `pb_order` int(11) NOT NULL AUTO_INCREMENT COMMENT '录入顺序，自增',
+  KEY `pb_order` (`pb_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `payment_back` */
 
 /*Table structure for table `project` */
 
@@ -141,8 +189,9 @@ CREATE TABLE `project` (
   `p_name` varchar(50) DEFAULT NULL COMMENT '项目名',
   `p_moeny` varchar(50) DEFAULT NULL COMMENT '项目金额',
   `p_progress` varchar(50) DEFAULT NULL COMMENT '项目进度，从字典表选择',
+  `p_owner` varchar(50) DEFAULT NULL COMMENT '项目负责人',
   `cp_id` int(11) DEFAULT NULL COMMENT '客户参与人员，多人',
-  `ct_id` int(11) DEFAULT NULL COMMENT '合同详情',
+  `pb_id` int(11) DEFAULT NULL COMMENT '回款表的id，要回款5次需要一张新表',
   PRIMARY KEY (`p_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

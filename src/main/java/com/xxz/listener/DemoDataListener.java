@@ -4,13 +4,8 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.xxz.bean.Customer;
 import com.xxz.bean.Employee;
-import com.xxz.mapper.EmployeeMapper;
 import com.xxz.service.CustomerService;
 import com.xxz.service.EmpService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 import java.util.Map;
 
