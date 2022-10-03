@@ -21,36 +21,45 @@ USE `hpcrm`;
 DROP TABLE IF EXISTS `contract`;
 
 CREATE TABLE `contract` (
-  `ct_id` int(11) NOT NULL,
+  `ct_id` int(11) NOT NULL AUTO_INCREMENT,
   `ct_contract_amount` varchar(50) DEFAULT NULL COMMENT '合同金额',
   `ct_contract_docment` varchar(100) DEFAULT NULL COMMENT '合同文件url',
   `ct_tender_amount` varchar(50) DEFAULT NULL COMMENT '招标金额',
   `ct_tender_docment` varchar(100) DEFAULT NULL COMMENT '标书文件url',
   `p_id` int(11) DEFAULT NULL COMMENT '项目合同相关信息对应的项目',
   PRIMARY KEY (`ct_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contract` */
 
 insert  into `contract`(`ct_id`,`ct_contract_amount`,`ct_contract_docment`,`ct_tender_amount`,`ct_tender_docment`,`p_id`) values 
-(1,'合同金额20w','/contracts/test1.doc','招标金额20W','/tenders/temp1.doc',1),
-(2,'合同金额30w','/contracts/test2.doc','招标金额30W','/tenders/temp2.doc',1);
+(1,'合同金额20w','temp1.docx','招标金额20W','test1.docx',1),
+(2,'合同金额30w','temp2.docx','招标金额30W','test2.docx',2),
+(4,'123','13d-8340-8fba347e9d07qubie.txt','123','6dc-9b06-0b36692bbe27qubie.txt',5);
 
 /*Table structure for table `cus_pro` */
 
 DROP TABLE IF EXISTS `cus_pro`;
 
 CREATE TABLE `cus_pro` (
-  `cp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cp_id` int(11) NOT NULL,
   `p_id` int(11) DEFAULT NULL COMMENT '项目id',
-  `c_id` int(11) DEFAULT NULL COMMENT '用户id',
-  PRIMARY KEY (`cp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `c_id` int(11) DEFAULT NULL COMMENT '用户id'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `cus_pro` */
 
 insert  into `cus_pro`(`cp_id`,`p_id`,`c_id`) values 
-(1,1,1);
+(1,1,1),
+(2,2,1),
+(1,1,2),
+(2,2,2),
+(5,5,1),
+(5,5,4),
+(6,6,2),
+(6,6,1),
+(8,8,1),
+(7,7,4);
 
 /*Table structure for table `customer` */
 
@@ -167,14 +176,15 @@ CREATE TABLE `interview` (
   `i_content` varchar(255) DEFAULT NULL COMMENT '内容摘要',
   `i_next` varchar(255) DEFAULT NULL COMMENT '下一步计划',
   PRIMARY KEY (`i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `interview` */
 
 insert  into `interview`(`i_id`,`i_company`,`c_id`,`i_visit_time`,`p_id`,`e_id`,`i_others`,`i_content`,`i_next`) values 
-(1,'张家界航院',1,'2022-10-11',1,5,'肖某|王某','农村致富','下乡'),
-(13,'厚朴公司',1,'2022-10-03',1,4,'jack|marry','牛逼','揍你'),
-(14,'厚朴公司',1,'2022-10-03',1,4,'jack|marry','牛逼','揍你');
+(1,'张家界航院',1,'2022-10-01',1,5,'肖某|王某','农村致富','下乡'),
+(13,'厚朴公司',2,'2022-10-03',1,4,'jack|marry','牛逼','揍你'),
+(14,'厚朴公司',2,'2022-10-03',1,4,'jack|marry','牛逼','揍你'),
+(15,'厚朴公司',1,'2022-10-03',NULL,2,'jack|marry','牛逼','揍你');
 
 /*Table structure for table `payment_back` */
 
@@ -185,13 +195,26 @@ CREATE TABLE `payment_back` (
   `pb_money` int(11) NOT NULL COMMENT '回款金额',
   `pb_order` int(11) NOT NULL AUTO_INCREMENT COMMENT '录入顺序，自增',
   KEY `pb_order` (`pb_order`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8;
 
 /*Data for the table `payment_back` */
 
 insert  into `payment_back`(`pb_id`,`pb_money`,`pb_order`) values 
-(1001,8000,1),
-(1001,12000,2);
+(1001,1111,1),
+(1003,3333,3),
+(1004,444,4),
+(1006,666,6),
+(2001,11111,2),
+(2002,11111,5),
+(2003,2312312,3),
+(2007,1,5),
+(2006,454555,5),
+(2005,123123,5),
+(2008,2,127),
+(2009,123123,128),
+(6001,23,129),
+(5001,1,130),
+(8001,1,131);
 
 /*Table structure for table `project` */
 
@@ -206,13 +229,17 @@ CREATE TABLE `project` (
   `cp_id` int(11) DEFAULT NULL COMMENT '客户参与人员，多人',
   `pb_id` int(11) DEFAULT NULL COMMENT '回款表的id，要回款5次需要一张新表',
   PRIMARY KEY (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `project` */
 
 insert  into `project`(`p_id`,`p_name`,`p_moeny`,`p_progress`,`p_owner`,`cp_id`,`pb_id`) values 
-(1,'工地项目(点击查看对应的合同表)','100w','招标','jack',1,1001),
-(2,'工地项目(点击查看对应的合同表)','100w','招标','jack',1,1001);
+(1,'工地项目(点击查看对应的合同表)','100w','招标','jack',1,1000),
+(2,'工地项目(点击查看对应的合同表)','100w','招标','jack',2,2000),
+(5,'创业','12W','意向','jack',5,5000),
+(6,'创业2','12W','方案','marry',6,6000),
+(7,'创业4','12W','意向','jack',7,7000),
+(8,'创业3','12W','回款','jack',8,8000);
 
 /*Table structure for table `type_dic` */
 

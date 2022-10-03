@@ -10,21 +10,13 @@ public interface CusProMapper {
 
     int deleteByExample(CusProExample example);
 
-    int deleteByPrimaryKey(Integer cpId);
-
     int insert(CusPro record);
 
     int insertSelective(CusPro record);
 
     List<CusPro> selectByExample(CusProExample example);
 
-    CusPro selectByPrimaryKey(Integer cpId);
-
     int updateByExampleSelective(@Param("record") CusPro record, @Param("example") CusProExample example);
 
     int updateByExample(@Param("record") CusPro record, @Param("example") CusProExample example);
-
-    int updateByPrimaryKeySelective(CusPro record);
-
-    int updateByPrimaryKey(CusPro record);
 }

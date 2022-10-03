@@ -20,10 +20,10 @@
     <!--上传-->
 
     <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
-    <div class="modal fade" id="add_emp">
+    <div class="modal fade" id="add_con">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form  method="post" class="nav-link">
+                <form th:action="@{/project/contractAdd}"  method="post" enctype="multipart/form-data" class="nav-link">
                     <div class="modal-body">
                         <div>
                             <div class="card card-default">
@@ -34,28 +34,29 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="rename">合同金额</label>
-                                          <input type="text"  name="rename" class="form-control">
+                                           <input type="hidden" name="pId" th:value="${pId}">
+                                          <label>合同金额</label>
+                                          <input type="text"  name="ctContractAmount" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="eBirthday">合同文件</label>
-                                          <input type="file"  name="eBirthday" class="form-control">
+                                          <label>合同文件</label>
+                                          <input type="file"  name="ctContractDocmentFile" class="form-control">
                                       </div>
                                   </span>
                                     </div>
                                     <div class="row">
                                       <span class="col-sm-6 col-md-6">
                                            <div class="form-group">
-                                              <label for="eName">招标金额</label>
-                                              <input type="text"  name="eName" class="form-control">
+                                              <label>招标金额</label>
+                                              <input type="text"  name="ctTenderAmount" class="form-control">
                                           </div>
                                       </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="ePwd">招标文件</label>
-                                          <input type="file"  name="ePwd" class="form-control">
+                                          <label>招标文件</label>
+                                          <input type="file"  name="ctTenderDocmentFile" class="form-control">
                                       </div>
                                   </span>
                                     </div>
@@ -149,7 +150,7 @@
                                     <div class="col-sm-10"></div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <button  class="btn btn-primary" data-toggle="modal" data-target="#add_emp">
+                                            <button  class="btn btn-primary" data-toggle="modal" data-target="#add_con">
                                                 添加合同信息（暂时不做业务问题）
                                             </button>
                                         </div>
@@ -172,9 +173,9 @@
                                     <tbody>
                                     <tr th:each="con,conState:${contractList}">
                                         <td th:text="${con.ctContractAmount}">合同金额20w</td>
-                                        <td><a th:href="@{'/project/download/'+${con.ctContractDocment}}">合同文件下载</a></td>
+                                        <td><a th:href="@{'/project/conownloadCon/'+${con.ctContractDocment}}">合同文件下载</a></td>
                                         <td th:text="${con.ctTenderAmount}">招标金额20w</td>
-                                        <td><a th:href="@{'/project/download/'+${con.ctTenderDocment}}">招标文件下载</a></td>
+                                        <td><a th:href="@{'/project/conownloadTen/'+${con.ctTenderDocment}}">招标文件下载</a></td>
                                         <td>
                                             <button type="button"  class="btn  btn-sm btn-info updateEmpBtn" data-toggle="modal" data-target="#update_emp">修改暂时不做，业务问题</button>
                                         </td>

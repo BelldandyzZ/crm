@@ -109,7 +109,7 @@
       #{pProgress,jdbcType=VARCHAR}, #{pOwner,jdbcType=VARCHAR}, #{cpId,jdbcType=INTEGER}, 
       #{pbId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.xxz.bean.Project" >
+  <insert id="insertSelective" parameterType="com.xxz.bean.Project" useGeneratedKeys="true" keyProperty="pId">
     insert into project
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="pId != null" >

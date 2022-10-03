@@ -1,6 +1,7 @@
 package com.xxz.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Project implements Serializable {
     private Integer pId;
@@ -15,14 +16,14 @@ public class Project implements Serializable {
 
     private Integer cpId;
     //业务设置列------------------------------------
-    private Integer cId;
-    public Integer getcId() {return cId;}
-    public void setcId(Integer cId) {this.cId = cId;}
+    private String cIds;
+    public String getcIds() { return cIds;}
+    public void setcIds(String cIds) {this.cIds = cIds;}
     //----------------------------------------------
     //业务设置列------------------------------------
-    private String cRename;
-    public String getcRename() {return cRename;}
-    public void setcRename(String cRename) {this.cRename = cRename;}
+    private List<String> cRenames;
+    public List<String> getcRenames() {return cRenames;}
+    public void setcRenames(List<String> cRenames) {this.cRenames = cRenames;}
     //----------------------------------------------
     public static long getSerialVersionUID() {
         return serialVersionUID;

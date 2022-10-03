@@ -20,10 +20,10 @@
     <!--上传-->
 
     <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
-    <div class="modal fade" id="add_emp">
+    <div class="modal fade" id="add_pay">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form  method="post" class="nav-link">
+                <form  th:action="@{/project/addPayBack}" method="post" class="nav-link">
                     <div class="modal-body">
                         <div>
                             <div class="card card-default">
@@ -34,14 +34,15 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="12">回款金额</label>
-                                          <input type="text"  name="12" class="form-control">
+                                          <label>回款金额</label>
+                                           <input type="hidden" name="pbId" th:value="${pbId}">
+                                          <input type="text"  name="pbMoney" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="12">录入顺序，可以不用写，数据库是自增的</label>
-                                          <input type="text"  name="12" class="form-control">
+                                          <label>录入顺序，可以不用写，数据库是自增的</label>
+                                          <input type="text"  name="pbOrder" class="form-control">
                                       </div>
                                   </span>
 
@@ -66,10 +67,10 @@
     <!--   新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗-->
 
     <!-- 修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗 -->
-    <div class="modal fade" id="update_emp">
+    <div class="modal fade" id="update_pay">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form  method="post" class="nav-link">
+                <form th:action="@{/project/payBackUpdate}"  method="post" class="nav-link">
                     <div class="modal-body">
                         <div>
                             <div class="card card-default">
@@ -80,14 +81,15 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="12">回款金额</label>
-                                          <input type="text"  name="12" class="form-control">
+                                          <label>回款金额</label>
+                                           <input type="text" id="pbId" name="pbId">
+                                          <input type="text" id="pbMoney"  name="pbMoney" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="12">录入顺序，可以不用写，数据库是自增的</label>
-                                          <input type="text"  name="12" class="form-control">
+                                          <label>录入顺序，可以不用写，数据库是自增的</label>
+                                          <input type="text" id="pbOrder"  name="pbOrder" class="form-control">
                                       </div>
                                   </span>
 
@@ -127,7 +129,7 @@
                                     <div class="col-sm-10"></div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <button  class="btn btn-primary" data-toggle="modal" data-target="#add_emp">
+                                            <button  class="btn btn-primary" data-toggle="modal" data-target="#add_pay">
                                                 添加回款记录
                                             </button>
                                         </div>
@@ -149,7 +151,7 @@
                                     <tr th:each="payback,paybackState:${paymentBackList}">
                                         <td th:text="${paybackState.index+1}">2（第二次回款）</td>
                                         <td th:text="${payback.pbMoney}">回款6w</td>
-                                        <td><button type="button"  class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button></td>
+                                        <td><button type="button" th:tar-id="${payback.pbId}" class="btn  btn-sm btn-info updatePayBtn" data-toggle="modal" data-target="#update_pay">修改</button></td>
                                     </tr>
 <!--                                    <tr>-->
 <!--                                        <td>1（第一次回款）</td>-->
@@ -241,26 +243,18 @@
         })
 
         //修改按钮
-        $('.updateEmpBtn').click(function (){
-            let empId = $(this).attr("tar-id");
+        $('.updatePayBtn').click(function (){
+            let pbId = $(this).attr("tar-id");
             $.ajax({
-                url: "/crm/emp/queryById/" + empId,
+                url: "/crm/project/payBackQueryById/" + pbId,
                 type: "get",
                 datatype: "json",
                 success: function (res){
                     console.log(res);
-                    let emp = res.data;
-                    $('#eId').val(emp.eId);
-                    $('#rename').val(emp.rename);
-                    $('#eName').val(emp.eName);
-                    $('#ePwd').val(emp.ePwd);
-                    $('#eBirthday').val(emp.eBirthday);
-                    $('#eSchool').val(emp.eSchool);
-                    $('#eJob').val(emp.eJob);
-                    $('#eStartTime').val(emp.eStartTime);
-                    $('#eSocialPosition').val(emp.eSocialPosition);
-                    $('#eHonor').val(emp.eHonor);
-                    $('#eRemark').val(emp.eRemark);
+                    let pb = res.data;
+                    $('#pbMoney').val(pb.pbMoney);
+                    $('#pbOrder').val(pb.pbOrder);
+                    $('#pbId').val(pb.pbId);
                 }
             })
         })

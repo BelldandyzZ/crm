@@ -4,6 +4,7 @@ import com.xxz.bean.PaymentBack;
 import com.xxz.bean.PaymentBackExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 public interface PaymentBackMapper {
     int countByExample(PaymentBackExample example);
@@ -19,4 +20,7 @@ public interface PaymentBackMapper {
     int updateByExampleSelective(@Param("record") PaymentBack record, @Param("example") PaymentBackExample example);
 
     int updateByExample(@Param("record") PaymentBack record, @Param("example") PaymentBackExample example);
+
+    @Update("update payment_back set pb_money = #{pbMoney}, pb_order = #{pbOrder} where pb_id = #{pbId}")
+    int updatePayBack(PaymentBack record);
 }
