@@ -33,8 +33,16 @@ public class EmpController {
     private EmployeeMapper employeeMapper;
 
     @RequestMapping("/login")
-    public String empLogin(String ename, String epwd){
+    public String empLogin(String ename, String epwd, HttpSession session){
         System.out.println(ename + "----" + epwd);
+        if(ename != null && !ename.equals("") && epwd != null && !epwd.equals("")){
+            EmployeeExample employeeExample = new EmployeeExample();
+            employeeExample.createCriteria().andENameEqualTo(ename).andEPwdEqualTo(epwd);
+            Employee employee = employeeMapper.selectByExample(employeeExample).get(0);
+            if(employee != null){
+                session.setAttribute("emp", employee);
+            }
+        }
         return "index";
     }
 

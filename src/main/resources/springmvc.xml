@@ -32,9 +32,9 @@
 <!--    <mvc:view-controller path="/customer/toIndex" view-name="customer/customer"/>-->
 <!--    <mvc:view-controller path="/interview/toIndex" view-name="interview/interview"/>-->
 <!--    <mvc:view-controller path="/project/toIndex" view-name="project/project"/>-->
-    <mvc:view-controller path="/project/contract/toIndex" view-name="project/contract/contract"/>
+<!--    <mvc:view-controller path="/project/contract/toIndex" view-name="project/contract/contract"/>-->
 <!--    <mvc:view-controller path="/project/interview_record/toIndex" view-name="project/interview_record/interview_record"/>-->
-    <mvc:view-controller path="/project/payment_back/toIndex" view-name="project/payment_back/payment_back"/>
+<!--    <mvc:view-controller path="/project/payment_back/toIndex" view-name="project/payment_back/payment_back"/>-->
     <mvc:view-controller path="/echarts/toIndex" view-name="echarts/echartsMenu"/>
 
 
@@ -72,26 +72,21 @@
         <property name="maxUploadSize" value="104857600"></property>
     </bean>
 
-    <!--mvc拦截器配置-->
-<!--    <mvc:interceptors>-->
-<!--        &lt;!&ndash;方式一：bean&ndash;&gt;-->
-<!--        <bean class="com.xxz.interceptor.FirstInterceptor"></bean>-->
-<!--        &lt;!&ndash;方式二：res（通过id值获取，或者@Component注解识别mvc拦截器实现类）&ndash;&gt;-->
-<!--        &lt;!&ndash;	<ref bean="firstInterceptor"></ref>&ndash;&gt;-->
-<!--        &lt;!&ndash;方式三：精确mvc:interceptor&ndash;&gt;-->
-<!--        <mvc:interceptor>-->
-<!--            &lt;!&ndash;-->
-<!--                配置拦截路径：-->
-<!--                (1)/*：表示上下文根下的一级请求(/xxx)，二级请求(/xxx/xxx)无法识别-->
-<!--                (2)/**：表示上下文根的多级请求(多少层都可以匹配，即任意请求路径)-->
-<!--            &ndash;&gt;-->
-<!--            <mvc:mapping path="/*"/>-->
-<!--            &lt;!&ndash;配置要排除的路径&ndash;&gt;-->
-<!--            <mvc:exclude-mapping path="/before"/>-->
-<!--            &lt;!&ndash;定义使用的拦截器：bean、ref方式&ndash;&gt;-->
-<!--            <bean class="com.xxz.interceptor.FirstInterceptor"></bean>-->
-<!--        </mvc:interceptor>-->
-<!--    </mvc:interceptors>-->
+<!--    mvc拦截器配置-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--拦截任意请求-->
+            <mvc:mapping path="/emp/*"/>
+            <mvc:mapping path="/interview/*"/>
+            <mvc:mapping path="/customer/*"/>
+            <mvc:mapping path="/project/*"/>
+            <!--配置要排除的路径-->
+            <mvc:exclude-mapping path="/"/>
+            <mvc:exclude-mapping path="/emp/login"/>
+            <!--定义使用的拦截器：bean、ref方式-->
+            <bean class="com.xxz.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
     <!--SpringMVC提供自定义异常处理器SimpleMappingExceptionResolver
         当控制器方法执行业务过程中出现异常，可以通过配置的自定义异常处理器捕获解决，
