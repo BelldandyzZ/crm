@@ -71,11 +71,17 @@ public class InterviewController {
         List<Interview> interviewList = interviewMapper.selectByExample(interviewExample);
         for (Interview interview : interviewList) {
             //设置客户姓名
-            interview.setcRename(customerMapper.selectByPrimaryKey(interview.getcId()).getcRename());
+            if(interview.getcId() != null && !interview.getcId().equals("")){
+                interview.setcRename(customerMapper.selectByPrimaryKey(interview.getcId()).getcRename());
+            }
             //我方员工姓名
-            interview.seteRename(employeeMapper.selectByPrimaryKey(interview.geteId()).getRename());
+            if(interview.geteId() != null && !interview.geteId().equals("")){
+                interview.seteRename(employeeMapper.selectByPrimaryKey(interview.geteId()).getRename());
+            }
             //设置拜访类型
-            interview.setpName("农村购物致富商城系统项目");
+            if(interview.getpName() == null || interview.getpName().equals("")){
+                interview.setpName("农村购物致富商城系统项目");
+            }
         }
         System.out.println("条件查询结果：" + interviewList);
         model.addAttribute("interviewList", interviewList);
@@ -117,10 +123,30 @@ public class InterviewController {
 
     //新增员工
     @RequestMapping("/add")
-    public String cusAdd(Interview interview){
-        System.out.println("add cus..." + interview);
-        //调用接口将数据添加到数据库
-        interviewMapper.insertSelective(interview);
+    public String cusAdd(Interview interview, String[] cRenames, String eRename){
+        //获取eid并且设置到interview对象中添加到数据库
+        if (eRename != null && !eRename.equals("")){
+            EmployeeExample employeeExample = new EmployeeExample();
+            employeeExample.createCriteria().andRenameEqualTo(eRename);
+            Integer eid = employeeMapper.selectByExample(employeeExample).get(0).geteId();
+            interview.seteId(eid);
+        }
+        //获取cid并且设置到interview对象中添加到数据库
+        for (String cRename : cRenames) {
+            System.out.println(cRename);
+            if(cRename != null && !cRename.equals("")){
+                CustomerExample customerExample = new CustomerExample();
+                customerExample.createCriteria().andCRenameEqualTo(cRename);
+                Integer cid = customerMapper.selectByExample(customerExample).get(0).getcId();
+                interview.setcId(cid);
+                //循环添加
+                System.out.println("======================================================");
+                System.out.println("add cus..." + interview);
+                System.out.println("======================================================");
+                //调用接口将数据添加到数据库
+                interviewMapper.insertSelective(interview);
+            }
+        }
         return "redirect:/interview/interviews";
     }
 

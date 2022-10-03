@@ -21,10 +21,10 @@
 <div class="wrapper">
 
     <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
-    <div class="modal fade" id="add_emp">
+    <div class="modal fade" id="add_itw">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form id=""  method="post" class="nav-link">
+                <form id="" th:action="@{/interview/add}"  method="post" class="nav-link">
                     <div class="modal-body">
                         <div>
                             <div class="card card-default">
@@ -35,18 +35,17 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="rename">客户单位</label>
-                                          <input type="text" id="eName" name="eName" class="form-control">
+                                          <label>客户单位</label>
+                                          <input type="text"  name="iCompany" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label for="">客户人员</label>
                                           <div class="select2-purple">
-                                        <select class="select2" multiple="multiple" data-placeholder="选择" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                            <option>客户表A</option>
-                                            <option>客户表B</option>
-                                            <option>客户表C</option>
+                                              <!--multiple="multiple"多选属性-->
+                                        <select name="cRenames" class="select2" multiple="multiple" data-placeholder="选择" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                           <option th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}">全部</option>
                                         </select>
                                     </div>
                                       </div>
@@ -55,18 +54,18 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="eName">拜访时间</label>
-                                          <input type="date" id="eName" name="eName" class="form-control">
+                                          <label for="iVisitTime">拜访时间</label>
+                                          <input type="date" id="iVisitTime" name="iVisitTime" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="113">拜访类型</label>
-                                          <select id="113" name="eJob" class="form-control custom-select" >
-                                              <option>需要在项目表中选择</option>
-                                         <option>工地项目</option>
-                                              <option>xx公司项目</option>
-                                              <option>修铁路</option>
+                                          <label for="pId">拜访类型</label>
+                                          <select id="pId" name="pId" class="form-control custom-select" >
+                                              <option value="">需要在项目表中选择</option>
+                                              <option value="1">工地项目</option>
+                                              <option value="2">xx公司项目</option>
+                                              <option value="3">修铁路</option>
                                       </select>
                                       </div>
                                   </span>
@@ -75,32 +74,31 @@
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label for="1133">我方人员</label>
-                                      <select id="1133" name="eJob" class="form-control custom-select" >
-                                         <option>员工A</option>
-                                         <option>员工B</option>
+                                      <select id="1133" name="eRename" class="form-control custom-select" >
+                                         <option th:each="eRename,empState:${eRenameSet}" th:text="${eRename}" th:value="${eRename}">全部</option>
                                       </select>
 
                                   </div>
                               </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="eSocialPosition">其他人员</label>
-                                      <input type="text" id="eSocialPosition" name="eSocialPosition" class="form-control" placeholder="其他人员">
+                                      <label for="iOthers">其他人员</label>
+                                      <input type="text" id="iOthers" name="iOthers" class="form-control" placeholder="其他人员">
                                   </div>
                               </span>
                                     </div>
                                     <div class="row">
                                 <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                     <label for="eStartTime">内容摘要</label>
-                                     <input type="text" id="eStartTime" name="eStartTime" class="form-control" >
+                                     <label for="iContent">内容摘要</label>
+                                     <input type="text" id="iContent" name="iContent" class="form-control" >
                                  </div>
                              </span>
                                         </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                     <label for="eStartTim1e">下一步计划</label>
-                                     <input type="text" id="eStartTim1e" name="eStartTime" class="form-control" >
+                                     <label for="iNext">下一步计划</label>
+                                     <input type="text" id="iNext" name="iNext" class="form-control" >
                                  </div>
                               </span>
                                     </div>
@@ -137,11 +135,11 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_iCompany">客户单位</label>
-<!--                                            <input type="text" id="con_iCompany" name="iCompany" class="form-control" placeholder="客户单位" value="">-->
-                                            <select id="con_iCompany" name="iCompany" class="form-control">
-                                                <option value="">全部</option>
-                                                <option th:each="company,cusState:${companySet}" th:text="${company}" th:value="${company}">全部</option>
-                                            </select>
+                                            <input type="text" id="con_iCompany" name="iCompany" class="form-control" placeholder="客户单位" value="">
+<!--                                            <select id="con_iCompany" name="iCompany" class="form-control">-->
+<!--                                                <option value="">全部</option>-->
+<!--                                                <option th:each="company,cusState:${companySet}" th:text="${company}" th:value="${company}">全部</option>-->
+<!--                                            </select>-->
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
@@ -182,7 +180,7 @@
                                         <!--这个label没用，纯当作占位符用来布局-->
                                         <label style="color: white">.</label>
                                         <div class="form-group">
-                                            <button  class="btn btn-primary" data-toggle="modal" data-target="#add_emp">
+                                            <button  class="btn btn-primary" data-toggle="modal" data-target="#add_itw">
                                              添加
                                             </button>
                                         </div>
