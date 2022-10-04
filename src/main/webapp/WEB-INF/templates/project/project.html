@@ -289,7 +289,7 @@
 <!--                                            <span th:each="cRename,${pro.cRenames}" th:text="${cRename}"></span>|-->
                                         </td>
 <!--                                        <td><a th:href="@{'/interview/interviews?cRename=' + ${pro.cRename}}">拜访记录（点击查看详情）</a></td>-->
-                                        <td><a th:href="@{'/project/interview_record?cIds=' + ${pro.cIds}}">拜访记录（点击查看详情）</a></td>
+                                        <td><a th:href="@{'/project/interview_record?cIds=' + ${pro.cIds} + '&pId=' + ${pro.pId}}">拜访记录（点击查看详情）</a></td>
                                         <td><a th:href="@{'/project/payment_back?pbId=' + ${pro.pbId} + '&pId=' + ${pro.pId}}" class="card-link">回款金额之和：55w(点击查看对应的回款记录)</a>
                                         </td>
                                         <td>

@@ -205,7 +205,7 @@ public class ProjectController {
 //拜访模块===================================================================================
 //    /project/interview_record
     @RequestMapping("/interview_record")
-    public String interview_recor(Model model, String cIds){
+    public String interview_recor(Model model, String cIds, Integer pId){
         InterviewExample interviewExample = new InterviewExample();
         //获取目标cId信息
         String[] split = cIds.split(",");
@@ -214,7 +214,8 @@ public class ProjectController {
             integers.add(Integer.valueOf(s));
         }
         System.out.println(integers+"================================================================");
-        interviewExample.createCriteria().andCIdIn(integers);
+//        interviewExample.createCriteria().andCIdIn(integers);
+        interviewExample.createCriteria().andPIdEqualTo(pId);
         //查询
         List<Interview> currentInterviewList = interviewMapper.selectByExample(interviewExample);
         for (Interview interview : currentInterviewList) {
@@ -228,7 +229,8 @@ public class ProjectController {
             }
             //设置拜访类型
             if(interview.getpName() == null || interview.getpName().equals("")){
-                interview.setpName("农村购物致富商城系统项目");
+                interview.setpName(projectMapper.selectByPrimaryKey(interview.getpId()).getpName());
+//                interview.setpName("农村购物致富商城系统项目");
             }
         }
         model.addAttribute("currentInterviewList", currentInterviewList);
@@ -327,6 +329,10 @@ public class ProjectController {
     public String contractAdd(Integer pId,MultipartFile ctContractDocmentFile, MultipartFile ctTenderDocmentFile, Contract contract, HttpSession session) throws IOException {
         //获取上传的文件的文件名
         String ctfileName = UUID.randomUUID().toString().substring(15) + ctContractDocmentFile.getOriginalFilename();
+        //锁定长度
+        if(ctfileName.length() > 25){
+            ctfileName = ctfileName.substring(ctfileName.length() - 25, ctfileName.length());
+        }
         System.out.println(ctfileName);
         contract.setCtContractDocment(ctfileName);
         //获取ServletContext对象
@@ -360,6 +366,10 @@ public class ProjectController {
         //====================================================================
         //获取上传的文件的文件名
         String tdfileName = UUID.randomUUID().toString().substring(15) + ctTenderDocmentFile.getOriginalFilename();
+        //锁定长度
+        if(tdfileName.length() > 25){
+            tdfileName = tdfileName.substring(tdfileName.length() - 25, tdfileName.length());
+        }
         System.out.println(tdfileName);
         contract.setCtTenderDocment(tdfileName);
         //获取ServletContext对象

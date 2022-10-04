@@ -28,14 +28,21 @@ CREATE TABLE `contract` (
   `ct_tender_docment` varchar(100) DEFAULT NULL COMMENT '标书文件url',
   `p_id` int(11) DEFAULT NULL COMMENT '项目合同相关信息对应的项目',
   PRIMARY KEY (`ct_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contract` */
 
 insert  into `contract`(`ct_id`,`ct_contract_amount`,`ct_contract_docment`,`ct_tender_amount`,`ct_tender_docment`,`p_id`) values 
 (1,'合同金额20w','temp1.docx','招标金额20W','test1.docx',1),
 (2,'合同金额30w','temp2.docx','招标金额30W','test2.docx',2),
-(4,'123','13d-8340-8fba347e9d07qubie.txt','123','6dc-9b06-0b36692bbe27qubie.txt',5);
+(4,'123','13d-8340-8fba347e9d07qubie.txt','123','6dc-9b06-0b36692bbe27qubie.txt',5),
+(5,'123','e19-9a3d-7c866146bebe6dc-9b06-0b36692bbe27qubie.txt','123','83b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',2),
+(6,'123','ac0-9f06-42274a62b08183b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt','123','832-aebe-bec095e8407683b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',5),
+(7,'123','35f-b07f-30380a6d86c083b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt','123','443-a3d0-8a8afc93345083b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',5),
+(8,'123','8e1-bfdc-cd9c88c7368d6dc-9b06-0b36692bbe27qubie.txt','123','b66-898f-c6846dd513be6dc-9b06-0b36692bbe27qubie.txt',5),
+(9,'123','702-8d42-8fba7b8459c56dc-9b06-0b36692bbe27qubie.txt','123','830-8c6c-7c612de18cad6dc-9b06-0b36692bbe27qubie.txt',5),
+(10,'123','852-af98-a81c2cfa530a83b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt','123','f96-afee-02be24d1e9ad83b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',5),
+(11,'123','b36692bbe27qubie.txt','123','b36692bbe27qubie.txt',5);
 
 /*Table structure for table `cus_pro` */
 
@@ -184,7 +191,7 @@ insert  into `interview`(`i_id`,`i_company`,`c_id`,`i_visit_time`,`p_id`,`e_id`,
 (1,'张家界航院',1,'2022-10-01',1,5,'肖某|王某','农村致富','下乡'),
 (13,'厚朴公司',2,'2022-10-03',1,4,'jack|marry','牛逼','揍你'),
 (14,'厚朴公司',2,'2022-10-03',1,4,'jack|marry','牛逼','揍你'),
-(15,'厚朴公司',1,'2022-10-03',NULL,2,'jack|marry','牛逼','揍你');
+(15,'厚朴公司',1,'2022-10-03',2,2,'jack|marry','牛逼','揍你');
 
 /*Table structure for table `payment_back` */
 
@@ -234,8 +241,8 @@ CREATE TABLE `project` (
 /*Data for the table `project` */
 
 insert  into `project`(`p_id`,`p_name`,`p_moeny`,`p_progress`,`p_owner`,`cp_id`,`pb_id`) values 
-(1,'工地项目(点击查看对应的合同表)','100w','招标','jack',1,1000),
-(2,'工地项目(点击查看对应的合同表)','100w','招标','jack',2,2000),
+(1,'工地项目(点击查看对应的合同表)1','100w','招标','jack',1,1000),
+(2,'工地项目(点击查看对应的合同表)2','100w','招标','jack',2,2000),
 (5,'创业','12W','意向','jack',5,5000),
 (6,'创业2','12W','方案','marry',6,6000),
 (7,'创业4','12W','意向','jack',7,7000),

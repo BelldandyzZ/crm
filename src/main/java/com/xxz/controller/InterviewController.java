@@ -9,6 +9,7 @@ import com.xxz.listener.DemoDataListener;
 import com.xxz.mapper.CustomerMapper;
 import com.xxz.mapper.EmployeeMapper;
 import com.xxz.mapper.InterviewMapper;
+import com.xxz.mapper.ProjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,9 @@ public class InterviewController {
     @Autowired
     private EmployeeMapper employeeMapper;
 
+    @Autowired
+    private ProjectMapper projectMapper;
+
     //条件查询
     @RequestMapping("/interviews")
     public String queryAll(Model model, String iCompany, String cRename, String eRename) throws UnsupportedEncodingException {
@@ -54,10 +58,14 @@ public class InterviewController {
         if(cRename != null && !cRename.equals("")){
             //样本
             CustomerExample customerExample = new CustomerExample();
-            customerExample.createCriteria().andCRenameEqualTo(cRename);
-            Customer cus = customerMapper.selectByExample(customerExample).get(0);
+            customerExample.createCriteria().andCRenameLike("%" + cRename + "%");
+            List<Customer> customers = customerMapper.selectByExample(customerExample);
+            List<Integer> cids = new ArrayList<>();
+            for (Customer customer : customers) {
+                cids.add(customer.getcId());
+            }
             //包含cids
-            criteria.andCIdEqualTo(cus.getcId());
+            criteria.andCIdIn(cids);
         }
         if(eRename != null && !eRename.equals("")){
             //样本
@@ -80,7 +88,8 @@ public class InterviewController {
             }
             //设置拜访类型
             if(interview.getpName() == null || interview.getpName().equals("")){
-                interview.setpName("农村购物致富商城系统项目");
+                interview.setpName(projectMapper.selectByPrimaryKey(interview.getpId()).getpName());
+//                interview.setpName("农村购物致富商城系统项目");
             }
         }
         System.out.println("条件查询结果：" + interviewList);
@@ -216,7 +225,7 @@ public class InterviewController {
             //我方员工姓名
             interview.seteRename(employeeMapper.selectByPrimaryKey(interview.geteId()).getRename());
             //设置拜访类型
-            interview.setpName("农村购物致富商城系统项目");
+            interview.setpName(projectMapper.selectByPrimaryKey(interview.getpId()).getpName());
         }
         //响应到浏览器
         EasyExcel.write(response.getOutputStream(), Interview.class).sheet("模板").doWrite(interviewList);
