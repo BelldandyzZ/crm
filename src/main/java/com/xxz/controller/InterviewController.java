@@ -10,6 +10,10 @@ import com.xxz.mapper.CustomerMapper;
 import com.xxz.mapper.EmployeeMapper;
 import com.xxz.mapper.InterviewMapper;
 import com.xxz.mapper.ProjectMapper;
+import com.xxz.service.CustomerService;
+import com.xxz.service.EmpService;
+import com.xxz.service.InterviewService;
+import com.xxz.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,73 +35,30 @@ import java.util.*;
 public class InterviewController {
 
     @Autowired
-    private InterviewMapper interviewMapper;
+    private InterviewService interviewService;
 
     @Autowired
-    private CustomerMapper customerMapper;
+    private CustomerService customerService;
 
     @Autowired
-    private EmployeeMapper employeeMapper;
+    private EmpService empService;
 
     @Autowired
-    private ProjectMapper projectMapper;
+    private ProjectService projectService;
 
     //条件查询
     @RequestMapping("/interviews")
     public String queryAll(Model model, String iCompany, String cRename, String eRename) throws UnsupportedEncodingException {
 //        System.out.println(URLEncoder.encode(eJob,"utf-8"));
         System.out.println("queryAll-interviews-confition:" + iCompany + "-" + cRename + "-" + eRename);
-        //样本
-        InterviewExample interviewExample = new InterviewExample();
-        //条件盒子
-        InterviewExample.Criteria criteria = interviewExample.createCriteria();
-        //追加条件
-        if (iCompany != null && !iCompany.equals("")){
-            criteria.andICompanyLike("%" + iCompany + "%");
-        }
-        if(cRename != null && !cRename.equals("")){
-            //样本
-            CustomerExample customerExample = new CustomerExample();
-            customerExample.createCriteria().andCRenameLike("%" + cRename + "%");
-            List<Customer> customers = customerMapper.selectByExample(customerExample);
-            List<Integer> cids = new ArrayList<>();
-            for (Customer customer : customers) {
-                cids.add(customer.getcId());
-            }
-            //包含cids
-            criteria.andCIdIn(cids);
-        }
-        if(eRename != null && !eRename.equals("")){
-            //样本
-            EmployeeExample employeeExample = new EmployeeExample();
-            employeeExample.createCriteria().andRenameEqualTo(eRename);
-            Employee emp = employeeMapper.selectByExample(employeeExample).get(0);
-            criteria.andEIdEqualTo(emp.geteId());
-        }
-        //============================================================================
-        //(1)查询
-        List<Interview> interviewList = interviewMapper.selectByExample(interviewExample);
-        for (Interview interview : interviewList) {
-            //设置客户姓名
-            if(interview.getcId() != null && !interview.getcId().equals("")){
-                interview.setcRename(customerMapper.selectByPrimaryKey(interview.getcId()).getcRename());
-            }
-            //我方员工姓名
-            if(interview.geteId() != null && !interview.geteId().equals("")){
-                interview.seteRename(employeeMapper.selectByPrimaryKey(interview.geteId()).getRename());
-            }
-            //设置拜访类型
-            if(interview.getpName() == null || interview.getpName().equals("")){
-                interview.setpName(projectMapper.selectByPrimaryKey(interview.getpId()).getpName());
-//                interview.setpName("农村购物致富商城系统项目");
-            }
-        }
-        System.out.println("条件查询结果：" + interviewList);
+
+        List<Interview> interviewList = interviewService.queryAllInterview(iCompany, cRename, eRename);
+        System.out.println(interviewList);
         model.addAttribute("interviewList", interviewList);
         //============================================================================
         //(2)客户名称下拉框、客户单位下拉框,我方员工姓名
-        List<Customer> customerList = customerMapper.selectByExample(null);
-        List<Employee> employeeList = employeeMapper.selectByExample(null);
+        List<Customer> customerList = customerService.queryAllCus(null, null, null);
+        List<Employee> employeeList = empService.queryAllEmp(null, null, null);
         //获取所有客户单位
         Set<String> companySet = new HashSet<>();
         //获取所有客户名称
@@ -122,7 +83,7 @@ public class InterviewController {
     @RequestMapping("/queryById/{cId}")
     @ResponseBody
     public Map<String,Object> queryById(@PathVariable("cId") Integer cId, HttpServletResponse response) throws IOException {
-        Interview interview = interviewMapper.selectByPrimaryKey(cId);
+        Interview interview = interviewService.queryById(cId);
         Map<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("code","200");
         stringObjectHashMap.put("data",interview);
@@ -132,30 +93,8 @@ public class InterviewController {
 
     //新增员工
     @RequestMapping("/add")
-    public String cusAdd(Interview interview, String[] cRenames, String eRename){
-        //获取eid并且设置到interview对象中添加到数据库
-        if (eRename != null && !eRename.equals("")){
-            EmployeeExample employeeExample = new EmployeeExample();
-            employeeExample.createCriteria().andRenameEqualTo(eRename);
-            Integer eid = employeeMapper.selectByExample(employeeExample).get(0).geteId();
-            interview.seteId(eid);
-        }
-        //获取cid并且设置到interview对象中添加到数据库
-        for (String cRename : cRenames) {
-            System.out.println(cRename);
-            if(cRename != null && !cRename.equals("")){
-                CustomerExample customerExample = new CustomerExample();
-                customerExample.createCriteria().andCRenameEqualTo(cRename);
-                Integer cid = customerMapper.selectByExample(customerExample).get(0).getcId();
-                interview.setcId(cid);
-                //循环添加
-                System.out.println("======================================================");
-                System.out.println("add cus..." + interview);
-                System.out.println("======================================================");
-                //调用接口将数据添加到数据库
-                interviewMapper.insertSelective(interview);
-            }
-        }
+    public String itwAdd(Interview interview, String[] cRenames, String eRename){
+        interviewService.itwAdd(interview, cRenames,eRename);
         return "redirect:/interview/interviews";
     }
 
@@ -164,7 +103,12 @@ public class InterviewController {
     public String cusDel(@PathVariable("eId") Integer eId){
         System.out.println(eId);
         //删除业务
-        interviewMapper.deleteByPrimaryKey(eId);
+        boolean result = interviewService.itwDel(eId);
+        if(result){
+            System.out.println("操作成功！");
+        }else{
+            System.out.println("操作失败！");
+        }
         //重定向到empList界面展示最新数据
         return "redirect:/interview/interviews";
     }
@@ -175,7 +119,12 @@ public class InterviewController {
         //展示emp
         System.out.println(interview);
         //调用目标接口实现信息修改
-        interviewMapper.updateByPrimaryKeySelective(interview);
+        boolean result = interviewService.itwUpdate(interview);
+        if(result){
+            System.out.println("操作成功！");
+        }else{
+            System.out.println("操作失败！");
+        }
         //重定向到empMenu界面
         return "redirect:/interview/interviews";
     }
@@ -218,14 +167,14 @@ public class InterviewController {
         response.setHeader("Content-disposition", "attachment;filename="
                 + URLEncoder.encode("访谈信息", "UTF-8") + ".xlsx");
         //获取目标数据
-        List<Interview> interviewList = interviewMapper.selectByExample(null);
+        List<Interview> interviewList = interviewService.queryAllInterview(null, null, null);
         for (Interview interview : interviewList) {
             //设置客户姓名
-            interview.setcRename(customerMapper.selectByPrimaryKey(interview.getcId()).getcRename());
+            interview.setcRename(customerService.queryById(interview.getcId()).getcRename());
             //我方员工姓名
-            interview.seteRename(employeeMapper.selectByPrimaryKey(interview.geteId()).getRename());
+            interview.seteRename(empService.queryById(interview.geteId()).getRename());
             //设置拜访类型
-            interview.setpName(projectMapper.selectByPrimaryKey(interview.getpId()).getpName());
+            interview.setpName(projectService.queryById(interview.getpId()).getpName());
         }
         //响应到浏览器
         EasyExcel.write(response.getOutputStream(), Interview.class).sheet("模板").doWrite(interviewList);

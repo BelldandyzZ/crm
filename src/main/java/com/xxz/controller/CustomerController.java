@@ -8,6 +8,7 @@ import com.xxz.bean.Customer;
 import com.xxz.bean.CustomerExample;
 import com.xxz.listener.DemoDataListener;
 import com.xxz.mapper.CustomerMapper;
+import com.xxz.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,29 +32,14 @@ import java.util.Map;
 public class CustomerController {
 
     @Autowired
-    private CustomerMapper customerMapper;
+    private CustomerService customerService;
 
     //条件查询
     @RequestMapping("/customers")
     public String queryAll(Model model, String cRename, String cName, String cJob) throws UnsupportedEncodingException {
 //        System.out.println(URLEncoder.encode(eJob,"utf-8"));
         System.out.println("queryAll-customers-confition:" + cRename + "-" + cName + "-" + cJob);
-        //样本
-        CustomerExample customerExample = new CustomerExample();
-        //条件盒子
-        CustomerExample.Criteria criteria = customerExample.createCriteria();
-        //追加条件
-        if (cRename != null){
-            criteria.andCRenameLike("%" + cRename + "%");
-        }
-        if(cJob != null && !cJob.equals("")){
-            criteria.andCJobEqualTo(cJob);
-        }
-        if(cName != null && !cName.equals("")){
-            criteria.andCNameEqualTo(cName);
-        }
-        //查询
-        List<Customer> customerList = customerMapper.selectByExample(customerExample);
+        List<Customer> customerList = customerService.queryAllCus(cRename, cName, cJob);
         System.out.println("条件查询结果：" + customerList);
         model.addAttribute("customerList", customerList);
         return "customer/customer";
@@ -63,7 +49,7 @@ public class CustomerController {
     @RequestMapping("/queryById/{cId}")
     @ResponseBody
     public Map<String,Object> queryById(@PathVariable("cId") Integer cId, HttpServletResponse response) throws IOException {
-        Customer customer = customerMapper.selectByPrimaryKey(cId);
+        Customer customer = customerService.queryById(cId);
         Map<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("code","200");
         stringObjectHashMap.put("data",customer);
@@ -76,7 +62,12 @@ public class CustomerController {
     public String cusAdd(Customer customer){
         System.out.println("add cus..." + customer);
         //调用接口将数据添加到数据库
-        customerMapper.insertSelective(customer);
+        boolean result = customerService.cusAdd(customer);
+        if (result){
+            System.out.println("cus操作成功！");
+        }else {
+            System.out.println("cus操作成功！");
+        }
         return "redirect:/customer/customers";
     }
 
@@ -85,7 +76,12 @@ public class CustomerController {
     public String cusDel(@PathVariable("eId") Integer eId){
         System.out.println(eId);
         //删除业务
-        customerMapper.deleteByPrimaryKey(eId);
+        boolean result = customerService.cusDel(eId);
+        if (result){
+            System.out.println("cus操作成功！");
+        }else {
+            System.out.println("cus操作成功！");
+        }
         //重定向到empList界面展示最新数据
         return "redirect:/customer/customers";
     }
@@ -96,7 +92,12 @@ public class CustomerController {
         //展示emp
         System.out.println(customer);
         //调用目标接口实现信息修改
-        customerMapper.updateByPrimaryKeySelective(customer);
+        boolean result = customerService.cusUpdate(customer);
+        if (result){
+            System.out.println("cus操作成功！");
+        }else {
+            System.out.println("cus操作成功！");
+        }
         //重定向到empMenu界面
         return "redirect:/customer/customers";
     }
@@ -139,7 +140,7 @@ public class CustomerController {
         response.setHeader("Content-disposition", "attachment;filename="
                 + URLEncoder.encode("客户信息", "UTF-8") + ".xlsx");
         //获取目标数据
-        List<Customer> customers = customerMapper.selectByExample(null);
+        List<Customer> customers = customerService.queryAllCus(null, null, null);
         //响应到浏览器
         EasyExcel.write(response.getOutputStream(), Customer.class).sheet("模板").doWrite(customers);
         System.out.println("excelOutput.................");

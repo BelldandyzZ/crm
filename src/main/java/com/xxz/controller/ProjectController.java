@@ -3,6 +3,9 @@ package com.xxz.controller;
 
 import com.xxz.bean.*;
 import com.xxz.mapper.*;
+import com.xxz.service.CustomerService;
+import com.xxz.service.EmpService;
+import com.xxz.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,77 +29,27 @@ import java.util.*;
 public class ProjectController {
 
     @Autowired
-    private ProjectMapper projectMapper;
+    private ProjectService projectService;
 
     @Autowired
-    private CustomerMapper customerMapper;
-//
-    @Autowired
-    private InterviewMapper interviewMapper;
+    private CustomerService customerService;
 
     @Autowired
-    private EmployeeMapper employeeMapper;
-
-    @Autowired
-    private ContractMapper contractMapper;
-
-    @Autowired
-    private PaymentBackMapper paymentBackMapper;
-
-    @Autowired
-    private CusProMapper cusProMapper;
-
-//    @Autowired
-//    private
+    private EmpService empService;
 
     //条件查询
     @RequestMapping("/projects")
     public String queryAll(Model model, String pName, String pMoeny, String pProgress, String pOwner) throws UnsupportedEncodingException {
 //        System.out.println(URLEncoder.encode(eJob,"utf-8"));
         System.out.println("queryAll-customers-confition:" + pName + "-" + pMoeny + "-" + pProgress + "-" + pOwner);
-        //样本
-        ProjectExample projectExampleExample = new ProjectExample();
-        //条件盒子
-        ProjectExample.Criteria criteria = projectExampleExample.createCriteria();
-        //追加条件
-        if (pName != null){
-            criteria.andPNameLike("%" + pName + "%");
-        }
-        if(pMoeny != null && !pMoeny.equals("")){
-            criteria.andPMoenyEqualTo(pMoeny);
-        }
-        if(pProgress != null && !pProgress.equals("")){
-            criteria.andPProgressEqualTo(pProgress);
-        }
-        if(pOwner != null && !pOwner.equals("")){
-            criteria.andPOwnerLike("%" + pOwner + "%");
-        }
-        //查询
-        List<Project> projectList = projectMapper.selectByExample(projectExampleExample);
-        for (Project project : projectList) {
-            CusProExample cusProExample = new CusProExample();
-            System.out.println("===================================================================");
-            System.out.println(project);
-            cusProExample.createCriteria().andCpIdEqualTo(project.getCpId());
-            List<CusPro> cusProList = cusProMapper.selectByExample(cusProExample);
-            List<String> cRenames = new ArrayList<>();
-            //给Project对象设置cIds拜访客户cId
-            String cIds = new String();
-            for (CusPro cusPro : cusProList) {
-                cRenames.add(customerMapper.selectByPrimaryKey(cusPro.getcId()).getcRename());
-                cIds += cusPro.getcId() + ",";
-            }
-            project.setcIds(cIds);
-            project.setcRenames(cRenames);
-        }
+        List<Project> projectList = projectService.queryAllProject(pName, pMoeny, pProgress, pOwner);
         System.out.println("条件查询结果：" + projectList);
         model.addAttribute("projectList", projectList);
-
         //============================================================================
         //(2)客户名称下拉框、客户单位下拉框,我方员工姓名
         //(2)客户名称下拉框、客户单位下拉框,我方员工姓名
-        List<Customer> customerList = customerMapper.selectByExample(null);
-        List<Employee> employeeList = employeeMapper.selectByExample(null);
+        List<Customer> customerList = customerService.queryAllCus(null, null, null);
+        List<Employee> employeeList = empService.queryAllEmp(null, null, null);
         //获取所有客户名称
         Set<String> cRenameSet = new HashSet<>();
         //获取所有我方员工姓名
@@ -118,22 +71,7 @@ public class ProjectController {
     public String addProject(HttpSession session, Project project, String[] cRenames){
         //(1)获取session域中的pbId
         //设置回款编号
-        System.out.println(project);
-        projectMapper.insertSelective(project);
-        Integer newIndex = project.getpId();
-        project.setCpId(newIndex);
-        project.setPbId(newIndex * 1000);
-        projectMapper.updateByPrimaryKeySelective(project);
-        for (String cRename : cRenames) {
-            //追加关系表cus_pro
-            CusPro cusPro = new CusPro();
-            cusPro.setCpId(newIndex);
-            cusPro.setpId(newIndex);
-            CustomerExample customerExample = new CustomerExample();
-            customerExample.createCriteria().andCRenameEqualTo(cRename);
-            cusPro.setcId(customerMapper.selectByExample(customerExample).get(0).getcId());
-            cusProMapper.insertSelective(cusPro);
-        }
+        projectService.addProject(project, cRenames);
         return "redirect:/project/projects";
     }
 
@@ -141,17 +79,7 @@ public class ProjectController {
     @RequestMapping("/queryById/{pId}")
     @ResponseBody
     public Map<String,Object> queryById(@PathVariable("pId") Integer pId){
-        Project project = projectMapper.selectByPrimaryKey(pId);
-        //========================================================
-        CusProExample cusProExample = new CusProExample();
-        cusProExample.createCriteria().andCpIdEqualTo(project.getCpId());
-        List<CusPro> cusProList = cusProMapper.selectByExample(cusProExample);
-        List<String> cRenames = new ArrayList<>();
-        //给Project对象设置cIds拜访客户cId
-        for (CusPro cusPro : cusProList) {
-            cRenames.add(customerMapper.selectByPrimaryKey(cusPro.getcId()).getcRename());
-        }
-        project.setcRenames(cRenames);
+        Project project = projectService.queryById(pId);
         //============================================
         Map<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("code","200");
@@ -163,42 +91,14 @@ public class ProjectController {
     //修改项目
     @RequestMapping("/update")
     public String updateProject(Project project, String[] cRenames){
-        //清空客户与项目信息
-        CusProExample cusProExample = new CusProExample();
-        cusProExample.createCriteria().andCpIdEqualTo(project.getpId());
-        cusProMapper.deleteByExample(cusProExample);
-        //重新添加客户信息到cus_pro
-        for (String cRename : cRenames) {
-            //追加关系表cus_pro
-            CusPro cusPro = new CusPro();
-            cusPro.setCpId(project.getpId());
-            cusPro.setpId(project.getpId());
-            CustomerExample customerExample = new CustomerExample();
-            customerExample.createCriteria().andCRenameEqualTo(cRename);
-            cusPro.setcId(customerMapper.selectByExample(customerExample).get(0).getcId());
-            cusProMapper.insertSelective(cusPro);
+        boolean result = projectService.updateProject(project, cRenames);
+        if(result){
+            System.out.println("操作成功！");
+        }else {
+            System.out.println("操作失败！");
         }
-        //重写字段值
-        project.setCpId(project.getpId());
-        project.setPbId(project.getpId() * 1000);
-        projectMapper.updateByPrimaryKey(project);
         return "redirect:/project/projects";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //拜访模块===================================================================================
 //拜访模块===================================================================================
@@ -206,39 +106,10 @@ public class ProjectController {
 //    /project/interview_record
     @RequestMapping("/interview_record")
     public String interview_recor(Model model, String cIds, Integer pId){
-        InterviewExample interviewExample = new InterviewExample();
-        //获取目标cId信息
-        String[] split = cIds.split(",");
-        List<Integer> integers = new ArrayList<>();
-        for (String s : split) {
-            integers.add(Integer.valueOf(s));
-        }
-        System.out.println(integers+"================================================================");
-//        interviewExample.createCriteria().andCIdIn(integers);
-        interviewExample.createCriteria().andPIdEqualTo(pId);
-        //查询
-        List<Interview> currentInterviewList = interviewMapper.selectByExample(interviewExample);
-        for (Interview interview : currentInterviewList) {
-            //设置客户姓名
-            if(interview.getcId() != null && !interview.getcId().equals("")){
-                interview.setcRename(customerMapper.selectByPrimaryKey(interview.getcId()).getcRename());
-            }
-            //我方员工姓名
-            if(interview.geteId() != null && !interview.geteId().equals("")){
-                interview.seteRename(employeeMapper.selectByPrimaryKey(interview.geteId()).getRename());
-            }
-            //设置拜访类型
-            if(interview.getpName() == null || interview.getpName().equals("")){
-                interview.setpName(projectMapper.selectByPrimaryKey(interview.getpId()).getpName());
-//                interview.setpName("农村购物致富商城系统项目");
-            }
-        }
+        List<Interview> currentInterviewList = projectService.interview_recor(cIds, pId);
         model.addAttribute("currentInterviewList", currentInterviewList);
         return "project/interview_record/interview_record";
     }
-
-
-
 
 
 //合同模块===================================================================================
@@ -247,10 +118,8 @@ public class ProjectController {
 //    /project/contract/contract_record
     @RequestMapping("/contract_record")
     public String contract_record(Model model, Integer pId){
-        ContractExample contractExample = new ContractExample();
-        contractExample.createCriteria().andPIdEqualTo(pId);
-        List<Contract> contractList = contractMapper.selectByExample(contractExample);
-        model.addAttribute("contractList", contractList);
+        List<Contract> contracts = projectService.contract_record(pId);
+        model.addAttribute("contractList", contracts);
         model.addAttribute("pId", pId);
         return "project/contract/contract";
     }
@@ -392,16 +261,17 @@ public class ProjectController {
         //=============================================
         //实现添加业务
         System.out.println(contract);
-        contractMapper.insertSelective(contract);
+        boolean result = projectService.contractAdd(contract);
+        if(result){
+            System.out.println("添加成功！");
+        }else {
+            System.out.println("操作失败！");
+        }
         //获取
         return "redirect:/project/contract_record?pId=" + pId;
     }
 
     //招标合同上传(/tenders/)
-
-
-
-
 
 //回款模块===================================================================================
 //回款模块===================================================================================
@@ -412,9 +282,7 @@ public class ProjectController {
         //(1)给定当前操作的项目pbId到Session域中---添加时需要
 //        session.setAttribute("pbId", pbId);
         //(2)回显最大pbId
-        PaymentBackExample paymentBackExample1 = new PaymentBackExample();
-        paymentBackExample1.createCriteria().andPbIdEqualTo(pbId);
-        List<PaymentBack> paymentBacks = paymentBackMapper.selectByExample(paymentBackExample1);
+        List<PaymentBack> paymentBacks = projectService.queryAllPayBack(pbId);
         TreeSet<Integer> pbIds = new TreeSet<>();
         for (PaymentBack paymentBack : paymentBacks) {
             pbIds.add(paymentBack.getPbId());
@@ -426,24 +294,22 @@ public class ProjectController {
             model.addAttribute("pbId", pId * 1000);
         }
         //处理查询业务
-        PaymentBackExample paymentBackExample = new PaymentBackExample();
         Integer startPbId = Integer.valueOf(pbId.toString().substring(0,2)) * 100;
         Integer endPbId = startPbId + 999;
         System.out.println("--------------start=" + startPbId + "------end=" + endPbId);
-        paymentBackExample.createCriteria().andPbIdBetween(startPbId, endPbId);
-        List<PaymentBack> paymentBackList = paymentBackMapper.selectByExample(paymentBackExample);
+        List<PaymentBack> paymentBackList = projectService.PbIdBetweenStartAndEnd(startPbId, endPbId);
         model.addAttribute("paymentBackList", paymentBackList);
         return "project/payment_back/payment_back";
     }
 
     //添加回款业务
     @RequestMapping("/addPayBack")
-    public String addProject(HttpSession session, PaymentBack paymentBack){
+    public String addPayMent(HttpSession session, PaymentBack paymentBack){
         //(1)获取session域中的pbId
 //        Integer pbId = (Integer) session.getAttribute("pbId");
         //(2)回去回显pbId(last)
         paymentBack.setPbId(paymentBack.getPbId() + 1);
-        paymentBackMapper.insert(paymentBack);
+        projectService.addPayMent(paymentBack);
         return "redirect:/project/payment_back?pbId=" + paymentBack.getPbId();
     }
     //查询回款业务
@@ -451,9 +317,7 @@ public class ProjectController {
     @RequestMapping("payBackQueryById/{pbId}")
     @ResponseBody
     public Map<String,Object> payBackQueryById(@PathVariable("pbId") Integer pbId){
-        PaymentBackExample paymentBackExample = new PaymentBackExample();
-        paymentBackExample.createCriteria().andPbIdEqualTo(pbId);
-        PaymentBack paymentBack = paymentBackMapper.selectByExample(paymentBackExample).get(0);
+        PaymentBack paymentBack = projectService.payBackQueryById(pbId);
         Map<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("code","200");
         stringObjectHashMap.put("data",paymentBack);
@@ -464,7 +328,10 @@ public class ProjectController {
     //修改回款信息
     @RequestMapping("/payBackUpdate")
     private String payBackUpdate(PaymentBack paymentBack){
-        paymentBackMapper.updatePayBack(paymentBack);
+        boolean result = projectService.payBackUpdate(paymentBack);
+        if (result){
+            System.out.println("操作成功！");
+        }
         return "redirect:/project/payment_back?pbId=" + paymentBack.getPbId();
     }
 }

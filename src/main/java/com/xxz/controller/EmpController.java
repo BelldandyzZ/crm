@@ -8,6 +8,7 @@ import com.xxz.bean.Employee;
 import com.xxz.bean.EmployeeExample;
 import com.xxz.listener.DemoDataListener;
 import com.xxz.mapper.EmployeeMapper;
+import com.xxz.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,18 +31,14 @@ import java.util.Map;
 public class EmpController {
 
     @Autowired
-    private EmployeeMapper employeeMapper;
+    private EmpService empService;
 
     @RequestMapping("/login")
     public String empLogin(String ename, String epwd, HttpSession session){
         System.out.println(ename + "----" + epwd);
-        if(ename != null && !ename.equals("") && epwd != null && !epwd.equals("")){
-            EmployeeExample employeeExample = new EmployeeExample();
-            employeeExample.createCriteria().andENameEqualTo(ename).andEPwdEqualTo(epwd);
-            Employee employee = employeeMapper.selectByExample(employeeExample).get(0);
-            if(employee != null){
-                session.setAttribute("emp", employee);
-            }
+        Employee employee = empService.empLogin(ename, epwd);
+        if(employee != null){
+            session.setAttribute("emp", employee);
         }
         return "index";
     }
@@ -51,22 +48,7 @@ public class EmpController {
     public String queryAll(Model model,String rename, String eJob, String eBirthday) throws UnsupportedEncodingException {
 //        System.out.println(URLEncoder.encode(eJob,"utf-8"));
         System.out.println("queryAll emp by confition:" + rename + "-" + eJob + "-" + eBirthday);
-        //样本
-        EmployeeExample employeeExample = new EmployeeExample();
-        //条件盒子
-        EmployeeExample.Criteria criteria = employeeExample.createCriteria();
-        //追加条件
-        if (rename != null){
-            criteria.andRenameLike("%" + rename + "%");
-        }
-        if(eJob != null && !eJob.equals("")){
-            criteria.andEJobEqualTo(eJob);
-        }
-        if(eBirthday != null && !eBirthday.equals("")){
-            criteria.andEBirthdayEqualTo(eBirthday);
-        }
-        //查询
-        List<Employee> employeeList = employeeMapper.selectByExample(employeeExample);
+        List<Employee> employeeList = empService.queryAllEmp(rename, eJob, eBirthday);
         System.out.println("条件查询结果：" + employeeList);
         model.addAttribute("empList", employeeList);
         return "employees/employee";
@@ -76,7 +58,8 @@ public class EmpController {
     @RequestMapping("/queryById/{eId}")
     @ResponseBody
     public Map<String,Object> queryById(@PathVariable("eId") Integer eId, HttpServletResponse response) throws IOException {
-        Employee employee = employeeMapper.selectByPrimaryKey(eId);
+
+        Employee employee = empService.queryById(eId);
         Map<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("code","200");
         stringObjectHashMap.put("data",employee);
@@ -89,7 +72,12 @@ public class EmpController {
     public String empAdd(Employee employee){
         System.out.println("add emp..." + employee);
         //调用接口将数据添加到数据库
-        employeeMapper.insertSelective(employee);
+        boolean result = empService.empAdd(employee);
+        if (result){
+            System.out.println("emp操作成功！");
+        }else {
+            System.out.println("emp操作失败！");
+        }
         return "redirect:/emp/emps";
     }
 
@@ -98,7 +86,12 @@ public class EmpController {
     public String empDel(@PathVariable("eId") Integer eId){
         System.out.println(eId);
         //删除业务
-        employeeMapper.deleteByPrimaryKey(eId);
+        boolean result = empService.empDel(eId);
+        if (result){
+            System.out.println("emp操作成功！");
+        }else {
+            System.out.println("emp操作失败！");
+        }
         //重定向到empList界面展示最新数据
         return "redirect:/emp/emps";
     }
@@ -109,7 +102,12 @@ public class EmpController {
         //展示emp
         System.out.println(employee);
         //调用目标接口实现信息修改
-        employeeMapper.updateByPrimaryKeySelective(employee);
+        boolean result = empService.empUpdate(employee);
+        if (result){
+            System.out.println("emp操作成功！");
+        }else {
+            System.out.println("emp操作失败！");
+        }
         //重定向到empMenu界面
         return "redirect:/emp/emps";
     }
@@ -152,7 +150,7 @@ public class EmpController {
         response.setHeader("Content-disposition", "attachment;filename="
                 + URLEncoder.encode("员工信息", "UTF-8") + ".xlsx");
         //获取目标数据
-        List<Employee> employees = employeeMapper.selectByExample(null);
+        List<Employee> employees = empService.queryAllEmp(null, null, null);
         //响应到浏览器
         EasyExcel.write(response.getOutputStream(), Employee.class).sheet("模板").doWrite(employees);
         System.out.println("excelOutput.................");
