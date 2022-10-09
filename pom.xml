@@ -68,7 +68,29 @@
             <artifactId>mybatis-spring</artifactId>
             <version>2.0.7</version>
         </dependency>
-
+        <!--分页插件依赖-->
+        <!--MyBatis的PageHelper插件-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.0.3</version>
+        </dependency>
+        <!--整合第三方缓存EHCache-->
+        <!--Mybatis EHCache整合包-->
+        <dependency>
+            <groupId>org.mybatis.caches</groupId>
+            <artifactId>mybatis-ehcache</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+        <!--slfj4日志门面(接口)的一个具体实现
+        注意：存在slfj4时，作为简易日志的log4j将失效，
+        此时我们需要借助slf4j的具体实现logback来打印日志，
+        创建logback的配置文件logback.xml来解决日志打印问题-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
 
 
         <!--spring-->

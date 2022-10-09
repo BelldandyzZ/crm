@@ -4,18 +4,19 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xxz.bean.Employee;
 import com.xxz.bean.EmployeeExample;
 import com.xxz.listener.DemoDataListener;
 import com.xxz.mapper.EmployeeMapper;
+import com.xxz.service.DicValueService;
 import com.xxz.service.EmpService;
+import com.xxz.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -33,24 +34,55 @@ public class EmpController {
     @Autowired
     private EmpService empService;
 
+    @Autowired
+    private DicValueService dicValueService;
+
+    @Autowired
+    private ProjectService projectService;
+
     @RequestMapping("/login")
     public String empLogin(String ename, String epwd, HttpSession session){
         System.out.println(ename + "----" + epwd);
         Employee employee = empService.empLogin(ename, epwd);
+        List<String> allProgress = dicValueService.getAllProgress();
+        System.out.println("===========================================================");
+        System.out.println("===========================================================");
+        System.out.println("===========================================================");
+        System.out.println("===========================================================");
+        System.out.println(allProgress);
         if(employee != null){
             session.setAttribute("emp", employee);
+            session.setAttribute("jobTypes", dicValueService.getAllJobType());
+            session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
+            session.setAttribute("progressTypes", allProgress);
+            session.setAttribute("pNames", projectService.getAllProjectName());
+            return "index";
+        }else{
+            return "login";
         }
-        return "index";
     }
 
     //条件查询
     @RequestMapping("/emps")
-    public String queryAll(Model model,String rename, String eJob, String eBirthday) throws UnsupportedEncodingException {
+    public String queryAll(Model model,String rename, String eJob, String eBirthday,
+                          @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
 //        System.out.println(URLEncoder.encode(eJob,"utf-8"));
         System.out.println("queryAll emp by confition:" + rename + "-" + eJob + "-" + eBirthday);
+        if (pageNum <=0){
+            pageNum = 1;
+        }
+        /**/
+        PageHelper.startPage(pageNum,  10);
+
         List<Employee> employeeList = empService.queryAllEmp(rename, eJob, eBirthday);
-        System.out.println("条件查询结果：" + employeeList);
-        model.addAttribute("empList", employeeList);
+
+        PageInfo<Employee> empPageInfo = new PageInfo<>(employeeList, 5);
+        System.out.println("条件查询结果：" + empPageInfo.getList());
+        model.addAttribute("empPageInfo", empPageInfo);
+        //回显条件
+        model.addAttribute("rename", rename);
+        model.addAttribute("eJob", eJob);
+        model.addAttribute("eBirthday", eBirthday);
         return "employees/employee";
     }
 

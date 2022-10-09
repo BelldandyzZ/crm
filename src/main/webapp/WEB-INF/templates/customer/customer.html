@@ -10,7 +10,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
   <!-- Ionicons -->
-  <link rel="stylesheet" th:href="@{https://cdn.bootcdn.net/ajax/libs/ionicons/2.0.1/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/dist/css/ionicons.min.css}">
   <!-- 主题样式 -->
   <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
 </head>
@@ -77,12 +77,8 @@
                                   <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label>单位类型</label>
-                                            <select name="cName" class="form-control custom-select" required>
-                                                <option value="学校">学校</option>
-                                                <option value="国企">国企</option>
-                                                <option value="政府机构">政府机构</option>
-                                                <option value="名气外企">名气外企</option>
-                                                <option value="其他">其他</option>
+                                            <select name="cCieType" class="form-control custom-select" required>
+                                                <option th:each="companyJob:${session.companyTypes}" th:text="${companyJob}" th:value="${companyJob}">售后</option>
                                             </select>
                                       </div>
                                   </span>
@@ -91,7 +87,7 @@
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
                                           <label for="">单位名称</label>
-                                          <input type="text"  name="cCieType" class="form-control" required>
+                                          <input type="text"  name="cName" class="form-control" required>
                                       </div>
                                   </span>
                                   <span class="col-sm-6 col-md-6">
@@ -114,12 +110,7 @@
                                           <label for="">岗位</label>
 <!--                                          <input type="text" name="cJob" class="form-control">-->
                                       <select name="cJob" class="form-control custom-select" required>
-                                         <option value="售前">售前</option>
-                                         <option value="售后">售后</option>
-                                         <option value="销售">销售</option>
-                                         <option value="商务">商务</option>
-                                         <option value="财务">财务</option>
-                                         <option value="其他">其他</option>
+                                          <option th:each="job:${session.jobTypes}"  th:text="${job}" th:value="${job}">售后</option>
                                       </select>
                                       </div>
                                   </span>
@@ -188,11 +179,7 @@
                                           <label>单位类型</label>
                                           <!--                                          <input type="date" id="eBirthday" name="eBirthday" class="form-control">-->
                                             <select id=""  class="form-control custom-select">
-                                                <option value="学校">学校</option>
-                                                <option value="国企">国企</option>
-                                                <option value="政府机构">政府机构</option>
-                                                <option value="名气外企">名气外企</option>
-                                                <option value="其他">其他</option>
+                                                 <option th:each="companyJob:${session.companyTypes}" th:text="${companyJob}" th:value="${companyJob}">售后</option>
                                             </select>
                                       </div>
                                   </span>
@@ -223,12 +210,7 @@
                                           <label for="">岗位</label>
                                           <!--                                          <input type="text" name="cJob" class="form-control">-->
                                       <select id="cJob" name="cJob" class="form-control custom-select">
-                                         <option value="售前">售前</option>
-                                         <option value="售后">售后</option>
-                                         <option value="销售">销售</option>
-                                         <option value="商务">商务</option>
-                                         <option value="财务">财务</option>
-                                         <option value="其他">其他</option>
+                                    <option th:each="job:${session.jobTypes}"  th:text="${job}" th:value="${job}">售后</option>
                                       </select>
                                       </div>
                                   </span>
@@ -289,7 +271,7 @@
                     <!-- text input -->
                     <div class="form-group">
                         <label for="con_cRename">客户姓名</label>
-                      <input type="text" id="con_cRename" name="cRename" class="form-control" placeholder="姓名">
+                      <input type="text" id="con_cRename" name="cRename" th:value="${cRename}" class="form-control" placeholder="姓名">
                     </div>
                   </div>
                   <div class="col-sm-3">
@@ -297,14 +279,9 @@
                       <div class="form-group">
                           <label for="con_cJob">岗位</label>
 <!--                          <input type="text" id="phone" class="form-control" placeholder="电话">-->
-                          <select id="con_cJob" name="cJob" class="form-control custom-select">
+                          <select id="con_cJob" name="cJob" class="form-control custom-select" >
                               <option value="">全部</option>
-                              <option value="售前">售前</option>
-                              <option value="售后">售后</option>
-                              <option value="销售">销售</option>
-                              <option value="商务">商务</option>
-                              <option value="财务">财务</option>
-                              <option value="其他">其他</option>
+                              <option th:each="job:${session.jobTypes}" th:selected="${cJob == job}"  th:text="${job}" th:value="${job}">售后</option>
                           </select>
                       </div>
 
@@ -314,7 +291,7 @@
                     <!-- text input -->
                     <div class="form-group">
                         <label for="con_cName">所在单位名称</label>
-                      <input type="text" id="con_cName" name="cName" class="form-control" placeholder="所在单位">
+                      <input type="text" id="con_cName" name="cName" th:value="${cName}"  class="form-control" placeholder="所在单位">
                     </div>
                   </div>
 
@@ -377,13 +354,13 @@
                       </tr>
                   </thead>
                   <tbody>
-                    <tr th:each="cus,cusState : ${customerList}">
+                    <tr th:each="cus,cusState : ${cusPageInfo.list}">
 <!--                     <td th:text="${cusState.index}">1</td>-->
 <!--                     <td th:text="${cus.cId}">1</td>-->
                      <td th:text="${cus.cRename}">1</td>
                      <td th:text="${cus.cName}">1</td>
-                     <td th:text="${cus.cDepart}">1</td>
                      <td th:text="${cus.cCieType}">1</td>
+                     <td th:text="${cus.cDepart}">1</td>
                      <td th:text="${cus.cJob}">1</td>
                      <td th:text="${cus.cTele}">1</td>
                      <td th:text="${cus.cPost}">1</td>
@@ -413,6 +390,32 @@
                   </tbody>
                 </table>
                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
+              <nav>
+                  <ul class="mypagination">
+                      <li><a>
+                          总页码：<span th:text="${cusPageInfo.pages}"></span>&nbsp;&nbsp;&nbsp;
+                          总条数：<span th:text="${cusPageInfo.total}"></span>
+                      </a></li>
+
+                      <li th:style="${cusPageInfo.hasPreviousPage ? '' : 'display: none;'}">
+                          <a th:href="@{'/emp/emps?pageNum=' + ${cusPageInfo.pageNum - 1} + ${cRename != null ? '&cRename='+cRename : ''} + ${cName != null ? '&cName='+cName : ''} + ${cJob != null ? '&cJob='+cJob : ''}}"
+                             aria-label="Previous">
+                              <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
+                      <li th:each="pageNum : ${cusPageInfo.navigatepageNums}"  >
+                          <a th:href="@{'/emp/emps?pageNum=' + ${pageNum} + ${cRename != null ? '&cRename='+cRename : ''} + ${cName != null ? '&cName='+cName : ''} + ${cJob != null ? '&cJob='+cJob : ''}}"
+                             th:style="${cusPageInfo.pageNum == pageNum ? 'background:#5faee3;' : ''}"
+                             th:text="${pageNum}"></a></li>
+                      <li th:style="${cusPageInfo.hasNextPage ? '' : 'display: none;'}">
+                          <a th:href="@{'/emp/emps?pageNum=' + ${cusPageInfo.pageNum + 1} + ${cRename != null ? '&cRename='+cRename : ''} + ${cName != null ? '&cName='+cName : ''} + ${cJob != null ? '&cJob='+cJob : ''}}"
+                             aria-label="Next">
+                              <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
+                      <!--                                        <li><a href="#">尾页</a></li>-->
+                  </ul>
+              </nav>
               </div>
               <!-- /.card-body -->
             </div>
@@ -514,35 +517,35 @@
         })
 
         //数据的分页
-        $('#table_data').DataTable(
-          {
-          "language": {
-            "sProcessing": "处理中...",
-           "sLengthMenu": "显示 _MENU_ 项结果",
-           "sZeroRecords": "没有匹配结果",
-           "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-           "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-           "sInfoPostFix": "",
-           "sSearch": "搜索:",
-           "sUrl": "",
-           "sEmptyTable": "表中数据为空",
-           "sLoadingRecords": "载入中...",
-           "sInfoThousands": ",",
-            "oPaginate":{
-              "sFirst": "首页",
-               "sPrevious": "上页",
-               "sNext": "下页",
-               "sLast": "末页"
-            }
-            },
-          "paging": true,
-          "lengthChange": false,
-          "searching": false,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false,
-          "responsive": true,
-        });
+        // $('#table_data').DataTable(
+        //   {
+        //   "language": {
+        //     "sProcessing": "处理中...",
+        //    "sLengthMenu": "显示 _MENU_ 项结果",
+        //    "sZeroRecords": "没有匹配结果",
+        //    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        //    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        //    "sInfoPostFix": "",
+        //    "sSearch": "搜索:",
+        //    "sUrl": "",
+        //    "sEmptyTable": "表中数据为空",
+        //    "sLoadingRecords": "载入中...",
+        //    "sInfoThousands": ",",
+        //     "oPaginate":{
+        //       "sFirst": "首页",
+        //        "sPrevious": "上页",
+        //        "sNext": "下页",
+        //        "sLast": "末页"
+        //     }
+        //     },
+        //   "paging": true,
+        //   "lengthChange": false,
+        //   "searching": false,
+        //   "ordering": true,
+        //   "info": true,
+        //   "autoWidth": false,
+        //   "responsive": true,
+        // });
   });
 </script>
 </body>

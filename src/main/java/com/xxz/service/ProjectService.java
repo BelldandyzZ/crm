@@ -74,6 +74,16 @@ public class ProjectService {
         return projectList;
     }
 
+    /*获取所有项目名称*/
+    public List<String> getAllProjectName(){
+        ArrayList<String> strings = new ArrayList<>();
+        List<Project> projects = projectMapper.selectByExample(null);
+        for (Project project : projects) {
+            strings.add(project.getpName());
+        }
+        return strings;
+    }
+
     /*添加项目*/
     public void addProject(Project project, String[] cRenames){
         //(1)获取session域中的pbId

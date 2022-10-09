@@ -66,7 +66,9 @@ insert  into `cus_pro`(`cp_id`,`p_id`,`c_id`) values
 (6,6,2),
 (6,6,1),
 (8,8,1),
-(7,7,4);
+(7,7,4),
+(9,9,2),
+(10,10,1);
 
 /*Table structure for table `customer` */
 
@@ -84,7 +86,7 @@ CREATE TABLE `customer` (
   `c_hobby` varchar(255) DEFAULT NULL COMMENT '爱好',
   `c_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `customer` */
 
@@ -92,7 +94,8 @@ insert  into `customer`(`c_id`,`c_rename`,`c_name`,`c_depart`,`c_cie_type`,`c_jo
 (1,'张三','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),
 (2,'李四','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),
 (4,'王五','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),
-(6,'123','学校','231','12312','销售','3123','123123@qq.com','312312','13213');
+(6,'123','张家界航院','销售部','学校','销售','3123','123123@qq.com','312312','13213'),
+(7,'123','张家界航院','销售部','政府机构','售前','123','123','篮球','123');
 
 /*Table structure for table `employee` */
 
@@ -111,18 +114,32 @@ CREATE TABLE `employee` (
   `e_honor` varchar(255) DEFAULT NULL COMMENT '社会荣誉',
   `e_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`e_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 /*Data for the table `employee` */
 
 insert  into `employee`(`e_id`,`rename`,`e_name`,`e_pwd`,`e_birthday`,`e_school`,`e_job`,`e_start_time`,`e_social_position`,`e_honor`,`e_remark`) values 
-(1,'jack','jack','123','2022-10-08','张家界学院','销售','2022-10-08','党员','党员-省赛一等奖','良好'),
-(2,'marry','marry','123','2022-10-08','张家界航院','销售','2022-10-08','党员','团员-666','良好'),
-(3,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),
-(4,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),
-(5,'marry','marry','123','2022-10-01','张家界航院','销售','2022-10-01','党员','团员-无','良好'),
-(6,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),
-(7,'marry','marry','123','2022-10-01','张家界航院','销售','2022-10-01','党员','团员-无','良好');
+(1,'jack','jack','123','2022-10-08','张家界学院','售后','2022-10-08','党员','党员-省赛一等奖','良好'),
+(2,'marry','marry','123','2022-10-08','张家界航院','售前','2022-10-08','党员','团员-666','良好'),
+(3,'tom','tom','123','2022-10-01','张家界航院','售前','2022-10-01','党员','群众-无','良好'),
+(4,'tom','tom','123','2022-10-01','张家界航院','售前','2022-10-01','党员','群众-无','良好'),
+(5,'marry','marry','123','2022-10-01','张家界航院','售前','2022-10-01','党员','团员-无','良好'),
+(6,'tom','tom','123','2022-10-01','张家界航院','售前','2022-10-01','党员','群众-无','良好'),
+(7,'marry','marry','123','2022-10-01','张家界航院','售前','2022-10-01','党员','团员-无','良好'),
+(9,'jack','jack','123','2022-10-08','张家界学院','销售','2022-10-08','党员','党员-省赛一等奖','良好'),
+(10,'marry','marry','123','2022-10-08','张家界航院','售前','2022-10-08','党员','团员-666','良好'),
+(11,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),
+(12,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),
+(13,'marry','marry','123','2022-10-01','张家界航院','售前','2022-10-01','党员','团员-无','良好'),
+(14,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),
+(15,'marry','marry','123','2022-10-01','张家界航院','售前','2022-10-01','党员','团员-无','良好'),
+(16,'jack','jack','123','2022-10-08','张家界学院','销售','2022-10-08','党员','党员-省赛一等奖','良好'),
+(17,'marry','marry','123','2022-10-08','张家界航院','销售','2022-10-08','党员','团员-666','良好'),
+(18,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),
+(19,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),
+(20,'marry','marry','123','2022-10-01','张家界航院','售前','2022-10-01','党员','团员-无','良好'),
+(21,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),
+(22,'marry','marry','123','2022-10-01','张家界航院','销售','2022-10-01','党员','团员-无','良好');
 
 /*Table structure for table `interview` */
 
@@ -139,7 +156,7 @@ CREATE TABLE `interview` (
   `i_content` varchar(255) DEFAULT NULL COMMENT '内容摘要',
   `i_next` varchar(255) DEFAULT NULL COMMENT '下一步计划',
   PRIMARY KEY (`i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 /*Data for the table `interview` */
 
@@ -150,7 +167,8 @@ insert  into `interview`(`i_id`,`i_company`,`c_id`,`i_visit_time`,`p_id`,`e_id`,
 (15,'厚朴公司',1,'2022-10-03',2,2,'jack|marry','牛逼','揍你'),
 (18,'热望亲热去',2,'2022-10-08',1,4,'大是大非','撒旦发射点','发放'),
 (19,'热望亲热去',1,'2022-10-08',1,4,'大是大非','撒旦发射点','发放'),
-(20,'热望亲热去',4,'2022-10-08',1,4,'大是大非','撒旦发射点','发放');
+(20,'热望亲热去',4,'2022-10-08',1,4,'大是大非','撒旦发射点','发放'),
+(21,'123',1,'2022-10-09',1,1,'jack|marry','123','123');
 
 /*Table structure for table `payment_back` */
 
@@ -161,7 +179,7 @@ CREATE TABLE `payment_back` (
   `pb_money` int(11) NOT NULL COMMENT '回款金额',
   `pb_order` int(11) NOT NULL AUTO_INCREMENT COMMENT '录入顺序，自增',
   KEY `pb_order` (`pb_order`)
-) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8;
 
 /*Data for the table `payment_back` */
 
@@ -180,7 +198,8 @@ insert  into `payment_back`(`pb_id`,`pb_money`,`pb_order`) values
 (2009,123123,128),
 (6001,23,129),
 (5001,1,130),
-(8001,1,131);
+(8001,1,131),
+(10001,213,133);
 
 /*Table structure for table `project` */
 
@@ -195,7 +214,7 @@ CREATE TABLE `project` (
   `cp_id` int(11) DEFAULT NULL COMMENT '客户参与人员，多人',
   `pb_id` int(11) DEFAULT NULL COMMENT '回款表的id，要回款5次需要一张新表',
   PRIMARY KEY (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `project` */
 
@@ -205,7 +224,9 @@ insert  into `project`(`p_id`,`p_name`,`p_moeny`,`p_progress`,`p_owner`,`cp_id`,
 (5,'创业','12W','意向','jack',5,5000),
 (6,'创业2','12W','方案','marry',6,6000),
 (7,'创业4','12W','意向','jack',7,7000),
-(8,'创业3','12W','回款','jack',8,8000);
+(8,'创业3','12W','回款','jack',8,8000),
+(9,'123','123','意向','jack',9,9000),
+(10,'123','1123','意向','jack',10,10000);
 
 /*Table structure for table `type_dic` */
 
@@ -253,7 +274,7 @@ insert  into `value_dic`(`v_id`,`v_value`,`type_code`) values
 (14,'招标','progress'),
 (15,'合同','progress'),
 (16,'回款','progress'),
-(17,'结束',NULL);
+(17,'结束','progress');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

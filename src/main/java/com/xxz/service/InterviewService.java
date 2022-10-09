@@ -88,6 +88,9 @@ public class InterviewService {
 
     /*新增拜访*/
     public void itwAdd(Interview interview, String[] cRenames, String eRename){
+        ProjectExample projectExample = new ProjectExample();
+        projectExample.createCriteria().andPNameEqualTo(interview.getpName());
+        interview.setpId(projectMapper.selectByExample(projectExample).get(0).getpId());
         //获取eid并且设置到interview对象中添加到数据库
         if (eRename != null && !eRename.equals("")){
             EmployeeExample employeeExample = new EmployeeExample();

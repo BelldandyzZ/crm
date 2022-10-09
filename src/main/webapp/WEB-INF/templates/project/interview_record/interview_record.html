@@ -10,7 +10,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
     <!-- Ionicons -->
-    <link rel="stylesheet" th:href="@{https://cdn.bootcdn.net/ajax/libs/ionicons/2.0.1/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/dist/css/ionicons.min.css}">
     <!-- 主题样式 -->
     <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
 
@@ -51,7 +51,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="itw,itwState:${currentInterviewList}">
+                                    <tr th:each="itw,itwState:${itwRecordPageInfo.list}">
                                         <td th:text="${itw.iCompany}">1</td>
                                         <!--cId-->
                                         <td th:text="${itw.cRename}">1</td>
@@ -76,6 +76,32 @@
 <!--                                    </tr>-->
                                     </tbody>
                                 </table>
+                                itwRecordPageInfo
+                                <nav>
+                                    <ul class="mypagination">
+                                        <li><a>
+                                            总页码：<span th:text="${itwRecordPageInfo.pages}"></span>&nbsp;&nbsp;&nbsp;
+                                            总条数：<span th:text="${itwRecordPageInfo.total}"></span>
+                                        </a></li>
+
+                                        <li th:style="${itwRecordPageInfo.hasPreviousPage ? '' : 'display: none;'}">
+                                            <a th:href="@{'/emp/emps?pageNum=' + ${itwRecordPageInfo.pageNum - 1}}"
+                                               aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li th:each="pageNum : ${itwRecordPageInfo.navigatepageNums}"  >
+                                            <a th:href="@{'/emp/emps?pageNum=' + ${pageNum}}"
+                                               th:style="${itwRecordPageInfo.pageNum == pageNum ? 'background:#5faee3;' : ''}"
+                                               th:text="${pageNum}"></a></li>
+                                        <li th:style="${itwRecordPageInfo.hasNextPage ? '' : 'display: none;'}">
+                                            <a th:href="@{'/emp/emps?pageNum=' + ${itwRecordPageInfo.pageNum + 1}}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                        <!--                                        <li><a href="#">尾页</a></li>-->
+                                    </ul>
+                                </nav>
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
                             </div>
                             <!-- /.card-body -->
@@ -133,35 +159,35 @@
         })
 
         //数据的分页
-        $('#table_data').DataTable(
-            {
-                "language": {
-                    "sProcessing": "处理中...",
-                    "sLengthMenu": "显示 _MENU_ 项结果",
-                    "sZeroRecords": "没有匹配结果",
-                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                    "sInfoPostFix": "",
-                    "sSearch": "搜索:",
-                    "sUrl": "",
-                    "sEmptyTable": "表中数据为空",
-                    "sLoadingRecords": "载入中...",
-                    "sInfoThousands": ",",
-                    "oPaginate":{
-                        "sFirst": "首页",
-                        "sPrevious": "上页",
-                        "sNext": "下页",
-                        "sLast": "末页"
-                    }
-                },
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
+        // $('#table_data').DataTable(
+        //     {
+        //         "language": {
+        //             "sProcessing": "处理中...",
+        //             "sLengthMenu": "显示 _MENU_ 项结果",
+        //             "sZeroRecords": "没有匹配结果",
+        //             "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        //             "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        //             "sInfoPostFix": "",
+        //             "sSearch": "搜索:",
+        //             "sUrl": "",
+        //             "sEmptyTable": "表中数据为空",
+        //             "sLoadingRecords": "载入中...",
+        //             "sInfoThousands": ",",
+        //             "oPaginate":{
+        //                 "sFirst": "首页",
+        //                 "sPrevious": "上页",
+        //                 "sNext": "下页",
+        //                 "sLast": "末页"
+        //             }
+        //         },
+        //         "paging": true,
+        //         "lengthChange": false,
+        //         "searching": false,
+        //         "ordering": true,
+        //         "info": true,
+        //         "autoWidth": false,
+        //         "responsive": true,
+        //     });
     });
 </script>
 </body>

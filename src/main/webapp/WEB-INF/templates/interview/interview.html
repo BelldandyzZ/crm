@@ -10,7 +10,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
     <!-- Ionicons -->
-    <link rel="stylesheet" th:href="@{https://cdn.bootcdn.net/ajax/libs/ionicons/2.0.1/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/dist/css/ionicons.min.css}">
     <!-- 主题样式 -->
     <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
 
@@ -24,7 +24,7 @@
     <div class="modal fade" id="add_itw">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form id="" th:action="@{/interview/add}"  method="post" class="nav-link">
+                <form th:action="@{/interview/add}"  method="post" class="nav-link">
                     <div class="modal-body">
                         <div>
                             <div class="card card-default">
@@ -61,11 +61,9 @@
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label for="pId">拜访类型</label>
-                                          <select id="pId" name="pId" class="form-control custom-select" required>
+                                          <select id="pId" name="pName" class="form-control custom-select" required>
                                               <option value="">需要在项目表中选择</option>
-                                              <option value="1">工地项目</option>
-                                              <option value="2">xx公司项目</option>
-                                              <option value="3">修铁路</option>
+                                              <option th:each="pname:${session.pNames}" th:text="${pname}" th:value="${pname}"></option>
                                       </select>
                                       </div>
                                   </span>
@@ -135,7 +133,7 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_iCompany">客户单位</label>
-                                            <input type="text" id="con_iCompany" name="iCompany" class="form-control" placeholder="客户单位" value="">
+                                            <input type="text" id="con_iCompany" th:value="${iCompany}" name="iCompany" class="form-control" placeholder="客户单位" value="">
 <!--                                            <select id="con_iCompany" name="iCompany" class="form-control">-->
 <!--                                                <option value="">全部</option>-->
 <!--                                                <option th:each="company,cusState:${companySet}" th:text="${company}" th:value="${company}">全部</option>-->
@@ -146,7 +144,7 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_cRename">客户名称</label>
-                                            <input type="text" id="con_cRename" name="cRename" class="form-control" placeholder="客户名称">
+                                            <input type="text" id="con_cRename"th:value="${cRename}" name="cRename" class="form-control" placeholder="客户名称">
 <!--                                            <select id="con_cRename" name="cRename" class="form-control">-->
 <!--                                                <option value="">全部</option>-->
 <!--                                                <option th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}">全部</option>-->
@@ -161,7 +159,7 @@
                                             <label for="con_eRename">我方人员</label>
                                             <select id="con_eRename" name="eRename" class="form-control custom-select" >
                                                 <option value="">姓名按照a-z的首字母排，添加一样</option>
-                                                <option th:each="eRename,empState:${eRenameSet}" th:text="${eRename}" th:value="${eRename}">全部</option>
+                                                <option th:each="eRename,empState:${eRenameSet}" th:text="${eRename}" th:value="${eRename}" th:selected="${reERename == eRename}">全部</option>
                                             </select>
                                         </div>
                                     </div>
@@ -218,7 +216,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="itw,itwState:${interviewList}">
+                                    <tr th:each="itw,itwState:${itwPageInfo.list}">
                                         <td th:text="${itw.iCompany}">1</td>
                                         <!--cId-->
                                         <td th:text="${itw.cRename}">1</td>
@@ -234,6 +232,31 @@
                                     </tbody>
                                 </table>
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
+                                <nav>
+                                    <ul class="mypagination">
+                                        <li><a>
+                                            总页码：<span th:text="${itwPageInfo.pages}"></span>&nbsp;&nbsp;&nbsp;
+                                            总条数：<span th:text="${itwPageInfo.total}"></span>
+                                        </a></li>
+
+                                        <li th:style="${itwPageInfo.hasPreviousPage ? '' : 'display: none;'}">
+                                            <a th:href="@{'/emp/emps?pageNum=' + ${itwPageInfo.pageNum - 1} + ${iCompany != null ? '&iCompany='+iCompany : ''} + ${cRename != null ? '&cRename='+cRename : ''} + ${reERename != null ? '&eRename='+reERename : ''}}"
+                                               aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li th:each="pageNum : ${itwPageInfo.navigatepageNums}"  >
+                                            <a th:href="@{'/emp/emps?pageNum=' + ${pageNum}+ ${iCompany != null ? '&iCompany='+iCompany : ''} + ${cRename != null ? '&cRename='+cRename : ''} + ${reERename != null ? '&eRename='+reERename : ''}}"
+                                               th:style="${itwPageInfo.pageNum == pageNum ? 'background:#5faee3;' : ''}"
+                                               th:text="${pageNum}"></a></li>
+                                        <li th:style="${itwPageInfo.hasNextPage ? '' : 'display: none;'}">
+                                            <a th:href="@{'/emp/emps?pageNum=' + ${itwPageInfo.pageNum + 1}+ ${iCompany != null ? '&iCompany='+iCompany : ''} + ${cRename != null ? '&cRename='+cRename : ''} + ${reERename != null ? '&eRename='+reERename : ''}}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                        <!--                                        <li><a href="#">尾页</a></li>-->
+                                    </ul>
+                                </nav>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -304,35 +327,35 @@
         })
 
         //数据的分页
-        $('#table_data').DataTable(
-            {
-                "language": {
-                    "sProcessing": "处理中...",
-                    "sLengthMenu": "显示 _MENU_ 项结果",
-                    "sZeroRecords": "没有匹配结果",
-                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                    "sInfoPostFix": "",
-                    "sSearch": "搜索:",
-                    "sUrl": "",
-                    "sEmptyTable": "表中数据为空",
-                    "sLoadingRecords": "载入中...",
-                    "sInfoThousands": ",",
-                    "oPaginate":{
-                        "sFirst": "首页",
-                        "sPrevious": "上页",
-                        "sNext": "下页",
-                        "sLast": "末页"
-                    }
-                },
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
+        // $('#table_data').DataTable(
+        //     {
+        //         "language": {
+        //             "sProcessing": "处理中...",
+        //             "sLengthMenu": "显示 _MENU_ 项结果",
+        //             "sZeroRecords": "没有匹配结果",
+        //             "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        //             "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        //             "sInfoPostFix": "",
+        //             "sSearch": "搜索:",
+        //             "sUrl": "",
+        //             "sEmptyTable": "表中数据为空",
+        //             "sLoadingRecords": "载入中...",
+        //             "sInfoThousands": ",",
+        //             "oPaginate":{
+        //                 "sFirst": "首页",
+        //                 "sPrevious": "上页",
+        //                 "sNext": "下页",
+        //                 "sLast": "末页"
+        //             }
+        //         },
+        //         "paging": true,
+        //         "lengthChange": false,
+        //         "searching": false,
+        //         "ordering": true,
+        //         "info": true,
+        //         "autoWidth": false,
+        //         "responsive": true,
+        //     });
     });
 </script>
 </body>

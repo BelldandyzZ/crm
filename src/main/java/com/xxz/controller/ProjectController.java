@@ -1,6 +1,8 @@
 package com.xxz.controller;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xxz.bean.*;
 import com.xxz.mapper.*;
 import com.xxz.service.CustomerService;
@@ -16,6 +18,7 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,12 +42,26 @@ public class ProjectController {
 
     //条件查询
     @RequestMapping("/projects")
-    public String queryAll(Model model, String pName, String pMoeny, String pProgress, String pOwner) throws UnsupportedEncodingException {
+    public String queryAll(Model model, String pName, String pMoeny, String pProgress, String pOwner,
+                           @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
 //        System.out.println(URLEncoder.encode(eJob,"utf-8"));
         System.out.println("queryAll-customers-confition:" + pName + "-" + pMoeny + "-" + pProgress + "-" + pOwner);
+        if (pageNum <=0){
+            pageNum = 1;
+        }
+        /**/
+        PageHelper.startPage(pageNum,  10);
+
         List<Project> projectList = projectService.queryAllProject(pName, pMoeny, pProgress, pOwner);
-        System.out.println("条件查询结果：" + projectList);
-        model.addAttribute("projectList", projectList);
+
+        PageInfo<Project> proPageInfo = new PageInfo<>(projectList, 5);
+        System.out.println("条件查询结果：" + proPageInfo);
+        model.addAttribute("proPageInfo", proPageInfo);
+        //条件回显
+        model.addAttribute("pName", pName);
+        model.addAttribute("pMoeny", pMoeny);
+        model.addAttribute("pProgress", pProgress);
+        model.addAttribute("pOwner", pOwner);
         //============================================================================
         //(2)客户名称下拉框、客户单位下拉框,我方员工姓名
         //(2)客户名称下拉框、客户单位下拉框,我方员工姓名
@@ -105,9 +122,14 @@ public class ProjectController {
 //拜访模块===================================================================================
 //    /project/interview_record
     @RequestMapping("/interview_record")
-    public String interview_recor(Model model, String cIds, Integer pId){
+    public String interview_recor(Model model, String cIds, Integer pId,
+                                  @RequestParam(defaultValue = "1") Integer pageNum){
+        PageHelper.startPage(pageNum,  10);
+
         List<Interview> currentInterviewList = projectService.interview_recor(cIds, pId);
-        model.addAttribute("currentInterviewList", currentInterviewList);
+
+        PageInfo<Interview> itwRecordPageInfo = new PageInfo<>(currentInterviewList, 5);
+        model.addAttribute("itwRecordPageInfo", itwRecordPageInfo);
         return "project/interview_record/interview_record";
     }
 
@@ -117,9 +139,14 @@ public class ProjectController {
 //合同模块===================================================================================
 //    /project/contract/contract_record
     @RequestMapping("/contract_record")
-    public String contract_record(Model model, Integer pId){
+    public String contract_record(Model model, Integer pId,
+                                  @RequestParam(defaultValue = "1") Integer pageNum){
+        PageHelper.startPage(pageNum,  10);
+
         List<Contract> contracts = projectService.contract_record(pId);
-        model.addAttribute("contractList", contracts);
+
+        PageInfo<Contract> conPageInfo = new PageInfo<>(contracts, 5);
+        model.addAttribute("conPageInfo", conPageInfo);
         model.addAttribute("pId", pId);
         return "project/contract/contract";
     }
@@ -278,27 +305,37 @@ public class ProjectController {
 //回款模块===================================================================================
 //    /project/payment_back?
     @RequestMapping("/payment_back")
-    public String payment_back(Model model, HttpSession session, Integer pbId, Integer pId){
+    public String payment_back(Model model, HttpSession session, Integer pbId, Integer pId,
+                               @RequestParam(defaultValue = "1") Integer pageNum){
         //(1)给定当前操作的项目pbId到Session域中---添加时需要
 //        session.setAttribute("pbId", pbId);
         //(2)回显最大pbId
         List<PaymentBack> paymentBacks = projectService.queryAllPayBack(pbId);
+
         TreeSet<Integer> pbIds = new TreeSet<>();
         for (PaymentBack paymentBack : paymentBacks) {
             pbIds.add(paymentBack.getPbId());
         }
+        System.out.println("[pbId=======================]" + pbId);
         System.out.println("[pbIds=======================]" + pbIds);
         if(pbIds.size() != 0){ //有回款最大编号才返回
             model.addAttribute("pbId", pbIds.last());
         }else{
-            model.addAttribute("pbId", pId * 1000);
+            model.addAttribute("pbId", pbId);
         }
         //处理查询业务
-        Integer startPbId = Integer.valueOf(pbId.toString().substring(0,2)) * 100;
+//        Integer startPbId = Integer.valueOf(pbId.toString().substring(0,2)) * 100;
+        Integer startPbId = pbId;
         Integer endPbId = startPbId + 999;
         System.out.println("--------------start=" + startPbId + "------end=" + endPbId);
+
+        PageHelper.startPage(pageNum,  10);
         List<PaymentBack> paymentBackList = projectService.PbIdBetweenStartAndEnd(startPbId, endPbId);
-        model.addAttribute("paymentBackList", paymentBackList);
+        PageInfo<PaymentBack> payPageInfo = new PageInfo<>(paymentBackList, 5);
+        model.addAttribute("payPageInfo", payPageInfo);
+        //条件回显
+
+
         return "project/payment_back/payment_back";
     }
 

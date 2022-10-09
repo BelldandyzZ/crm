@@ -36,6 +36,7 @@
 <!--    <mvc:view-controller path="/project/interview_record/toIndex" view-name="project/interview_record/interview_record"/>-->
 <!--    <mvc:view-controller path="/project/payment_back/toIndex" view-name="project/payment_back/payment_back"/>-->
     <mvc:view-controller path="/echarts/toIndex" view-name="echarts/echartsMenu"/>
+    <mvc:view-controller path="/dicvalue/toIndex" view-name="dicvalue/dicvalue"/>
 
 
     <!--Spring5整合thymeleaf核心库依赖提供-->
@@ -104,7 +105,8 @@
                     properties的键表示处理器方法执行过程中出现的异常(异常)
                     properties的值表示若出现指定异常时，设置一个新的视图名称，跳转到指定页面(逻辑视图)
                  -->
-                <prop key="java.lang.Exception" >error/error</prop>
+                <prop key="java.lang.ArithmeticException" >error/error</prop>
+                <prop key="java.lang.NullPointerException" >error/error</prop>
             </props>
         </property>
         <!--[Model]异常处理参数：将异常信息共享到请求域中、value表示请求域中的属性名ex.msg..-->

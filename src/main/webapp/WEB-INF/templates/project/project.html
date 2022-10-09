@@ -10,7 +10,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
     <!-- Ionicons -->
-    <link rel="stylesheet" th:href="@{https://cdn.bootcdn.net/ajax/libs/ionicons/2.0.1/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/dist/css/ionicons.min.css}">
     <!-- 主题样式 -->
     <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
 
@@ -53,12 +53,7 @@
                                        <div class="form-group">
                                           <label>项目进度</label>
                                           <select name="pProgress" class="form-control custom-select" required>
-                                                <option value="意向">意向</option>
-                                                <option value="方案">方案</option>
-                                                <option value="招标">招标</option>
-                                                <option value="合同">合同</option>
-                                                <option value="回款">回款</option>
-                                                <option value="结束">结束</option>
+                                               <option th:each="job:${session.progressTypes}" th:text="${job}" th:value="${job}">售后</option>
                                             </select>
                                       </div>
                                   </span>
@@ -136,12 +131,7 @@
                                        <div class="form-group">
                                           <label for="pProgress">项目进度</label>
                                           <select id="pProgress" name="pProgress" class="form-control custom-select">
-                                                <option value="意向">意向</option>
-                                                <option value="方案">方案</option>
-                                                <option value="招标">招标</option>
-                                                <option value="合同">合同</option>
-                                                <option value="回款">回款</option>
-                                                <option value="结束">结束</option>
+                                                 <option th:each="job:${session.progressTypes}" th:text="${job}" th:value="${job}" >售后</option>
                                             </select>
                                       </div>
                                   </span>
@@ -200,14 +190,14 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_pName">项目名称</label>
-                                            <input type="text" id="con_pName" name="pName" class="form-control" placeholder="项目名称">
+                                            <input type="text" id="con_pName" th:value="${pName}" name="pName" class="form-control" placeholder="项目名称">
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_pMoeny">项目金额</label>
-                                            <input type="text" id="con_pMoeny" name="pMoeny" class="form-control" placeholder="项目金额">
+                                            <input type="text" id="con_pMoeny" th:value="${pMoeny}" name="pMoeny" class="form-control" placeholder="项目金额">
                                         </div>
 
                                     </div>
@@ -218,12 +208,7 @@
                                             <label for="con_pProgress">项目完成度</label>
                                             <select id="con_pProgress" name="pProgress" class="form-control custom-select">
                                                 <option value="">全部</option>
-                                                <option value="意向">意向</option>
-                                                <option value="方案">方案</option>
-                                                <option value="招标">招标</option>
-                                                <option value="合同">合同</option>
-                                                <option value="回款">回款</option>
-                                                <option value="结束">结束</option>
+                                                <option th:each="job:${session.progressTypes}" th:text="${job}" th:value="${job}" th:selected="${pProgress == job}">售后</option>
                                             </select>
                                         </div>
                                     </div>
@@ -231,7 +216,7 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_pOwner">项目负责人</label>
-                                            <input type="text" id="con_pOwner" name="pOwner" class="form-control" placeholder="项目负责人">
+                                            <input type="text" id="con_pOwner" th:value="${pOwner}" name="pOwner" class="form-control" placeholder="项目负责人">
                                         </div>
                                     </div>
 
@@ -279,7 +264,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="pro,proState:${projectList}">
+                                    <tr th:each="pro,proState:${proPageInfo.list}">
                                         <td><a th:href=" @{'/project/contract_record?pId=' + ${pro.pId}}" class="card-link" th:text="${pro.pName}">工地项目(点击查看对应的合同表)</a></td>
                                         <td th:text="${pro.pMoeny}">100w</td>
                                         <td th:text="${pro.pProgress}">招标</td>
@@ -316,6 +301,31 @@
                                     </tbody>
                                 </table>
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
+                                <nav>
+                                    <ul class="mypagination">
+                                        <li><a>
+                                            总页码：<span th:text="${proPageInfo.pages}"></span>&nbsp;&nbsp;&nbsp;
+                                            总条数：<span th:text="${proPageInfo.total}"></span>
+                                        </a></li>
+
+                                        <li th:style="${proPageInfo.hasPreviousPage ? '' : 'display: none;'}">
+                                            <a th:href="@{'/emp/emps?pageNum=' + ${proPageInfo.pageNum - 1} + ${pName != null ? '&pName='+pName : ''} + ${pMoeny != null ? '&pMoeny='+pMoeny : ''} + ${pProgress != null ? '&pProgress='+pProgress : ''} + ${pOwner != null ? '&pOwner='+pOwner : ''}}"
+                                               aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li th:each="pageNum : ${proPageInfo.navigatepageNums}"  >
+                                            <a th:href="@{'/emp/emps?pageNum=' + ${pageNum} + ${pName != null ? '&pName='+pName : ''} + ${pMoeny != null ? '&pMoeny='+pMoeny : ''} + ${pProgress != null ? '&pProgress='+pProgress : ''} + ${pOwner != null ? '&pOwner='+pOwner : ''}}"
+                                               th:style="${proPageInfo.pageNum == pageNum ? 'background:#5faee3;' : ''}"
+                                               th:text="${pageNum}"></a></li>
+                                        <li th:style="${proPageInfo.hasNextPage ? '' : 'display: none;'}">
+                                            <a th:href="@{'/emp/emps?pageNum=' + ${proPageInfo.pageNum + 1} + ${pName != null ? '&pName='+pName : ''} + ${pMoeny != null ? '&pMoeny='+pMoeny : ''} + ${pProgress != null ? '&pProgress='+pProgress : ''} + ${pOwner != null ? '&pOwner='+pOwner : ''}}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                        <!--                                        <li><a href="#">尾页</a></li>-->
+                                    </ul>
+                                </nav>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -432,35 +442,35 @@
         })
 
         //数据的分页
-        $('#table_data').DataTable(
-            {
-                "language": {
-                    "sProcessing": "处理中...",
-                    "sLengthMenu": "显示 _MENU_ 项结果",
-                    "sZeroRecords": "没有匹配结果",
-                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                    "sInfoPostFix": "",
-                    "sSearch": "搜索:",
-                    "sUrl": "",
-                    "sEmptyTable": "表中数据为空",
-                    "sLoadingRecords": "载入中...",
-                    "sInfoThousands": ",",
-                    "oPaginate": {
-                        "sFirst": "首页",
-                        "sPrevious": "上页",
-                        "sNext": "下页",
-                        "sLast": "末页"
-                    }
-                },
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
+        // $('#table_data').DataTable(
+        //     {
+        //         "language": {
+        //             "sProcessing": "处理中...",
+        //             "sLengthMenu": "显示 _MENU_ 项结果",
+        //             "sZeroRecords": "没有匹配结果",
+        //             "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        //             "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        //             "sInfoPostFix": "",
+        //             "sSearch": "搜索:",
+        //             "sUrl": "",
+        //             "sEmptyTable": "表中数据为空",
+        //             "sLoadingRecords": "载入中...",
+        //             "sInfoThousands": ",",
+        //             "oPaginate": {
+        //                 "sFirst": "首页",
+        //                 "sPrevious": "上页",
+        //                 "sNext": "下页",
+        //                 "sLast": "末页"
+        //             }
+        //         },
+        //         "paging": true,
+        //         "lengthChange": false,
+        //         "searching": false,
+        //         "ordering": true,
+        //         "info": true,
+        //         "autoWidth": false,
+        //         "responsive": true,
+        //     });
     });
 </script>
 </body>

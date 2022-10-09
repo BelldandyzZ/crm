@@ -4,18 +4,18 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xxz.bean.Customer;
 import com.xxz.bean.CustomerExample;
+import com.xxz.bean.Employee;
 import com.xxz.listener.DemoDataListener;
 import com.xxz.mapper.CustomerMapper;
 import com.xxz.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -36,12 +36,23 @@ public class CustomerController {
 
     //条件查询
     @RequestMapping("/customers")
-    public String queryAll(Model model, String cRename, String cName, String cJob) throws UnsupportedEncodingException {
+    public String queryAll(Model model, String cRename, String cName, String cJob,
+    @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
 //        System.out.println(URLEncoder.encode(eJob,"utf-8"));
         System.out.println("queryAll-customers-confition:" + cRename + "-" + cName + "-" + cJob);
+        if (pageNum <=0){
+            pageNum = 1;
+        }
+        /**/
+        PageHelper.startPage(pageNum,  10);
         List<Customer> customerList = customerService.queryAllCus(cRename, cName, cJob);
-        System.out.println("条件查询结果：" + customerList);
-        model.addAttribute("customerList", customerList);
+        PageInfo<Customer> cusPageInfo = new PageInfo<>(customerList, 5);
+        System.out.println("条件查询结果：" + cusPageInfo);
+        model.addAttribute("cusPageInfo", cusPageInfo);
+        //条件回显
+        model.addAttribute("cRename", cRename);
+        model.addAttribute("cName", cName);
+        model.addAttribute("cJob", cJob);
         return "customer/customer";
     }
 

@@ -4,6 +4,8 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xxz.bean.*;
 import com.xxz.listener.DemoDataListener;
 import com.xxz.mapper.CustomerMapper;
@@ -17,10 +19,7 @@ import com.xxz.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -48,13 +47,23 @@ public class InterviewController {
 
     //条件查询
     @RequestMapping("/interviews")
-    public String queryAll(Model model, String iCompany, String cRename, String eRename) throws UnsupportedEncodingException {
+    public String queryAll(Model model, String iCompany, String cRename, String eRename,
+                           @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
 //        System.out.println(URLEncoder.encode(eJob,"utf-8"));
         System.out.println("queryAll-interviews-confition:" + iCompany + "-" + cRename + "-" + eRename);
-
+        if (pageNum <=0){
+            pageNum = 1;
+        }
+        /**/
+        PageHelper.startPage(pageNum,  10);
         List<Interview> interviewList = interviewService.queryAllInterview(iCompany, cRename, eRename);
+        PageInfo<Interview> itwPageInfo = new PageInfo<>(interviewList, 5);
         System.out.println(interviewList);
-        model.addAttribute("interviewList", interviewList);
+        model.addAttribute("itwPageInfo", itwPageInfo);
+        //回显条件
+        model.addAttribute("iCompany", iCompany);
+        model.addAttribute("cRename", cRename);
+        model.addAttribute("reERename", eRename);
         //============================================================================
         //(2)客户名称下拉框、客户单位下拉框,我方员工姓名
         List<Customer> customerList = customerService.queryAllCus(null, null, null);
@@ -94,6 +103,8 @@ public class InterviewController {
     //新增员工
     @RequestMapping("/add")
     public String itwAdd(Interview interview, String[] cRenames, String eRename){
+        System.out.println("==============================================");
+        System.out.println("queryAll-interviews-confition:" + cRenames + "-" + eRename);
         interviewService.itwAdd(interview, cRenames,eRename);
         return "redirect:/interview/interviews";
     }

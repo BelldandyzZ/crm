@@ -16,9 +16,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <setting name="aggressiveLazyLoading" value="false"/>
     </settings>
 
-    <mappers>
-<!--        <mapper resource="org/mybatis/example/BlogMapper.xml"/>-->
-        <!-- 让mybatis扫描数据接口 -->
-<!--        <package name="com.hp.mapper"/>-->
-    </mappers>
+    <plugins>
+        <!--设置分页插件-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
+
 </configuration>
