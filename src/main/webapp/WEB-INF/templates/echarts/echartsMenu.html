@@ -1,87 +1,162 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Ehcarts</title>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+    <style>
+        #main,
+        html,
+        body {
+            width: 100%;
+        }
+        #main {
+            height: 500px;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>客户信息</title>
 
+    <!-- 离线 Google 字体: Source Sans Pro -->
+    <link rel="stylesheet" th:href="@{'/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{https://cdn.bootcdn.net/ajax/libs/ionicons/2.0.1/css/ionicons.min.css}">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
 </head>
-<body>
-    <div id="main" style="position: absolute;bottom: 0px; top: 0px; left: 0px; right: 0px;"></div>
-</body>
-<script>
-    var chartDom = document.getElementById('main');
-    var myChart = echarts.init(chartDom);
-    var option;
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
 
-    option = {
-        backgroundColor: '#2c343c',
-        title: {
-            text: 'Customized Pie',
-            left: 'center',
-            top: 20,
-            textStyle: {
-                color: '#ccc'
-            }
-        },
-        tooltip: {
-            trigger: 'item'
-        },
-        visualMap: {
-            show: false,
-            min: 80,
-            max: 600,
-            inRange: {
-                colorLightness: [0, 1]
-            }
-        },
-        series: [
-            {
-                name: 'Access From',
-                type: 'pie',
-                radius: '55%',
-                center: ['50%', '50%'],
-                data: [
-                    { value: 335, name: 'Direct' },
-                    { value: 310, name: 'Email' },
-                    { value: 274, name: 'Union Ads' },
-                    { value: 235, name: 'Video Ads' },
-                    { value: 400, name: 'Search Engine' }
-                ].sort(function (a, b) {
-                    return a.value - b.value;
-                }),
-                roseType: 'radius',
-                label: {
-                    color: 'rgba(255, 255, 255, 0.3)'
-                },
-                labelLine: {
-                    lineStyle: {
-                        color: 'rgba(255, 255, 255, 0.3)'
-                    },
-                    smooth: 0.2,
-                    length: 10,
-                    length2: 20
-                },
-                itemStyle: {
-                    color: '#c23531',
-                    shadowBlur: 200,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                },
-                animationType: 'scale',
-                animationEasing: 'elasticOut',
-                animationDelay: function (idx) {
-                    return Math.random() * 200;
-                }
-            }
-        ]
+
+    <!-- Content Wrapper. 包含页面内容 -->
+    <div class="content-wrapper">
+        <!-- 主体内容 -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
+                                <div class="row" >
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label for="con_cRename">项目名称</label>
+                                            <input type="text" id="con_cRename" name="cRename" class="form-control" placeholder="姓名">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label for="1">开始时间</label>
+                                            <input type="date" id="1" name="cName" class="form-control" placeholder="所在单位">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="form-group">
+                                            <label style="color: white">.</label>
+                                            <input class="form-control" value="至" style="border: white;background: white" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label for="2">结束时间</label>
+                                            <input type="date" id="2" name="cName" class="form-control" placeholder="所在单位">
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-1">
+                                        <!--这个label没用，纯当作占位符用来布局-->
+                                        <label style="color: white">.</label>
+                                        <div class="form-group">
+                                            <button type="button" id="cusConditionBtn" class="btn btn-block btn-default">搜索</button>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div id="main"></div>
+
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+
+                        <!-- /.card -->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- 回到顶部 -->
+        <a id="back-to-top" th:href="@{#}" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+            <i class="fas fa-chevron-up"></i>
+        </a>
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- DataTables  & Plugins -->
+<script th:src="@{/plugins/datatables/jquery.dataTables.js}"></script>
+<script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<script th:src="@{/plugins/echart/echarts.js}"></script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    window.onresize = function() {
+        myChart.resize();
     };
 
-    option && myChart.setOption(option);
+    // 指定图表的配置项和数据
+    $.get('/crm/data.json').done(function(data) {
+        console.log(data);
+        myChart.hideLoading();
+        myChart.setOption({
+            legend: {},
+            tooltip: {},
+            dataset: {
+                dimensions: ['empName','backMoney', 'UnBackMoney'],
+                source:data
+            },
+
+            xAxis: {  },
+
+            yAxis: {type: 'category'},
+
+            series: [
+                { type: 'bar' , stack: 'x'},
+                { type: 'bar' , stack: 'x'}
+            ]
+        })
+    })
+
+    myChart.on('click', function(params) {
+        console.log(params.value.id);
+    });
 </script>
+</body>
 </html>

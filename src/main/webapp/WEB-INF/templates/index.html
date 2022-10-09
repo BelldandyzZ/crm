@@ -62,15 +62,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- 使用 .nav-icon 类添加图标，
                或使用 font-awesome 或其他任何图标字体库 -->
-        
-          <li class="nav-item">
-            <a th:href="@{/emp/emps}" class="nav-link">
-              <i class="fa fa-user" aria-hidden="true"></i>
-              <p>
-                员工管理
-              </p>
-            </a>
-          </li>
+
 
           <li class="nav-item">
             <a th:href="@{/customer/customers}" class="nav-link">
@@ -100,21 +92,42 @@
           </li>
 
           <li class="nav-item">
-            <a th:href="@{#}" class="nav-link">
-              <i class="fa fa-user" aria-hidden="true"></i>
-              <p>
-                权限管理
-              </p>
-            </a>
-          </li>
-
-          <li class="nav-item">
             <a th:href="@{/echarts/toIndex}" class="nav-link">
               <i class="fa fa-user" aria-hidden="true"></i>
               <p>
                 统计报表
               </p>
             </a>
+          </li>
+
+          <li class="nav-item">
+            <a th:href="@{#}" class="nav-link">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              <p>
+                权限管理
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="./index.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>数据字典</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a th:href="@{/emp/emps}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>员工管理</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./index3.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>授权信息</p>
+                </a>
+              </li>
+            </ul>
           </li>
 
          
