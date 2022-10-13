@@ -2,13 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
       				http://www.springframework.org/schema/beans/spring-beans.xsd
       				http://www.springframework.org/schema/context
       				http://www.springframework.org/schema/context/spring-context.xsd
       				http://www.springframework.org/schema/mvc
-      				http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+      				http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--SpringMVC注解驱动-->
     <mvc:annotation-driven>
@@ -25,10 +25,10 @@
     <mvc:default-servlet-handler/>
 
     <!--扫描控制层-->
-    <context:component-scan base-package="com.xxz.controller"/>
+    <context:component-scan base-package="com.xxz"/>
 
     <!--视图跳转控制器-->
-    <mvc:view-controller path="/" view-name="login"></mvc:view-controller>
+    <mvc:view-controller path="/" view-name="login"/>
 <!--    <mvc:view-controller path="/customer/toIndex" view-name="customer/customer"/>-->
 <!--    <mvc:view-controller path="/interview/toIndex" view-name="interview/interview"/>-->
 <!--    <mvc:view-controller path="/project/toIndex" view-name="project/project"/>-->
@@ -36,7 +36,11 @@
 <!--    <mvc:view-controller path="/project/interview_record/toIndex" view-name="project/interview_record/interview_record"/>-->
 <!--    <mvc:view-controller path="/project/payment_back/toIndex" view-name="project/payment_back/payment_back"/>-->
     <mvc:view-controller path="/echarts/toIndex" view-name="echarts/echartsMenu"/>
+    <mvc:view-controller path="/echarts/detail" view-name="echarts/detail/detail"/>
+    <mvc:view-controller path="/permission/toIndex" view-name="permission/index"/>
     <mvc:view-controller path="/dicvalue/toIndex" view-name="dicvalue/dicvalue"/>
+    <mvc:view-controller path="/error/error" view-name="error/error"/>
+
 
 
     <!--Spring5整合thymeleaf核心库依赖提供-->
@@ -88,7 +92,6 @@
             <bean class="com.xxz.interceptor.LoginInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
-
     <!--SpringMVC提供自定义异常处理器SimpleMappingExceptionResolver
         当控制器方法执行业务过程中出现异常，可以通过配置的自定义异常处理器捕获解决，
         并且返回一个新的ModelAndView给到视图解析器解析响应、[MV]
@@ -113,6 +116,6 @@
         <property name="exceptionAttribute" value="ex"></property>
     </bean>
 
-
+    <aop:aspectj-autoproxy/>
 
 </beans>

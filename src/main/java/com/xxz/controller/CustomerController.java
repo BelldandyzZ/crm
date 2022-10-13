@@ -6,11 +6,9 @@ import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xxz.annotations.Permission;
 import com.xxz.bean.Customer;
-import com.xxz.bean.CustomerExample;
-import com.xxz.bean.Employee;
 import com.xxz.listener.DemoDataListener;
-import com.xxz.mapper.CustomerMapper;
 import com.xxz.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +34,7 @@ public class CustomerController {
 
     //条件查询
     @RequestMapping("/customers")
+    @Permission("1010")
     public String queryAll(Model model, String cRename, String cName, String cJob,
     @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
 //        System.out.println(URLEncoder.encode(eJob,"utf-8"));
@@ -59,6 +58,7 @@ public class CustomerController {
     //id查询
     @RequestMapping("/queryById/{cId}")
     @ResponseBody
+    @Permission("1010")
     public Map<String,Object> queryById(@PathVariable("cId") Integer cId, HttpServletResponse response) throws IOException {
         Customer customer = customerService.queryById(cId);
         Map<String, Object> stringObjectHashMap = new HashMap<>();
@@ -70,6 +70,7 @@ public class CustomerController {
 
     //新增员工
     @RequestMapping("/add")
+    @Permission("1020")
     public String cusAdd(Customer customer){
         System.out.println("add cus..." + customer);
         //调用接口将数据添加到数据库
@@ -84,6 +85,7 @@ public class CustomerController {
 
     //删除员工
     @RequestMapping("/del/{eId}")
+    @Permission("1030")
     public String cusDel(@PathVariable("eId") Integer eId){
         System.out.println(eId);
         //删除业务
@@ -99,6 +101,7 @@ public class CustomerController {
 
     //修改
     @RequestMapping("/update")
+    @Permission("1040")
     public String cusUpdate(Customer customer){
         //展示emp
         System.out.println(customer);
@@ -139,6 +142,7 @@ public class CustomerController {
     }
 
     //导出
+    @Permission("1060")
     @RequestMapping("/excelOutput") //ResponseEntity<byte[]>
     public void excelOutput(HttpSession session, HttpServletResponse response) throws IOException {
         //获取本机桌面地址

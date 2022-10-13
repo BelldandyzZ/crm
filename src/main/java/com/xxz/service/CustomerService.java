@@ -21,6 +21,7 @@ public class CustomerService {
     private CustomerMapper customerMapper;
 
     /*查询所有客户*/
+
     public List<Customer> queryAllCus(String cRename, String cName, String cJob){
         //样本
         CustomerExample customerExample = new CustomerExample();

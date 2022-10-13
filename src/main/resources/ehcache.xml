@@ -17,7 +17,7 @@
            共有三种策略,分别为LRU(最近最少使用)、LFU(最常用的)、FIFO(先进先出)默认使用"最近使用"策略
 -->
     <!-- 指定一个文件目录，当EhCache把数据写到硬盘上时，将把数据写到这个文件目录下E:/ehcache_log   /opt/logs/epp/log/sps/ehcache -->
-    <diskStore path="E:/ehcache_log"/>
+    <diskStore path="C:/ehcache_log"/>
 
     <!-- 设定缓存的默认数据过期策略 -->
     <defaultCache

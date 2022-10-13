@@ -6,13 +6,13 @@ import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.xxz.bean.Employee;
-import com.xxz.bean.EmployeeExample;
+import com.xxz.bean.*;
+import com.xxz.exception.AsyncResp;
 import com.xxz.listener.DemoDataListener;
-import com.xxz.mapper.EmployeeMapper;
 import com.xxz.service.DicValueService;
 import com.xxz.service.EmpService;
 import com.xxz.service.ProjectService;
+import com.xxz.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,9 @@ public class EmpController {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    private RoleService roleService;
+
     @RequestMapping("/login")
     public String empLogin(String ename, String epwd, HttpSession session){
         System.out.println(ename + "----" + epwd);
@@ -56,6 +60,15 @@ public class EmpController {
             session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
             session.setAttribute("progressTypes", allProgress);
             session.setAttribute("pNames", projectService.getAllProjectName());
+
+            /*------------------------登录成功查看员工对应的权限---------------------------*/
+
+            List<String> permissions =  roleService.queryAllMenuByEmpId(employee.geteId());
+            session.setAttribute("permissions",permissions);
+            /*------------------------登录成功查看员工对应的权限---------------------------*/
+
+
+
             return "index";
         }else{
             return "login";
@@ -186,6 +199,39 @@ public class EmpController {
         //响应到浏览器
         EasyExcel.write(response.getOutputStream(), Employee.class).sheet("模板").doWrite(employees);
         System.out.println("excelOutput.................");
+    }
+
+    /**
+     * 查询所有角色信息
+     */
+    @RequestMapping("findAllRole/{empId}")
+    @ResponseBody
+    public AsyncResp findAllRole(@PathVariable("empId") String empId){
+        //查询所有的角色信息
+        List<Role> roleList = roleService.queryAllRole();
+        //查询员工拥有的角色
+        List<Role> empOfRoleList = roleService.queryAllRoleByEmpId(empId);
+        Map map = new HashMap<String,List>();
+        map.put("roleList",roleList);
+        map.put("empOfRoleList",empOfRoleList);
+        return AsyncResp.success(map);
+    }
+
+    /**
+     * 关联角色信息
+     */
+    @RequestMapping("addRole")
+    @ResponseBody
+    public AsyncResp addRole(@RequestParam("roleId") String[] roleIds,String empId){
+        ArrayList<EmpRole> empRoles = new ArrayList<>(16);
+        for (String roleId : roleIds) {
+            EmpRole empRole = new EmpRole();
+            empRole.setrId(roleId);
+            empRole.seteId(empId);
+            empRoles.add(empRole);
+        }
+        roleService.saveRoleList(empRoles,empId);
+        return AsyncResp.success(AsyncResp.ADD_SUCCESS);
     }
 
 

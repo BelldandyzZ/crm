@@ -267,48 +267,45 @@
               <div class="card-header">
                 <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
                 <div class="row" >
-                  <div class="col-sm-3">
-                    <!-- text input -->
-                    <div class="form-group">
-                        <label for="con_cRename">客户姓名</label>
-                      <input type="text" id="con_cRename" name="cRename" th:value="${cRename}" class="form-control" placeholder="姓名">
+                    <div th:if="${session.permissions.contains('1010')}" class="col-sm-3">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label for="con_cRename">客户姓名</label>
+                            <input type="text" id="con_cRename" name="cRename" th:value="${cRename}" class="form-control" placeholder="姓名">
+                        </div>
                     </div>
-                  </div>
-                  <div class="col-sm-3">
-                    <!-- text input -->
-                      <div class="form-group">
-                          <label for="con_cJob">岗位</label>
-<!--                          <input type="text" id="phone" class="form-control" placeholder="电话">-->
-                          <select id="con_cJob" name="cJob" class="form-control custom-select" >
-                              <option value="">全部</option>
-                              <option th:each="job:${session.jobTypes}" th:selected="${cJob == job}"  th:text="${job}" th:value="${job}">售后</option>
-                          </select>
-                      </div>
+                    <div th:if="${session.permissions.contains('1010')}" class="col-sm-3">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label for="con_cJob">岗位</label>
+                            <!--                          <input type="text" id="phone" class="form-control" placeholder="电话">-->
+                            <select id="con_cJob" name="cJob" class="form-control custom-select" >
+                                <option value="">全部</option>
+                                <option th:each="job:${session.jobTypes}" th:selected="${cJob == job}"  th:text="${job}" th:value="${job}">售后</option>
+                            </select>
+                        </div>
 
-                  </div>
-        
-                  <div class="col-sm-3">
-                    <!-- text input -->
-                    <div class="form-group">
-                        <label for="con_cName">所在单位名称</label>
-                      <input type="text" id="con_cName" name="cName" th:value="${cName}"  class="form-control" placeholder="所在单位">
                     </div>
-                  </div>
-
-
-                  <div class="col-sm-1">
-                      <!--这个label没用，纯当作占位符用来布局-->
-                      <label style="color: white">.</label>
-                      <div class="form-group">
-                          <button type="button" id="cusConditionBtn" class="btn btn-block btn-default">搜索</button>
-                      </div>
-                  </div>
+                    <div th:if="${session.permissions.contains('1010')}" class="col-sm-3">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label for="con_cName">所在单位名称</label>
+                            <input type="text" id="con_cName" name="cName" th:value="${cName}"  class="form-control" placeholder="所在单位">
+                        </div>
+                    </div>
+                    <div th:if="${session.permissions.contains('1010')}" class="col-sm-1">
+                        <!--这个label没用，纯当作占位符用来布局-->
+                        <label style="color: white">.</label>
+                        <div class="form-group">
+                            <button type="button" id="cusConditionBtn" class="btn btn-block btn-default">搜索</button>
+                        </div>
+                    </div>
 
                     <div class="col-sm-1">
                         <!--这个label没用，纯当作占位符用来布局-->
                         <label style="color: white">.</label>
                         <div class="form-group">
-                            <button  class="btn btn-primary" data-toggle="modal" data-target="#add_emp">
+                            <button th:if="${session.permissions.contains('1020')}" class="btn btn-primary" data-toggle="modal" data-target="#add_emp">
                                 添加
                             </button>
                         </div>
@@ -323,13 +320,13 @@
                 <div class="row">
                   <div class="col-sm-8"></div>
                   <div class="col-sm-2 ">
-                    <button type="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#cusInportModel">
+                    <button th:if="${session.permissions.contains('1050')}" type="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#cusInportModel">
                       <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                      导入客户信息
                     </button>
                   </div>
                   <div class="col-sm-2">
-                    <button type="button" id="cusExcelOutputBtn" class="btn btn-block btn-default">
+                    <button th:if="${session.permissions.contains('1060')}" type="button" id="cusExcelOutputBtn" class="btn btn-block btn-default">
                       <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>导出客户信息
                     </button>
                   </div>
@@ -338,7 +335,7 @@
 <!--                  <h1 th:text="${empList}"></h1>-->
 <!--                  <h1 th:text="${session.emp}"></h1>-->
                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
-                <table id="table_data" class="table table-bordered table-hover">
+                <table th:if="${session.permissions.contains('1010')}" id="table_data" class="table table-bordered table-hover">
                   <thead>
                       <tr>
                         <th>客户姓名</th>
@@ -367,8 +364,8 @@
                      <td th:text="${cus.cHobby}">1</td>
                      <td th:text="${cus.cRemark}">1</td>
                           <td>
-                              <button type="button" th:tar-id="${cus.cId}" class="btn  btn-danger btn-sm confirmsCus">删除</button>
-                              <button type="button" th:tar-id="${cus.cId}" class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button>
+                              <button th:if="${session.permissions.contains('1030')}" type="button" th:tar-id="${cus.cId}" class="btn  btn-danger btn-sm confirmsCus">删除</button>
+                              <button th:if="${session.permissions.contains('1040')}" type="button" th:tar-id="${cus.cId}" class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button>
                           </td>
                     </tr>
 <!--                  <tr>-->
@@ -390,7 +387,7 @@
                   </tbody>
                 </table>
                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
-              <nav>
+              <nav th:if="${session.permissions.contains('1010')}">
                   <ul class="mypagination">
                       <li><a>
                           总页码：<span th:text="${cusPageInfo.pages}"></span>&nbsp;&nbsp;&nbsp;

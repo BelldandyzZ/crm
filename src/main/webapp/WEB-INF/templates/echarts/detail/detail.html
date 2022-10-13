@@ -8,7 +8,7 @@
             width: 100%;
         }
         #main {
-            min-height: 800px;
+            min-height: 1000px;
         }
     </style>
     <meta charset="utf-8">
@@ -41,7 +41,7 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="con_cRename">员工姓名</label>
+                                            <label for="con_cRename">项目名称</label>
                                             <input type="text" id="con_cRename" name="cRename" class="form-control" placeholder="姓名">
                                         </div>
                                     </div>
@@ -127,7 +127,7 @@
     };
 
     // 指定图表的配置项和数据
-    $.get('/crm/data.json').done(function(data) {
+    $.get('/crm/dataDetail.json').done(function(data) {
         myChart.hideLoading();
         myChart.setOption({
             legend: {},
@@ -138,7 +138,7 @@
 
             xAxis: {name:'合同金额'  },
 
-            yAxis: {type: 'category',name:'员工'},
+            yAxis: {type: 'category',name:'项目名'},
 
             series: [
                 { type: 'bar' , stack: 'x'},
@@ -149,7 +149,6 @@
 
     myChart.on('click', function(params) {
         console.log(params.value.id);
-        window.location.href = "/crm/echarts/detail";
     });
 </script>
 </body>

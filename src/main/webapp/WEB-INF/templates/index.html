@@ -64,7 +64,7 @@
                或使用 font-awesome 或其他任何图标字体库 -->
 
 
-          <li class="nav-item">
+          <li th:if="${session.permissions.contains('10')}" class="nav-item">
             <a th:href="@{/customer/customers}" class="nav-link">
               <i class="fa fa-user-md" aria-hidden="true"></i>
               <p>
@@ -73,7 +73,7 @@
             </a>
           </li>
 
-          <li class="nav-item">
+          <li th:if="${session.permissions.contains('20')}" class="nav-item">
             <a th:href="@{/interview/interviews}" class="nav-link">
               <i class="fa fa-tty" aria-hidden="true"></i>
               <p>
@@ -82,7 +82,7 @@
             </a>
           </li>
 
-          <li class="nav-item">
+          <li th:if="${session.permissions.contains('30')}" class="nav-item">
             <a th:href="@{/project/projects}" class="nav-link">
               <i class="fa fa-window-maximize" aria-hidden="true"></i>
               <p>
@@ -91,7 +91,7 @@
             </a>
           </li>
 
-          <li class="nav-item">
+          <li th:if="${session.permissions.contains('40')}" class="nav-item">
             <a th:href="@{/echarts/toIndex}" class="nav-link">
               <i class="fa fa-align-left" aria-hidden="true"></i>
               <p>
@@ -100,7 +100,7 @@
             </a>
           </li>
 
-          <li class="nav-item">
+          <li  class="nav-item">
             <a th:href="@{#}" class="nav-link">
               <i class="fa fa-cog" aria-hidden="true"></i>
               <p>
@@ -109,20 +109,20 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
+              <li th:if="${session.permissions.contains('5010')}" class="nav-item">
                 <a th:href="@{/dic/dics}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>数据字典</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <li th:if="${session.permissions.contains('5020')}" class="nav-item">
                 <a th:href="@{/emp/emps}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>员工管理</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
+              <li  class="nav-item">
+                <a th:href="@{/permission/findAllRole}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>授权信息</p>
                 </a>

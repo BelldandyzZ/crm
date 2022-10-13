@@ -1,0 +1,304 @@
+<html xmlns:th="http://www. thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base th:href="${#request.getContextPath()}+'/'">
+    <title>角色管理</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" th:href="@{plugins/sweetalert2/sweetalert2.css}">
+    <!--zTree	-->
+    <link rel="stylesheet" th:href="@{plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" th:href="@{dist/css/adminlte.min.css}">
+    <style>
+        #activityTable {
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- 主体内容 -->
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
+                <div class="row" >
+                    <div class="col-sm-1">
+                        <!--这个label没用，纯当作占位符用来布局-->
+                        <label style="color: white">.</label>
+                        <div class="form-group">
+                            <button  class="btn btn-primary" data-toggle="modal" data-target="#add_role">
+                                添加
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="table_data" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>角色名</th>
+                        <th>备注</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="role,roleStatus:${roleList}">
+                        <td th:text="${roleStatus.count}"></td>
+                        <td th:text="${role.rName}"></td>
+                        <td th:text="${role.rRemark}"></td>
+                        <td>
+                            <a type="button" th:href="@{'/permission/eraseRole/'+${role.rId}}" class="btn  btn-danger btn-sm confirms">删除</a>
+                            <a type="button"  th:data-id="${role.rId}" class="to_update btn  btn-sm btn-info updateEmpBtn" data-toggle="modal">修改</a>
+                            <a type="button"  th:data-id="${role.rId}" class="btn  btn-primary btn-sm confirms openPermissionModal"  data-toggle="modal">资源绑定</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </section>
+    <!-- 主体内容/-->
+
+    <!--  新增弹窗  -->
+    <div class="modal fade" id="add_role">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div>
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">新增角色</h3>
+                            </div>
+                            <div class="card-body">
+                                <form id="saveRoleForm" th:action="@{/permission/addRole}">
+                                    <div class="row">
+										<span class="col-sm-12 col-md-12">
+											 <div class="form-group">
+												<label for="rName">角色名</label>
+												<input type="text" name="rName" id="rName" class="form-control"/>
+											</div>
+										</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-12 col-md-12">
+                                            <label for="rRemark">角色备注</label>
+                                            <textarea id="rRemark" name="rRemark" class="form-control" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" id="close-saveRole">关闭
+                                        </button>
+                                        <button type="submit" class="btn btn-primary" id="ensureSave-department">保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--   新增弹窗-->
+
+
+    <!--    修改弹窗-->
+    <div class="modal fade" id="update_role">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div>
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">新增角色</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+										<span class="col-sm-12 col-md-12">
+											 <div class="form-group">
+												<label for="edit_rName">角色名</label>
+												<input type="text" id="edit_rName" class="form-control"/>
+                                                 <input type="hidden" id="edit_rId" class="form-control"/>
+											</div>
+										</span>
+                                    </div>
+                                <div class="row">
+                                        <div class="form-group col-sm-12 col-md-12">
+                                            <label for="edit_rRemark">角色备注</label>
+                                            <textarea id="edit_rRemark" class="form-control" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="closeSaveRole">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" id="edit_role">保存</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--    修改弹窗-->
+
+    <!--    资源绑定-->
+    <div class="modal fade" id="toPermissionModal">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div>
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">资源绑定</h3>
+                            </div>
+                            <div class="card-body">
+                                <form id="save-Permission">
+                                    <ul id="treeDemo" class="ztree"></ul>
+                                </form>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModal">关闭
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!--    资源绑定-->
+
+
+
+</div>
+</body>
+<!-- jQuery -->
+<script th:src="@{plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{plugins/bootstrap/js/bootstrap.js}"></script>
+<!-- zTree -->
+<script type="text/javascript" th:src="@{plugins/zTree_v3/js/jquery.ztree.core.js}"></script>
+<script type="text/javascript" th:src="@{plugins/zTree_v3/js/jquery.ztree.excheck.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{dist/js/adminlte.min.js}"></script>
+<script>
+
+    let zTreeObj;
+
+
+
+    $(function () {
+        let roleId = '';
+            /*修改时数据回显的执行函数*/
+        $('.to_update').click(function () {
+            let id = $(this).attr('data-id');
+            $.ajax({
+                url:'permission/toEditRole/'+id,
+                type:'GET',
+                success:(res)=>{
+                    $('#edit_rId').val(res.data.rId);
+                    $('#edit_rName').val(res.data.rName);
+                    $('#edit_rRemark').val(res.data.rRemark);
+                    $('#update_role').modal('show');
+                }
+            })
+            return false;
+        })
+
+        /*修改确认时提交的函数*/
+        $('#edit_role').click(()=>{
+            let rId = $('#edit_rId').val();
+            let rName = $('#edit_rName').val();
+            let rRemark = $('#edit_rRemark').val();
+
+            $.ajax({
+                url:encodeURI('permission/editRole'),
+                data:{rId,rName,rRemark},
+                type:'POST',
+                success:(res)=>{
+                    if(res.code == 200){
+                        alert(res.msg);
+                        window.location.href = "permission/findAllRole"
+                    }else{
+                        alert(res.msg);
+                    }
+
+                }
+            })
+
+
+        })
+
+        //打开资源绑定模态框之前进行数据的请求
+        $('.openPermissionModal').click(function () {
+            roleId = $(this).attr('data-id');
+            let setting = {
+                check: {
+                    enable: true
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                callback: {
+                    onCheck: zTreeOnCheck,
+                }
+            };
+            $.ajax({
+                url:'permission/findAllMenu/'+roleId,
+                type:'POST',
+                success:(res)=>{
+                    zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, res.data);
+                    $('#toPermissionModal').modal('show');
+                },
+
+            })
+        })
+
+        let zTreeOnCheck = function (event, treeId, treeNode) {
+            let e = zTreeObj.getCheckedNodes(true);
+            let ids = "";
+            for (let i = 0; i < e.length; i++) {
+                ids += "id=" + e[i].id + "&"
+            }
+
+            $.ajax({
+                url: 'permission/editPermissions',
+                data: ids + "roleId=" + roleId,
+                type: 'POST',
+            })
+
+
+        }
+
+    })
+
+
+</script>
+
+</html>
