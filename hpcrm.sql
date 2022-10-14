@@ -1,8 +1,8 @@
 /*
-SQLyog Ultimate v10.00 Beta1
-MySQL - 5.7.35-log : Database - hpcrm
+SQLyog Enterprise v13.1.1 (64 bit)
+MySQL - 5.5.27 : Database - hpcrm
 *********************************************************************
-*/
+*/
 
 /*!40101 SET NAMES utf8 */;
 
@@ -28,11 +28,23 @@ CREATE TABLE `contract` (
   `ct_tender_docment` varchar(100) DEFAULT NULL COMMENT '标书文件url',
   `p_id` int(11) DEFAULT NULL COMMENT '项目合同相关信息对应的项目',
   PRIMARY KEY (`ct_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contract` */
 
-insert  into `contract`(`ct_id`,`ct_contract_amount`,`ct_contract_docment`,`ct_tender_amount`,`ct_tender_docment`,`p_id`) values (1,'合同金额20w','temp1.docx','招标金额20W','test1.docx',1),(2,'合同金额30w','temp2.docx','招标金额30W','test2.docx',2),(4,'123','13d-8340-8fba347e9d07qubie.txt','123','6dc-9b06-0b36692bbe27qubie.txt',5),(5,'123','e19-9a3d-7c866146bebe6dc-9b06-0b36692bbe27qubie.txt','123','83b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',2),(6,'123','ac0-9f06-42274a62b08183b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt','123','832-aebe-bec095e8407683b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',5),(7,'123','35f-b07f-30380a6d86c083b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt','123','443-a3d0-8a8afc93345083b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',5),(8,'123','8e1-bfdc-cd9c88c7368d6dc-9b06-0b36692bbe27qubie.txt','123','b66-898f-c6846dd513be6dc-9b06-0b36692bbe27qubie.txt',5),(9,'123','702-8d42-8fba7b8459c56dc-9b06-0b36692bbe27qubie.txt','123','830-8c6c-7c612de18cad6dc-9b06-0b36692bbe27qubie.txt',5),(10,'123','852-af98-a81c2cfa530a83b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt','123','f96-afee-02be24d1e9ad83b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',5),(11,'123','b36692bbe27qubie.txt','123','b36692bbe27qubie.txt',5);
+insert  into `contract`(`ct_id`,`ct_contract_amount`,`ct_contract_docment`,`ct_tender_amount`,`ct_tender_docment`,`p_id`) values 
+(1,'合同金额20w','temp1.docx','招标金额20W','test1.docx',1),
+(2,'合同金额30w','temp2.docx','招标金额30W','test2.docx',2),
+(4,'123','af68-47cf90db77b0项目改动.txt','123','97b9-17c282288f57项目改动.txt',5),
+(5,'123','e19-9a3d-7c866146bebe6dc-9b06-0b36692bbe27qubie.txt','123','83b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',2),
+(6,'123','ac0-9f06-42274a62b08183b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt','123','832-aebe-bec095e8407683b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',5),
+(7,'123','35f-b07f-30380a6d86c083b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt','123','443-a3d0-8a8afc93345083b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',5),
+(8,'123','8e1-bfdc-cd9c88c7368d6dc-9b06-0b36692bbe27qubie.txt','123','b66-898f-c6846dd513be6dc-9b06-0b36692bbe27qubie.txt',5),
+(9,'123','702-8d42-8fba7b8459c56dc-9b06-0b36692bbe27qubie.txt','123','830-8c6c-7c612de18cad6dc-9b06-0b36692bbe27qubie.txt',5),
+(10,'123','852-af98-a81c2cfa530a83b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt','123','f96-afee-02be24d1e9ad83b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',5),
+(11,'123','b36692bbe27qubie.txt','123','b36692bbe27qubie.txt',5),
+(12,'123','fa1-a930-add73eb6cba8','123','1b6-959c-f42ebdeda9ee',1),
+(13,'123','964-815c-5368b71c35b1','123','a310-9ed191098b7e项目改动.txt',2);
 
 /*Table structure for table `cus_pro` */
 
@@ -46,7 +58,21 @@ CREATE TABLE `cus_pro` (
 
 /*Data for the table `cus_pro` */
 
-insert  into `cus_pro`(`cp_id`,`p_id`,`c_id`) values (1,1,1),(2,2,1),(1,1,2),(2,2,2),(5,5,1),(5,5,4),(6,6,2),(6,6,1),(8,8,1),(7,7,4),(9,9,2),(10,10,1);
+insert  into `cus_pro`(`cp_id`,`p_id`,`c_id`) values 
+(1,1,1),
+(2,2,1),
+(1,1,2),
+(2,2,2),
+(5,5,1),
+(5,5,4),
+(6,6,2),
+(6,6,1),
+(8,8,1),
+(7,7,4),
+(9,9,2),
+(10,10,2),
+(12,12,2),
+(13,13,1);
 
 /*Table structure for table `customer` */
 
@@ -64,11 +90,14 @@ CREATE TABLE `customer` (
   `c_hobby` varchar(255) DEFAULT NULL COMMENT '爱好',
   `c_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 /*Data for the table `customer` */
 
-insert  into `customer`(`c_id`,`c_rename`,`c_name`,`c_depart`,`c_cie_type`,`c_job`,`c_tele`,`c_post`,`c_hobby`,`c_remark`) values (1,'张三','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),(2,'李四','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),(4,'王五','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),(6,'123','张家界航院','销售部','学校','销售','3123','123123@qq.com','312312','13213'),(7,'123','张家界航院','销售部','政府机构','售前','123','123','篮球','123');
+insert  into `customer`(`c_id`,`c_rename`,`c_name`,`c_depart`,`c_cie_type`,`c_job`,`c_tele`,`c_post`,`c_hobby`,`c_remark`) values 
+(1,'张三','张家界航院','销售部','学校','售后','123','123@qq.com','唱歌','良好'),
+(2,'李四','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好'),
+(4,'王五','张家界航院','销售部','学校','销售','123','123@qq.com','唱歌','良好');
 
 /*Table structure for table `emp_role` */
 
@@ -83,7 +112,11 @@ CREATE TABLE `emp_role` (
 
 /*Data for the table `emp_role` */
 
-insert  into `emp_role`(`er_id`,`e_id`,`r_id`) values (9,4,11),(10,4,12),(12,5,11),(19,1,11);
+insert  into `emp_role`(`er_id`,`e_id`,`r_id`) values 
+(9,4,11),
+(10,4,12),
+(12,5,11),
+(19,1,11);
 
 /*Table structure for table `employee` */
 
@@ -102,11 +135,17 @@ CREATE TABLE `employee` (
   `e_honor` varchar(255) DEFAULT NULL COMMENT '社会荣誉',
   `e_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`e_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `employee` */
 
-insert  into `employee`(`e_id`,`rename`,`e_name`,`e_pwd`,`e_birthday`,`e_school`,`e_job`,`e_start_time`,`e_social_position`,`e_honor`,`e_remark`) values (1,'jack','jack','123','2022-10-08','张家界学院','售后','2022-10-08','党员','党员-省赛一等奖','良好'),(3,'tom','tom','123','2022-10-01','张家界航院','售前','2022-10-01','党员','群众-无','良好'),(4,'tom','tom','123','2022-10-01','张家界航院','售前','2022-10-01','党员','群众-无','良好'),(5,'marry','marry','123','2022-10-01','张家界航院','售前','2022-10-01','党员','团员-无','良好'),(6,'tom','tom','123','2022-10-01','张家界航院','售前','2022-10-01','党员','群众-无','良好'),(7,'marry','marry','123','2022-10-01','张家界航院','售前','2022-10-01','党员','团员-无','良好'),(9,'jack','jack','123','2022-10-08','张家界学院','销售','2022-10-08','党员','党员-省赛一等奖','良好'),(10,'marry','marry','123','2022-10-08','张家界航院','售前','2022-10-08','党员','团员-666','良好'),(11,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),(12,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),(13,'marry','marry','123','2022-10-01','张家界航院','售前','2022-10-01','党员','团员-无','良好'),(14,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),(15,'marry','marry','123','2022-10-01','张家界航院','售前','2022-10-01','党员','团员-无','良好'),(16,'jack','jack','123','2022-10-08','张家界学院','销售','2022-10-08','党员','党员-省赛一等奖','良好'),(17,'marry','marry','123','2022-10-08','张家界航院','销售','2022-10-08','党员','团员-666','良好'),(18,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),(19,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),(20,'marry','marry','123','2022-10-01','张家界航院','售前','2022-10-01','党员','团员-无','良好'),(21,'tom','tom','123','2022-10-01','张家界航院','销售','2022-10-01','党员','群众-无','良好'),(22,'marry','marry','123','2022-10-01','张家界航院','销售','2022-10-01','党员','团员-无','良好');
+insert  into `employee`(`e_id`,`rename`,`e_name`,`e_pwd`,`e_birthday`,`e_school`,`e_job`,`e_start_time`,`e_social_position`,`e_honor`,`e_remark`) values 
+(1,'jack','jack','123','2022-10-08','张家界学院','售后','2022-10-08','党员','党员-省赛一等奖','良好'),
+(2,'john','john','123','2022-10-01','张家界航院','售前','2022-10-10','党员','党员','良好'),
+(3,'tom','tom','123','2022-10-01','张家界航院','售前','2022-10-01','党员','群众-无','良好'),
+(4,'xxz','xxz','123','2022-10-01','张家界航院','售前','2022-10-10','党员','党员','良好'),
+(5,'marry','marry','123','2022-10-01','张家界航院','售前','2022-10-01','党员','团员-无','良好'),
+(9,'123','123','123','','','售前','','党员','','');
 
 /*Table structure for table `interview` */
 
@@ -123,11 +162,24 @@ CREATE TABLE `interview` (
   `i_content` varchar(255) DEFAULT NULL COMMENT '内容摘要',
   `i_next` varchar(255) DEFAULT NULL COMMENT '下一步计划',
   PRIMARY KEY (`i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 /*Data for the table `interview` */
 
-insert  into `interview`(`i_id`,`i_company`,`c_id`,`i_visit_time`,`p_id`,`e_id`,`i_others`,`i_content`,`i_next`) values (1,'张家界航院',1,'2022-10-01',1,5,'肖某|王某','农村致富','下乡'),(13,'厚朴公司',2,'2022-10-03',1,4,'jack|marry','牛逼','揍你'),(14,'厚朴公司',2,'2022-10-03',1,4,'jack|marry','牛逼','揍你'),(15,'厚朴公司',1,'2022-10-03',2,2,'jack|marry','牛逼','揍你'),(18,'热望亲热去',2,'2022-10-08',1,4,'大是大非','撒旦发射点','发放'),(19,'热望亲热去',1,'2022-10-08',1,4,'大是大非','撒旦发射点','发放'),(20,'热望亲热去',4,'2022-10-08',1,4,'大是大非','撒旦发射点','发放'),(21,'123',1,'2022-10-09',1,1,'jack|marry','123','123');
+insert  into `interview`(`i_id`,`i_company`,`c_id`,`i_visit_time`,`p_id`,`e_id`,`i_others`,`i_content`,`i_next`) values 
+(1,'张家界航院',1,'2022-10-01',1,5,'肖某|王某','农村致富','下乡'),
+(13,'厚朴公司',2,'2022-10-03',1,4,'jack|marry','牛逼','揍你'),
+(14,'厚朴公司',2,'2022-10-03',1,4,'jack|marry','牛逼','揍你'),
+(15,'厚朴公司',1,'2022-10-03',2,2,'jack|marry','牛逼','揍你'),
+(18,'热望亲热去',2,'2022-10-08',1,4,'大是大非','撒旦发射点','发放'),
+(19,'热望亲热去',1,'2022-10-08',1,4,'大是大非','撒旦发射点','发放'),
+(20,'热望亲热去',4,'2022-10-08',1,4,'大是大非','撒旦发射点','发放'),
+(21,'123',1,'2022-10-09',1,1,'jack|marry','123','123'),
+(23,'厚朴',9,'2022-10-13',5,5,'jack|marry','123','123'),
+(24,'厚朴公司',2,'2022-10-14',5,1,'jack|marry','123','123'),
+(25,'厚朴公司',1,'2022-10-14',5,1,'jack|marry','123','123'),
+(28,'厚朴公司123',2,'2022-10-14',9,6,'jack|marry','牛逼','揍你'),
+(29,'厚朴公司123',1,'2022-10-14',9,6,'jack|marry','牛逼','揍你');
 
 /*Table structure for table `menu` */
 
@@ -143,7 +195,39 @@ CREATE TABLE `menu` (
 
 /*Data for the table `menu` */
 
-insert  into `menu`(`m_id`,`parent_code`,`cur_code`,`m_name`) values (1,'0','10','客户管理'),(2,'0','20','访谈记录'),(3,'0','30','项目管理'),(4,'0','40','报表统计'),(5,'0','50','权限管理'),(6,'10','1010','查询客户信息'),(7,'10','1020','添加客户信息'),(8,'10','1030','删除客户信息'),(9,'10','1040','修改客户信息'),(10,'10','1050','导入客户信息'),(11,'10','1060','导出客户信息'),(12,'20','2010','查询访谈记录'),(13,'20','2020','添加访谈记录'),(14,'20','2030','导出访谈记录'),(15,'30','3010','查看项目信息'),(16,'30','3020','添加项目信息'),(17,'30','3030','修改项目信息'),(18,'50','5010','数据字典'),(19,'50','5020','员工管理'),(20,'50','5030','授权信息'),(21,'5010','501010','查看字典信息'),(22,'5010','501020','添加字典信息'),(23,'5020','502010','查看员工信息'),(24,'5020','502020','添加员工信息'),(25,'5020','502030','修改员工信息'),(26,'5020','502040','删除员工信息'),(27,'5020','502050','导入员工信息'),(28,'5020','502060','导出员工信息'),(29,'5030','503010','查看角色信息'),(30,'5030','503020','删除角色信息'),(31,'5030','503030','修改角色信息'),(32,'5030','503040','角色资源绑定');
+insert  into `menu`(`m_id`,`parent_code`,`cur_code`,`m_name`) values 
+(1,'0','10','客户管理'),
+(2,'0','20','访谈记录'),
+(3,'0','30','项目管理'),
+(4,'0','40','报表统计'),
+(5,'0','50','权限管理'),
+(6,'10','1010','查询客户信息'),
+(7,'10','1020','添加客户信息'),
+(8,'10','1030','删除客户信息'),
+(9,'10','1040','修改客户信息'),
+(10,'10','1050','导入客户信息'),
+(11,'10','1060','导出客户信息'),
+(12,'20','2010','查询访谈记录'),
+(13,'20','2020','添加访谈记录'),
+(14,'20','2030','导出访谈记录'),
+(15,'30','3010','查看项目信息'),
+(16,'30','3020','添加项目信息'),
+(17,'30','3030','修改项目信息'),
+(18,'50','5010','数据字典'),
+(19,'50','5020','员工管理'),
+(20,'50','5030','授权信息'),
+(21,'5010','501010','查看字典信息'),
+(22,'5010','501020','添加字典信息'),
+(23,'5020','502010','查看员工信息'),
+(24,'5020','502020','添加员工信息'),
+(25,'5020','502030','修改员工信息'),
+(26,'5020','502040','删除员工信息'),
+(27,'5020','502050','导入员工信息'),
+(28,'5020','502060','导出员工信息'),
+(29,'5030','503010','查看角色信息'),
+(30,'5030','503020','删除角色信息'),
+(31,'5030','503030','修改角色信息'),
+(32,'5030','503040','角色资源绑定');
 
 /*Table structure for table `payment_back` */
 
@@ -154,11 +238,38 @@ CREATE TABLE `payment_back` (
   `pb_money` int(11) NOT NULL COMMENT '回款金额',
   `pb_order` int(11) NOT NULL AUTO_INCREMENT COMMENT '录入顺序，自增',
   KEY `pb_order` (`pb_order`)
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=utf8;
 
 /*Data for the table `payment_back` */
 
-insert  into `payment_back`(`pb_id`,`pb_money`,`pb_order`) values (1001,1111,1),(1003,3333,3),(1004,444,4),(1006,666,6),(2001,11111,2),(2002,11111,5),(2003,2312312,3),(2007,1,5),(2006,454555,5),(2005,123123,5),(2008,2,127),(2009,123123,128),(6001,23,129),(5001,1,130),(8001,1,131),(10001,213,133);
+insert  into `payment_back`(`pb_id`,`pb_money`,`pb_order`) values 
+(1001,12000,1),
+(1003,12000,3),
+(1004,12000,4),
+(1006,12000,6),
+(2001,12000,2),
+(2002,12000,5),
+(2003,12000,3),
+(2007,12000,5),
+(2006,12000,5),
+(2005,12000,5),
+(2008,12000,127),
+(2009,12000,128),
+(6001,12000,129),
+(5001,12000,130),
+(8001,12000,131),
+(10001,12000,133),
+(6002,12000,139),
+(6003,12000,140),
+(10002,12000,141),
+(10003,12000,142),
+(10004,12000,143),
+(10005,12000,144),
+(10006,12000,145),
+(6004,12000,146),
+(7001,12000,147),
+(10007,12312,148),
+(12001,12000,149);
 
 /*Table structure for table `project` */
 
@@ -173,11 +284,21 @@ CREATE TABLE `project` (
   `cp_id` int(11) DEFAULT NULL COMMENT '客户参与人员，多人',
   `pb_id` int(11) DEFAULT NULL COMMENT '回款表的id，要回款5次需要一张新表',
   PRIMARY KEY (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `project` */
 
-insert  into `project`(`p_id`,`p_name`,`p_moeny`,`p_progress`,`p_owner`,`cp_id`,`pb_id`) values (1,'工地项目(点击查看对应的合同表)1','100w','招标','jack',1,1000),(2,'工地项目(点击查看对应的合同表)2','100w','招标','jack',2,2000),(5,'创业','12W','意向','jack',5,5000),(6,'创业2','12W','方案','marry',6,6000),(7,'创业4','12W','意向','jack',7,7000),(8,'创业3','12W','回款','jack',8,8000),(9,'123','123','意向','jack',9,9000),(10,'123','1123','意向','jack',10,10000);
+insert  into `project`(`p_id`,`p_name`,`p_moeny`,`p_progress`,`p_owner`,`cp_id`,`pb_id`) values 
+(1,'工地项目(点击查看对应的合同表)1','1000000','招标','jack',1,1000),
+(2,'工地项目2','1000000','招标','jack',2,2000),
+(5,'创业','120000','意向','jack',5,5000),
+(6,'创业2','120000','方案','marry',6,6000),
+(7,'创业4','120000','意向','jack',7,7000),
+(8,'创业3','120000','回款','jack',8,8000),
+(9,'123','120000','意向','jack',9,9000),
+(10,'123','120000','意向','jack',10,10000),
+(12,'312','120000','意向','123',12,12000),
+(13,'666','120000','方案','123',13,13000);
 
 /*Table structure for table `role` */
 
@@ -192,7 +313,10 @@ CREATE TABLE `role` (
 
 /*Data for the table `role` */
 
-insert  into `role`(`r_id`,`r_name`,`r_remark`) values (11,'管理员','fasd'),(12,'销售','212313'),(13,'前台','313');
+insert  into `role`(`r_id`,`r_name`,`r_remark`) values 
+(11,'管理员','fasd'),
+(12,'销售','212313'),
+(13,'前台','313');
 
 /*Table structure for table `role_menu` */
 
@@ -207,7 +331,39 @@ CREATE TABLE `role_menu` (
 
 /*Data for the table `role_menu` */
 
-insert  into `role_menu`(`rm_id`,`m_id`,`r_id`) values (1290,1,11),(1291,6,11),(1292,7,11),(1293,8,11),(1294,9,11),(1295,10,11),(1296,11,11),(1297,2,11),(1298,12,11),(1299,13,11),(1300,14,11),(1301,3,11),(1302,15,11),(1303,16,11),(1304,17,11),(1305,4,11),(1306,5,11),(1307,18,11),(1308,21,11),(1309,22,11),(1310,19,11),(1311,23,11),(1312,24,11),(1313,25,11),(1314,26,11),(1315,27,11),(1316,28,11),(1317,20,11),(1318,29,11),(1319,30,11),(1320,31,11),(1321,32,11);
+insert  into `role_menu`(`rm_id`,`m_id`,`r_id`) values 
+(1290,1,11),
+(1291,6,11),
+(1292,7,11),
+(1293,8,11),
+(1294,9,11),
+(1295,10,11),
+(1296,11,11),
+(1297,2,11),
+(1298,12,11),
+(1299,13,11),
+(1300,14,11),
+(1301,3,11),
+(1302,15,11),
+(1303,16,11),
+(1304,17,11),
+(1305,4,11),
+(1306,5,11),
+(1307,18,11),
+(1308,21,11),
+(1309,22,11),
+(1310,19,11),
+(1311,23,11),
+(1312,24,11),
+(1313,25,11),
+(1314,26,11),
+(1315,27,11),
+(1316,28,11),
+(1317,20,11),
+(1318,29,11),
+(1319,30,11),
+(1320,31,11),
+(1321,32,11);
 
 /*Table structure for table `type_dic` */
 
@@ -220,7 +376,11 @@ CREATE TABLE `type_dic` (
 
 /*Data for the table `type_dic` */
 
-insert  into `type_dic`(`code`,`type`) values ('jobType','岗位性质'),('companyType','单位类型'),('progress','项目进度');
+insert  into `type_dic`(`code`,`type`) values 
+('jobType','岗位性质'),
+('companyType','单位类型'),
+('progress','项目进度'),
+('schoolType','院校岗位');
 
 /*Table structure for table `value_dic` */
 
@@ -231,11 +391,40 @@ CREATE TABLE `value_dic` (
   `v_value` varchar(50) DEFAULT NULL COMMENT '字典值',
   `type_code` varchar(50) DEFAULT NULL COMMENT '关联type_dic表',
   PRIMARY KEY (`v_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 /*Data for the table `value_dic` */
 
-insert  into `value_dic`(`v_id`,`v_value`,`type_code`) values (1,'售前','jobType'),(2,'售后','jobType'),(3,'销售','jobType'),(4,'商务','jobType'),(5,'财务','jobType'),(6,'其他','jobType'),(7,'学校','companyType'),(8,'国企','companyType'),(9,'政府机构','companyType'),(10,'名气外企','companyType'),(11,'其他','companyType'),(12,'意向','progress'),(13,'方案','progress'),(14,'招标','progress'),(15,'合同','progress'),(16,'回款','progress'),(17,'结束','progress');
+insert  into `value_dic`(`v_id`,`v_value`,`type_code`) values 
+(1,'售前','jobType'),
+(2,'售后','jobType'),
+(3,'销售','jobType'),
+(4,'商务','jobType'),
+(5,'财务','jobType'),
+(6,'其他','jobType'),
+(7,'学校','companyType'),
+(8,'国企','companyType'),
+(9,'政府机构','companyType'),
+(10,'名气外企','companyType'),
+(11,'其他','companyType'),
+(12,'意向','progress'),
+(13,'方案','progress'),
+(14,'招标','progress'),
+(15,'合同','progress'),
+(16,'回款','progress'),
+(17,'项目完结','progress'),
+(18,'校长','schoolType'),
+(19,'书记','schoolType'),
+(20,'教学副校长','schoolType'),
+(21,'其他副校长','schoolType'),
+(22,'二级学院院长','schoolType'),
+(23,'二级学院副院长','schoolType'),
+(24,'教研室主任','schoolType'),
+(25,'专业带头人','schoolType'),
+(26,'老师','schoolType'),
+(27,'立项','progress'),
+(28,'项目终止','progress'),
+(29,'施工','progress');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
