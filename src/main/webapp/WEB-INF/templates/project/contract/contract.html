@@ -78,10 +78,10 @@
     <!--   新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗-->
 
     <!-- 修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗 -->
-    <div class="modal fade" id="update_emp">
+    <div class="modal fade" id="update_con">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form  method="post" class="nav-link">
+                <form th:action="@{/project/updateContract}"  method="post" enctype="multipart/form-data" class="nav-link" >
                     <div class="modal-body">
                         <div>
                             <div class="card card-default">
@@ -92,28 +92,32 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="rename">合同金额</label>
-                                          <input type="text"  name="rename" class="form-control">
+                                          <label>合同金额</label>
+                                            <!--当前合同pId-->
+                                             <input type="hidden" name="pId" th:value="${pId}">
+                                           <!--修改主键-->
+                                            <input type="hidden" id="ctId" name="ctId" th:value="${ctId}">
+                                          <input type="text" id="ctContractAmount" name="rename" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="eBirthday">合同文件</label>
-                                          <input type="file"  name="eBirthday" class="form-control">
+                                          <label>合同文件</label>
+                                          <input type="file" id="ctContractDocment" name="ctContractDocmentFile" class="form-control">
                                       </div>
                                   </span>
                                     </div>
                                     <div class="row">
                                       <span class="col-sm-6 col-md-6">
                                            <div class="form-group">
-                                              <label for="eName">招标金额</label>
-                                              <input type="text"  name="eName" class="form-control">
+                                              <label>招标金额</label>
+                                              <input type="text" id="ctTenderAmount"  name="ctTenderAmount" class="form-control">
                                           </div>
                                       </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="ePwd">招标文件</label>
-                                          <input type="file"  name="ePwd" class="form-control">
+                                          <label>招标文件</label>
+                                          <input type="file" id="ctTenderDocment"  name="ctTenderDocmentFile" class="form-control">
                                       </div>
                                   </span>
                                     </div>
@@ -147,7 +151,14 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-sm-10"></div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <a  class="btn btn-primary" th:href="@{/project/projects}">
+                                                返回
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8"></div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <button  class="btn btn-primary" data-toggle="modal" data-target="#add_con">
@@ -177,20 +188,13 @@
                                         <td th:text="${con.ctTenderAmount}">招标金额20w</td>
                                         <td><a th:href="@{'/project/conownloadTen/'+${con.ctTenderDocment}}">招标文件下载</a></td>
                                         <td>
-                                            <button type="button"  class="btn  btn-sm btn-info updateEmpBtn" data-toggle="modal" data-target="#update_emp">修改暂时不做，业务问题</button>
+                                            <button type="button" th:tar-id="${con.ctId}" class="btn  btn-sm btn-info updateConBtn" data-toggle="modal" data-target="#update_con">重要文件，请谨慎修改！</button>
                                         </td>
                                     </tr>
-<!--                                    <tr>-->
-<!--                                        <td>合同金额20w</td>-->
-<!--                                        <td><a href="javascrupt:;">合同文件下载</a></td>-->
-<!--                                        <td>招标金额20w</td>-->
-<!--                                        <td><a href="javascrupt:;">招标文件下载</a></td>-->
-<!--                                        <td>-->
-<!--                                            <button type="button"  class="btn  btn-sm btn-info updateEmpBtn" data-toggle="modal" data-target="#update_emp">修改暂时不做，业务问题</button>-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
                                     </tbody>
                                 </table>
+                                <p th:if="${conPageInfo.total == 0}">本项目没有合同数据哦！要添加对应合同记录才有哦！
+                                </p>
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
                                 <nav>
                                     <ul class="mypagination">
@@ -200,17 +204,17 @@
                                         </a></li>
 
                                         <li th:style="${conPageInfo.hasPreviousPage ? '' : 'display: none;'}">
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${conPageInfo.pageNum - 1}}"
+                                            <a th:href="@{'/project/contract_record?pageNum=' + ${conPageInfo.pageNum - 1} + '&pId=' + ${pId}}"
                                                aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
                                         <li th:each="pageNum : ${conPageInfo.navigatepageNums}"  >
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${pageNum}}"
+                                            <a th:href="@{'/project/contract_record?pageNum=' + ${pageNum} + '&pId=' + ${pId}}"
                                                th:style="${conPageInfo.pageNum == pageNum ? 'background:#5faee3;' : ''}"
                                                th:text="${pageNum}"></a></li>
                                         <li th:style="${conPageInfo.hasNextPage ? '' : 'display: none;'}">
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${conPageInfo.pageNum + 1}}" aria-label="Next">
+                                            <a th:href="@{'/project/contract_record?pageNum=' + ${conPageInfo.pageNum + 1} + '&pId=' + ${pId}}" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>
@@ -287,26 +291,18 @@
         })
 
         //修改按钮
-        $('.updateEmpBtn').click(function (){
-            let empId = $(this).attr("tar-id");
+        $('.updateConBtn').click(function (){
+            let ctId = $(this).attr("tar-id");
             $.ajax({
-                url: "/crm/emp/queryById/" + empId,
+                url: "/crm/project/queryConById/" + ctId,
                 type: "get",
                 datatype: "json",
                 success: function (res){
                     console.log(res);
-                    let emp = res.data;
-                    $('#eId').val(emp.eId);
-                    $('#rename').val(emp.rename);
-                    $('#eName').val(emp.eName);
-                    $('#ePwd').val(emp.ePwd);
-                    $('#eBirthday').val(emp.eBirthday);
-                    $('#eSchool').val(emp.eSchool);
-                    $('#eJob').val(emp.eJob);
-                    $('#eStartTime').val(emp.eStartTime);
-                    $('#eSocialPosition').val(emp.eSocialPosition);
-                    $('#eHonor').val(emp.eHonor);
-                    $('#eRemark').val(emp.eRemark);
+                    let ct = res.data;
+                    $('#ctId').val(ct.ctId);
+                    $('#ctContractAmount').val(ct.ctContractAmount);
+                    $('#ctTenderAmount').val(ct.ctTenderAmount);
                 }
             })
         })

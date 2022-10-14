@@ -72,7 +72,7 @@
                                       <label>客户参与人员</label>
                                       <div class="select2-purple">
                                           <select class="select2" name="cRenames" multiple="multiple" data-placeholder="选择"
-                                                  data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                                  data-dropdown-css-class="select2-purple" style="width: 100%;" required>
                                           <option th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}">全部</option>
                                         </select>
                                       </div>
@@ -114,13 +114,13 @@
                                        <div class="form-group">
                                            <input id="pId" name="pId" type="hidden">
                                           <label for="pName">项目名称</label>
-                                            <input type="text" id="pName" name="pName" class="form-control">
+                                            <input type="text" id="pName" name="pName" class="form-control" required>
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label for="pMoeny">项目金额</label>
-                                          <input type="text" id="pMoeny" name="pMoeny" class="form-control">
+                                          <input type="text" id="pMoeny" name="pMoeny" class="form-control" required>
 
                                     </div>
 
@@ -138,7 +138,7 @@
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label for="pOwner">项目负责人</label>
-                                          <select id="pOwner" name="pOwner" class="form-control custom-select">
+                                          <select id="pOwner" name="pOwner" class="form-control custom-select" required>
                                                <option th:each="eRename,empState:${eRenameSet}" th:text="${eRename}" th:value="${eRename}">全部</option>
                                       </select>
                                       </div>
@@ -150,7 +150,7 @@
                                       <label id="laberCrename" for="cRenames"></label>
                                       <div class="select2-purple">
                                           <select class="select2" id="cRenames" name="cRenames" multiple="multiple" data-placeholder="选择"
-                                                  data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                                  data-dropdown-css-class="select2-purple" style="width: 100%;" required>
                                             <option class="updateProCrenameItem" th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}">全部</option>
                                         </select>
                                       </div>
@@ -269,10 +269,15 @@
                                         <td th:text="${pro.pMoeny}">100w</td>
                                         <td th:text="${pro.pProgress}">招标</td>
                                         <td th:text="${pro.pOwner}">我是员工A</td>
-                                        <!--cpId-->
-                                        <td th:text="${pro.cRenames}">
-<!--                                            <span th:each="cRename,${pro.cRenames}" th:text="${cRename}"></span>|-->
+                                        <!--cpId：th:text="${pro.cRenames}"-->
+                                        <td th:if="${pro.cRenames.size == 0}">待定</td>
+                                        <td th:if="${pro.cRenames.size != 0}" th:text="${pro.cRenames}">
+<!--                                            <span th:each="cRename:${pro.cRenames}" th:text="${cRename}"></span>|-->
+<!--                                            <select class="form-control custom-select">-->
+<!--                                                <option style="display: block;height: 50px;line-height: 50px;" th:each="cRename : ${pro.cRenames}" th:text="${cRename}" th:value="${cRename}"></option>-->
+<!--                                            </select>-->
                                         </td>
+                                        <!--下啦-->
 <!--                                        <td><a th:href="@{'/interview/interviews?cRename=' + ${pro.cRename}}">拜访记录（点击查看详情）</a></td>-->
                                         <td><a th:href="@{'/project/interview_record?cIds=' + ${pro.cIds} + '&pId=' + ${pro.pId}}">拜访记录（点击查看详情）</a></td>
                                         <td><a th:href="@{'/project/payment_back?pbId=' + ${pro.pbId} + '&pId=' + ${pro.pId}}" class="card-link">回款金额之和：55w(点击查看对应的回款记录)</a>
@@ -283,21 +288,6 @@
                                             </button>
                                         </td>
                                     </tr>
-<!--                                    <tr>-->
-<!--                                        <td><a th:href=" @{/project/contract/toIndex}" class="card-link">工地项目(点击查看对应的合同表)</a></td>-->
-<!--                                        <td>100w</td>-->
-<!--                                        <td>招标</td>-->
-<!--                                        <td>我是员工A</td>-->
-<!--                                        <td>张三|李四|王五</td>-->
-<!--                                        <td><a th:href="@{/project/interview_record/toIndex}">拜访记录（点击查看详情）</a></td>-->
-<!--                                        <td><a th:href="@{/project/payment_back/toIndex}" class="card-link">回款金额之和：55w(点击查看对应的回款记录)</a>-->
-<!--                                        </td>-->
-<!--                                        <td>-->
-<!--                                            <button type="button" class="btn  btn-sm btn-info updateEmpBtn"-->
-<!--                                                    data-toggle="modal" data-target="#update_emp">修改-->
-<!--                                            </button>-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
                                     </tbody>
                                 </table>
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
@@ -309,17 +299,17 @@
                                         </a></li>
 
                                         <li th:style="${proPageInfo.hasPreviousPage ? '' : 'display: none;'}">
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${proPageInfo.pageNum - 1} + ${pName != null ? '&pName='+pName : ''} + ${pMoeny != null ? '&pMoeny='+pMoeny : ''} + ${pProgress != null ? '&pProgress='+pProgress : ''} + ${pOwner != null ? '&pOwner='+pOwner : ''}}"
+                                            <a th:href="@{'/project/projects?pageNum=' + ${proPageInfo.pageNum - 1} + ${pName != null ? '&pName='+pName : ''} + ${pMoeny != null ? '&pMoeny='+pMoeny : ''} + ${pProgress != null ? '&pProgress='+pProgress : ''} + ${pOwner != null ? '&pOwner='+pOwner : ''}}"
                                                aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
                                         <li th:each="pageNum : ${proPageInfo.navigatepageNums}"  >
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${pageNum} + ${pName != null ? '&pName='+pName : ''} + ${pMoeny != null ? '&pMoeny='+pMoeny : ''} + ${pProgress != null ? '&pProgress='+pProgress : ''} + ${pOwner != null ? '&pOwner='+pOwner : ''}}"
+                                            <a th:href="@{'/project/projects?pageNum=' + ${pageNum} + ${pName != null ? '&pName='+pName : ''} + ${pMoeny != null ? '&pMoeny='+pMoeny : ''} + ${pProgress != null ? '&pProgress='+pProgress : ''} + ${pOwner != null ? '&pOwner='+pOwner : ''}}"
                                                th:style="${proPageInfo.pageNum == pageNum ? 'background:#5faee3;' : ''}"
                                                th:text="${pageNum}"></a></li>
                                         <li th:style="${proPageInfo.hasNextPage ? '' : 'display: none;'}">
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${proPageInfo.pageNum + 1} + ${pName != null ? '&pName='+pName : ''} + ${pMoeny != null ? '&pMoeny='+pMoeny : ''} + ${pProgress != null ? '&pProgress='+pProgress : ''} + ${pOwner != null ? '&pOwner='+pOwner : ''}}" aria-label="Next">
+                                            <a th:href="@{'/project/projects?' + ${proPageInfo.pageNum + 1} + ${pName != null ? '&pName='+pName : ''} + ${pMoeny != null ? '&pMoeny='+pMoeny : ''} + ${pProgress != null ? '&pProgress='+pProgress : ''} + ${pOwner != null ? '&pOwner='+pOwner : ''}}" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>

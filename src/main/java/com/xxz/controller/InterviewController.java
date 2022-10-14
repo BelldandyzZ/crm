@@ -47,19 +47,14 @@ public class InterviewController {
 
     //条件查询
     @RequestMapping("/interviews")
-    public String queryAll(Model model, String iCompany, String cRename, String eRename,
+    public String queryAll(Model model, String iCompany, String cRename, String eRename,HttpSession session,
                            @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
-//        System.out.println(URLEncoder.encode(eJob,"utf-8"));
-        System.out.println("queryAll-interviews-confition:" + iCompany + "-" + cRename + "-" + eRename);
-        if (pageNum <=0){
-            pageNum = 1;
-        }
-        /**/
         PageHelper.startPage(pageNum,  10);
         List<Interview> interviewList = interviewService.queryAllInterview(iCompany, cRename, eRename);
         PageInfo<Interview> itwPageInfo = new PageInfo<>(interviewList, 5);
-        System.out.println(interviewList);
         model.addAttribute("itwPageInfo", itwPageInfo);
+        //将当前查询数据存储到sessino中是，实现条件导出
+        session.setAttribute("interviewListExcel", interviewList);
         //回显条件
         model.addAttribute("iCompany", iCompany);
         model.addAttribute("cRename", cRename);
@@ -168,28 +163,46 @@ public class InterviewController {
     //导出
     @RequestMapping("/excelOutput") //ResponseEntity<byte[]>
     public void excelOutput(HttpSession session, HttpServletResponse response) throws IOException {
-        //获取本机桌面地址
-//        File desktopDir = FileSystemView.getFileSystemView() .getHomeDirectory();
-//        String PATH = desktopDir.getAbsolutePath() + "\\";
-//        String fileName = PATH + "员工信息表.xlsx";
         //设置响应头和响应体格式，告诉浏览器是什么文件，对应解析
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         response.setHeader("Content-disposition", "attachment;filename="
                 + URLEncoder.encode("访谈信息", "UTF-8") + ".xlsx");
         //获取目标数据
-        List<Interview> interviewList = interviewService.queryAllInterview(null, null, null);
+        List<Interview> interviewList = (List<Interview>) session.getAttribute("interviewListExcel");
         for (Interview interview : interviewList) {
             //设置客户姓名
-            interview.setcRename(customerService.queryById(interview.getcId()).getcRename());
+            Customer customer = customerService.queryById(interview.getcId());
+            if(customer != null){
+                interview.setcRename(customer.getcRename());
+            }else {
+                interview.setcRename("无");
+            }
             //我方员工姓名
-            interview.seteRename(empService.queryById(interview.geteId()).getRename());
+            Employee employee = empService.queryById(interview.geteId());
+            if(employee != null){
+                if (employee.getRename() == null || employee.getRename().equals("")){
+                    interview.seteRename("未知");
+                }else{
+                    interview.seteRename(employee.getRename());
+                }
+            }else{
+                interview.seteRename("无");
+            }
+
             //设置拜访类型
-            interview.setpName(projectService.queryById(interview.getpId()).getpName());
+            Project project = projectService.queryById(interview.getpId());
+            if(project != null){
+                interview.setpName(project.getpName());
+            }else{
+                interview.setpName("无");
+            }
+
         }
+        //正序
+        Collections.reverse(interviewList);
         //响应到浏览器
-        EasyExcel.write(response.getOutputStream(), Interview.class).sheet("模板").doWrite(interviewList);
-        System.out.println("excelOutput.................");
+        EasyExcel.write(response.getOutputStream(), Interview.class).sheet("拜访记录模板").doWrite(interviewList);
     }
 
 

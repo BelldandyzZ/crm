@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Transactional
@@ -43,6 +44,7 @@ public class InterviewService {
             CustomerExample customerExample = new CustomerExample();
             customerExample.createCriteria().andCRenameLike("%" + cRename + "%");
             List<Customer> customers = customerMapper.selectByExample(customerExample);
+            //获取当前客户对应的所有拜访记录
             List<Integer> cids = new ArrayList<>();
             for (Customer customer : customers) {
                 cids.add(customer.getcId());
@@ -58,25 +60,53 @@ public class InterviewService {
             criteria.andEIdEqualTo(emp.geteId());
         }
 //============================================================================
-        //(1)查询
+        //(1)查询拜访记录
         List<Interview> interviewList = interviewMapper.selectByExample(interviewExample);
-        System.out.println("999999999999999999999999999 " + interviewList);
+
+        //删除的拜访[健壮性]
+        ArrayList<Interview> delItws = new ArrayList<>();
+
         for (Interview interview : interviewList) {
             //设置客户姓名
             if(interview.getcId() != null && !interview.getcId().equals("")){
-                interview.setcRename(customerMapper.selectByPrimaryKey(interview.getcId()).getcRename());
+                Customer customer = customerMapper.selectByPrimaryKey(interview.getcId());
+                if(customer != null){
+                    interview.setcRename(customer.getcRename());
+                }else{
+//                    interviewList.remove(interview);
+                    delItws.add(interview);
+//                    interviewMapper.deleteByPrimaryKey(interview.getiId());
+                    continue;
+                }
             }
             //我方员工姓名
             if(interview.geteId() != null && !interview.geteId().equals("")){
-                interview.seteRename(employeeMapper.selectByPrimaryKey(interview.geteId()).getRename());
+                Employee employee = employeeMapper.selectByPrimaryKey(interview.geteId());
+                if(employee != null){
+                    interview.seteRename(employee.getRename());
+                }else{
+//                    interviewList.remove(interview);
+                    delItws.add(interview);
+//                    interviewMapper.deleteByPrimaryKey(interview.getiId());
+                    continue;
+                }
             }
             //设置拜访类型
             if(interview.getpName() == null || interview.getpName().equals("")){
-                interview.setpName(projectMapper.selectByPrimaryKey(interview.getpId()).getpName());
-//                interview.setpName("农村购物致富商城系统项目");
+                Project project = projectMapper.selectByPrimaryKey(interview.getpId());
+                if(project != null){
+                    interview.setpName(project.getpName());
+                }else {
+//                    interviewList.remove(interview);
+                    delItws.add(interview);
+//                    interviewMapper.deleteByPrimaryKey(interview.getiId());
+                    continue;
+                }
             }
         }
-        System.out.println("条件查询结果：" + interviewList);
+        interviewList.removeAll(delItws);
+        //倒叙
+        Collections.reverse(interviewList);
         return interviewList;
     }
 

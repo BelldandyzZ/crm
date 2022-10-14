@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@Component
+//@Component
 public class GlobalExceptionHandler implements HandlerExceptionResolver {
     @Override
 
@@ -22,6 +22,11 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
      * 有ResponseBody注解就是异步请求，否则就不是。
      */
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler, Exception e) {
+
+        //打印异常信息
+        System.out.println(e.getMessage());
+        System.out.println(e.getStackTrace());
+
 
         //首先判断是返回页面还是返回json，false默认返回页面
         boolean isReturnJson = false;

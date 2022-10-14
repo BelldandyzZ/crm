@@ -16,5 +16,5 @@
     </root>
 
     <!-- 根据特殊需求指定局部日志级别 -->
-    <logger name="com.xxz.mapper" level="DEBUG"/>
+<!--    <logger name="com.xxz.mapper" level="DEBUG"/>-->
 </configuration>

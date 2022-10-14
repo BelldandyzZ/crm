@@ -2,31 +2,69 @@ package com.xxz.bean;
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.alibaba.excel.annotation.write.style.ContentStyle;
+import com.alibaba.excel.annotation.write.style.HeadRowHeight;
+import com.alibaba.excel.annotation.write.style.HeadStyle;
 import lombok.Data;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import sun.plugin2.util.ColorUtil;
 
+import javax.swing.plaf.synth.ColorType;
+import java.awt.*;
+import java.awt.color.ColorSpace;
 import java.io.Serializable;
 
 @Data
-@ExcelIgnoreUnannotated
+@ExcelIgnoreUnannotated //忽视大小写
+//行高全部设为40
+@HeadRowHeight(value = 20)
+//标题全部居中
+@HeadStyle(horizontalAlignment = HorizontalAlignment.CENTER,borderRight = BorderStyle.MEDIUM,
+        borderLeft =  BorderStyle.MEDIUM,
+        borderTop = BorderStyle.MEDIUM,
+        borderBottom = BorderStyle.MEDIUM )
+//框线
+@ColumnWidth(value = 20)
+@ContentStyle( borderRight = BorderStyle.MEDIUM,
+        borderLeft =  BorderStyle.MEDIUM,
+        borderTop = BorderStyle.MEDIUM,
+        borderBottom = BorderStyle.MEDIUM,
+        fillPatternType = FillPatternType.SOLID_FOREGROUND,
+        fillForegroundColor = 1,
+        horizontalAlignment = HorizontalAlignment.CENTER,
+        wrapped = true)
 public class Customer implements Serializable {
-    @ExcelProperty(value = "客户编号", index = 0)
+    @ExcelProperty(value = "编号", index = 0)
+    @ColumnWidth(value = 10)
     private Integer cId;
+
     @ExcelProperty(value = "客户姓名", index = 1)
     private String cRename;
+
     @ExcelProperty(value = "单位名称", index = 2)
     private String cName;
+
     @ExcelProperty(value = "所在部门", index = 3)
     private String cDepart;
+
     @ExcelProperty(value = "单位类型", index = 4)
     private String cCieType;
+
     @ExcelProperty(value = "客户职务", index = 5)
     private String cJob;
+
     @ExcelProperty(value = "客户电话", index = 6)
     private String cTele;
+
     @ExcelProperty(value = "客户邮箱", index = 7)
     private String cPost;
+
     @ExcelProperty(value = "客户爱好", index = 8)
     private String cHobby;
+
     @ExcelProperty(value = "备注", index = 9)
     private String cRemark;
 

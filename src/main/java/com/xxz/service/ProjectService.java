@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Transactional
@@ -53,24 +54,39 @@ public class ProjectService {
         if(pOwner != null && !pOwner.equals("")){
             criteria.andPOwnerLike("%" + pOwner + "%");
         }
-        //查询
+        //查询所有项目
         List<Project> projectList = projectMapper.selectByExample(projectExampleExample);
         for (Project project : projectList) {
+            //判断该员工是否存在
+            String eName = project.getpOwner();
+            EmployeeExample employeeExample = new EmployeeExample();
+            employeeExample.createCriteria().andENameEqualTo(eName);
+            List<Employee> employeeList = employeeMapper.selectByExample(employeeExample);
+            if(employeeList.size() == 0){
+                project.setpOwner("待定");
+            }
+            //项目-客户表
             CusProExample cusProExample = new CusProExample();
-            System.out.println("===================================================================");
-            System.out.println(project);
+            //根据当前项目id查询对应的所有客户
             cusProExample.createCriteria().andCpIdEqualTo(project.getCpId());
             List<CusPro> cusProList = cusProMapper.selectByExample(cusProExample);
+            //获取当前项目对应的所有客户名称
             List<String> cRenames = new ArrayList<>();
             //给Project对象设置cIds拜访客户cId
             String cIds = new String();
             for (CusPro cusPro : cusProList) {
-                cRenames.add(customerMapper.selectByPrimaryKey(cusPro.getcId()).getcRename());
-                cIds += cusPro.getcId() + ",";
+                //前端展示客户参与人员
+                Customer customer = customerMapper.selectByPrimaryKey(cusPro.getcId());
+                if(customer != null){
+                    cRenames.add(customer.getcRename());
+                    cIds += customer.getcId() + ",";
+                }
             }
             project.setcIds(cIds);
             project.setcRenames(cRenames);
         }
+        //倒叙
+        Collections.reverse(projectList);
         return projectList;
     }
 
@@ -90,19 +106,27 @@ public class ProjectService {
         //设置回款编号
         System.out.println(project);
         projectMapper.insertSelective(project);
+        //返回生成的编号
         Integer newIndex = project.getpId();
         project.setCpId(newIndex);
         project.setPbId(newIndex * 1000);
+        //修改重要字段值
         projectMapper.updateByPrimaryKeySelective(project);
-        for (String cRename : cRenames) {
-            //追加关系表cus_pro
-            CusPro cusPro = new CusPro();
-            cusPro.setCpId(newIndex);
-            cusPro.setpId(newIndex);
-            CustomerExample customerExample = new CustomerExample();
-            customerExample.createCriteria().andCRenameEqualTo(cRename);
-            cusPro.setcId(customerMapper.selectByExample(customerExample).get(0).getcId());
-            cusProMapper.insertSelective(cusPro);
+        //根据客户名单遍历添加数据库
+        if(cRenames.length > 0 && cRenames != null){
+            for (String cRename : cRenames) {
+                //追加关系表cus_pro
+                CusPro cusPro = new CusPro();
+                cusPro.setCpId(newIndex);
+                cusPro.setpId(newIndex);
+                CustomerExample customerExample = new CustomerExample();
+                customerExample.createCriteria().andCRenameEqualTo(cRename);
+                Customer customer = customerMapper.selectByExample(customerExample).get(0);
+                if(customer != null){
+                    cusPro.setcId(customer.getcId());
+                    cusProMapper.insertSelective(cusPro);
+                }
+            }
         }
     }
 
@@ -115,10 +139,17 @@ public class ProjectService {
         List<CusPro> cusProList = cusProMapper.selectByExample(cusProExample);
         List<String> cRenames = new ArrayList<>();
         //给Project对象设置cIds拜访客户cId
-        for (CusPro cusPro : cusProList) {
-            cRenames.add(customerMapper.selectByPrimaryKey(cusPro.getcId()).getcRename());
+        if(cusProList.size() > 0){
+            for (CusPro cusPro : cusProList) {
+                Customer customer = customerMapper.selectByPrimaryKey(cusPro.getcId());
+                if(customer != null){
+                    cRenames.add(customer.getcRename());
+                }
+            }
         }
-        project.setcRenames(cRenames);
+        if(cRenames.size() > 0){
+            project.setcRenames(cRenames);
+        }
         return project;
     }
 
@@ -129,15 +160,20 @@ public class ProjectService {
         cusProExample.createCriteria().andCpIdEqualTo(project.getpId());
         cusProMapper.deleteByExample(cusProExample);
         //重新添加客户信息到cus_pro
-        for (String cRename : cRenames) {
-            //追加关系表cus_pro
-            CusPro cusPro = new CusPro();
-            cusPro.setCpId(project.getpId());
-            cusPro.setpId(project.getpId());
-            CustomerExample customerExample = new CustomerExample();
-            customerExample.createCriteria().andCRenameEqualTo(cRename);
-            cusPro.setcId(customerMapper.selectByExample(customerExample).get(0).getcId());
-            cusProMapper.insertSelective(cusPro);
+        if(cRenames != null && cRenames.length > 0){
+            for (String cRename : cRenames) {
+                //追加关系表cus_pro
+                CusPro cusPro = new CusPro();
+                cusPro.setCpId(project.getpId());
+                cusPro.setpId(project.getpId());
+                CustomerExample customerExample = new CustomerExample();
+                customerExample.createCriteria().andCRenameEqualTo(cRename);
+                Customer customer = customerMapper.selectByExample(customerExample).get(0);
+                if (customer != null){
+                    cusPro.setcId(customer.getcId());
+                    cusProMapper.insertSelective(cusPro);
+                }
+            }
         }
         //重写字段值
         project.setCpId(project.getpId());
@@ -149,33 +185,68 @@ public class ProjectService {
     /*[拜访模块]=====================================================================================*/
     /*查询当前合同拜访记录*/
     public List<Interview> interview_recor(String cIds, Integer pId){
+        //获取目标cIds信息，即当前项目所有的客户[目前没什么用]
+//        if(cIds != null){
+//            String[] split = cIds.split(",");
+//            List<Integer> cIdList = new ArrayList<>();
+//            for (String s : split) {
+//                cIdList.add(Integer.parseInt(s));
+//            }
+//        }
+        //创建样本对象
         InterviewExample interviewExample = new InterviewExample();
-        //获取目标cId信息
-        String[] split = cIds.split(",");
-        List<Integer> integers = new ArrayList<>();
-        for (String s : split) {
-            integers.add(Integer.valueOf(s));
-        }
-        System.out.println(integers+"================================================================");
-//        interviewExample.createCriteria().andCIdIn(integers);
+        //追加条件，根据传过来的项目id查询
         interviewExample.createCriteria().andPIdEqualTo(pId);
-        //查询
+        //查询当前项目id对应的所有拜访记录
         List<Interview> currentInterviewList = interviewMapper.selectByExample(interviewExample);
+        //不展示部分
+        List<Interview> delItws = new ArrayList<>();
+        //遍历
         for (Interview interview : currentInterviewList) {
             //设置客户姓名
             if(interview.getcId() != null && !interview.getcId().equals("")){
-                interview.setcRename(customerMapper.selectByPrimaryKey(interview.getcId()).getcRename());
+                Customer customer = customerMapper.selectByPrimaryKey(interview.getcId());
+                //客户不为空时---为空则不展示
+                if(customer != null){
+                    interview.setcRename(customer.getcRename());
+                }else{
+                    delItws.add(interview);
+                    continue;
+                }
             }
             //我方员工姓名
             if(interview.geteId() != null && !interview.geteId().equals("")){
-                interview.seteRename(employeeMapper.selectByPrimaryKey(interview.geteId()).getRename());
+                Employee employee = employeeMapper.selectByPrimaryKey(interview.geteId());
+                //客户不为空时---为空则不展示
+                if(employee != null){
+                    interview.seteRename(employee.getRename());
+                }else{
+                    delItws.add(interview);
+                    continue;
+                }
             }
             //设置拜访类型
             if(interview.getpName() == null || interview.getpName().equals("")){
-                interview.setpName(projectMapper.selectByPrimaryKey(interview.getpId()).getpName());
-//                interview.setpName("农村购物致富商城系统项目");
+                Project project = projectMapper.selectByPrimaryKey(interview.getpId());
+                //客户不为空时---为空则不展示
+                if(project != null){
+                    interview.setpName(project.getpName());
+                }else{
+                    delItws.add(interview);
+                    continue;
+                }
             }
         }
+        //批量过滤不存在的
+        currentInterviewList.removeAll(delItws);
+
+        //输出查看过情况
+        System.out.println("===============================");
+        System.out.println(currentInterviewList);
+
+        //返回现有的
+        //倒叙
+        Collections.reverse(currentInterviewList);
         return currentInterviewList;
     }
 
@@ -185,6 +256,8 @@ public class ProjectService {
         ContractExample contractExample = new ContractExample();
         contractExample.createCriteria().andPIdEqualTo(pId);
         List<Contract> contractList = contractMapper.selectByExample(contractExample);
+        //倒叙
+        Collections.reverse(contractList);
         return contractList;
     }
 
@@ -196,11 +269,27 @@ public class ProjectService {
         return result>0 ? true : false;
     }
 
+    /*根据ctId查询合同*/
+    public Contract queryConById(Integer ctId) {
+        Contract contract = contractMapper.selectByPrimaryKey(ctId);
+        return contract;
+    }
+
+    /*根据ctId修改合同*/
+    public boolean contractUpdate(Contract contract){
+        //实现添加业务
+        System.out.println(contract);
+        int result = contractMapper.updateByPrimaryKeySelective(contract);
+        return result > 0 ? true : false;
+    }
+
     /*[回款模块]==================================================================================*/
     public List<PaymentBack> queryAllPayBack(Integer pbId){
         PaymentBackExample paymentBackExample1 = new PaymentBackExample();
         paymentBackExample1.createCriteria().andPbIdEqualTo(pbId);
         List<PaymentBack> paymentBacks = paymentBackMapper.selectByExample(paymentBackExample1);
+        //倒叙
+        Collections.reverse(paymentBacks);
         return paymentBacks;
     }
 

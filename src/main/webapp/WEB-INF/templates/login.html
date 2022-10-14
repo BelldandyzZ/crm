@@ -23,7 +23,7 @@
     </div>
     <div class="card-body">
       <p class="login-box-msg">帐户登录</p>
-
+      <p style="color: red;" th:text="${loginMsg}"></p>
       <form th:action="@{/emp/login}" method="post">
         <div class="input-group mb-3">
           <input type="text" name="ename" class="form-control" placeholder="账号 " value="jack">

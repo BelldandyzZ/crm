@@ -26,17 +26,21 @@
         <!-- 主体内容 -->
         <section class="content">
             <div class="container-fluid">
-
+                <div class="row">
+                    <div class="col-sm-2" style="margin-top: 10px;">
+                        <div class="form-group">
+                            <a  class="btn btn-primary" th:href="@{/project/projects}">
+                                返回
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-10"></div>
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <!-- /.card-header -->
                             <div class="card-body">
-
-
-                                <!--                  <h1 th:text="${empList}"></h1>-->
-                                <!--                  <h1 th:text="${session.emp}"></h1>-->
-                                <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
                                 <table id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
@@ -76,7 +80,9 @@
 <!--                                    </tr>-->
                                     </tbody>
                                 </table>
-                                itwRecordPageInfo
+                                <p th:if="${itwRecordPageInfo.total == 0}">本项目没有拜访数据哦！要添加对应拜访记录才有哦！
+                                    <a th:href="@{/interview/interviews}">[去添加]</a>
+                                </p>
                                 <nav>
                                     <ul class="mypagination">
                                         <li><a>
@@ -85,17 +91,17 @@
                                         </a></li>
 
                                         <li th:style="${itwRecordPageInfo.hasPreviousPage ? '' : 'display: none;'}">
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${itwRecordPageInfo.pageNum - 1}}"
+                                            <a th:href="@{'/project/interview_record?pageNum='+${itwRecordPageInfo.pageNum - 1}+'&pId='+${pId}}"
                                                aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
                                         <li th:each="pageNum : ${itwRecordPageInfo.navigatepageNums}"  >
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${pageNum}}"
+                                            <a th:href="@{'/project/interview_record?pageNum=' + ${pageNum}+'&pId='+${pId}}"
                                                th:style="${itwRecordPageInfo.pageNum == pageNum ? 'background:#5faee3;' : ''}"
                                                th:text="${pageNum}"></a></li>
                                         <li th:style="${itwRecordPageInfo.hasNextPage ? '' : 'display: none;'}">
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${itwRecordPageInfo.pageNum + 1}}" aria-label="Next">
+                                            <a th:href="@{'/project/interview_record?pageNum='+${itwRecordPageInfo.pageNum + 1}+'&pId='+${pId}}" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>

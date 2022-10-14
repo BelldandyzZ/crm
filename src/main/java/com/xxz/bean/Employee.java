@@ -3,13 +3,37 @@ package com.xxz.bean;
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.alibaba.excel.annotation.write.style.ContentStyle;
+import com.alibaba.excel.annotation.write.style.HeadRowHeight;
+import com.alibaba.excel.annotation.write.style.HeadStyle;
 import lombok.Data;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
 import java.io.Serializable;
 
 
 @Data
 @ExcelIgnoreUnannotated
+//行高全部设为40
+@HeadRowHeight(value = 20)
+//标题全部居中
+@HeadStyle(horizontalAlignment = HorizontalAlignment.CENTER,borderRight = BorderStyle.MEDIUM,
+        borderLeft =  BorderStyle.MEDIUM,
+        borderTop = BorderStyle.MEDIUM,
+        borderBottom = BorderStyle.MEDIUM )
+//框线
+@ColumnWidth(value = 20)
+@ContentStyle( borderRight = BorderStyle.MEDIUM,
+        borderLeft =  BorderStyle.MEDIUM,
+        borderTop = BorderStyle.MEDIUM,
+        borderBottom = BorderStyle.MEDIUM,
+        fillPatternType = FillPatternType.SOLID_FOREGROUND,
+        fillForegroundColor = 1,
+        horizontalAlignment = HorizontalAlignment.CENTER,
+        wrapped = true)
 public class Employee implements Serializable {
 
     @ExcelProperty(value = "员工编号", index = 0)

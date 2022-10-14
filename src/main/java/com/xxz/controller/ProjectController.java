@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.*;
@@ -42,21 +43,16 @@ public class ProjectController {
 
     //条件查询
     @RequestMapping("/projects")
-    public String queryAll(Model model, String pName, String pMoeny, String pProgress, String pOwner,
+    public String queryAll(Model model, String pName, String pMoeny, String pProgress, String pOwner,HttpSession session,
                            @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
-//        System.out.println(URLEncoder.encode(eJob,"utf-8"));
-        System.out.println("queryAll-customers-confition:" + pName + "-" + pMoeny + "-" + pProgress + "-" + pOwner);
-        if (pageNum <=0){
-            pageNum = 1;
-        }
-        /**/
         PageHelper.startPage(pageNum,  10);
-
+        //工具条件查询
         List<Project> projectList = projectService.queryAllProject(pName, pMoeny, pProgress, pOwner);
-
         PageInfo<Project> proPageInfo = new PageInfo<>(projectList, 5);
         System.out.println("条件查询结果：" + proPageInfo);
         model.addAttribute("proPageInfo", proPageInfo);
+        //回显最新项目名称
+        session.setAttribute("pNames", projectService.getAllProjectName());
         //条件回显
         model.addAttribute("pName", pName);
         model.addAttribute("pMoeny", pMoeny);
@@ -122,14 +118,19 @@ public class ProjectController {
 //拜访模块===================================================================================
 //    /project/interview_record
     @RequestMapping("/interview_record")
-    public String interview_recor(Model model, String cIds, Integer pId,
+    public String interview_recor(Model model, @RequestParam(required = false) String cIds, Integer pId,
                                   @RequestParam(defaultValue = "1") Integer pageNum){
-        PageHelper.startPage(pageNum,  10);
-
+        //查询当前项目对应的所有拜访记录
         List<Interview> currentInterviewList = projectService.interview_recor(cIds, pId);
-
+        PageHelper.startPage(pageNum,  10);
         PageInfo<Interview> itwRecordPageInfo = new PageInfo<>(currentInterviewList, 5);
         model.addAttribute("itwRecordPageInfo", itwRecordPageInfo);
+
+
+        System.out.println("================================================");
+        System.out.println(itwRecordPageInfo.getList());
+        //条件回显
+        model.addAttribute("pId", pId);
         return "project/interview_record/interview_record";
     }
 
@@ -142,11 +143,12 @@ public class ProjectController {
     public String contract_record(Model model, Integer pId,
                                   @RequestParam(defaultValue = "1") Integer pageNum){
         PageHelper.startPage(pageNum,  10);
-
+        //查询当前项目所有合同
         List<Contract> contracts = projectService.contract_record(pId);
-
         PageInfo<Contract> conPageInfo = new PageInfo<>(contracts, 5);
+        //返回数据
         model.addAttribute("conPageInfo", conPageInfo);
+        //回显条件
         model.addAttribute("pId", pId);
         return "project/contract/contract";
     }
@@ -298,56 +300,143 @@ public class ProjectController {
         return "redirect:/project/contract_record?pId=" + pId;
     }
 
-    //招标合同上传(/tenders/)
+
+    //    updateContract
+    @RequestMapping("/updateContract")
+    public String updateContract(Integer pId,MultipartFile ctContractDocmentFile, MultipartFile ctTenderDocmentFile, Contract contract, HttpSession session) throws IOException {
+        //获取上传的文件的文件名
+        String ctfileName = UUID.randomUUID().toString().substring(15) + ctContractDocmentFile.getOriginalFilename();
+        //锁定长度
+        if(ctfileName.length() > 25){
+            ctfileName = ctfileName.substring(ctfileName.length() - 25, ctfileName.length());
+        }
+        System.out.println(ctfileName);
+        contract.setCtContractDocment(ctfileName);
+        //获取ServletContext对象
+        ServletContext servletContext = session.getServletContext();
+        //获取当前工程下photo目录的真实路径
+        String photoRealPath = servletContext.getRealPath("/contracts");
+        System.out.println(photoRealPath);
+        File parentFile = new File(photoRealPath).getParentFile().getParentFile().getParentFile();
+        System.out.println(parentFile.getPath() + "\\src\\main\\webapp\\contracts");
+
+        //E:\idea-workspace\crm\src\main\webapp\contracts
+        photoRealPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts";
+/*
+我们项目中没有photo目录，但文件上传如果到tomcat服务器中,
+则可以给服务器部署的工程war包所运行的项目创建photo目录,专门用于存储客户端上传的文件
+*/
+        //创建photoPath所对应的File对象
+        File file = new File(photoRealPath);
+        //判断file所对应目录是否存在(即部署的项目中，判断photo目录是否存在)
+        if(!file.exists()){
+            //不存在则直接创建目录
+            file.mkdir();
+        }
+        //拼接目标文件上传的路径
+        String targetFileUploadPath = photoRealPath + File.separator + ctfileName;
+        System.out.println(targetFileUploadPath);
+        //上传文件(根据目标文件上传路径)
+        ctContractDocmentFile.transferTo(new File(targetFileUploadPath));
+        //====================================================================
+        //====================================================================
+        //====================================================================
+        //获取上传的文件的文件名
+        String tdfileName = UUID.randomUUID().toString().substring(15) + ctTenderDocmentFile.getOriginalFilename();
+        //锁定长度
+        if(tdfileName.length() > 25){
+            tdfileName = tdfileName.substring(tdfileName.length() - 25, tdfileName.length());
+        }
+        System.out.println(tdfileName);
+        contract.setCtTenderDocment(tdfileName);
+        //获取ServletContext对象
+        //获取当前工程下photo目录的真实路径
+        String photoRealPath2 = servletContext.getRealPath("/tenders");
+        File parentFile2 = new File(photoRealPath2).getParentFile().getParentFile().getParentFile();
+        System.out.println(parentFile2.getPath() + "\\src\\main\\webapp\\tenders");
+        photoRealPath2 = parentFile2.getPath() + "\\src\\main\\webapp\\tenders";
+        //创建photoPath所对应的File对象
+        File file2 = new File(photoRealPath2);
+        //判断file所对应目录是否存在(即部署的项目中，判断photo目录是否存在)
+        if(!file2.exists()){
+            //不存在则直接创建目录
+            file2.mkdir();
+        }
+        //拼接目标文件上传的路径
+        String targetFileUploadPath2 = photoRealPath2 + File.separator + tdfileName;
+        //上传文件(根据目标文件上传路径)
+        ctTenderDocmentFile.transferTo(new File(targetFileUploadPath2));
+        //=============================================
+        //实现添加业务
+        System.out.println(contract);
+        boolean result = projectService.contractUpdate(contract);
+        if(result){
+            System.out.println("修改成功！");
+        }else {
+            System.out.println("操作失败！");
+        }
+        //获取
+        return "redirect:/project/contract_record?pId=" + pId;
+    }
+
+    @RequestMapping("/queryConById/{ctId}")
+    @ResponseBody
+    public Map<String,Object> queryConById(@PathVariable("ctId") Integer ctId, HttpServletResponse response) throws IOException {
+        Contract contract = projectService.queryConById(ctId);
+        Map<String, Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("code","200");
+        stringObjectHashMap.put("data",contract);
+        return stringObjectHashMap;
+    }
 
 //回款模块===================================================================================
 //回款模块===================================================================================
 //回款模块===================================================================================
 //    /project/payment_back?
     @RequestMapping("/payment_back")
-    public String payment_back(Model model, HttpSession session, Integer pbId, Integer pId,
+    public String payment_back(Model model, HttpSession session, Integer pbId,
+                               @RequestParam(required = false) Integer pId,
                                @RequestParam(defaultValue = "1") Integer pageNum){
-        //(1)给定当前操作的项目pbId到Session域中---添加时需要
-//        session.setAttribute("pbId", pbId);
-        //(2)回显最大pbId
-        List<PaymentBack> paymentBacks = projectService.queryAllPayBack(pbId);
-
-        TreeSet<Integer> pbIds = new TreeSet<>();
-        for (PaymentBack paymentBack : paymentBacks) {
-            pbIds.add(paymentBack.getPbId());
-        }
-        System.out.println("[pbId=======================]" + pbId);
-        System.out.println("[pbIds=======================]" + pbIds);
-        if(pbIds.size() != 0){ //有回款最大编号才返回
-            model.addAttribute("pbId", pbIds.last());
-        }else{
-            model.addAttribute("pbId", pbId);
-        }
         //处理查询业务
 //        Integer startPbId = Integer.valueOf(pbId.toString().substring(0,2)) * 100;
         Integer startPbId = pbId;
         Integer endPbId = startPbId + 999;
         System.out.println("--------------start=" + startPbId + "------end=" + endPbId);
-
         PageHelper.startPage(pageNum,  10);
         List<PaymentBack> paymentBackList = projectService.PbIdBetweenStartAndEnd(startPbId, endPbId);
         PageInfo<PaymentBack> payPageInfo = new PageInfo<>(paymentBackList, 5);
+        //回显分页对象
         model.addAttribute("payPageInfo", payPageInfo);
+        //======================================================
+        TreeSet<Integer> pbIds = new TreeSet<>();
+        for (PaymentBack paymentBack : paymentBackList) {
+            pbIds.add(paymentBack.getPbId());
+        }
+        System.out.println("[pbId=======================]" + pbId);
+        System.out.println("[pbIds=======================]" + pbIds);
+         //有回款最大编号才返回----添加的时候到session里面获取+1即可
+        if(pbIds.size() > 0){
+            session.setAttribute("max_pbId", pbIds.last());
+        }else{
+            session.setAttribute("max_pbId", pbId);
+        }
+        session.setAttribute("now_pbId", pbId);
         //条件回显
-
-
+        model.addAttribute("pbId", pbId);
         return "project/payment_back/payment_back";
     }
 
     //添加回款业务
     @RequestMapping("/addPayBack")
     public String addPayMent(HttpSession session, PaymentBack paymentBack){
-        //(1)获取session域中的pbId
-//        Integer pbId = (Integer) session.getAttribute("pbId");
-        //(2)回去回显pbId(last)
-        paymentBack.setPbId(paymentBack.getPbId() + 1);
+        //session获取最大pbid
+        Integer max_pbId = (Integer) session.getAttribute("max_pbId");
+        //session获取当前pbid
+        Integer now_pbId = (Integer) session.getAttribute("now_pbId");
+        //设置最大id添加
+        paymentBack.setPbId(max_pbId + 1);
         projectService.addPayMent(paymentBack);
-        return "redirect:/project/payment_back?pbId=" + paymentBack.getPbId();
+        return "redirect:/project/payment_back?pbId=" + now_pbId;
     }
     //查询回款业务
 //    url: "/crm/project/payBackQueryById/" + pbId,
@@ -364,11 +453,13 @@ public class ProjectController {
 
     //修改回款信息
     @RequestMapping("/payBackUpdate")
-    private String payBackUpdate(PaymentBack paymentBack){
+    private String payBackUpdate(PaymentBack paymentBack,HttpSession session){
         boolean result = projectService.payBackUpdate(paymentBack);
+        //session获取当前pbid
+        Integer now_pbId = (Integer) session.getAttribute("now_pbId");
         if (result){
             System.out.println("操作成功！");
         }
-        return "redirect:/project/payment_back?pbId=" + paymentBack.getPbId();
+        return "redirect:/project/payment_back?pbId=" + now_pbId;
     }
 }

@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 @Transactional
@@ -28,6 +31,8 @@ public class DicValueService {
             criteria.andTypeCodeEqualTo(typeCode);
         }
         List<DicValue> dicValues = dicValueMapper.selectByExample(dicValueExample);
+        //倒叙
+        Collections.reverse(dicValues);
         return dicValues;
     }
 
@@ -100,12 +105,32 @@ public class DicValueService {
         for (DicValue dicValue : dicValueList) {
             jobTypeList.add(dicValue.getvValue());
         }
-        System.out.println("===========================================================");
-        System.out.println("===========================================================");
-        System.out.println("===========================================================");
-        System.out.println("===========================================================");
-        System.out.println(jobTypeList);
         return jobTypeList;
+    }
+
+    public List<String> getAllSchoolType() {
+        ArrayList<String> jobTypeList = new ArrayList<>();
+        //
+        DicValueExample dicValueExample = new DicValueExample();
+        dicValueExample.createCriteria().andTypeCodeEqualTo("schoolType");
+        List<DicValue> dicValueList = dicValueMapper.selectByExample(dicValueExample);
+        for (DicValue dicValue : dicValueList) {
+            jobTypeList.add(dicValue.getvValue());
+        }
+        return jobTypeList;
+    }
+
+    public List<String> getAllDicType() {
+        List<DicValue> dicValues = dicValueMapper.selectByExample(null);
+        HashSet<String> strings = new HashSet<>();
+        for (DicValue dicValue : dicValues) {
+            strings.add(dicValue.getTypeCode());
+        }
+        return new ArrayList<>(strings);
+    }
+
+    public DicValue queryById(Integer vId) {
+        return dicValueMapper.selectByPrimaryKey(vId);
     }
 
     //添加progress

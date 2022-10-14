@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 @Transactional
@@ -48,15 +49,19 @@ public class EmpService {
         //追加条件
         if (rename != null){
             criteria.andRenameLike("%" + rename + "%");
+            System.out.println("======================================");
+            System.out.println("条件追加成功！rename=" + rename);
         }
         if(eJob != null && !eJob.equals("")){
             criteria.andEJobEqualTo(eJob);
         }
         if(eBirthday != null && !eBirthday.equals("")){
-            criteria.andEBirthdayEqualTo(eBirthday);
+            criteria.andEBirthdayLessThanOrEqualTo(eBirthday);
         }
         //查询
         List<Employee> employeeList = employeeMapper.selectByExample(employeeExample);
+        //倒叙
+        Collections.reverse(employeeList);
         return employeeList;
     }
 

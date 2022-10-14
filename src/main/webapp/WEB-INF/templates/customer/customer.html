@@ -171,14 +171,14 @@
                                           <label >姓名</label>
                                            <!--发送id-->
                                            <input type="hidden" id="cId" name="cId">
-                                          <input type="text" id="cRename" name="cRename" class="form-control">
+                                          <input type="text" id="cRename" name="cRename" class="form-control" required>
                                       </div>
                                   </span>
                                     <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label>单位类型</label>
                                           <!--                                          <input type="date" id="eBirthday" name="eBirthday" class="form-control">-->
-                                            <select id=""  class="form-control custom-select">
+                                            <select id=""  class="form-control custom-select" required>
                                                  <option th:each="companyJob:${session.companyTypes}" th:text="${companyJob}" th:value="${companyJob}">售后</option>
                                             </select>
                                       </div>
@@ -188,7 +188,7 @@
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
                                           <label for="cName">单位名称</label>
-                                          <input type="text" id="cName"  name="cName" class="form-control">
+                                          <input type="text" id="cName"  name="cName" class="form-control" required>
                                       </div>
                                   </span>
                                     <span class="col-sm-6 col-md-6">
@@ -219,13 +219,13 @@
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label>电话</label>
-                                      <input type="text" id="cTele"  name="cTele" class="form-control">
+                                      <input type="text" id="cTele"  name="cTele" class="form-control" required>
                                   </div>
                               </span>
                                     <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label>邮箱</label>
-                                      <input type="text" id="cPost" name="cPost" class="form-control" placeholder="邮箱">
+                                      <input type="text" id="cPost" name="cPost" class="form-control" placeholder="邮箱" required>
                                   </div>
                               </span>
                                 </div>
@@ -395,17 +395,17 @@
                       </a></li>
 
                       <li th:style="${cusPageInfo.hasPreviousPage ? '' : 'display: none;'}">
-                          <a th:href="@{'/emp/emps?pageNum=' + ${cusPageInfo.pageNum - 1} + ${cRename != null ? '&cRename='+cRename : ''} + ${cName != null ? '&cName='+cName : ''} + ${cJob != null ? '&cJob='+cJob : ''}}"
+                          <a th:href="@{'/customer/customers?pageNum=' + ${cusPageInfo.pageNum - 1} + ${cRename != null ? '&cRename='+cRename : ''} + ${cName != null ? '&cName='+cName : ''} + ${cJob != null ? '&cJob='+cJob : ''}}"
                              aria-label="Previous">
                               <span aria-hidden="true">&laquo;</span>
                           </a>
                       </li>
                       <li th:each="pageNum : ${cusPageInfo.navigatepageNums}"  >
-                          <a th:href="@{'/emp/emps?pageNum=' + ${pageNum} + ${cRename != null ? '&cRename='+cRename : ''} + ${cName != null ? '&cName='+cName : ''} + ${cJob != null ? '&cJob='+cJob : ''}}"
+                          <a th:href="@{'/customer/customers?pageNum=' + ${pageNum} + ${cRename != null ? '&cRename='+cRename : ''} + ${cName != null ? '&cName='+cName : ''} + ${cJob != null ? '&cJob='+cJob : ''}}"
                              th:style="${cusPageInfo.pageNum == pageNum ? 'background:#5faee3;' : ''}"
                              th:text="${pageNum}"></a></li>
                       <li th:style="${cusPageInfo.hasNextPage ? '' : 'display: none;'}">
-                          <a th:href="@{'/emp/emps?pageNum=' + ${cusPageInfo.pageNum + 1} + ${cRename != null ? '&cRename='+cRename : ''} + ${cName != null ? '&cName='+cName : ''} + ${cJob != null ? '&cJob='+cJob : ''}}"
+                          <a th:href="@{'/customer/customers?pageNum=' + ${cusPageInfo.pageNum + 1} + ${cRename != null ? '&cRename='+cRename : ''} + ${cName != null ? '&cName='+cName : ''} + ${cJob != null ? '&cJob='+cJob : ''}}"
                              aria-label="Next">
                               <span aria-hidden="true">&raquo;</span>
                           </a>

@@ -18,7 +18,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
     <plugins>
         <!--设置分页插件-->
-        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!-- 分页合理化，超出页数拦截 -->
+            <property name="reasonable" value="true"/>
+        </plugin>
     </plugins>
 
 </configuration>

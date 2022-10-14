@@ -60,7 +60,7 @@
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="pId">拜访类型</label>
+                                          <label for="pId">对接项目</label>
                                           <select id="pId" name="pName" class="form-control custom-select" required>
                                               <option value="">需要在项目表中选择</option>
                                               <option th:each="pname:${session.pNames}" th:text="${pname}" th:value="${pname}"></option>
@@ -240,17 +240,17 @@
                                         </a></li>
 
                                         <li th:style="${itwPageInfo.hasPreviousPage ? '' : 'display: none;'}">
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${itwPageInfo.pageNum - 1} + ${iCompany != null ? '&iCompany='+iCompany : ''} + ${cRename != null ? '&cRename='+cRename : ''} + ${reERename != null ? '&eRename='+reERename : ''}}"
+                                            <a th:href="@{'/interview/interviews?pageNum=' + ${itwPageInfo.pageNum - 1} + ${iCompany != null ? '&iCompany='+iCompany : ''} + ${cRename != null ? '&cRename='+cRename : ''} + ${reERename != null ? '&eRename='+reERename : ''}}"
                                                aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
                                         <li th:each="pageNum : ${itwPageInfo.navigatepageNums}"  >
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${pageNum}+ ${iCompany != null ? '&iCompany='+iCompany : ''} + ${cRename != null ? '&cRename='+cRename : ''} + ${reERename != null ? '&eRename='+reERename : ''}}"
+                                            <a th:href="@{'/interview/interviews?pageNum=' + ${pageNum}+ ${iCompany != null ? '&iCompany='+iCompany : ''} + ${cRename != null ? '&cRename='+cRename : ''} + ${reERename != null ? '&eRename='+reERename : ''}}"
                                                th:style="${itwPageInfo.pageNum == pageNum ? 'background:#5faee3;' : ''}"
                                                th:text="${pageNum}"></a></li>
                                         <li th:style="${itwPageInfo.hasNextPage ? '' : 'display: none;'}">
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${itwPageInfo.pageNum + 1}+ ${iCompany != null ? '&iCompany='+iCompany : ''} + ${cRename != null ? '&cRename='+cRename : ''} + ${reERename != null ? '&eRename='+reERename : ''}}" aria-label="Next">
+                                            <a th:href="@{'/interview/interviews?pageNum=' + ${itwPageInfo.pageNum + 1}+ ${iCompany != null ? '&iCompany='+iCompany : ''} + ${cRename != null ? '&cRename='+cRename : ''} + ${reERename != null ? '&eRename='+reERename : ''}}" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>

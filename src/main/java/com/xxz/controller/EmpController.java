@@ -23,10 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/emp")
@@ -45,53 +42,40 @@ public class EmpController {
     private RoleService roleService;
 
     @RequestMapping("/login")
-    public String empLogin(String ename, String epwd, HttpSession session){
+    public String empLogin(String ename, String epwd, HttpSession session, Model model){
         System.out.println(ename + "----" + epwd);
         Employee employee = empService.empLogin(ename, epwd);
-        List<String> allProgress = dicValueService.getAllProgress();
-        System.out.println("===========================================================");
-        System.out.println("===========================================================");
-        System.out.println("===========================================================");
-        System.out.println("===========================================================");
-        System.out.println(allProgress);
+        //登录成功就初始化字段值
         if(employee != null){
             session.setAttribute("emp", employee);
             session.setAttribute("jobTypes", dicValueService.getAllJobType());
             session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
-            session.setAttribute("progressTypes", allProgress);
+            session.setAttribute("progressTypes", dicValueService.getAllProgress());
+            session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
+            session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
             session.setAttribute("pNames", projectService.getAllProjectName());
-
             /*------------------------登录成功查看员工对应的权限---------------------------*/
-
             List<String> permissions =  roleService.queryAllMenuByEmpId(employee.geteId());
             session.setAttribute("permissions",permissions);
             /*------------------------登录成功查看员工对应的权限---------------------------*/
-
-
-
             return "index";
         }else{
+            model.addAttribute("loginMsg", "账号密码有误！");
             return "login";
         }
     }
 
     //条件查询
     @RequestMapping("/emps")
-    public String queryAll(Model model,String rename, String eJob, String eBirthday,
+    public String queryAll(Model model,String rename, String eJob, String eBirthday, HttpSession session,
                           @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
-//        System.out.println(URLEncoder.encode(eJob,"utf-8"));
-        System.out.println("queryAll emp by confition:" + rename + "-" + eJob + "-" + eBirthday);
-        if (pageNum <=0){
-            pageNum = 1;
-        }
-        /**/
         PageHelper.startPage(pageNum,  10);
-
         List<Employee> employeeList = empService.queryAllEmp(rename, eJob, eBirthday);
-
         PageInfo<Employee> empPageInfo = new PageInfo<>(employeeList, 5);
         System.out.println("条件查询结果：" + empPageInfo.getList());
         model.addAttribute("empPageInfo", empPageInfo);
+        //条件导出excel
+        session.setAttribute("employeeListExcel", employeeList);
         //回显条件
         model.addAttribute("rename", rename);
         model.addAttribute("eJob", eJob);
@@ -161,10 +145,6 @@ public class EmpController {
     @RequestMapping(value = "/excelInport", method = RequestMethod.POST)
     public String excelInport(MultipartFile importFile){
         System.out.println("文件名：" + importFile.getOriginalFilename());
-//        System.out.println("input.........................");
-//        String fileName = "E:\\员工信息表.xlsx";
-//        //EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet().doRead();
-//        EasyExcel.read(fileName, Employee.class, new DemoDataListener()).sheet().doRead();
         // 解析Excel
         ExcelReader excelReader = null;
         try {
@@ -185,20 +165,17 @@ public class EmpController {
     //导出
     @RequestMapping("/excelOutput") //ResponseEntity<byte[]>
     public void excelOutput(HttpSession session,HttpServletResponse response) throws IOException {
-        //获取本机桌面地址
-//        File desktopDir = FileSystemView.getFileSystemView() .getHomeDirectory();
-//        String PATH = desktopDir.getAbsolutePath() + "\\";
-//        String fileName = PATH + "员工信息表.xlsx";
         //设置响应头和响应体格式，告诉浏览器是什么文件，对应解析
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         response.setHeader("Content-disposition", "attachment;filename="
                 + URLEncoder.encode("员工信息", "UTF-8") + ".xlsx");
         //获取目标数据
-        List<Employee> employees = empService.queryAllEmp(null, null, null);
+        List<Employee> employees = (List<Employee>) session.getAttribute("employeeListExcel");
+        //正序
+        Collections.reverse(employees);
         //响应到浏览器
-        EasyExcel.write(response.getOutputStream(), Employee.class).sheet("模板").doWrite(employees);
-        System.out.println("excelOutput.................");
+        EasyExcel.write(response.getOutputStream(), Employee.class).sheet("员工信息模板").doWrite(employees);
     }
 
     /**

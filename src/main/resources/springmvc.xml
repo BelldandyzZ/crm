@@ -29,12 +29,6 @@
 
     <!--视图跳转控制器-->
     <mvc:view-controller path="/" view-name="login"/>
-<!--    <mvc:view-controller path="/customer/toIndex" view-name="customer/customer"/>-->
-<!--    <mvc:view-controller path="/interview/toIndex" view-name="interview/interview"/>-->
-<!--    <mvc:view-controller path="/project/toIndex" view-name="project/project"/>-->
-<!--    <mvc:view-controller path="/project/contract/toIndex" view-name="project/contract/contract"/>-->
-<!--    <mvc:view-controller path="/project/interview_record/toIndex" view-name="project/interview_record/interview_record"/>-->
-<!--    <mvc:view-controller path="/project/payment_back/toIndex" view-name="project/payment_back/payment_back"/>-->
     <mvc:view-controller path="/echarts/toIndex" view-name="echarts/echartsMenu"/>
     <mvc:view-controller path="/echarts/detail" view-name="echarts/detail/detail"/>
     <mvc:view-controller path="/permission/toIndex" view-name="permission/index"/>
@@ -78,20 +72,20 @@
     </bean>
 
 <!--    mvc拦截器配置-->
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <!--拦截任意请求-->
-            <mvc:mapping path="/emp/*"/>
-            <mvc:mapping path="/interview/*"/>
-            <mvc:mapping path="/customer/*"/>
-            <mvc:mapping path="/project/*"/>
-            <!--配置要排除的路径-->
-            <mvc:exclude-mapping path="/"/>
-            <mvc:exclude-mapping path="/emp/login"/>
-            <!--定义使用的拦截器：bean、ref方式-->
-            <bean class="com.xxz.interceptor.LoginInterceptor"></bean>
-        </mvc:interceptor>
-    </mvc:interceptors>
+<!--    <mvc:interceptors>-->
+<!--        <mvc:interceptor>-->
+<!--            &lt;!&ndash;拦截任意请求&ndash;&gt;-->
+<!--            <mvc:mapping path="/emp/*"/>-->
+<!--            <mvc:mapping path="/interview/*"/>-->
+<!--            <mvc:mapping path="/customer/*"/>-->
+<!--            <mvc:mapping path="/project/*"/>-->
+<!--            &lt;!&ndash;配置要排除的路径&ndash;&gt;-->
+<!--            <mvc:exclude-mapping path="/"/>-->
+<!--            <mvc:exclude-mapping path="/emp/login"/>-->
+<!--            &lt;!&ndash;定义使用的拦截器：bean、ref方式&ndash;&gt;-->
+<!--            <bean class="com.xxz.interceptor.LoginInterceptor"></bean>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
     <!--SpringMVC提供自定义异常处理器SimpleMappingExceptionResolver
         当控制器方法执行业务过程中出现异常，可以通过配置的自定义异常处理器捕获解决，
         并且返回一个新的ModelAndView给到视图解析器解析响应、[MV]
@@ -100,21 +94,21 @@
         (1)SpringMVC提供的自定义异常解析器：简单映射异常处理器SimpleMAppingExceptinoREsolver
         (2)SpringMVC的提供的默认异常处理器：DefaultHandlerExceptionResolver
     -->
-    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-        <!--[View]异常处理映射-->
-        <property name="exceptionMappings">
-            <props>
-                <!--
-                    properties的键表示处理器方法执行过程中出现的异常(异常)
-                    properties的值表示若出现指定异常时，设置一个新的视图名称，跳转到指定页面(逻辑视图)
-                 -->
-                <prop key="java.lang.ArithmeticException" >error/error</prop>
-                <prop key="java.lang.NullPointerException" >error/error</prop>
-            </props>
-        </property>
-        <!--[Model]异常处理参数：将异常信息共享到请求域中、value表示请求域中的属性名ex.msg..-->
-        <property name="exceptionAttribute" value="ex"></property>
-    </bean>
+<!--    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+<!--        &lt;!&ndash;[View]异常处理映射&ndash;&gt;-->
+<!--        <property name="exceptionMappings">-->
+<!--            <props>-->
+<!--                &lt;!&ndash;-->
+<!--                    properties的键表示处理器方法执行过程中出现的异常(异常)-->
+<!--                    properties的值表示若出现指定异常时，设置一个新的视图名称，跳转到指定页面(逻辑视图)-->
+<!--                 &ndash;&gt;-->
+<!--                <prop key="java.lang.ArithmeticException" >error/error</prop>-->
+<!--                <prop key="java.lang.NullPointerException" >error/error</prop>-->
+<!--            </props>-->
+<!--        </property>-->
+<!--        &lt;!&ndash;[Model]异常处理参数：将异常信息共享到请求域中、value表示请求域中的属性名ex.msg..&ndash;&gt;-->
+<!--        <property name="exceptionAttribute" value="ex"></property>-->
+<!--    </bean>-->
 
     <aop:aspectj-autoproxy/>
 

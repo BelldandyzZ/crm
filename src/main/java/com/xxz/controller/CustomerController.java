@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,19 +36,16 @@ public class CustomerController {
     //条件查询
     @RequestMapping("/customers")
     @Permission("1010")
-    public String queryAll(Model model, String cRename, String cName, String cJob,
+    public String queryAll(Model model, String cRename, String cName, String cJob, HttpSession session,
     @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
-//        System.out.println(URLEncoder.encode(eJob,"utf-8"));
         System.out.println("queryAll-customers-confition:" + cRename + "-" + cName + "-" + cJob);
-        if (pageNum <=0){
-            pageNum = 1;
-        }
-        /**/
         PageHelper.startPage(pageNum,  10);
         List<Customer> customerList = customerService.queryAllCus(cRename, cName, cJob);
         PageInfo<Customer> cusPageInfo = new PageInfo<>(customerList, 5);
         System.out.println("条件查询结果：" + cusPageInfo);
         model.addAttribute("cusPageInfo", cusPageInfo);
+        //条件导出excel
+        session.setAttribute("customerListExcel", customerList);
         //条件回显
         model.addAttribute("cRename", cRename);
         model.addAttribute("cName", cName);
@@ -120,10 +118,6 @@ public class CustomerController {
     @RequestMapping(value = "/excelInport", method = RequestMethod.POST)
     public String excelInport(MultipartFile importFile){
         System.out.println("文件名：" + importFile.getOriginalFilename());
-//        System.out.println("input.........................");
-//        String fileName = "E:\\员工信息表.xlsx";
-//        //EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet().doRead();
-//        EasyExcel.read(fileName, Employee.class, new DemoDataListener()).sheet().doRead();
         // 解析Excel
         ExcelReader excelReader = null;
         try {
@@ -145,20 +139,19 @@ public class CustomerController {
     @Permission("1060")
     @RequestMapping("/excelOutput") //ResponseEntity<byte[]>
     public void excelOutput(HttpSession session, HttpServletResponse response) throws IOException {
-        //获取本机桌面地址
-//        File desktopDir = FileSystemView.getFileSystemView() .getHomeDirectory();
-//        String PATH = desktopDir.getAbsolutePath() + "\\";
-//        String fileName = PATH + "员工信息表.xlsx";
         //设置响应头和响应体格式，告诉浏览器是什么文件，对应解析
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         response.setHeader("Content-disposition", "attachment;filename="
                 + URLEncoder.encode("客户信息", "UTF-8") + ".xlsx");
         //获取目标数据
-        List<Customer> customers = customerService.queryAllCus(null, null, null);
+        List<Customer> customers = (List<Customer>) session.getAttribute("customerListExcel");
+        //正序
+        Collections.reverse(customers);
         //响应到浏览器
-        EasyExcel.write(response.getOutputStream(), Customer.class).sheet("模板").doWrite(customers);
-        System.out.println("excelOutput.................");
+        EasyExcel.write(response.getOutputStream(), Customer.class)
+                .sheet("客户信息模板")
+                .doWrite(customers);
     }
 
 }

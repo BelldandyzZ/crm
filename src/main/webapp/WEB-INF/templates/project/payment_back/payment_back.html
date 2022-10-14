@@ -126,7 +126,14 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-sm-10"></div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <a  class="btn btn-primary" th:href="@{/project/projects}">
+                                                返回
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8"></div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <button  class="btn btn-primary" data-toggle="modal" data-target="#add_pay">
@@ -153,25 +160,10 @@
                                         <td th:text="${payback.pbMoney}">回款6w</td>
                                         <td><button type="button" th:tar-id="${payback.pbId}" class="btn  btn-sm btn-info updatePayBtn" data-toggle="modal" data-target="#update_pay">修改</button></td>
                                     </tr>
-<!--                                    <tr>-->
-<!--                                        <td>1（第一次回款）</td>-->
-<!--                                        <td>回款5w</td>-->
-<!--                                        <td><button type="button"  class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button></td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <td>2（第二次回款）</td>-->
-<!--                                        <td>回款6w</td>-->
-<!--                                        <td><button type="button"  class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button></td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <td>1（第一次回款）</td>-->
-<!--                                        <td>回款5w</td>-->
-<!--                                        <td><button type="button"  class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button></td>-->
-<!--                                    </tr>-->
-
-
                                     </tbody>
                                 </table>
+                                <p th:if="${payPageInfo.total == 0}">本项目没有回款数据哦！要添加对应回款记录才有哦！
+                                </p>
                                 <nav>
                                     <ul class="mypagination">
                                         <li><a>
@@ -180,17 +172,17 @@
                                         </a></li>
 
                                         <li th:style="${payPageInfo.hasPreviousPage ? '' : 'display: none;'}">
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${payPageInfo.pageNum - 1}}"
+                                            <a th:href="@{'/project/payment_back?pageNum='+${payPageInfo.pageNum - 1}+'&pbId='+${session.now_pbId} }"
                                                aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
                                         <li th:each="pageNum : ${payPageInfo.navigatepageNums}"  >
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${pageNum}}"
+                                            <a th:href="@{'/project/payment_back?pageNum='+${pageNum}+'&pbId='+${session.now_pbId}}"
                                                th:style="${payPageInfo.pageNum == pageNum ? 'background:#5faee3;' : ''}"
                                                th:text="${pageNum}"></a></li>
                                         <li th:style="${payPageInfo.hasNextPage ? '' : 'display: none;'}">
-                                            <a th:href="@{'/emp/emps?pageNum=' + ${payPageInfo.pageNum + 1}}" aria-label="Next">
+                                            <a th:href="@{'/project/payment_back?pageNum='+${payPageInfo.pageNum + 1}+'&pbId='+${session.now_pbId}}" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>

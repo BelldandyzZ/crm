@@ -17,125 +17,42 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
 
-    <!--上传-->
-    <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
-    <div class="modal fade" id="cusInportModel">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form id="empInputForm" th:action="@{/customer/excelInport}" method="post" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <div>
-                            <div class="card card-default">
-                                <div class="card-header">
-                                    <h3 class="card-title">文件上传</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                  <span class="col-sm-6 col-md-6">
-                                       <div class="form-group">
-                                          <label>文件</label>
-                                          <input type="file" name="importFile" class="form-control">
-                                      </div>
-                                  </span>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="submit" class="btn btn-primary">上传</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--   新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗-->
-
-
     <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
     <div class="modal fade" id="add_emp">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form th:action="@{/customer/add}" method="post" class="nav-link">
+                <form th:action="@{/dic/add}" method="post" class="nav-link">
                     <div class="modal-body">
                         <div>
                             <div class="card card-default">
                                 <div class="card-header">
-                                    <h3 class="card-title">添加客户</h3>
+                                    <h3 class="card-title">添加字典</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                  <span class="col-sm-6 col-md-6">
-                                       <div class="form-group">
-                                          <label >姓名</label>
-                                          <input type="text" name="cRename" class="form-control" required>
-                                      </div>
-                                  </span>
-                                        <span class="col-sm-6 col-md-6">
-                                      <div class="form-group">
-                                          <label>单位类型</label>
-                                            <select name="cCieType" class="form-control custom-select" required>
-                                                <option th:each="companyJob:${session.companyTypes}" th:text="${companyJob}" th:value="${companyJob}">售后</option>
-                                            </select>
-                                      </div>
-                                  </span>
+                                              <span class="col-sm-6 col-md-6">
+                                                   <div class="form-group">
+                                                      <label >字典值</label>
+                                                      <input type="text" name="vValue" class="form-control" required>
+                                                  </div>
+                                              </span>
+                                            <span class="col-sm-6 col-md-6">
+                                              <div class="form-group">
+                                                  <label>字典编码/类型</label>
+<!--                                                    <input type="text" name="typeCode" class="form-control" required>-->
+                                                    <select  name="typeCode"  class="form-control custom-select">
+                                                       <option th:each="dicCode:${session.dicvalueTypes}" th:text="${dicCode}" th:value="${dicCode}">售后</option>
+                                                    </select>
+                                              </div>
+                                          </span>
                                     </div>
                                     <div class="row">
-                                  <span class="col-sm-6 col-md-6">
-                                       <div class="form-group">
-                                          <label for="">单位名称</label>
-                                          <input type="text"  name="cName" class="form-control" required>
-                                      </div>
-                                  </span>
-                                        <span class="col-sm-6 col-md-6">
-                                       <div class="form-group">
-                                          <label for="">爱好</label>
-                                          <input type="text" name="cHobby" class="form-control" placeholder="爱好" required>
-                                      </div>
-                                  </span>
-
-                                    </div>
-                                    <div class="row">
-                                  <span class="col-sm-6 col-md-6">
-                                       <div class="form-group">
-                                          <label for="">部门</label>
-                                          <input type="text"  name="cDepart" class="form-control" required>
-                                      </div>
-                                  </span>
-                                        <span class="col-sm-6 col-md-6">
-                                      <div class="form-group">
-                                          <label for="">岗位</label>
-                                          <!--                                          <input type="text" name="cJob" class="form-control">-->
-                                      <select name="cJob" class="form-control custom-select" required>
-                                          <option th:each="job:${session.jobTypes}"  th:text="${job}" th:value="${job}">售后</option>
-                                      </select>
-                                      </div>
-                                  </span>
-                                    </div>
-                                    <div class="row">
-                              <span class="col-sm-6 col-md-6">
-                                  <div class="form-group">
-                                      <label>电话</label>
-                                      <input type="text"  name="cTele" class="form-control" required>
-                                  </div>
-                              </span>
-                                        <span class="col-sm-6 col-md-6">
-                                  <div class="form-group">
-                                      <label>邮箱</label>
-                                      <input type="text" name="cPost" class="form-control" placeholder="邮箱" required>
-                                  </div>
-                              </span>
-                                    </div>
-                                    <div class="row">
-                                  <span class="col-sm-6 col-md-6">
-                                  <div class="form-group">
-                                      <label>备注</label>
-                                        <input type="text" name="cRemark" class="form-control" placeholder="备注" required>
-                                  </div>
-                              </span>
+                                        <ul>
+                                            <li>companyType：单位类型(如：学校/国企/政府机构/名气外企/其他)</li>
+                                            <li>progress：项目进度(如：意向/方案/招标/合同/回款/结束)</li>
+                                            <li>jobType：岗位类型(如：售前/售后/销售/商务/财务/其他)</li>
+                                            <li>schoolType：学校类型<span th:text="${session.schoolTypes}"></span></li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -154,90 +71,42 @@
     <!--   新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗-->
 
     <!-- 修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗 -->
-    <div class="modal fade" id="update_emp">
+    <div class="modal fade" id="update_dic">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form th:action="@{/customer/update}" method="post">
+                <form th:action="@{/dic/update}" method="post">
                     <div class="modal-body">
                         <div>
                             <div class="card card-default">
                                 <div class="card-header">
-                                    <h3 class="card-title">添加客户</h3>
+                                    <h3 class="card-title">修改字典</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                  <span class="col-sm-6 col-md-6">
-                                       <div class="form-group">
-                                          <label >姓名</label>
-                                           <!--发送id-->
-                                           <input type="hidden" id="cId" name="cId">
-                                          <input type="text" id="cRename" name="cRename" class="form-control">
-                                      </div>
-                                  </span>
+                                              <span class="col-sm-6 col-md-6">
+                                                   <div class="form-group">
+                                                      <label >字典值</label>
+                                                       <input type="hidden" id="vId" name="vId">
+                                                      <input type="text" id="vValue" name="vValue" class="form-control" required>
+                                                  </div>
+                                              </span>
                                         <span class="col-sm-6 col-md-6">
-                                      <div class="form-group">
-                                          <label>单位类型</label>
-                                          <!--                                          <input type="date" id="eBirthday" name="eBirthday" class="form-control">-->
-                                            <select id=""  class="form-control custom-select">
-                                                 <option th:each="companyJob:${session.companyTypes}" th:text="${companyJob}" th:value="${companyJob}">售后</option>
-                                            </select>
-                                      </div>
-                                  </span>
+                                              <div class="form-group">
+                                                  <label>字典编码/类型</label>
+                                                  <!--                                                    <input type="text" name="typeCode" class="form-control" required>-->
+                                                    <select  name="typeCode" id="typeCode"  class="form-control custom-select">
+                                                       <option th:each="dicCode:${session.dicvalueTypes}" th:text="${dicCode}" th:value="${dicCode}">售后</option>
+                                                    </select>
+                                              </div>
+                                          </span>
                                     </div>
                                     <div class="row">
-                                  <span class="col-sm-6 col-md-6">
-                                       <div class="form-group">
-                                          <label for="cName">单位名称</label>
-                                          <input type="text" id="cName"  name="cName" class="form-control">
-                                      </div>
-                                  </span>
-                                        <span class="col-sm-6 col-md-6">
-                                  <div class="form-group">
-                                     <label>爱好</label>
-                                     <input type="text" id="cHobby" name="cHobby" class="form-control" placeholder="爱好">
-                                 </div>
-                             </span>
-                                    </div>
-                                    <div class="row">
-                                  <span class="col-sm-6 col-md-6">
-                                       <div class="form-group">
-                                          <label for="">部门</label>
-                                          <input type="text" id="cDepart"  name="cDepart" class="form-control">
-                                      </div>
-                                  </span>
-                                        <span class="col-sm-6 col-md-6">
-                                      <div class="form-group">
-                                          <label for="">岗位</label>
-                                          <!--                                          <input type="text" name="cJob" class="form-control">-->
-                                      <select id="cJob" name="cJob" class="form-control custom-select">
-                                    <option th:each="job:${session.jobTypes}"  th:text="${job}" th:value="${job}">售后</option>
-                                      </select>
-                                      </div>
-                                  </span>
-                                    </div>
-                                    <div class="row">
-                              <span class="col-sm-6 col-md-6">
-                                  <div class="form-group">
-                                      <label>电话</label>
-                                      <input type="text" id="cTele"  name="cTele" class="form-control">
-                                  </div>
-                              </span>
-                                        <span class="col-sm-6 col-md-6">
-                                  <div class="form-group">
-                                      <label>邮箱</label>
-                                      <input type="text" id="cPost" name="cPost" class="form-control" placeholder="邮箱">
-                                  </div>
-                              </span>
-                                    </div>
-                                    <div class="row">
-
-                                        </span>
-                                        <span class="col-sm-6 col-md-6">
-                                  <div class="form-group">
-                                      <label>备注</label>
-                                 <input type="text" id="cRemark" name="cRemark" class="form-control" placeholder="备注" >
-                                  </div>
-                              </span>
+                                        <ul>
+                                            <li>companyType：单位类型<span th:text="${session.companyTypes}"></span></li>
+                                            <li>progress：项目进度<span th:text="${session.progressTypes}"></span></li>
+                                            <li>jobType：岗位类型<span th:text="${session.jobTypes}"></span></li>
+                                            <li>schoolType：学校类型<span th:text="${session.schoolTypes}"></span></li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -281,9 +150,7 @@
                                             <!--                          <input type="text" id="phone" class="form-control" placeholder="电话">-->
                                             <select id="con_typeCode" name="typeCode" class="form-control custom-select" >
                                                 <option value="">全部</option>
-                                                <option value="jobType">jobType(岗位性质)</option>
-                                                <option value="companyType">companyType(单位类型)</option>
-                                                <option value="progress">progress(项目进度)</option>
+                                                <option th:each="dicCode:${session.dicvalueTypes}" th:text="${dicCode}" th:value="${dicCode}">售后</option>
                                             </select>
                                         </div>
 
@@ -313,20 +180,20 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-8"></div>
-                                    <div class="col-sm-2 ">
-                                        <button type="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#cusInportModel">
-                                            <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
-                                            导入信息
-                                        </button>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <button type="button" id="cusExcelOutputBtn" class="btn btn-block btn-default">
-                                            <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>导出信息
-                                        </button>
-                                    </div>
-                                </div>
+<!--                                <div class="row">-->
+<!--                                    <div class="col-sm-8"></div>-->
+<!--                                    <div class="col-sm-2 ">-->
+<!--                                        <button type="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#cusInportModel">-->
+<!--                                            <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>-->
+<!--                                            导入信息-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-sm-2">-->
+<!--                                        <button type="button" id="cusExcelOutputBtn" class="btn btn-block btn-default">-->
+<!--                                            <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>导出信息-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
 
                                 <!--                  <h1 th:text="${empList}"></h1>-->
                                 <!--                  <h1 th:text="${session.emp}"></h1>-->
@@ -347,7 +214,7 @@
                                         <td th:text="${dic.typeCode}">1</td>
                                         <td>
                                             <button type="button" th:tar-id="${dic.vId}" class="btn  btn-danger btn-sm confirmsCus">删除</button>
-                                            <button type="button" th:tar-id="${dic.vId}" class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button>
+                                            <button type="button" th:tar-id="${dic.vId}" class="btn  btn-sm btn-info updateDicBtn" data-toggle="modal" data-target="#update_dic">修改</button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -401,7 +268,6 @@
         $('#cusConditionBtn').click(function (){
             let vValue = $('#con_vValue').val();
             let typeCode = $('#con_typeCode').val();
-            console.log(cRename + "-" + cJob + "-" + cName)
             location.href = "/crm/dic/dics?vValue="+vValue+"&typeCode="+typeCode;
         })
         // $('#conditionBtn').click(function (){
@@ -411,37 +277,26 @@
         //删除的确定弹窗
         $(".confirmsCus").click(function () {
             if(confirm("确定删除该记录？")){
-                let cId = $(this).attr("tar-id");
-                location.href = "/crm/customer/del/" + cId;
+                let vId = $(this).attr("tar-id");
+                location.href = "/crm/dic/del/" + vId;
             }
 
         })
 
         //修改
         //修改按钮
-        $('.updateCusBtn').click(function (){
-            let cId = $(this).attr("tar-id");
-
-            /*
-            *             <td th:text="${cus.cRename}">1</td>
-                   <td th:text="${cus.cName}">1</td>
-                   <td th:text="${cus.cDepart}">1</td>
-                   <td th:text="${cus.cJob}">1</td>
-                   <td th:text="${cus.cTele}">1</td>
-                   <td th:text="${cus.cPost}">1</td>
-                   <td th:text="${cus.cHobby}">1</td>
-                   <td th:text="${cus.cRemark}">1</td>*/
-
+        $('.updateDicBtn').click(function (){
+            let vId = $(this).attr("tar-id");
             $.ajax({
-                url: "/crm/customer/queryById/" + cId,
+                url: "/crm/dic/queryById/" + vId,
                 type: "get",
                 datatype: "json",
                 success: function (res){
                     console.log(res);
-                    let cus = res.data;
-                    $('#cId').val(cus.cId);
-                    $('#cRename').val(cus.cRename);
-                    $('#cName').val(cus.cName);
+                    let dic = res.data;
+                    $('#vId').val(dic.vId);
+                    $('#vValue').val(dic.vValue);
+                    $('#typeCode').val(dic.typeCode);
                 }
             })
         })

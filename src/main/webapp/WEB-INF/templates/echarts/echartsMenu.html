@@ -126,31 +126,53 @@
         myChart.resize();
     };
 
-    // 指定图表的配置项和数据
-    $.get('/crm/data.json').done(function(data) {
-        myChart.hideLoading();
-        myChart.setOption({
-            legend: {},
-            tooltip: {},
-            dataset: {
-                source:data
-            },
+    //定义报表刷新方法
+    function freshFun(url){
+        // 指定图表的配置项和数据
+        $.get(url).done(function(data) {
+            myChart.hideLoading();
+            myChart.setOption({
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    source:data
+                },
 
-            xAxis: {name:'合同金额'  },
+                xAxis: {name:'合同金额'  },
 
-            yAxis: {type: 'category',name:'员工'},
+                yAxis: {type: 'category',name:'员工'},
 
-            series: [
-                { type: 'bar' , stack: 'x'},
-                { type: 'bar' , stack: 'x'}
-            ]
+                series: [
+                    { type: 'bar' , stack: 'x'},
+                    { type: 'bar' , stack: 'x'}
+                ]
+            })
         })
-    })
+    }
+
+    //执行刷新报表
+    let con_cRename = sessionStorage.getItem("con_cRename");
+    if(con_cRename){
+        this.freshFun("/crm/dic/echartsData?empName="+con_cRename);
+    }else{
+        this.freshFun("/crm/dic/echartsData");
+    }
+
 
     myChart.on('click', function(params) {
         console.log(params.value.id);
         window.location.href = "/crm/echarts/detail";
     });
+
+    /*事件*/
+    $('#cusConditionBtn').click(function (){
+        let con_cRename = $('#con_cRename').val();
+        //将条件存储在域中
+        sessionStorage.setItem("con_cRename", con_cRename);
+        location.href = "/crm/echarts/toIndex";
+        //执行刷新报表
+        // this.freshFun("/crm/dic/echartsData?empName="+con_cRename);
+    })
 </script>
 </body>
 </html>
