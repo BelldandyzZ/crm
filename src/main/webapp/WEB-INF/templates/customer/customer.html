@@ -176,7 +176,7 @@
                                     <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label>客户单位类型</label>
-                                            <select   class="form-control custom-select" required>
+                                            <select id="c_cie_type" name="cCieType" class="form-control custom-select" required>
                                                  <option th:each="companyJob:${session.companyTypes}" th:text="${companyJob}" th:value="${companyJob}">售后</option>
                                             </select>
                                       </div>
@@ -506,6 +506,8 @@
                     $('#cPost').val(cus.cPost);
                     $('#cHobby').val(cus.cHobby);
                     $('#cRemark').val(cus.cRemark);
+                    $('#c_cie_type').val(cus.cCieType);
+
                 }
             })
         })

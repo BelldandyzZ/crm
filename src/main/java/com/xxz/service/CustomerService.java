@@ -3,6 +3,7 @@ package com.xxz.service;
 import com.xxz.bean.Customer;
 import com.xxz.bean.CustomerExample;
 import com.xxz.mapper.CustomerMapper;
+import com.xxz.mapper.InterviewMapper;
 import com.xxz.utils.JdbcUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,10 @@ import java.util.List;
 @Transactional
 @Service
 public class CustomerService {
+
+    @Autowired
+    private InterviewMapper interviewMapper;
+
 
     @Autowired
     private CustomerMapper customerMapper;
@@ -62,6 +67,9 @@ public class CustomerService {
     public boolean cusDel(Integer eId){
         //删除业务
         int delResult = customerMapper.deleteByPrimaryKey(eId);
+
+        int res = interviewMapper.deleteInterviewByCustomerId(eId);
+
         return delResult > 0 ? true : false;
     }
 

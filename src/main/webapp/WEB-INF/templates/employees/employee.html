@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>客户信息</title>
+    <title>员工信息</title>
 
     <!-- 离线 Google 字体: Source Sans Pro -->
     <link rel="stylesheet" th:href="@{'/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'}">
@@ -55,8 +55,7 @@
             </div>
         </div>
     </div>
-    <!--   新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗-->
-
+    <!--上传-->
 
     <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
     <div class="modal fade" id="add_emp">
@@ -73,28 +72,28 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="rename">姓名</label>
-                                          <input type="text"  name="rename" class="form-control" required>
+                                          <label for="rename">员工姓名</label>
+                                          <input type="text"  name="rename" class="form-control" required placeholder="请输入员工姓名">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label for="eBirthday">出生年月</label>
-                                          <input type="date"  name="eBirthday" class="form-control">
+                                          <input type="date"  name="eBirthday" class="form-control" placeholder="出生年月">
                                       </div>
                                   </span>
                                     </div>
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="eName">用户名</label>
-                                          <input type="text"  name="eName" class="form-control" required>
+                                          <label for="eName">登录账户</label>
+                                          <input type="text"  name="eName" class="form-control" required placeholder="请输入登录账户">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="ePwd">密码</label>
-                                          <input type="text"  name="ePwd" class="form-control" required>
+                                          <label for="ePwd">登录密码</label>
+                                          <input type="text"  name="ePwd" class="form-control" required placeholder="请输入登录密码">
                                       </div>
                                   </span>
                                     </div>
@@ -102,13 +101,13 @@
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label for="eSchool">毕业院校</label>
-                                      <input type="text"  name="eSchool" class="form-control">
+                                      <input type="text" name="eSchool" class="form-control" placeholder="请输入毕业院校">
                                   </div>
                               </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label for="eSocialPosition">社会职务</label>
-                                      <input type="text"  name="eSocialPosition" class="form-control" placeholder="岗位性质">
+                                      <input type="text"  name="eSocialPosition" class="form-control" placeholder="请输入社会职务">
                                   </div>
                               </span>
                                     </div>
@@ -116,15 +115,16 @@
                                 <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                      <label for="eStartTime">入司时间</label>
-                                     <input type="date"  name="eStartTime" class="form-control">
+                                     <input type="date" name="eStartTime" class="form-control">
                                  </div>
                              </span>
                                         </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="eJob">岗位性质</label>
+                                      <label for="eJob">所任职务</label>
                                       <select  name="eJob" class="form-control custom-select" required>
-                                         <option th:each="job:${session.jobTypes}" th:text="${job}" th:value="${job}">售后</option>
+                                          <option value="">无</option>
+                                         <option th:each="job:${session.jobTypes}" th:text="${job}" th:value="${job}"></option>
                                       </select>
                                   </div>
                               </span>
@@ -132,14 +132,14 @@
                                     <div class="row">
                               <span class="col-sm-6 col-md-6">
                                    <div class="form-group">
-                                      <label for="eHonor">荣誉</label>
-                                      <input type="text"  name="eHonor" class="form-control">
+                                      <label for="eHonor">员工荣誉</label>
+                                      <input type="text"  name="eHonor" class="form-control" placeholder="请输入员工荣誉">
                                   </div>
                               </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="eRemark">备注</label>
-                                      <input type="text"  name="eRemark" class="form-control">
+                                      <label for="eRemark">员工备注</label>
+                                      <input type="text"  name="eRemark" class="form-control" placeholder="请输入员工备注">
                                   </div>
                               </span>
                                     </div>
@@ -174,9 +174,9 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="rename">姓名</label>
+                                          <label for="rename">员工姓名</label>
                                            <input type="hidden" id="eId" name="eId">
-                                          <input type="text" id="rename" name="rename" class="form-control">
+                                          <input type="text" id="rename" name="rename" class="form-control" placeholder="请输入员工姓名">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
@@ -189,14 +189,14 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="eName">用户名</label>
-                                          <input type="text" id="eName" name="eName" class="form-control">
+                                          <label for="eName">登录账户</label>
+                                          <input type="text" placeholder="请输入登录账户" id="eName" name="eName" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="ePwd">密码</label>
-                                          <input type="text" id="ePwd" name="ePwd" class="form-control">
+                                          <label for="ePwd">登录密码</label>
+                                          <input type="text" id="ePwd" name="ePwd" class="form-control" placeholder="请输入登录密码">
                                       </div>
                                   </span>
                                     </div>
@@ -204,13 +204,13 @@
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label for="eSchool">毕业院校</label>
-                                      <input type="text" id="eSchool" name="eSchool" class="form-control">
+                                      <input type="text" id="eSchool" name="eSchool" class="form-control" placeholder="请输入毕业院校">
                                   </div>
                               </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label for="eSocialPosition">社会职务</label>
-                                      <input type="text" id="eSocialPosition" name="eSocialPosition" class="form-control" placeholder="岗位性质">
+                                      <input type="text" id="eSocialPosition" name="eSocialPosition" class="form-control" placeholder="请输入社会职务">
                                   </div>
                               </span>
                                     </div>
@@ -224,7 +224,7 @@
                                         </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="eJob">岗位性质</label>
+                                      <label for="eJob">所任职务</label>
                                       <select id="eJob" name="eJob" class="form-control custom-select">
                                           <option th:each="job:${session.jobTypes}" th:text="${job}" th:value="${job}">售后</option>
                                       </select>
@@ -234,14 +234,14 @@
                                     <div class="row">
                               <span class="col-sm-6 col-md-6">
                                    <div class="form-group">
-                                      <label for="eHonor">荣誉</label>
-                                      <input type="text" id="eHonor" name="eHonor" class="form-control" >
+                                      <label for="eHonor">员工荣誉</label>
+                                      <input type="text" id="eHonor" name="eHonor" class="form-control" placeholder="请输入员工荣誉">
                                   </div>
                               </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="eRemark">备注</label>
-                                      <input type="text" id="eRemark" name="eRemark" class="form-control" >
+                                      <label for="eRemark">员工备注</label>
+                                      <input type="text" id="eRemark" name="eRemark" class="form-control" placeholder="请输入员工备注">
                                   </div>
                               </span>
                                     </div>
@@ -317,15 +317,15 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="con_rename">姓名</label>
-                                            <input type="text" id="con_rename" th:value="${rename}" name="rename" class="form-control" placeholder="姓名">
+                                            <label for="con_rename">员工姓名</label>
+                                            <input type="text" id="con_rename" th:value="${rename}" name="rename" class="form-control" placeholder="请输入员工姓名">
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <!-- text input -->
 
                                         <div class="form-group">
-                                            <label for="con_eJob">岗位性质</label>
+                                            <label for="con_eJob">所任职务</label>
                                             <select id="con_eJob" name="eJob" class="form-control">
                                                 <option value="">全部</option>
                                                 <option th:each="job:${session.jobTypes}" th:text="${job}" th:value="${job}" th:selected="${eJob == job}">售后</option>
@@ -385,12 +385,13 @@
                                     <thead>
                                     <tr>
                                         <th>员工姓名</th>
-                                        <th>出生年月(员工生日)</th>
-                                        <th>毕业院校(员工毕业院校)</th>
-                                        <th>岗位性质(员工岗位性质)</th>
-                                        <th>入司时间(员工入职时间)</th>
-                                        <th>社会职务(员工社会职位)</th>
-                                        <th>社会荣誉(员工社会荣誉)</th>
+                                        <th>登录账户</th>
+                                        <th>出生年月</th>
+                                        <th>毕业院校</th>
+                                        <th>所任职务</th>
+                                        <th>入司时间</th>
+                                        <th>社会职务</th>
+                                        <th>员工荣誉</th>
                                         <th>员工备注</th>
                                         <th>操作</th>
                                     </tr>
@@ -398,6 +399,7 @@
                                     <tbody>
                                     <tr th:each="emp,empState : ${empPageInfo.list}">
                                         <td th:text="${emp.rename}"></td>
+                                        <td th:text="${emp.eName}"></td>
                                         <td th:text="${emp.eBirthday}"></td>
                                         <td th:text="${emp.eSchool}"></td>
                                         <td th:text="${emp.eJob}"></td>
@@ -590,7 +592,7 @@
                 type:'POST',
                 success:(res)=>{
                     $('#roleModal').modal('hide');
-                    alert(res.msg);
+                    alert("授权成功");
                 }
             })
         })
