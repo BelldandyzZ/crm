@@ -18,7 +18,6 @@
 <div class="wrapper">
 
 <!--上传-->
-<!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
 <div class="modal fade" id="cusInportModel">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -52,7 +51,6 @@
         </div>
     </div>
 </div>
-<!--   新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗-->
 
 
     <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
@@ -70,13 +68,13 @@
                               <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label >姓名</label>
-                                          <input type="text" name="cRename" class="form-control" required>
+                                          <label>客户姓名</label>
+                                          <input type="text" name="cRename" class="form-control" required placeholder="请输入客户姓名">
                                       </div>
                                   </span>
                                   <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label>单位类型</label>
+                                          <label>客户单位类型</label>
                                             <select name="cCieType" class="form-control custom-select" required>
                                                 <option th:each="companyJob:${session.companyTypes}" th:text="${companyJob}" th:value="${companyJob}">售后</option>
                                             </select>
@@ -86,14 +84,14 @@
                               <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="">单位名称</label>
-                                          <input type="text"  name="cName" class="form-control" required>
+                                          <label for="">客户单位</label>
+                                          <input type="text"  name="cName" class="form-control" required placeholder="请输入客户单位名称">
                                       </div>
                                   </span>
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="">爱好</label>
-                                          <input type="text" name="cHobby" class="form-control" placeholder="爱好" required>
+                                          <label for="">客户爱好</label>
+                                          <input type="text" name="cHobby" class="form-control" placeholder="请输入客户爱好" required>
                                       </div>
                                   </span>
 
@@ -101,13 +99,13 @@
                               <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="">部门</label>
-                                          <input type="text"  name="cDepart" class="form-control" required>
+                                          <label for="">客户所在部门</label>
+                                          <input type="text"  name="cDepart" class="form-control" required placeholder="请输入客户所在部门">
                                       </div>
                                   </span>
                                       <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="">岗位</label>
+                                          <label for="">客户所任职务</label>
 <!--                                          <input type="text" name="cJob" class="form-control">-->
                                       <select name="cJob" class="form-control custom-select" required>
                                           <option th:each="job:${session.jobTypes}"  th:text="${job}" th:value="${job}">售后</option>
@@ -118,22 +116,23 @@
                               <div class="row">
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label>电话</label>
-                                      <input type="text"  name="cTele" class="form-control" required>
+                                      <label>客户电话</label>
+                                      <input type="text"  name="cTele" class="form-control" required placeholder="请输入客户电话">
                                   </div>
                               </span>
                                   <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label>邮箱</label>
-                                      <input type="text" name="cPost" class="form-control" placeholder="邮箱" required>
+                                      <label>客户邮箱</label>
+                                      <input type="text" name="cPost" class="form-control" placeholder="请输入客户邮箱" required>
                                   </div>
                               </span>
                               </div>
                               <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label>备注</label>
-                                        <input type="text" name="cRemark" class="form-control" placeholder="备注" required>
+                                      <label>客户备注</label>
+<!--                                        <input type="" name="cRemark" class="form-control" placeholder="请输入客户备注" required>-->
+                                      <textarea name="cRemark" class="form-control" rows="3" placeholder="请输入客户备注"></textarea>
                                   </div>
                               </span>
                               </div>
@@ -162,23 +161,22 @@
                     <div>
                         <div class="card card-default">
                             <div class="card-header">
-                                <h3 class="card-title">添加客户</h3>
+                                <h3 class="card-title">修改客户</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label >姓名</label>
+                                          <label>客户姓名</label>
                                            <!--发送id-->
                                            <input type="hidden" id="cId" name="cId">
-                                          <input type="text" id="cRename" name="cRename" class="form-control" required>
+                                          <input type="text" id="cRename" name="cRename" class="form-control" required placeholder="请输入客户姓名">
                                       </div>
                                   </span>
                                     <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label>单位类型</label>
-                                          <!--                                          <input type="date" id="eBirthday" name="eBirthday" class="form-control">-->
-                                            <select id=""  class="form-control custom-select" required>
+                                          <label>客户单位类型</label>
+                                            <select   class="form-control custom-select" required>
                                                  <option th:each="companyJob:${session.companyTypes}" th:text="${companyJob}" th:value="${companyJob}">售后</option>
                                             </select>
                                       </div>
@@ -187,28 +185,27 @@
                                 <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="cName">单位名称</label>
-                                          <input type="text" id="cName"  name="cName" class="form-control" required>
+                                          <label for="cName">客户单位</label>
+                                          <input type="text" id="cName"  name="cName" class="form-control" required placeholder="请输入客户单位名称">
                                       </div>
                                   </span>
                                     <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                     <label>爱好</label>
-                                     <input type="text" id="cHobby" name="cHobby" class="form-control" placeholder="爱好">
+                                     <label>客户爱好</label>
+                                     <input type="text" id="cHobby" name="cHobby" class="form-control" placeholder="请输入客户爱好">
                                  </div>
                              </span>
                                 </div>
                                 <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="">部门</label>
-                                          <input type="text" id="cDepart"  name="cDepart" class="form-control">
+                                          <label for="">客户所在部门</label>
+                                          <input type="text" id="cDepart"  name="cDepart" class="form-control" placeholder="请输入客户所在部门">
                                       </div>
                                   </span>
                                     <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="">岗位</label>
-                                          <!--                                          <input type="text" name="cJob" class="form-control">-->
+                                          <label for="">客户所任职务</label>
                                       <select id="cJob" name="cJob" class="form-control custom-select">
                                     <option th:each="job:${session.jobTypes}"  th:text="${job}" th:value="${job}">售后</option>
                                       </select>
@@ -218,14 +215,14 @@
                                 <div class="row">
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label>电话</label>
-                                      <input type="text" id="cTele"  name="cTele" class="form-control" required>
+                                      <label>客户电话</label>
+                                      <input type="text" id="cTele"  name="cTele" class="form-control" required placeholder="请输入客户电话">
                                   </div>
                               </span>
                                     <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label>邮箱</label>
-                                      <input type="text" id="cPost" name="cPost" class="form-control" placeholder="邮箱" required>
+                                      <label>客户邮箱</label>
+                                      <input type="text" id="cPost" name="cPost" class="form-control" placeholder="请输入客户邮箱" required>
                                   </div>
                               </span>
                                 </div>
@@ -234,8 +231,8 @@
                                     </span>
                                     <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label>备注</label>
-                                 <input type="text" id="cRemark" name="cRemark" class="form-control" placeholder="备注" >
+                                      <label>客户备注</label>
+                                      <textarea name="cRemark" id="cRemark" class="form-control" rows="3" placeholder="请输入客户备注"></textarea>
                                   </div>
                               </span>
                                 </div>
@@ -271,13 +268,13 @@
                         <!-- text input -->
                         <div class="form-group">
                             <label for="con_cRename">客户姓名</label>
-                            <input type="text" id="con_cRename" name="cRename" th:value="${cRename}" class="form-control" placeholder="姓名">
+                            <input type="text" id="con_cRename" name="cRename" th:value="${cRename}" class="form-control" placeholder="客户姓名">
                         </div>
                     </div>
                     <div th:if="${session.permissions.contains('1010')}" class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                            <label for="con_cJob">岗位</label>
+                            <label for="con_cJob">客户所任职务</label>
                             <!--                          <input type="text" id="phone" class="form-control" placeholder="电话">-->
                             <select id="con_cJob" name="cJob" class="form-control custom-select" >
                                 <option value="">全部</option>
@@ -289,8 +286,8 @@
                     <div th:if="${session.permissions.contains('1010')}" class="col-sm-3">
                         <!-- text input -->
                         <div class="form-group">
-                            <label for="con_cName">所在单位名称</label>
-                            <input type="text" id="con_cName" name="cName" th:value="${cName}"  class="form-control" placeholder="所在单位">
+                            <label for="con_cName">客户单位</label>
+                            <input type="text" id="con_cName" name="cName" th:value="${cName}"  class="form-control" placeholder="客户单位">
                         </div>
                     </div>
                     <div th:if="${session.permissions.contains('1010')}" class="col-sm-1">
@@ -339,11 +336,11 @@
                   <thead>
                       <tr>
                         <th>客户姓名</th>
-                        <th>单位名称/客户单位</th>
-                        <th>单位类型/客户单位类型</th>
-                        <th>部门/客户所在部门</th>
-                        <th>职务/客户所任职务</th>
-                        <th>联系电话/客户联系</th>
+                        <th>客户单位</th>
+                        <th>客户单位类型</th>
+                        <th>客户所在部门</th>
+                        <th>客户所任职务</th>
+                        <th>客户联系</th>
                         <th>客户邮箱</th>
                         <th>客户爱好</th>
                         <th>客户备注</th>

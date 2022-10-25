@@ -123,6 +123,7 @@ public class RoleController {
         //当前角色拥有的菜单资源
         List<MenuVo> roleMenus = roleService.queryAllRoleOfMenuByRoleId(roleId);
 
+
         //判断哪些是角色已经有的资源，设置true在前端做默认选中
         if(roleMenus != null && roleMenus.size() > 0){
             for (MenuVo menuVo : menuVoList) {
@@ -157,6 +158,8 @@ public class RoleController {
             roleMenu.setrId(roleId);
             roleMenus.add(roleMenu);
         }
+
+
          roleService.modifyMenuByRoleId(roleMenus,roleId);
          return AsyncResp.success(AsyncResp.ADD_SUCCESS);
     }

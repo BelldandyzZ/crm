@@ -8,6 +8,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xxz.bean.*;
 import com.xxz.exception.AsyncResp;
+import com.xxz.exception.enums.AppExceptionCodeMsg;
 import com.xxz.listener.DemoDataListener;
 import com.xxz.service.DicValueService;
 import com.xxz.service.EmpService;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,8 +45,7 @@ public class EmpController {
     private RoleService roleService;
 
     @RequestMapping("/login")
-    public String empLogin(String ename, String epwd, HttpSession session, Model model){
-        System.out.println(ename + "----" + epwd);
+    public String empLogin(String ename, String epwd, HttpSession session, Model model,RedirectAttributes attr){
         Employee employee = empService.empLogin(ename, epwd);
         //登录成功就初始化字段值
         if(employee != null){
@@ -55,13 +57,15 @@ public class EmpController {
             session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
             session.setAttribute("pNames", projectService.getAllProjectName());
             /*------------------------登录成功查看员工对应的权限---------------------------*/
+
             List<String> permissions =  roleService.queryAllMenuByEmpId(employee.geteId());
             session.setAttribute("permissions",permissions);
+
             /*------------------------登录成功查看员工对应的权限---------------------------*/
-            return "index";
+            return "redirect:/index";
         }else{
-            model.addAttribute("loginMsg", "账号密码有误！");
-            return "login";
+            attr.addFlashAttribute("loginMsg",AppExceptionCodeMsg.LOGIN_EXCEPTION.getMsg());
+            return "redirect:/";
         }
     }
 

@@ -28,8 +28,6 @@ public class PermissionProxy {
     @Around("@annotation(com.xxz.annotations.Permission)")
     public Object around(ProceedingJoinPoint point) throws Throwable {
 
-        System.out.println("PermissionProxy.around");
-
         Object result = null;
 
         //得到当前用户拥有的所有权限

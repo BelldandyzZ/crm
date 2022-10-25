@@ -7,7 +7,7 @@ public enum  AppExceptionCodeMsg {
 
 
     INSUFFICIENT_PERMISSION(1002,"权限不足"),
-
+    LOGIN_EXCEPTION(1001,"账号密码错误"),
 
     ;
 

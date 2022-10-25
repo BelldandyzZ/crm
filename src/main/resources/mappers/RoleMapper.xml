@@ -40,6 +40,10 @@
         WHERE e_id = #{empId}
     </delete>
 
+
+
+
+
     <insert id="insertRoleList">
         INSERT INTO emp_role(e_id,r_id)
         VALUES
@@ -47,6 +51,12 @@
             (#{empRole.eId},#{empRole.rId})
         </foreach>
     </insert>
+
+
+
+
+
+
 
     <select id="selectAllRoleByEmpId" parameterType="string" resultType="com.xxz.bean.EmpRole">
         SELECT *
