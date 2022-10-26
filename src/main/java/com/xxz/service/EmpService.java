@@ -25,12 +25,12 @@ public class EmpService {
     /*登录empLogin*/
     public Employee empLogin(String ename, String epwd ){
         if(ename != null && !ename.equals("") && epwd != null && !epwd.equals("")){
-            EmployeeExample employeeExample = new EmployeeExample();
-            employeeExample.createCriteria().andENameEqualTo(ename).andEPwdEqualTo(epwd);
-            List<Employee> employeeList = employeeMapper.selectByExample(employeeExample);
-            if(employeeList.size() > 0){
-                Employee employee = employeeList.get(0);
-                return employee;
+//            EmployeeExample employeeExample = new EmployeeExample();
+//            employeeExample.createCriteria().andENameEqualTo(ename).andEPwdEqualTo(epwd);
+//            List<Employee> employeeList = employeeMapper.selectByExample(employeeExample);
+            Employee emp = employeeMapper.login(ename, epwd);
+            if(emp != null){
+                return emp;
             }else{
                 return null;
             }
