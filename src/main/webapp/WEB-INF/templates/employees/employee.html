@@ -30,19 +30,40 @@
                         <div>
                             <div class="card card-default">
                                 <div class="card-header">
-                                    <h3 class="card-title">文件上传</h3>
+                                    <h3 class="card-title">导入员工信息</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                      <span class="col-sm-6 col-md-6">
-                                           <div class="form-group">
-                                              <label>文件</label>
-                                              <input type="file" name="importFile" class="form-control">
-                                          </div>
-                                      </span>
+                                        <div>
+                                            <h5>重要提示</h5>
+                                            <ul>
+                                                <li>操作仅针对Excel，仅支持后缀名为xlsx的文件。</li>
+                                                <li>请确认您的文件大小不超过5MB。</li>
+                                                <li>时间请采用xxxxx的格式填写</li>
+                                                <li>默认情况下，字符编码是UTF-8 (统一码)，请确保您导入的文件使用的是正确的字符编码方式。</li>
+                                                <li>建议您在导入真实数据之前用测试文件测试文件导入功能。</li>
+                                                <li>
+                                                    <form action="javascript:;">
+                                                        <input type="submit" value="下载模板">
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- /.card-body -->
+                                    <div class="row" style="margin-top: 20px">
+                                        <div>
+                                            请选择要上传的文件：<small style="color: gray;">[仅支持.xlsx]</small>
+                                        </div>
+                                        <div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div>
+                                            <input id="activityFile" type="file" name="activityFile">
+                                        </div>
+                                    </div>
+                                </div>                                <!-- /.card-body -->
                             </div>
                             <!-- /.card -->
                         </div>

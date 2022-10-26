@@ -283,9 +283,8 @@
                                         <td><a th:href="@{'/project/payment_back?pbId=' + ${pro.pbId} + '&pId=' + ${pro.pId}}" class="card-link">2004534</a>
                                         </td>
                                         <td>
-                                            <button type="button" th:tar-id="${pro.pId}" class="btn  btn-sm btn-info updateProBtn"
-                                                    data-toggle="modal" data-target="#update_pro">修改
-                                            </button>
+                                            <button  type="button" tar-id="" class="btn  btn-danger btn-sm confirmsCus">删除</button>
+                                            <button type="button" th:tar-id="${pro.pId}" class="btn  btn-sm btn-info updateProBtn" data-toggle="modal" data-target="#update_pro">修改</button>
                                         </td>
                                     </tr>
                                     </tbody>
