@@ -18,7 +18,7 @@ import java.awt.color.ColorSpace;
 import java.io.Serializable;
 
 @Data
-@ExcelIgnoreUnannotated //忽视大小写
+@ExcelIgnoreUnannotated //忽视大小写11123
 //行高全部设为40
 @HeadRowHeight(value = 20)
 //标题全部居中
@@ -47,16 +47,16 @@ public class Customer implements Serializable {
     @ExcelProperty(value = "单位名称", index = 1)
     private String cName;
 
-    @ExcelProperty(value = "所在部门", index = 2)
+    @ExcelProperty(value = "客户所在部门", index = 3)
     private String cDepart;
 
-    @ExcelProperty(value = "单位类型", index = 3)
+    @ExcelProperty(value = "客户单位类型", index = 2)
     private String cCieType;
 
-    @ExcelProperty(value = "客户职务", index = 4)
+    @ExcelProperty(value = "客户所在职务", index = 4)
     private String cJob;
 
-    @ExcelProperty(value = "客户电话", index = 5)
+    @ExcelProperty(value = "客户联系", index = 5)
     private String cTele;
 
     @ExcelProperty(value = "客户邮箱", index = 6)

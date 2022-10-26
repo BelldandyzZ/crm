@@ -45,8 +45,6 @@ public class CustomerService {
         }
         //查询
         List<Customer> customerList = customerMapper.selectByExample(customerExample);
-        //倒叙
-        Collections.reverse(customerList);
         return customerList;
     }
 
