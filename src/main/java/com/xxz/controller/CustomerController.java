@@ -113,12 +113,12 @@ public class CustomerController {
 
     /*excel导入导出*/
     @RequestMapping(value = "/excelInport", method = RequestMethod.POST)
-    public String excelInport(MultipartFile importFile){
-        System.out.println("文件名：" + importFile.getOriginalFilename());
+    public String excelInport(MultipartFile activityFile){
+        System.out.println("文件名：" + activityFile.getOriginalFilename());
         // 解析Excel
         ExcelReader excelReader = null;
         try {
-            excelReader = EasyExcelFactory.read(importFile.getInputStream(), Customer.class, new DemoDataListener<Customer>()).build();
+            excelReader = EasyExcelFactory.read(activityFile.getInputStream(), Customer.class, new DemoDataListener<Customer>()).build();
             ReadSheet readSheet = EasyExcelFactory.readSheet(0).build();
             excelReader.read(readSheet);
         } catch (Exception e) {

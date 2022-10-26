@@ -37,35 +37,35 @@ import java.io.Serializable;
         horizontalAlignment = HorizontalAlignment.CENTER,
         wrapped = true)
 public class Customer implements Serializable {
-    @ExcelProperty(value = "编号", index = 0)
+//    @ExcelProperty(value = "编号", index = 0)
     @ColumnWidth(value = 10)
     private Integer cId;
 
-    @ExcelProperty(value = "客户姓名", index = 1)
+    @ExcelProperty(value = "客户姓名", index = 0)
     private String cRename;
 
-    @ExcelProperty(value = "单位名称", index = 2)
+    @ExcelProperty(value = "单位名称", index = 1)
     private String cName;
 
-    @ExcelProperty(value = "所在部门", index = 3)
+    @ExcelProperty(value = "所在部门", index = 2)
     private String cDepart;
 
-    @ExcelProperty(value = "单位类型", index = 4)
+    @ExcelProperty(value = "单位类型", index = 3)
     private String cCieType;
 
-    @ExcelProperty(value = "客户职务", index = 5)
+    @ExcelProperty(value = "客户职务", index = 4)
     private String cJob;
 
-    @ExcelProperty(value = "客户电话", index = 6)
+    @ExcelProperty(value = "客户电话", index = 5)
     private String cTele;
 
-    @ExcelProperty(value = "客户邮箱", index = 7)
+    @ExcelProperty(value = "客户邮箱", index = 6)
     private String cPost;
 
-    @ExcelProperty(value = "客户爱好", index = 8)
+    @ExcelProperty(value = "客户爱好", index = 7)
     private String cHobby;
 
-    @ExcelProperty(value = "备注", index = 9)
+    @ExcelProperty(value = "备注", index = 8)
     private String cRemark;
 
     private static final long serialVersionUID = 1L;
