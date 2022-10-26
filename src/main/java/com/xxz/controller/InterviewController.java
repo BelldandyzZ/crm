@@ -6,6 +6,7 @@ import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xxz.annotations.Permission;
 import com.xxz.bean.*;
 import com.xxz.listener.DemoDataListener;
 import com.xxz.mapper.CustomerMapper;
@@ -84,10 +85,10 @@ public class InterviewController {
     }
 
     //id查询
-    @RequestMapping("/queryById/{cId}")
+    @RequestMapping("/queryById/{iId}")
     @ResponseBody
-    public Map<String,Object> queryById(@PathVariable("cId") Integer cId, HttpServletResponse response) throws IOException {
-        Interview interview = interviewService.queryById(cId);
+    public Map<String,Object> queryById(@PathVariable("iId") Integer iId, HttpServletResponse response) throws IOException {
+        Interview interview = interviewService.queryById(iId);
         Map<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("code","200");
         stringObjectHashMap.put("data",interview);
@@ -105,16 +106,11 @@ public class InterviewController {
     }
 
     //删除员工
-    @RequestMapping("/del/{eId}")
-    public String cusDel(@PathVariable("eId") Integer eId){
-        System.out.println(eId);
+    @RequestMapping("/del/{iId}")
+    public String cusDel(@PathVariable("iId") Integer iId){
+        System.out.println(iId);
         //删除业务
-        boolean result = interviewService.itwDel(eId);
-        if(result){
-            System.out.println("操作成功！");
-        }else{
-            System.out.println("操作失败！");
-        }
+        boolean result = interviewService.itwDel(iId);
         //重定向到empList界面展示最新数据
         return "redirect:/interview/interviews";
     }
@@ -122,15 +118,8 @@ public class InterviewController {
     //修改
     @RequestMapping("/update")
     public String cusUpdate(Interview interview){
-        //展示emp
-        System.out.println(interview);
         //调用目标接口实现信息修改
         boolean result = interviewService.itwUpdate(interview);
-        if(result){
-            System.out.println("操作成功！");
-        }else{
-            System.out.println("操作失败！");
-        }
         //重定向到empMenu界面
         return "redirect:/interview/interviews";
     }

@@ -106,13 +106,16 @@ public class InterviewService {
         }
         interviewList.removeAll(delItws);
         //倒叙
-        Collections.reverse(interviewList);
+//        Collections.reverse(interviewList);
         return interviewList;
     }
 
     /*通过ID查询*/
     public Interview queryById(Integer cId){
         Interview interview = interviewMapper.selectByPrimaryKey(cId);
+        interview.seteRename(employeeMapper.selectByPrimaryKey(interview.geteId()).getRename());
+        interview.setcRename(customerMapper.selectByPrimaryKey(interview.getcId()).getcRename());
+        interview.setpName(projectMapper.selectByPrimaryKey(interview.getpId()).getpName());
         return interview;
     }
 
@@ -156,6 +159,24 @@ public class InterviewService {
     /*修改*/
     public boolean itwUpdate(Interview interview){
         //调用目标接口实现信息修改
+
+        EmployeeExample employeeExample = new EmployeeExample();
+        employeeExample.createCriteria().andRenameEqualTo(interview.geteRename());
+        List<Employee> employees = employeeMapper.selectByExample(employeeExample);
+        interview.seteId(employees.get(0).geteId());
+
+
+        CustomerExample customerExample = new CustomerExample();
+        customerExample.createCriteria().andCRenameEqualTo(interview.getcRename());
+        List<Customer> customers = customerMapper.selectByExample(customerExample);
+        interview.setcId(customers.get(0).getcId());
+
+        ProjectExample projectExample = new ProjectExample();
+        projectExample.createCriteria().andPNameEqualTo(interview.getpName());
+        List<Project> projects = projectMapper.selectByExample(projectExample);
+        interview.setpId(projects.get(0).getpId());
+
+
         int updateResult = interviewMapper.updateByPrimaryKeySelective(interview);
         return updateResult > 0 ? true : false;
     }

@@ -72,7 +72,7 @@ insert  into `cus_pro`(`cp_id`,`p_id`,`c_id`) values
 (9,9,2),
 (10,10,2),
 (12,12,2),
-(13,13,1);
+(13,13,2);
 
 /*Table structure for table `customer` */
 
@@ -90,7 +90,7 @@ CREATE TABLE `customer` (
   `c_hobby` varchar(255) DEFAULT NULL COMMENT '爱好',
   `c_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Data for the table `customer` */
 
@@ -162,7 +162,7 @@ CREATE TABLE `interview` (
   `i_content` varchar(255) DEFAULT NULL COMMENT '内容摘要',
   `i_next` varchar(255) DEFAULT NULL COMMENT '下一步计划',
   PRIMARY KEY (`i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 /*Data for the table `interview` */
 
@@ -175,11 +175,11 @@ insert  into `interview`(`i_id`,`i_company`,`c_id`,`i_visit_time`,`p_id`,`e_id`,
 (19,'热望亲热去',1,'2022-10-08',1,4,'大是大非','撒旦发射点','发放'),
 (20,'热望亲热去',4,'2022-10-08',1,4,'大是大非','撒旦发射点','发放'),
 (21,'123',1,'2022-10-09',1,1,'jack|marry','123','123'),
-(23,'厚朴',9,'2022-10-13',5,5,'jack|marry','123','123'),
 (24,'厚朴公司',2,'2022-10-14',5,1,'jack|marry','123','123'),
 (25,'厚朴公司',1,'2022-10-14',5,1,'jack|marry','123','123'),
 (28,'厚朴公司123',2,'2022-10-14',9,6,'jack|marry','牛逼','揍你'),
-(29,'厚朴公司123',1,'2022-10-14',9,6,'jack|marry','牛逼','揍你');
+(29,'厚朴公司123',1,'2022-10-14',9,6,'jack|marry','牛逼','揍你'),
+(35,'000',2,'2022-10-26',12,2,'123','123','123');
 
 /*Table structure for table `menu` */
 
@@ -391,7 +391,7 @@ CREATE TABLE `value_dic` (
   `v_value` varchar(50) DEFAULT NULL COMMENT '字典值',
   `type_code` varchar(50) DEFAULT NULL COMMENT '关联type_dic表',
   PRIMARY KEY (`v_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 /*Data for the table `value_dic` */
 

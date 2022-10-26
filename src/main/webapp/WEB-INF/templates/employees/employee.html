@@ -143,7 +143,7 @@
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label for="eJob">所任职务</label>
-                                      <select  name="eJob" class="form-control custom-select" required>
+                                      <select  name="eJob" name="eJob" class="form-control custom-select" required>
                                           <option value="">无</option>
                                          <option th:each="job:${session.jobTypes}" th:text="${job}" th:value="${job}"></option>
                                       </select>
@@ -184,7 +184,7 @@
     <div class="modal fade" id="update_emp">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form id="" th:action="@{/emp/update}" method="post" class="nav-link">
+                <form  th:action="@{/emp/update}" method="post" class="nav-link">
                     <div class="modal-body">
                         <div>
                             <div class="card card-default">

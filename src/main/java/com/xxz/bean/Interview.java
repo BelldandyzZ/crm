@@ -33,40 +33,40 @@ import java.io.Serializable;
         horizontalAlignment = HorizontalAlignment.CENTER,
         wrapped = true)
 public class Interview implements Serializable {
-    @ExcelProperty(value = "访谈编号", index = 0)
+//    @ExcelProperty(value = "访谈编号", index = 0)
     private Integer iId;
-    @ExcelProperty(value = "访谈单位", index = 1)
+    @ExcelProperty(value = "客户单位", index = 0)
     private String iCompany;
-    @ExcelProperty(value = "客户人员编号", index = 2)
+//    @ExcelProperty(value = "客户人员编号", index = 1)
     private Integer cId;
 
     //业务设置列------------------------------------
-    @ExcelProperty(value = "客户姓名", index = 3)
+    @ExcelProperty(value = "客户人员", index = 2)
     private String cRename;
     public String getcRename() {return cRename;}
     public void setcRename(String cRename) {this.cRename = cRename;}
     //-------------------------------------------
-    @ExcelProperty(value = "拜访时间", index = 4)
+    @ExcelProperty(value = "拜访时间", index = 3)
     private String iVisitTime;
-    @ExcelProperty(value = "拜访类型编号", index = 5)
+//    @ExcelProperty(value = "拜访类型编号", index = 4)
     private Integer pId;
     //业务设置列------------------------------------
-    @ExcelProperty(value = "拜访项目", index = 6)
+    @ExcelProperty(value = "拜访类型", index = 5)
     private String pName;
     public String getpName() {return pName;}
     public void setpName(String pName) {this.pName = pName;}
     //-------------------------------------------
-    @ExcelProperty(value = "我方员工编号", index = 7)
+//    @ExcelProperty(value = "我方员工编号", index = 6)
     private Integer eId;
     //业务设置列------------------------------------
-    @ExcelProperty(value = "我方员工姓名", index = 8)
+    @ExcelProperty(value = "我方人员", index = 7)
     private String eRename;
     public String geteRename() {return eRename;}
     public void seteRename(String eRename) {this.eRename = eRename;}
     //-------------------------------------------
-    @ExcelProperty(value = "其他参与成员", index = 9)
+    @ExcelProperty(value = "其他人员", index = 8)
     private String iOthers;
-    @ExcelProperty(value = "拜访内容", index = 10)
+    @ExcelProperty(value = "内容摘要", index = 9)
     private String iContent;
     @ExcelProperty(value = "下一步计划", index = 11)
     private String iNext;
@@ -147,21 +147,19 @@ public class Interview implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", iId=").append(iId);
-        sb.append(", iCompany=").append(iCompany);
-        sb.append(", cId=").append(cId);
-        sb.append(", iVisitTime=").append(iVisitTime);
-        sb.append(", pId=").append(pId);
-        sb.append(", eId=").append(eId);
-        sb.append(", iOthers=").append(iOthers);
-        sb.append(", iContent=").append(iContent);
-        sb.append(", iNext=").append(iNext);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Interview{" +
+                "iId=" + iId +
+                ", iCompany='" + iCompany + '\'' +
+                ", cId=" + cId +
+                ", cRename='" + cRename + '\'' +
+                ", iVisitTime='" + iVisitTime + '\'' +
+                ", pId=" + pId +
+                ", pName='" + pName + '\'' +
+                ", eId=" + eId +
+                ", eRename='" + eRename + '\'' +
+                ", iOthers='" + iOthers + '\'' +
+                ", iContent='" + iContent + '\'' +
+                ", iNext='" + iNext + '\'' +
+                '}';
     }
 }
