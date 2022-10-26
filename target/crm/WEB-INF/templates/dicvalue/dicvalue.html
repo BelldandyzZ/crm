@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>字段信息</title>
+
+    <!-- 离线 Google 字体: Source Sans Pro -->
+    <link rel="stylesheet" th:href="@{'/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{/dist/css/ionicons.min.css}">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
+    <div class="modal fade" id="add_emp">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form th:action="@{/dic/add}" method="post" class="nav-link">
+                    <div class="modal-body">
+                        <div>
+                            <div class="card card-default">
+                                <div class="card-header">
+                                    <h3 class="card-title">添加字典</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                              <span class="col-sm-6 col-md-6">
+                                                   <div class="form-group">
+                                                      <label >字典值</label>
+                                                      <input type="text" name="vValue" class="form-control" required>
+                                                  </div>
+                                              </span>
+                                            <span class="col-sm-6 col-md-6">
+                                              <div class="form-group">
+                                                  <label>字段类型</label>
+<!--                                                    <input type="text" name="typeCode" class="form-control" required>-->
+                                                    <select  name="typeCode"  class="form-control custom-select">
+                                                       <option th:each="dicCode:${session.dicvalueTypes}" th:text="${dicCode}" th:value="${dicCode}">售后</option>
+                                                    </select>
+                                              </div>
+                                          </span>
+                                    </div>
+                                    <div class="row">
+                                        <ul>
+                                            <li>companyType：单位类型(如：学校/国企/政府机构/名气外企/其他)</li>
+                                            <li>progress：项目进度(如：意向/方案/招标/合同/回款/结束)</li>
+                                            <li>jobType：岗位类型(如：售前/售后/销售/商务/财务/其他)</li>
+                                            <li>schoolType：学校类型<span th:text="${session.schoolTypes}"></span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="">关闭</button>
+                        <button type="submit" class="btn btn-primary" id="">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--   新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗-->
+
+    <!-- 修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗 -->
+    <div class="modal fade" id="update_dic">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form th:action="@{/dic/update}" method="post">
+                    <div class="modal-body">
+                        <div>
+                            <div class="card card-default">
+                                <div class="card-header">
+                                    <h3 class="card-title">修改字典</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                              <span class="col-sm-6 col-md-6">
+                                                   <div class="form-group">
+                                                      <label >字典值</label>
+                                                       <input type="hidden" id="vId" name="vId">
+                                                      <input type="text" id="vValue" name="vValue" class="form-control" required>
+                                                  </div>
+                                              </span>
+                                        <span class="col-sm-6 col-md-6">
+                                              <div class="form-group">
+                                                  <label>字段类型</label>
+                                                  <!--                                                    <input type="text" name="typeCode" class="form-control" required>-->
+                                                    <select  name="typeCode" id="typeCode"  class="form-control custom-select">
+                                                       <option th:each="dicCode:${session.dicvalueTypes}" th:text="${dicCode}" th:value="${dicCode}">售后</option>
+                                                    </select>
+                                              </div>
+                                          </span>
+                                    </div>
+                                    <div class="row">
+                                        <ul>
+                                            <li>companyType：单位类型<span th:text="${session.companyTypes}"></span></li>
+                                            <li>progress：项目进度<span th:text="${session.progressTypes}"></span></li>
+                                            <li>jobType：岗位类型<span th:text="${session.jobTypes}"></span></li>
+                                            <li>schoolType：学校类型<span th:text="${session.schoolTypes}"></span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗 -->
+
+    <!-- Content Wrapper. 包含页面内容 -->
+    <div class="content-wrapper">
+        <!-- 主体内容 -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
+                                <div class="row" >
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label for="con_vValue">字段值</label>
+                                            <input type="text" id="con_vValue" name="vValue" class="form-control" placeholder="请输入字段值">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label for="con_typeCode">字段类型</label>
+                                            <select id="con_typeCode" name="typeCode" class="form-control custom-select" >
+                                                <option value="">全部</option>
+                                                <option th:each="dicCode:${session.dicvalueTypes}" th:text="${dicCode}" th:value="${dicCode}">售后</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-sm-1">
+                                        <!--这个label没用，纯当作占位符用来布局-->
+                                        <label style="color: white">.</label>
+                                        <div class="form-group">
+                                            <button type="button" id="cusConditionBtn" class="btn btn-block btn-default">搜索</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-1">
+                                        <!--这个label没用，纯当作占位符用来布局-->
+                                        <label style="color: white">.</label>
+                                        <div class="form-group">
+                                            <button  class="btn btn-primary" data-toggle="modal" data-target="#add_emp">
+                                                添加
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+<!--                                <div class="row">-->
+<!--                                    <div class="col-sm-8"></div>-->
+<!--                                    <div class="col-sm-2 ">-->
+<!--                                        <button type="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#cusInportModel">-->
+<!--                                            <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>-->
+<!--                                            导入信息-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-sm-2">-->
+<!--                                        <button type="button" id="cusExcelOutputBtn" class="btn btn-block btn-default">-->
+<!--                                            <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>导出信息-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+                                <!--                  <h1 th:text="${empList}"></h1>-->
+                                <!--                  <h1 th:text="${session.emp}"></h1>-->
+                                <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
+                                <table id="table_data" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>字典编号</th>
+                                        <th>字段值</th>
+                                        <th>字段类型</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="dic,dicState : ${dicValues}">
+                                        <td th:text="${dic.vId}">1</td>
+                                        <td th:text="${dic.vValue}">1</td>
+                                        <td th:text="${dic.typeCode}">1</td>
+                                        <td>
+                                            <button type="button" th:tar-id="${dic.vId}" class="btn  btn-danger btn-sm confirmsCus">删除</button>
+                                            <button type="button" th:tar-id="${dic.vId}" class="btn  btn-sm btn-info updateDicBtn" data-toggle="modal" data-target="#update_dic">修改</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+
+                        <!-- /.card -->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- 回到顶部 -->
+        <a id="back-to-top" th:href="@{#}" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+            <i class="fas fa-chevron-up"></i>
+        </a>
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- DataTables  & Plugins -->
+<script th:src="@{/plugins/datatables/jquery.dataTables.js}"></script>
+<script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+
+<script>
+    //自动生成分页信息的插件，执行初始化代码
+    $(function () {
+
+        //excel导出(emp)
+        $('#cusExcelOutputBtn').click(function (){
+            location.href = "/crm/customer/excelOutput";
+        })
+
+        //条件查询
+        $('#cusConditionBtn').click(function (){
+            let vValue = $('#con_vValue').val();
+            let typeCode = $('#con_typeCode').val();
+            location.href = "/crm/dic/dics?vValue="+vValue+"&typeCode="+typeCode;
+        })
+        // $('#conditionBtn').click(function (){
+        //     $('#conForm').submit();
+        // })
+
+        //删除的确定弹窗
+        $(".confirmsCus").click(function () {
+            if(confirm("确定删除该记录？")){
+                let vId = $(this).attr("tar-id");
+                location.href = "/crm/dic/del/" + vId;
+            }
+
+        })
+
+        //修改
+        //修改按钮
+        $('.updateDicBtn').click(function (){
+            let vId = $(this).attr("tar-id");
+            $.ajax({
+                url: "/crm/dic/queryById/" + vId,
+                type: "get",
+                datatype: "json",
+                success: function (res){
+                    console.log(res);
+                    let dic = res.data;
+                    $('#vId').val(dic.vId);
+                    $('#vValue').val(dic.vValue);
+                    $('#typeCode').val(dic.typeCode);
+                }
+            })
+        })
+
+        // 数据的分页
+        $('#table_data').DataTable(
+          {
+          "language": {
+            "sProcessing": "处理中...",
+           "sLengthMenu": "显示 _MENU_ 项结果",
+           "sZeroRecords": "没有匹配结果",
+           "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+           "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+           "sInfoPostFix": "",
+           "sSearch": "搜索:",
+           "sUrl": "",
+           "sEmptyTable": "表中数据为空",
+           "sLoadingRecords": "载入中...",
+           "sInfoThousands": ",",
+            "oPaginate":{
+              "sFirst": "首页",
+               "sPrevious": "上页",
+               "sNext": "下页",
+               "sLast": "末页"
+            }
+            },
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
+        });
+    });
+</script>
+</body>
+</html>

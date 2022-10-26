@@ -21,10 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/customer")
@@ -154,4 +151,32 @@ public class CustomerController {
                 .doWrite(customers);
     }
 
+    //excelOutputModel
+    @RequestMapping("/excelOutputModel") //ResponseEntity<byte[]>
+    public void excelOutputModel(HttpSession session, HttpServletResponse response) throws IOException {
+        //设置响应头和响应体格式，告诉浏览器是什么文件，对应解析
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename="
+                + URLEncoder.encode("客户信息", "UTF-8") + ".xlsx");
+        //获取目标数据
+        List<Customer> customers = new ArrayList<>();
+        Customer customer = new Customer();
+        customer.setcRename("张三");
+        customer.setcName("xxx学院");
+        customer.setcCieType("学校");
+        customer.setcDepart("xx部门");
+        customer.setcJob("销售");
+        customer.setcTele("137xxxxxxxx");
+        customer.setcPost("xxx@xx.com");
+        customer.setcHobby("游泳xxx");
+        customer.setcRemark("xxx良好");
+        customers.add(customer);
+        //正序
+        Collections.reverse(customers);
+        //响应到浏览器
+        EasyExcel.write(response.getOutputStream(), Customer.class)
+                .sheet("客户信息模板")
+                .doWrite(customers);
+    }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <!-- 设置识别下划线对应驼峰变量名 -->
+        <!-- 开启下划线映射驼峰识别 emp_name empName -->
+        <setting name="mapUnderscoreToCamelCase" value="true"></setting>
+        <!--开启懒加载：控制resoultMap association标签分步查询生效与否、
+          当未涉及到连接查询需要就，不会执行association分步查询-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--配合懒加载、按需加载：默认false、如果设为true、
+        则无论是否涉及分步字段，都进行分步查询-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+
+    <plugins>
+        <!--设置分页插件-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!-- 分页合理化，超出页数拦截 -->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+
+</configuration>

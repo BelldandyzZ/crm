@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxz.mapper.DicValueMapper" >
+  <!--开启二级缓存-->
+<!--  <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
+  <resultMap id="BaseResultMap" type="com.xxz.bean.DicValue" >
+    <id column="v_id" property="vId" jdbcType="INTEGER" />
+    <result column="v_value" property="vValue" jdbcType="VARCHAR" />
+    <result column="type_code" property="typeCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    v_id, v_value, type_code
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xxz.bean.DicValueExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from value_dic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from value_dic
+    where v_id = #{vId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from value_dic
+    where v_id = #{vId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xxz.bean.DicValueExample" >
+    delete from value_dic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xxz.bean.DicValue" >
+    insert into value_dic (v_id, v_value, type_code
+      )
+    values (#{vId,jdbcType=INTEGER}, #{vValue,jdbcType=VARCHAR}, #{typeCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xxz.bean.DicValue" >
+    insert into value_dic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="vId != null" >
+        v_id,
+      </if>
+      <if test="vValue != null" >
+        v_value,
+      </if>
+      <if test="typeCode != null" >
+        type_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="vId != null" >
+        #{vId,jdbcType=INTEGER},
+      </if>
+      <if test="vValue != null" >
+        #{vValue,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCode != null" >
+        #{typeCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xxz.bean.DicValueExample" resultType="java.lang.Integer" >
+    select count(*) from value_dic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update value_dic
+    <set >
+      <if test="record.vId != null" >
+        v_id = #{record.vId,jdbcType=INTEGER},
+      </if>
+      <if test="record.vValue != null" >
+        v_value = #{record.vValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeCode != null" >
+        type_code = #{record.typeCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update value_dic
+    set v_id = #{record.vId,jdbcType=INTEGER},
+      v_value = #{record.vValue,jdbcType=VARCHAR},
+      type_code = #{record.typeCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxz.bean.DicValue" >
+    update value_dic
+    <set >
+      <if test="vValue != null" >
+        v_value = #{vValue,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCode != null" >
+        type_code = #{typeCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where v_id = #{vId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xxz.bean.DicValue" >
+    update value_dic
+    set v_value = #{vValue,jdbcType=VARCHAR},
+      type_code = #{typeCode,jdbcType=VARCHAR}
+    where v_id = #{vId,jdbcType=INTEGER}
+  </update>
+</mapper>

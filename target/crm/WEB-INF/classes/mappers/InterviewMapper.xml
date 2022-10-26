@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxz.mapper.InterviewMapper" >
+  <!--开启二级缓存-->
+<!--  <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
+  <resultMap id="BaseResultMap" type="com.xxz.bean.Interview" >
+    <id column="i_id" property="iId" jdbcType="INTEGER" />
+    <result column="i_company" property="iCompany" jdbcType="VARCHAR" />
+    <result column="c_id" property="cId" jdbcType="INTEGER" />
+    <result column="i_visit_time" property="iVisitTime" jdbcType="CHAR" />
+    <result column="p_id" property="pId" jdbcType="INTEGER" />
+    <result column="e_id" property="eId" jdbcType="INTEGER" />
+    <result column="i_others" property="iOthers" jdbcType="VARCHAR" />
+    <result column="i_content" property="iContent" jdbcType="VARCHAR" />
+    <result column="i_next" property="iNext" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    i_id, i_company, c_id, i_visit_time, p_id, e_id, i_others, i_content, i_next
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xxz.bean.InterviewExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from interview
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from interview
+    where i_id = #{iId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from interview
+    where i_id = #{iId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xxz.bean.InterviewExample" >
+    delete from interview
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xxz.bean.Interview" >
+    insert into interview (i_id, i_company, c_id, 
+      i_visit_time, p_id, e_id, 
+      i_others, i_content, i_next
+      )
+    values (#{iId,jdbcType=INTEGER}, #{iCompany,jdbcType=VARCHAR}, #{cId,jdbcType=INTEGER}, 
+      #{iVisitTime,jdbcType=CHAR}, #{pId,jdbcType=INTEGER}, #{eId,jdbcType=INTEGER}, 
+      #{iOthers,jdbcType=VARCHAR}, #{iContent,jdbcType=VARCHAR}, #{iNext,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xxz.bean.Interview" >
+    insert into interview
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iId != null" >
+        i_id,
+      </if>
+      <if test="iCompany != null" >
+        i_company,
+      </if>
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="iVisitTime != null" >
+        i_visit_time,
+      </if>
+      <if test="pId != null" >
+        p_id,
+      </if>
+      <if test="eId != null" >
+        e_id,
+      </if>
+      <if test="iOthers != null" >
+        i_others,
+      </if>
+      <if test="iContent != null" >
+        i_content,
+      </if>
+      <if test="iNext != null" >
+        i_next,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iId != null" >
+        #{iId,jdbcType=INTEGER},
+      </if>
+      <if test="iCompany != null" >
+        #{iCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="iVisitTime != null" >
+        #{iVisitTime,jdbcType=CHAR},
+      </if>
+      <if test="pId != null" >
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="eId != null" >
+        #{eId,jdbcType=INTEGER},
+      </if>
+      <if test="iOthers != null" >
+        #{iOthers,jdbcType=VARCHAR},
+      </if>
+      <if test="iContent != null" >
+        #{iContent,jdbcType=VARCHAR},
+      </if>
+      <if test="iNext != null" >
+        #{iNext,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xxz.bean.InterviewExample" resultType="java.lang.Integer" >
+    select count(*) from interview
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update interview
+    <set >
+      <if test="record.iId != null" >
+        i_id = #{record.iId,jdbcType=INTEGER},
+      </if>
+      <if test="record.iCompany != null" >
+        i_company = #{record.iCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cId != null" >
+        c_id = #{record.cId,jdbcType=INTEGER},
+      </if>
+      <if test="record.iVisitTime != null" >
+        i_visit_time = #{record.iVisitTime,jdbcType=CHAR},
+      </if>
+      <if test="record.pId != null" >
+        p_id = #{record.pId,jdbcType=INTEGER},
+      </if>
+      <if test="record.eId != null" >
+        e_id = #{record.eId,jdbcType=INTEGER},
+      </if>
+      <if test="record.iOthers != null" >
+        i_others = #{record.iOthers,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iContent != null" >
+        i_content = #{record.iContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iNext != null" >
+        i_next = #{record.iNext,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update interview
+    set i_id = #{record.iId,jdbcType=INTEGER},
+      i_company = #{record.iCompany,jdbcType=VARCHAR},
+      c_id = #{record.cId,jdbcType=INTEGER},
+      i_visit_time = #{record.iVisitTime,jdbcType=CHAR},
+      p_id = #{record.pId,jdbcType=INTEGER},
+      e_id = #{record.eId,jdbcType=INTEGER},
+      i_others = #{record.iOthers,jdbcType=VARCHAR},
+      i_content = #{record.iContent,jdbcType=VARCHAR},
+      i_next = #{record.iNext,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxz.bean.Interview" >
+    update interview
+    <set >
+      <if test="iCompany != null" >
+        i_company = #{iCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="cId != null" >
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="iVisitTime != null" >
+        i_visit_time = #{iVisitTime,jdbcType=CHAR},
+      </if>
+      <if test="pId != null" >
+        p_id = #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="eId != null" >
+        e_id = #{eId,jdbcType=INTEGER},
+      </if>
+      <if test="iOthers != null" >
+        i_others = #{iOthers,jdbcType=VARCHAR},
+      </if>
+      <if test="iContent != null" >
+        i_content = #{iContent,jdbcType=VARCHAR},
+      </if>
+      <if test="iNext != null" >
+        i_next = #{iNext,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where i_id = #{iId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xxz.bean.Interview" >
+    update interview
+    set i_company = #{iCompany,jdbcType=VARCHAR},
+      c_id = #{cId,jdbcType=INTEGER},
+      i_visit_time = #{iVisitTime,jdbcType=CHAR},
+      p_id = #{pId,jdbcType=INTEGER},
+      e_id = #{eId,jdbcType=INTEGER},
+      i_others = #{iOthers,jdbcType=VARCHAR},
+      i_content = #{iContent,jdbcType=VARCHAR},
+      i_next = #{iNext,jdbcType=VARCHAR}
+    where i_id = #{iId,jdbcType=INTEGER}
+  </update>
+</mapper>
