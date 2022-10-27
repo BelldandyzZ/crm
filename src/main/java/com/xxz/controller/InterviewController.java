@@ -13,10 +13,7 @@ import com.xxz.mapper.CustomerMapper;
 import com.xxz.mapper.EmployeeMapper;
 import com.xxz.mapper.InterviewMapper;
 import com.xxz.mapper.ProjectMapper;
-import com.xxz.service.CustomerService;
-import com.xxz.service.EmpService;
-import com.xxz.service.InterviewService;
-import com.xxz.service.ProjectService;
+import com.xxz.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,10 +43,26 @@ public class InterviewController {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    private DicValueService dicValueService;
+
+    @Autowired
+    private RoleService roleService;
+
     //条件查询
     @RequestMapping("/interviews")
     public String queryAll(Model model, String iCompany, String cRename, String eRename,HttpSession session,
                            @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
+
+        session.setAttribute("jobTypes", dicValueService.getAllJobType());
+        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
+        session.setAttribute("progressTypes", dicValueService.getAllProgress());
+        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
+        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
+        session.setAttribute("pNames", projectService.getAllProjectName());
+//=====================================================================================================
+
+
         PageHelper.startPage(pageNum,  10);
         List<Interview> interviewList = interviewService.queryAllInterview(iCompany, cRename, eRename);
         PageInfo<Interview> itwPageInfo = new PageInfo<>(interviewList, 5);

@@ -9,7 +9,7 @@ import com.github.pagehelper.PageInfo;
 import com.xxz.annotations.Permission;
 import com.xxz.bean.Customer;
 import com.xxz.listener.DemoDataListener;
-import com.xxz.service.CustomerService;
+import com.xxz.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,11 +30,30 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private EmpService empService;
+
+    @Autowired
+    private DicValueService dicValueService;
+
+    @Autowired
+    private ProjectService projectService;
+
+    @Autowired
+    private RoleService roleService;
+
     //条件查询
     @RequestMapping("/customers")
     @Permission("1010")
     public String queryAll(Model model, String cRename, String cName, String cJob, HttpSession session,
     @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
+        session.setAttribute("jobTypes", dicValueService.getAllJobType());
+        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
+        session.setAttribute("progressTypes", dicValueService.getAllProgress());
+        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
+        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
+        session.setAttribute("pNames", projectService.getAllProjectName());
+//=====================================================================================================
         System.out.println("queryAll-customers-confition:" + cRename + "-" + cName + "-" + cJob);
         PageHelper.startPage(pageNum,  10);
         List<Customer> customerList = customerService.queryAllCus(cRename, cName, cJob);

@@ -7,8 +7,8 @@ import com.xxz.bean.Role;
 import com.xxz.bean.RoleMenu;
 import com.xxz.bean.vo.MenuVo;
 import com.xxz.exception.AsyncResp;
-import com.xxz.service.MenuService;
-import com.xxz.service.RoleService;
+import com.xxz.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +32,32 @@ public class RoleController {
     @Resource
     private MenuService menuService;
 
+    @Autowired
+    private EmpService empService;
+
+    @Autowired
+    private ProjectService projectService;
+
+    @Autowired
+    private DicValueService dicValueService;
+
     /**
      * 查询所有角色
      * @param model
      * @return
      */
     @RequestMapping("findAllRole")
-    public String findAllRole(Model model){
+    public String findAllRole(Model model, HttpSession session){
+
+        session.setAttribute("jobTypes", dicValueService.getAllJobType());
+        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
+        session.setAttribute("progressTypes", dicValueService.getAllProgress());
+        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
+        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
+        session.setAttribute("pNames", projectService.getAllProjectName());
+//=====================================================================================================
+
+
         List<Role> roleList = roleService.queryAllRole();
         model.addAttribute("roleList",roleList);
         return "permission/index";

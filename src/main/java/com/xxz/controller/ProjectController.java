@@ -5,9 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xxz.bean.*;
 import com.xxz.mapper.*;
-import com.xxz.service.CustomerService;
-import com.xxz.service.EmpService;
-import com.xxz.service.ProjectService;
+import com.xxz.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,10 +42,27 @@ public class ProjectController {
     @Autowired
     private  ProjectMapper projectMapper;
 
+    @Autowired
+    private DicValueService dicValueService;
+
+    @Autowired
+    private RoleService roleService;
+
     //条件查询
     @RequestMapping("/projects")
     public String queryAll(Model model, String pName, String pMoeny, String pProgress, String pOwner,HttpSession session,
                            @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
+
+        session.setAttribute("jobTypes", dicValueService.getAllJobType());
+        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
+        session.setAttribute("progressTypes", dicValueService.getAllProgress());
+        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
+        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
+        session.setAttribute("pNames", projectService.getAllProjectName());
+//=====================================================================================================
+
+
+
         PageHelper.startPage(pageNum,  10);
         //工具条件查询
         List<Project> projectList = projectService.queryAllProject(pName, pMoeny, pProgress, pOwner);

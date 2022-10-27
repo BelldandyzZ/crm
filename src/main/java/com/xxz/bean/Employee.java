@@ -36,27 +36,27 @@ import java.io.Serializable;
         wrapped = true)
 public class Employee implements Serializable {
 
-    @ExcelProperty(value = "员工编号", index = 0)
+//    @ExcelProperty(value = "员工编号", index = 0)
     private Integer eId;
-    @ExcelProperty(value = "姓名", index = 1)
+    @ExcelProperty(value = "员工姓名", index = 0)
     private String rename;
-    @ExcelProperty(value = "员工账号", index = 2)
+    @ExcelProperty(value = "员工账号", index = 1)
     private String eName;
-    @ExcelProperty(value = "密码", index = 3)
+    @ExcelProperty(value = "员工密码", index = 2)
     private String ePwd;
-    @ExcelProperty(value = "出生年月", index = 4)
+    @ExcelProperty(value = "出生年月", index = 3)
     private String eBirthday;
-    @ExcelProperty(value = "毕业院校", index = 5)
+    @ExcelProperty(value = "毕业院校", index = 4)
     private String eSchool;
-    @ExcelProperty(value = "职位", index = 6)
+    @ExcelProperty(value = "所任职位", index = 5)
     private String eJob;
-    @ExcelProperty(value = "入司时间", index = 7)
+    @ExcelProperty(value = "入司时间", index = 6)
     private String eStartTime;
-    @ExcelProperty(value = "社会职位", index = 8)
+    @ExcelProperty(value = "社会职位", index = 7)
     private String eSocialPosition;
-    @ExcelProperty(value = "荣誉", index = 9)
+    @ExcelProperty(value = "员工荣誉", index = 8)
     private String eHonor;
-    @ExcelProperty(value = "备注", index = 10)
+    @ExcelProperty(value = "员工备注", index = 9)
     private String eRemark;
 
     private static final long serialVersionUID = 1L;

@@ -6,6 +6,7 @@ import com.xxz.mapper.PaymentBackMapper;
 import com.xxz.service.DicValueService;
 import com.xxz.service.EmpService;
 import com.xxz.service.ProjectService;
+import com.xxz.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.*;
@@ -35,10 +37,23 @@ public class DicValueController {
     @Autowired
     PaymentBackMapper paymentBackMapper;
 
+    @Autowired
+    private RoleService roleService;
+
 
     /*查询所有*/
     @RequestMapping("/dics")
-    public String queryAllDic(Model model , String vValue, String typeCode){
+    public String queryAllDic(Model model , String vValue, String typeCode, HttpSession session){
+        session.setAttribute("jobTypes", dicValueService.getAllJobType());
+        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
+        session.setAttribute("progressTypes", dicValueService.getAllProgress());
+        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
+        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
+        session.setAttribute("pNames", projectService.getAllProjectName());
+//=====================================================================================================
+
+
+
         List<DicValue> dicValues = dicValueService.queryAllDic(vValue, typeCode);
         model.addAttribute("dicValues", dicValues);
         return "dicvalue\\dicvalue";

@@ -65,6 +65,7 @@ public class EmpController {
             return "redirect:/index";
         }else{
             attr.addFlashAttribute("loginMsg",AppExceptionCodeMsg.LOGIN_EXCEPTION.getMsg());
+            attr.addFlashAttribute("loginName", ename);
             return "redirect:/";
         }
     }
@@ -73,6 +74,16 @@ public class EmpController {
     @RequestMapping("/emps")
     public String queryAll(Model model,String rename, String eJob, String eBirthday, HttpSession session,
                           @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
+
+        session.setAttribute("jobTypes", dicValueService.getAllJobType());
+        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
+        session.setAttribute("progressTypes", dicValueService.getAllProgress());
+        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
+        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
+        session.setAttribute("pNames", projectService.getAllProjectName());
+//=====================================================================================================
+
+
         PageHelper.startPage(pageNum,  10);
         List<Employee> employeeList = empService.queryAllEmp(rename, eJob, eBirthday);
         PageInfo<Employee> empPageInfo = new PageInfo<>(employeeList, 5);
@@ -147,12 +158,12 @@ public class EmpController {
 
     /*excel导入导出*/
     @RequestMapping(value = "/excelInport", method = RequestMethod.POST)
-    public String excelInport(MultipartFile importFile){
-        System.out.println("文件名：" + importFile.getOriginalFilename());
+    public String excelInport(MultipartFile activityFile){
+        System.out.println("文件名：" + activityFile.getOriginalFilename());
         // 解析Excel
         ExcelReader excelReader = null;
         try {
-            excelReader = EasyExcelFactory.read(importFile.getInputStream(), Employee.class, new DemoDataListener<Employee>()).build();
+            excelReader = EasyExcelFactory.read(activityFile.getInputStream(), Employee.class, new DemoDataListener<Employee>()).build();
             ReadSheet readSheet = EasyExcelFactory.readSheet(0).build();
             excelReader.read(readSheet);
         } catch (Exception e) {
@@ -178,6 +189,33 @@ public class EmpController {
         List<Employee> employees = (List<Employee>) session.getAttribute("employeeListExcel");
         //正序
         Collections.reverse(employees);
+        //响应到浏览器
+        EasyExcel.write(response.getOutputStream(), Employee.class).sheet("员工信息模板").doWrite(employees);
+    }
+
+    //导出
+    @RequestMapping("/excelOutputModel") //ResponseEntity<byte[]>
+    public void excelOutputModel(HttpSession session,HttpServletResponse response) throws IOException {
+        //设置响应头和响应体格式，告诉浏览器是什么文件，对应解析
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename="
+                + URLEncoder.encode("员工信息", "UTF-8") + ".xlsx");
+        //获取目标数据
+        List<Employee> employees = new ArrayList<>();
+        Employee employee = new Employee();
+        employee.setRename("xx张三");
+        employee.seteName("登录账号123");
+        employee.setePwd("密码123");
+        employee.seteBirthday("1927-10-29");
+        employee.seteSchool("xx学院");
+        employee.seteJob("售前/售后/销售/商务/财务/其他");
+        employee.seteStartTime("2020-10-20");
+        employee.seteSocialPosition("群众/团员/党员");
+        employee.seteHonor("荣誉/一等奖学金/xxx");
+        employee.seteRemark("备注/良好xxx");
+        employees.add(employee);
+
         //响应到浏览器
         EasyExcel.write(response.getOutputStream(), Employee.class).sheet("员工信息模板").doWrite(employees);
     }

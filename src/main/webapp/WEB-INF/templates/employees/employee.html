@@ -43,9 +43,8 @@
                                                 <li>默认情况下，字符编码是UTF-8 (统一码)，请确保您导入的文件使用的是正确的字符编码方式。</li>
                                                 <li>建议您在导入真实数据之前用测试文件测试文件导入功能。</li>
                                                 <li>
-                                                    <form action="javascript:;">
-                                                        <input type="submit" value="下载模板">
-                                                    </form>
+                                                    <!--excelOutputModel-->
+                                                    <a class="btn btn-success" th:href="@{/emp/excelOutputModel}">下载模板</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -143,7 +142,7 @@
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label for="eJob">所任职务</label>
-                                      <select  name="eJob" name="eJob" class="form-control custom-select" required>
+                                      <select  name="eJob" class="form-control custom-select" required>
                                           <option value="">无</option>
                                          <option th:each="job:${session.jobTypes}" th:text="${job}" th:value="${job}"></option>
                                       </select>

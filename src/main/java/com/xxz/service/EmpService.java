@@ -49,19 +49,24 @@ public class EmpService {
         //追加条件
         if (rename != null){
             criteria.andRenameLike("%" + rename + "%");
-            System.out.println("======================================");
-            System.out.println("条件追加成功！rename=" + rename);
         }
         if(eJob != null && !eJob.equals("")){
             criteria.andEJobEqualTo(eJob);
         }
         if(eBirthday != null && !eBirthday.equals("")){
-            criteria.andEBirthdayLessThanOrEqualTo(eBirthday);
+            criteria.andEBirthdayGreaterThanOrEqualTo(eBirthday);
         }
         //查询
         List<Employee> employeeList = employeeMapper.selectByExample(employeeExample);
+        //超管不展示
+//        for (Employee employee : employeeList) {
+//            if(employee.getRename().equals("超管")){
+//                employeeList.remove(employee);
+//                break;
+//            }
+//        }
         //倒叙
-        Collections.reverse(employeeList);
+//        Collections.reverse(employeeList);
         return employeeList;
     }
 
