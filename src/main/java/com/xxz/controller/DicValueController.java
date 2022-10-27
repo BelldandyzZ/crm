@@ -43,26 +43,30 @@ public class DicValueController {
 
     /*查询所有*/
     @RequestMapping("/dics")
-    public String queryAllDic(Model model , String vValue, String typeCode, HttpSession session){
+    public String queryAllDic(Model model , String vValue, String type, HttpSession session){
         session.setAttribute("jobTypes", dicValueService.getAllJobType());
         session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
         session.setAttribute("progressTypes", dicValueService.getAllProgress());
         session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
         session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
         session.setAttribute("pNames", projectService.getAllProjectName());
+        session.setAttribute("allType", dicValueService.getAllType());
 //=====================================================================================================
 
 
 
-        List<DicValue> dicValues = dicValueService.queryAllDic(vValue, typeCode);
+        List<DicValue> dicValues = dicValueService.queryAllDic(vValue, type);
         model.addAttribute("dicValues", dicValues);
+
+
+
         return "dicvalue\\dicvalue";
     }
 
     /*新增*/
     @RequestMapping("/add")
-    public String add(DicValue dicValue){
-        boolean result = dicValueService.add(dicValue);
+    public String add(DicValue dicValue, String type){
+        boolean result = dicValueService.add(dicValue, type);
         return "redirect:/dic/dics";
     }
 
@@ -80,9 +84,9 @@ public class DicValueController {
 
     /*修改*/
     @RequestMapping("/update")
-    public String update(DicValue dicValue){
+    public String update(DicValue dicValue, String type){
         System.out.println(dicValue);
-        boolean result = dicValueService.update(dicValue);
+        boolean result = dicValueService.update(dicValue, type);
         return "redirect:/dic/dics";
     }
     /*删除*/

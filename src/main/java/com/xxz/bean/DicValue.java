@@ -9,6 +9,16 @@ public class DicValue implements Serializable {
 
     private String typeCode;
 
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getvId() {

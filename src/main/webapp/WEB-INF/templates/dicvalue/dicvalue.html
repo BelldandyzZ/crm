@@ -40,8 +40,8 @@
                                               <div class="form-group">
                                                   <label>字段类型</label>
 <!--                                                    <input type="text" name="typeCode" class="form-control" required>-->
-                                                    <select  name="typeCode"  class="form-control custom-select">
-                                                       <option th:each="dicCode:${session.dicvalueTypes}" th:text="${dicCode}" th:value="${dicCode}">售后</option>
+                                                    <select  name="type"  class="form-control custom-select">
+                                                       <option th:each="type:${session.allType}" th:text="${type}" th:value="${type}">售后</option>
                                                     </select>
                                               </div>
                                           </span>
@@ -94,8 +94,8 @@
                                               <div class="form-group">
                                                   <label>字段类型</label>
                                                   <!--                                                    <input type="text" name="typeCode" class="form-control" required>-->
-                                                    <select  name="typeCode" id="typeCode"  class="form-control custom-select">
-                                                       <option th:each="dicCode:${session.dicvalueTypes}" th:text="${dicCode}" th:value="${dicCode}">售后</option>
+                                                    <select  name="type" id="type"  class="form-control custom-select">
+                                                       <option th:each="type:${session.allType}" th:text="${type}" th:value="${type}">售后</option>
                                                     </select>
                                               </div>
                                           </span>
@@ -146,10 +146,10 @@
                                     <div class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="con_typeCode">字段类型</label>
-                                            <select id="con_typeCode" name="typeCode" class="form-control custom-select" >
+                                            <label for="con_type">字段类型</label>
+                                            <select id="con_type" name="type" class="form-control custom-select" >
                                                 <option value="">全部</option>
-                                                <option th:each="dicCode:${session.dicvalueTypes}" th:text="${dicCode}" th:value="${dicCode}">售后</option>
+                                                <option th:each="type:${session.allType}" th:text="${type}" th:value="${type}">售后</option>
                                             </select>
                                         </div>
 
@@ -210,7 +210,7 @@
                                     <tr th:each="dic,dicState : ${dicValues}">
                                         <td th:text="${dic.vId}">1</td>
                                         <td th:text="${dic.vValue}">1</td>
-                                        <td th:text="${dic.typeCode}">1</td>
+                                        <td th:text="${dic.type}">1</td>
                                         <td>
                                             <button type="button" th:tar-id="${dic.vId}" class="btn  btn-danger btn-sm confirmsCus">删除</button>
                                             <button type="button" th:tar-id="${dic.vId}" class="btn  btn-sm btn-info updateDicBtn" data-toggle="modal" data-target="#update_dic">修改</button>
@@ -266,8 +266,8 @@
         //条件查询
         $('#cusConditionBtn').click(function (){
             let vValue = $('#con_vValue').val();
-            let typeCode = $('#con_typeCode').val();
-            location.href = "/crm/dic/dics?vValue="+vValue+"&typeCode="+typeCode;
+            let type = $('#con_type').val();
+            location.href = "/crm/dic/dics?vValue="+vValue+"&type="+type;
         })
         // $('#conditionBtn').click(function (){
         //     $('#conForm').submit();
@@ -295,7 +295,7 @@
                     let dic = res.data;
                     $('#vId').val(dic.vId);
                     $('#vValue').val(dic.vValue);
-                    $('#typeCode').val(dic.typeCode);
+                    $('#type').val(dic.type);
                 }
             })
         })

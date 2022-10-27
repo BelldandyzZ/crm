@@ -55,6 +55,7 @@ public class RoleController {
         session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
         session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
         session.setAttribute("pNames", projectService.getAllProjectName());
+        session.setAttribute("allType", dicValueService.getAllType());
 //=====================================================================================================
 
 

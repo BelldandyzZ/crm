@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -45,10 +46,14 @@ public class EmpController {
     private RoleService roleService;
 
     @RequestMapping("/login")
-    public String empLogin(String ename, String epwd, HttpSession session, Model model,RedirectAttributes attr){
+    public String empLogin(String ename, String epwd, HttpSession session, Model model,RedirectAttributes attr, HttpServletResponse response){
         Employee employee = empService.empLogin(ename, epwd);
         //登录成功就初始化字段值
         if(employee != null){
+            Cookie loginName = new Cookie("loginName", ename);
+            loginName.setMaxAge( 60 * 60 * 24 * 7);//记住用户名密码7天时间
+            loginName.setPath("/");
+            response.addCookie(loginName);
             session.setAttribute("emp", employee);
             session.setAttribute("jobTypes", dicValueService.getAllJobType());
             session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
@@ -56,6 +61,7 @@ public class EmpController {
             session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
             session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
             session.setAttribute("pNames", projectService.getAllProjectName());
+            session.setAttribute("allType", dicValueService.getAllType());
             /*------------------------登录成功查看员工对应的权限---------------------------*/
 
             List<String> permissions =  roleService.queryAllMenuByEmpId(employee.geteId());
@@ -81,6 +87,7 @@ public class EmpController {
         session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
         session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
         session.setAttribute("pNames", projectService.getAllProjectName());
+        session.setAttribute("allType", dicValueService.getAllType());
 //=====================================================================================================
 
 

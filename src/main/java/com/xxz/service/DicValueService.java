@@ -21,18 +21,24 @@ public class DicValueService {
     private DicValueMapper dicValueMapper;
 
     /*获取所有字段*/
-    public List<DicValue> queryAllDic(String vValue, String typeCode){
+    public List<DicValue> queryAllDic(String vValue, String type){
         DicValueExample dicValueExample = new DicValueExample();
         DicValueExample.Criteria criteria = dicValueExample.createCriteria();
         if(vValue != null && !vValue.equals("")){
             criteria.andVValueLike("%" + vValue + "%");
         }
-        if(typeCode != null && !typeCode.equals("")){
+        if(type != null && !type.equals("")){
+            String typeCode = dicValueMapper.selectCodeByType(type);
             criteria.andTypeCodeEqualTo(typeCode);
+            System.out.println(type);
+            System.out.println(typeCode);
         }
         List<DicValue> dicValues = dicValueMapper.selectByExample(dicValueExample);
+        for (DicValue dicValue : dicValues) {
+            dicValue.setType(dicValueMapper.selectTypeByCode(dicValue.getTypeCode()));
+        }
         //倒叙
-        Collections.reverse(dicValues);
+//        Collections.reverse(dicValues);
         return dicValues;
     }
 
@@ -50,7 +56,8 @@ public class DicValueService {
     }
 
     //添加jobType
-    public boolean add(DicValue dicValue){
+    public boolean add(DicValue dicValue, String type){
+        dicValue.setTypeCode(dicValueMapper.selectCodeByType(type));
         int result = dicValueMapper.insertSelective(dicValue);
         if(result > 0){
             return true;
@@ -68,7 +75,8 @@ public class DicValueService {
         }
     }
     //修改jobType
-    public boolean update(DicValue dicValue){
+    public boolean update(DicValue dicValue, String type){
+        dicValue.setTypeCode(dicValueMapper.selectCodeByType(type));
         int result = dicValueMapper.updateByPrimaryKey(dicValue);
         if(result > 0){
             return true;
@@ -129,8 +137,16 @@ public class DicValueService {
         return new ArrayList<>(strings);
     }
 
+    public List<String> getAllType(){
+        return dicValueMapper.selectAllType();
+    }
+
     public DicValue queryById(Integer vId) {
-        return dicValueMapper.selectByPrimaryKey(vId);
+        DicValue dicValue = dicValueMapper.selectByPrimaryKey(vId);
+
+        dicValue.setType(dicValueMapper.selectTypeByCode(dicValue.getTypeCode()));
+
+        return dicValue;
     }
 
     //添加progress
