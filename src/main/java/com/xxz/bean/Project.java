@@ -31,6 +31,16 @@ public class Project implements Serializable {
 
     private Integer pbId;
 
+    private Integer total;
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getpId() {

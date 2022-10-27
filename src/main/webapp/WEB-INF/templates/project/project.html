@@ -216,7 +216,11 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_pOwner">项目负责人</label>
-                                            <input type="text" id="con_pOwner" th:value="${pOwner}" name="pOwner" class="form-control" placeholder="项目负责人">
+<!--                                            <input type="text"  name="pOwner" class="form-control" placeholder="项目负责人">-->
+                                            <select id="con_pOwner" th:value="${pOwner}" name="pOwner" class="form-control custom-select" required>
+                                                <option value="">全部</option>
+                                                <option th:each="eRename,empState:${eRenameSet}" th:text="${eRename}" th:value="${eRename}">全部</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -280,10 +284,10 @@
                                         <!--下啦-->
 <!--                                        <td><a th:href="@{'/interview/interviews?cRename=' + ${pro.cRename}}">拜访记录（点击查看详情）</a></td>-->
                                         <td><a th:href="@{'/project/interview_record?cIds=' + ${pro.cIds} + '&pId=' + ${pro.pId}}">点击查看详情</a></td>
-                                        <td><a th:href="@{'/project/payment_back?pbId=' + ${pro.pbId} + '&pId=' + ${pro.pId}}" class="card-link">2004534</a>
+                                        <td><a th:href="@{'/project/payment_back?pbId=' + ${pro.pbId} + '&pId=' + ${pro.pId}}" class="card-link" th:text="${pro.total}">2004534</a>
                                         </td>
                                         <td>
-                                            <button  type="button" tar-id="" class="btn  btn-danger btn-sm confirmsCus">删除</button>
+                                            <button  type="button" th:tar-id="${pro.pId}" class="btn  btn-danger btn-sm confirmsDelPro">删除</button>
                                             <button type="button" th:tar-id="${pro.pId}" class="btn  btn-sm btn-info updateProBtn" data-toggle="modal" data-target="#update_pro">修改</button>
                                         </td>
                                     </tr>
@@ -415,6 +419,8 @@
         })
     })
 
+    /*删除项目*/
+
     //初始化 Select2 元素
     $('.select2').select2()
 
@@ -426,8 +432,11 @@
     $(function () {
 
         //删除的确定弹窗
-        $(".confirms").click(function () {
-            confirm("确定删除该记录？")
+        $(".confirmsDelPro").click(function () {
+           if( confirm("确定删除该记录？")){
+               let pId = $(this).attr("tar-id");
+                location.href = "/crm/project/del/"+pId;
+           }
         })
 
         //数据的分页

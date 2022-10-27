@@ -180,9 +180,14 @@
                                     <tbody>
                                     <tr th:each="con,conState:${conPageInfo.list}">
                                         <td th:text="${con.ctContractAmount}"></td>
-                                        <td><a th:href="@{'/project/conownloadCon/'+${con.ctContractDocment}}">合同文件下载</a></td>
+                                        <td>
+                                            <a th:if="${con.ctContractDocment  != '' and con.ctContractDocment != null}" th:href="@{'/project/conownloadCon/'+${con.ctContractDocment}}">合同文件下载</a>
+<!--                                            <a th:if="${con.ctContractDocment} == null" href="javascript:void (0)">合同文件下载</a>-->
+                                        </td>
                                         <td th:text="${con.ctTenderAmount}"></td>
-                                        <td><a th:href="@{'/project/conownloadTen/'+${con.ctTenderDocment}}">招标文件下载</a></td>
+                                        <td>
+                                            <a th:if="${con.ctTenderDocment  != '' and con.ctTenderDocment != null}" th:href="@{'/project/conownloadTen/'+${con.ctTenderDocment}}">招标文件下载</a>
+                                        </td>
                                         <td>
                                             <button type="button" th:tar-id="${con.ctId}" class="btn  btn-sm btn-info updateConBtn" data-toggle="modal" data-target="#update_con">修改</button>
                                         </td>

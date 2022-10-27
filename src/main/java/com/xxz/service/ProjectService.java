@@ -1,5 +1,6 @@
 package com.xxz.service;
 
+import com.github.pagehelper.PageHelper;
 import com.xxz.bean.*;
 import com.xxz.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,12 @@ public class ProjectService {
     @Autowired
     private CusProMapper cusProMapper;
 
+    @Autowired
+    private ProjectService projectService;
+
     /*查询所有项目*/
     public List<Project> queryAllProject(String pName, String pMoeny, String pProgress, String pOwner){
+        System.out.println(pName + "-" + pMoeny + "-" + pProgress + "-" + pOwner);
         //样本
         ProjectExample projectExampleExample = new ProjectExample();
         //条件盒子
@@ -46,7 +51,7 @@ public class ProjectService {
             criteria.andPNameLike("%" + pName + "%");
         }
         if(pMoeny != null && !pMoeny.equals("")){
-            criteria.andPMoenyEqualTo(pMoeny);
+            criteria.andPMoenyGreaterThanOrEqualTo(pMoeny);
         }
         if(pProgress != null && !pProgress.equals("")){
             criteria.andPProgressEqualTo(pProgress);
@@ -82,11 +87,21 @@ public class ProjectService {
                     cIds += customer.getcId() + ",";
                 }
             }
+            //获取回款总金额
+            Integer startPbId = project.getPbId();
+            Integer endPbId = startPbId + 999;
+            System.out.println("--------------start=" + startPbId + "------end=" + endPbId);
+            List<PaymentBack> paymentBacks = projectService.PbIdBetweenStartAndEnd(startPbId, endPbId);
+            Integer total = 0;
+            for (PaymentBack paymentBack : paymentBacks) {
+                total += paymentBack.getPbMoney();
+            }
+            project.setTotal(total);
             project.setcIds(cIds);
             project.setcRenames(cRenames);
         }
         //倒叙
-        Collections.reverse(projectList);
+//        Collections.reverse(projectList);
         return projectList;
     }
 
@@ -277,6 +292,25 @@ public class ProjectService {
 
     /*根据ctId修改合同*/
     public boolean contractUpdate(Contract contract){
+        //去空格
+        if(null != contract.getCtContractAmount()){
+            String ctContractAmount = contract.getCtContractAmount();
+            String conStr = "";
+            String[] s = ctContractAmount.split(" ");
+            for (String s1 : s) {
+                conStr += s1;
+            }
+            contract.setCtContractAmount(conStr);
+        }
+        if(null != contract.getCtTenderAmount()){
+            String ctTenderAmount = contract.getCtTenderAmount();
+            String tenStr = "";
+            String[] s1 = ctTenderAmount.split(" ");
+            for (String s2 : s1) {
+                tenStr += s2;
+            }
+            contract.setCtTenderAmount(tenStr);
+        }
         //实现添加业务
         System.out.println(contract);
         int result = contractMapper.updateByPrimaryKeySelective(contract);
@@ -316,7 +350,12 @@ public class ProjectService {
 
     /*修改回款*/
     public boolean payBackUpdate(PaymentBack paymentBack){
-        int updateResult = paymentBackMapper.updatePayBack(paymentBack);
+        PaymentBackExample paymentBackExample = new PaymentBackExample();
+        paymentBackExample.createCriteria().andPbIdEqualTo(paymentBack.getPbId());
+        List<PaymentBack> paymentBacks = paymentBackMapper.selectByExample(paymentBackExample);
+        PaymentBack payment = paymentBacks.get(0);
+        payment.setPbMoney(paymentBack.getPbMoney());
+        int updateResult = paymentBackMapper.updatePayBack(payment);
         return updateResult > 0 ? true : false;
     }
 }

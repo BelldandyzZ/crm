@@ -41,6 +41,9 @@ public class ProjectController {
     @Autowired
     private EmpService empService;
 
+    @Autowired
+    private  ProjectMapper projectMapper;
+
     //条件查询
     @RequestMapping("/projects")
     public String queryAll(Model model, String pName, String pMoeny, String pProgress, String pOwner,HttpSession session,
@@ -85,6 +88,16 @@ public class ProjectController {
         //(1)获取session域中的pbId
         //设置回款编号
         projectService.addProject(project, cRenames);
+        return "redirect:/project/projects";
+    }
+
+    //添加回款业务
+    @RequestMapping("/del/{pId}")
+    public String delProject(@PathVariable("pId") Integer pId){
+        //(1)获取session域中的pbId
+        //设置回款编号
+//        projectService.addProject(project, cRenames);
+        projectMapper.deleteByPrimaryKey(pId);
         return "redirect:/project/projects";
     }
 
@@ -226,76 +239,74 @@ public class ProjectController {
     @RequestMapping("/contractAdd")
     public String contractAdd(Integer pId,MultipartFile ctContractDocmentFile, MultipartFile ctTenderDocmentFile, Contract contract, HttpSession session) throws IOException {
         //获取上传的文件的文件名
-        String ctfileName = UUID.randomUUID().toString().substring(15) + ctContractDocmentFile.getOriginalFilename();
-        //锁定长度
-        if(ctfileName.length() > 25){
-            ctfileName = ctfileName.substring(ctfileName.length() - 25, ctfileName.length());
-        }
-        System.out.println(ctfileName);
-        contract.setCtContractDocment(ctfileName);
         //获取ServletContext对象
         ServletContext servletContext = session.getServletContext();
-        //获取当前工程下photo目录的真实路径
-        String photoRealPath = servletContext.getRealPath("/contracts");
-        System.out.println(photoRealPath);
-        File parentFile = new File(photoRealPath).getParentFile().getParentFile().getParentFile();
-        System.out.println(parentFile.getPath() + "\\src\\main\\webapp\\contracts");
+        if(ctContractDocmentFile.getOriginalFilename() != null && !ctContractDocmentFile.getOriginalFilename().equals("")){
+            String ctfileName = UUID.randomUUID().toString().substring(15) + ctContractDocmentFile.getOriginalFilename();
+            //锁定长度
+            if(ctfileName.length() > 25){
+                ctfileName = ctfileName.substring(ctfileName.length() - 25, ctfileName.length());
+            }
+            System.out.println(ctfileName);
+            contract.setCtContractDocment(ctfileName);
+            //获取当前工程下photo目录的真实路径
+            String photoRealPath = servletContext.getRealPath("/contracts");
+            System.out.println(photoRealPath);
+            File parentFile = new File(photoRealPath).getParentFile().getParentFile().getParentFile();
+            System.out.println(parentFile.getPath() + "\\src\\main\\webapp\\contracts");
 
-        //E:\idea-workspace\crm\src\main\webapp\contracts
-        photoRealPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts";
+            //E:\idea-workspace\crm\src\main\webapp\contracts
+            photoRealPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts";
 /*
 我们项目中没有photo目录，但文件上传如果到tomcat服务器中,
 则可以给服务器部署的工程war包所运行的项目创建photo目录,专门用于存储客户端上传的文件
 */
-        //创建photoPath所对应的File对象
-        File file = new File(photoRealPath);
-        //判断file所对应目录是否存在(即部署的项目中，判断photo目录是否存在)
-        if(!file.exists()){
-            //不存在则直接创建目录
-            file.mkdir();
+            //创建photoPath所对应的File对象
+            File file = new File(photoRealPath);
+            //判断file所对应目录是否存在(即部署的项目中，判断photo目录是否存在)
+            if(!file.exists()){
+                //不存在则直接创建目录
+                file.mkdir();
+            }
+            //拼接目标文件上传的路径
+            String targetFileUploadPath = photoRealPath + File.separator + ctfileName;
+            System.out.println(targetFileUploadPath);
+            //上传文件(根据目标文件上传路径)
+            ctContractDocmentFile.transferTo(new File(targetFileUploadPath));
         }
-        //拼接目标文件上传的路径
-        String targetFileUploadPath = photoRealPath + File.separator + ctfileName;
-        System.out.println(targetFileUploadPath);
-        //上传文件(根据目标文件上传路径)
-        ctContractDocmentFile.transferTo(new File(targetFileUploadPath));
         //====================================================================
         //====================================================================
         //====================================================================
-        //获取上传的文件的文件名
-        String tdfileName = UUID.randomUUID().toString().substring(15) + ctTenderDocmentFile.getOriginalFilename();
-        //锁定长度
-        if(tdfileName.length() > 25){
-            tdfileName = tdfileName.substring(tdfileName.length() - 25, tdfileName.length());
+        if(ctTenderDocmentFile.getOriginalFilename() != null && !ctTenderDocmentFile.getOriginalFilename().equals("")){
+            //获取上传的文件的文件名
+            String tdfileName = UUID.randomUUID().toString().substring(15) + ctTenderDocmentFile.getOriginalFilename();
+            //锁定长度
+            if(tdfileName.length() > 25){
+                tdfileName = tdfileName.substring(tdfileName.length() - 25, tdfileName.length());
+            }
+            System.out.println(tdfileName);
+            contract.setCtTenderDocment(tdfileName);
+            //获取ServletContext对象
+            //获取当前工程下photo目录的真实路径
+            String photoRealPath2 = servletContext.getRealPath("/tenders");
+            File parentFile2 = new File(photoRealPath2).getParentFile().getParentFile().getParentFile();
+            System.out.println(parentFile2.getPath() + "\\src\\main\\webapp\\tenders");
+            photoRealPath2 = parentFile2.getPath() + "\\src\\main\\webapp\\tenders";
+            //创建photoPath所对应的File对象
+            File file2 = new File(photoRealPath2);
+            //判断file所对应目录是否存在(即部署的项目中，判断photo目录是否存在)
+            if(!file2.exists()){
+                //不存在则直接创建目录
+                file2.mkdir();
+            }
+            //拼接目标文件上传的路径
+            String targetFileUploadPath2 = photoRealPath2 + File.separator + tdfileName;
+            //上传文件(根据目标文件上传路径)
+            ctTenderDocmentFile.transferTo(new File(targetFileUploadPath2));
         }
-        System.out.println(tdfileName);
-        contract.setCtTenderDocment(tdfileName);
-        //获取ServletContext对象
-        //获取当前工程下photo目录的真实路径
-        String photoRealPath2 = servletContext.getRealPath("/tenders");
-        File parentFile2 = new File(photoRealPath2).getParentFile().getParentFile().getParentFile();
-        System.out.println(parentFile2.getPath() + "\\src\\main\\webapp\\tenders");
-        photoRealPath2 = parentFile2.getPath() + "\\src\\main\\webapp\\tenders";
-        //创建photoPath所对应的File对象
-        File file2 = new File(photoRealPath2);
-        //判断file所对应目录是否存在(即部署的项目中，判断photo目录是否存在)
-        if(!file2.exists()){
-            //不存在则直接创建目录
-            file2.mkdir();
-        }
-        //拼接目标文件上传的路径
-        String targetFileUploadPath2 = photoRealPath2 + File.separator + tdfileName;
-        //上传文件(根据目标文件上传路径)
-        ctTenderDocmentFile.transferTo(new File(targetFileUploadPath2));
         //=============================================
         //实现添加业务
-        System.out.println(contract);
         boolean result = projectService.contractAdd(contract);
-        if(result){
-            System.out.println("添加成功！");
-        }else {
-            System.out.println("操作失败！");
-        }
         //获取
         return "redirect:/project/contract_record?pId=" + pId;
     }
@@ -304,77 +315,76 @@ public class ProjectController {
     //    updateContract
     @RequestMapping("/updateContract")
     public String updateContract(Integer pId,MultipartFile ctContractDocmentFile, MultipartFile ctTenderDocmentFile, Contract contract, HttpSession session) throws IOException {
-        //获取上传的文件的文件名
-        String ctfileName = UUID.randomUUID().toString().substring(15) + ctContractDocmentFile.getOriginalFilename();
-        //锁定长度
-        if(ctfileName.length() > 25){
-            ctfileName = ctfileName.substring(ctfileName.length() - 25, ctfileName.length());
-        }
-        System.out.println(ctfileName);
-        contract.setCtContractDocment(ctfileName);
         //获取ServletContext对象
         ServletContext servletContext = session.getServletContext();
-        //获取当前工程下photo目录的真实路径
-        String photoRealPath = servletContext.getRealPath("/contracts");
-        System.out.println(photoRealPath);
-        File parentFile = new File(photoRealPath).getParentFile().getParentFile().getParentFile();
-        System.out.println(parentFile.getPath() + "\\src\\main\\webapp\\contracts");
+        if(ctContractDocmentFile.getOriginalFilename() != null && !ctContractDocmentFile.getOriginalFilename().equals("")) {
+            //获取上传的文件的文件名
+            String ctfileName = UUID.randomUUID().toString().substring(15) + ctContractDocmentFile.getOriginalFilename();
+            //锁定长度
+            if (ctfileName.length() > 25) {
+                ctfileName = ctfileName.substring(ctfileName.length() - 25, ctfileName.length());
+            }
+            System.out.println(ctfileName);
+            contract.setCtContractDocment(ctfileName);
+            //获取当前工程下photo目录的真实路径
+            String photoRealPath = servletContext.getRealPath("/contracts");
+            System.out.println(photoRealPath);
+            File parentFile = new File(photoRealPath).getParentFile().getParentFile().getParentFile();
+            System.out.println(parentFile.getPath() + "\\src\\main\\webapp\\contracts");
 
-        //E:\idea-workspace\crm\src\main\webapp\contracts
-        photoRealPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts";
+            //E:\idea-workspace\crm\src\main\webapp\contracts
+            photoRealPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts";
 /*
 我们项目中没有photo目录，但文件上传如果到tomcat服务器中,
 则可以给服务器部署的工程war包所运行的项目创建photo目录,专门用于存储客户端上传的文件
 */
-        //创建photoPath所对应的File对象
-        File file = new File(photoRealPath);
-        //判断file所对应目录是否存在(即部署的项目中，判断photo目录是否存在)
-        if(!file.exists()){
-            //不存在则直接创建目录
-            file.mkdir();
+            //创建photoPath所对应的File对象
+            File file = new File(photoRealPath);
+            //判断file所对应目录是否存在(即部署的项目中，判断photo目录是否存在)
+            if (!file.exists()) {
+                //不存在则直接创建目录
+                file.mkdir();
+            }
+            //拼接目标文件上传的路径
+            String targetFileUploadPath = photoRealPath + File.separator + ctfileName;
+            System.out.println(targetFileUploadPath);
+            //上传文件(根据目标文件上传路径)
+            ctContractDocmentFile.transferTo(new File(targetFileUploadPath));
         }
-        //拼接目标文件上传的路径
-        String targetFileUploadPath = photoRealPath + File.separator + ctfileName;
-        System.out.println(targetFileUploadPath);
-        //上传文件(根据目标文件上传路径)
-        ctContractDocmentFile.transferTo(new File(targetFileUploadPath));
         //====================================================================
         //====================================================================
         //====================================================================
-        //获取上传的文件的文件名
-        String tdfileName = UUID.randomUUID().toString().substring(15) + ctTenderDocmentFile.getOriginalFilename();
-        //锁定长度
-        if(tdfileName.length() > 25){
-            tdfileName = tdfileName.substring(tdfileName.length() - 25, tdfileName.length());
+        if(ctTenderDocmentFile.getOriginalFilename() != null && !ctTenderDocmentFile.getOriginalFilename().equals("")) {
+            //获取上传的文件的文件名
+            String tdfileName = UUID.randomUUID().toString().substring(15) + ctTenderDocmentFile.getOriginalFilename();
+            //锁定长度
+            if (tdfileName.length() > 25) {
+                tdfileName = tdfileName.substring(tdfileName.length() - 25, tdfileName.length());
+            }
+            System.out.println(tdfileName);
+            contract.setCtTenderDocment(tdfileName);
+            //获取ServletContext对象
+            //获取当前工程下photo目录的真实路径
+            String photoRealPath2 = servletContext.getRealPath("/tenders");
+            File parentFile2 = new File(photoRealPath2).getParentFile().getParentFile().getParentFile();
+            System.out.println(parentFile2.getPath() + "\\src\\main\\webapp\\tenders");
+            photoRealPath2 = parentFile2.getPath() + "\\src\\main\\webapp\\tenders";
+            //创建photoPath所对应的File对象
+            File file2 = new File(photoRealPath2);
+            //判断file所对应目录是否存在(即部署的项目中，判断photo目录是否存在)
+            if (!file2.exists()) {
+                //不存在则直接创建目录
+                file2.mkdir();
+            }
+            //拼接目标文件上传的路径
+            String targetFileUploadPath2 = photoRealPath2 + File.separator + tdfileName;
+            //上传文件(根据目标文件上传路径)
+            ctTenderDocmentFile.transferTo(new File(targetFileUploadPath2));
         }
-        System.out.println(tdfileName);
-        contract.setCtTenderDocment(tdfileName);
-        //获取ServletContext对象
-        //获取当前工程下photo目录的真实路径
-        String photoRealPath2 = servletContext.getRealPath("/tenders");
-        File parentFile2 = new File(photoRealPath2).getParentFile().getParentFile().getParentFile();
-        System.out.println(parentFile2.getPath() + "\\src\\main\\webapp\\tenders");
-        photoRealPath2 = parentFile2.getPath() + "\\src\\main\\webapp\\tenders";
-        //创建photoPath所对应的File对象
-        File file2 = new File(photoRealPath2);
-        //判断file所对应目录是否存在(即部署的项目中，判断photo目录是否存在)
-        if(!file2.exists()){
-            //不存在则直接创建目录
-            file2.mkdir();
-        }
-        //拼接目标文件上传的路径
-        String targetFileUploadPath2 = photoRealPath2 + File.separator + tdfileName;
-        //上传文件(根据目标文件上传路径)
-        ctTenderDocmentFile.transferTo(new File(targetFileUploadPath2));
         //=============================================
         //实现添加业务
         System.out.println(contract);
         boolean result = projectService.contractUpdate(contract);
-        if(result){
-            System.out.println("修改成功！");
-        }else {
-            System.out.println("操作失败！");
-        }
         //获取
         return "redirect:/project/contract_record?pId=" + pId;
     }
@@ -454,12 +464,10 @@ public class ProjectController {
     //修改回款信息
     @RequestMapping("/payBackUpdate")
     private String payBackUpdate(PaymentBack paymentBack,HttpSession session){
+        System.out.println(paymentBack);
         boolean result = projectService.payBackUpdate(paymentBack);
         //session获取当前pbid
         Integer now_pbId = (Integer) session.getAttribute("now_pbId");
-        if (result){
-            System.out.println("操作成功！");
-        }
         return "redirect:/project/payment_back?pbId=" + now_pbId;
     }
 }

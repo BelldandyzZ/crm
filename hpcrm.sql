@@ -28,23 +28,12 @@ CREATE TABLE `contract` (
   `ct_tender_docment` varchar(100) DEFAULT NULL COMMENT '标书文件url',
   `p_id` int(11) DEFAULT NULL COMMENT '项目合同相关信息对应的项目',
   PRIMARY KEY (`ct_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contract` */
 
 insert  into `contract`(`ct_id`,`ct_contract_amount`,`ct_contract_docment`,`ct_tender_amount`,`ct_tender_docment`,`p_id`) values 
-(1,'合同金额20w','temp1.docx','招标金额20W','test1.docx',1),
-(2,'合同金额30w','temp2.docx','招标金额30W','test2.docx',2),
-(4,'123','af68-47cf90db77b0项目改动.txt','123','97b9-17c282288f57项目改动.txt',5),
-(5,'123','e19-9a3d-7c866146bebe6dc-9b06-0b36692bbe27qubie.txt','123','83b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',2),
-(6,'123','ac0-9f06-42274a62b08183b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt','123','832-aebe-bec095e8407683b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',5),
-(7,'123','35f-b07f-30380a6d86c083b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt','123','443-a3d0-8a8afc93345083b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',5),
-(8,'123','8e1-bfdc-cd9c88c7368d6dc-9b06-0b36692bbe27qubie.txt','123','b66-898f-c6846dd513be6dc-9b06-0b36692bbe27qubie.txt',5),
-(9,'123','702-8d42-8fba7b8459c56dc-9b06-0b36692bbe27qubie.txt','123','830-8c6c-7c612de18cad6dc-9b06-0b36692bbe27qubie.txt',5),
-(10,'123','852-af98-a81c2cfa530a83b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt','123','f96-afee-02be24d1e9ad83b-8f02-eb1301acb8f56dc-9b06-0b36692bbe27qubie.txt',5),
-(11,'123','b36692bbe27qubie.txt','123','b36692bbe27qubie.txt',5),
-(12,'123','fa1-a930-add73eb6cba8','123','1b6-959c-f42ebdeda9ee',1),
-(13,'123','964-815c-5368b71c35b1','123','a310-9ed191098b7e项目改动.txt',2);
+(1,'1','646-e8bca275fca1修改crm.txt','111','50e-aaa398ce4141修改crm.txt',13);
 
 /*Table structure for table `cus_pro` */
 
@@ -72,7 +61,9 @@ insert  into `cus_pro`(`cp_id`,`p_id`,`c_id`) values
 (9,9,2),
 (10,10,2),
 (12,12,2),
-(13,13,2);
+(13,13,2),
+(14,14,2),
+(15,15,2);
 
 /*Table structure for table `customer` */
 
@@ -269,7 +260,7 @@ insert  into `payment_back`(`pb_id`,`pb_money`,`pb_order`) values
 (6004,12000,146),
 (7001,12000,147),
 (10007,12312,148),
-(12001,12000,149);
+(12001,12001,149);
 
 /*Table structure for table `project` */
 
@@ -284,7 +275,7 @@ CREATE TABLE `project` (
   `cp_id` int(11) DEFAULT NULL COMMENT '客户参与人员，多人',
   `pb_id` int(11) DEFAULT NULL COMMENT '回款表的id，要回款5次需要一张新表',
   PRIMARY KEY (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `project` */
 
