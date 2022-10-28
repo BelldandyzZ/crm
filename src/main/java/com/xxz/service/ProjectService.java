@@ -363,4 +363,14 @@ public class ProjectService {
         int updateResult = paymentBackMapper.updatePayBack(payment);
         return updateResult > 0 ? true : false;
     }
+
+
+    public int removePaymentbackById(Integer id) {
+        int res = projectMapper.deletePaymentbackById(id);
+        return res;
+    }
+
+    public int removeContractById(Integer ctId) {
+        return projectMapper.deleteContractById(ctId);
+    }
 }

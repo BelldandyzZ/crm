@@ -489,4 +489,27 @@ public class ProjectController {
         Integer now_pbId = (Integer) session.getAttribute("now_pbId");
         return "redirect:/project/payment_back?pbId=" + now_pbId;
     }
+
+
+
+    //删除回款
+    @RequestMapping("/remove/{paymentBackId}")
+    public String erasePaymentbackById(HttpSession session,@PathVariable("paymentBackId") Integer id){
+        System.out.println("id = " + id);
+        projectService.removePaymentbackById(id);
+        Integer now_pbId = (Integer) session.getAttribute("now_pbId");
+        return "redirect:/project/payment_back?pbId=" + now_pbId;
+    }
+
+    //删除合同
+    @RequestMapping("/eraseContractById/{currentpId}/{ctId}")
+    public String eraseContractById(@PathVariable("currentpId") Integer currentpId,@PathVariable("ctId") Integer ctId){
+        int res = projectService.removeContractById(ctId);
+        return "redirect:/project/contract_record?pId=" + currentpId;
+    }
+
+
+
+
+
 }

@@ -156,7 +156,7 @@
                                         <td>回款时间</td>
                                         <td>
                                             <button type="button" th:tar-id="${payback.pbId}" class="btn  btn-sm btn-info updatePayBtn" data-toggle="modal" data-target="#update_pay">修改</button>
-                                            <button type="button"  class="btn  btn-sm btn-danger " >删除</button>
+                                            <button type="button" th:tar-id="${payback.pbId}"  class="btn  btn-sm btn-danger delete_payment_back" >删除</button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -273,6 +273,13 @@
                     $('#pbId').val(pb.pbId);
                 }
             })
+        })
+
+        $(".delete_payment_back").click(function () {
+            if(confirm("确定删除该记录？")){
+                let paymentId = $(this).attr("tar-id");
+                location.href = "/crm/project/remove/" + paymentId;
+            }
         })
 
         //数据的分页

@@ -27,4 +27,8 @@ public interface ProjectMapper {
     int updateByPrimaryKeySelective(Project record);
 
     int updateByPrimaryKey(Project record);
+
+    int deletePaymentbackById(@Param("id") Integer id);
+
+    int deleteContractById(@Param("ctId") Integer ctId);
 }

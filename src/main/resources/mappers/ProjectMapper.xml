@@ -261,4 +261,15 @@ order by p_id desc
       pb_id = #{pbId,jdbcType=INTEGER}
     where p_id = #{pId,jdbcType=INTEGER}
   </update>
+
+
+
+
+  <delete id="deletePaymentbackById">
+    delete from payment_back where pb_id = #{id}
+  </delete>
+
+  <delete id="deleteContractById">
+    delete from contract where ct_id = #{ctId}
+  </delete>
 </mapper>

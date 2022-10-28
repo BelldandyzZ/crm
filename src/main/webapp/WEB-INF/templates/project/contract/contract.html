@@ -33,7 +33,7 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                           <input type="hidden" name="pId" th:value="${pId}">
+                                           <input id="currentpId" type="hidden" name="pId" th:value="${pId}">
                                           <label>合同金额</label>
                                           <input type="number"  placeholder="请输入合同金额" name="ctContractAmount" class="form-control">
                                       </div>
@@ -191,7 +191,7 @@
                                         </td>
                                         <td>
                                             <button type="button" th:tar-id="${con.ctId}" class="btn  btn-sm btn-info updateConBtn" data-toggle="modal" data-target="#update_con">修改</button>
-                                            <button type="button"  class="btn  btn-sm btn-danger " >删除</button>
+                                            <button type="button"  th:tar-id="${con.ctId}" class="btn  btn-sm btn-danger delete_contract" >删除</button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -309,6 +309,21 @@
                 }
             })
         })
+
+
+        /*删除*/
+        $('.delete_contract').click(function () {
+            if(confirm("确定删除该记录？")){
+                let ctId = $(this).attr("tar-id");
+                let currentpId = $('#currentpId').val();
+
+                console.log(ctId)
+                console.log(currentpId)
+
+                location.href = "/crm/project/eraseContractById/" + currentpId+"/"+ctId;
+            }
+        })
+
 
         //数据的分页
         // $('#table_data').DataTable(
