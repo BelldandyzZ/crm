@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -101,7 +102,7 @@ public class DicValueController {
     @ResponseBody
     public List<String[]> echartsObjs(String empName,
                                       @RequestParam(required = false) Date startTime,
-                                      @RequestParam(required = false)Date endTime ){//根据用户，时间断查询
+                                      @RequestParam(required = false)Date endTime ) throws UnsupportedEncodingException {//根据用户，时间断查询
         List<EchartsObj> echartsObjs = new ArrayList<EchartsObj>();
         //获取所有员工信息
         List<Employee> employeeList = empService.queryAllEmp(empName, null, null);

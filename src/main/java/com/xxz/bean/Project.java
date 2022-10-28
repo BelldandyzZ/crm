@@ -25,6 +25,26 @@ public class Project implements Serializable {
     public List<String> getcRenames() {return cRenames;}
     public void setcRenames(List<String> cRenames) {this.cRenames = cRenames;}
     //----------------------------------------------
+
+    private String startTime;
+
+    private String endTime;
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -101,19 +121,19 @@ public class Project implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", pId=").append(pId);
-        sb.append(", pName=").append(pName);
-        sb.append(", pMoeny=").append(pMoeny);
-        sb.append(", pProgress=").append(pProgress);
-        sb.append(", pOwner=").append(pOwner);
-        sb.append(", cpId=").append(cpId);
-        sb.append(", pbId=").append(pbId);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Project{" +
+                "pId=" + pId +
+                ", pName='" + pName + '\'' +
+                ", pMoeny='" + pMoeny + '\'' +
+                ", pProgress='" + pProgress + '\'' +
+                ", pOwner='" + pOwner + '\'' +
+                ", cpId=" + cpId +
+                ", cIds='" + cIds + '\'' +
+                ", cRenames=" + cRenames +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", pbId=" + pbId +
+                ", total=" + total +
+                '}';
     }
 }

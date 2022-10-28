@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,24 +42,30 @@ public class ProjectService {
     private ProjectService projectService;
 
     /*查询所有项目*/
-    public List<Project> queryAllProject(String pName, String pMoeny, String pProgress, String pOwner){
+    public List<Project> queryAllProject(String pName, String pMoeny, String pProgress, String pOwner) throws UnsupportedEncodingException {
         System.out.println(pName + "-" + pMoeny + "-" + pProgress + "-" + pOwner);
         //样本
         ProjectExample projectExampleExample = new ProjectExample();
         //条件盒子
         ProjectExample.Criteria criteria = projectExampleExample.createCriteria();
         //追加条件
+        //请求参数乱码解决
         if (pName != null){
+            pName = URLDecoder.decode(pName, "UTF-8");
             criteria.andPNameLike("%" + pName + "%");
         }
+
         if(pMoeny != null && !pMoeny.equals("")){
+            pMoeny = URLDecoder.decode(pMoeny, "UTF-8");
             criteria.andPMoenyGreaterThanOrEqualTo(pMoeny);
         }
         if(pProgress != null && !pProgress.equals("")){
+            pProgress = URLDecoder.decode(pProgress, "UTF-8");
             criteria.andPProgressEqualTo(pProgress);
         }
         if(pOwner != null && !pOwner.equals("")){
-            criteria.andPOwnerLike("%" + pOwner + "%");
+            pOwner = URLDecoder.decode(pOwner, "UTF-8");
+            criteria.andPOwnerEqualTo(pOwner);
         }
         //查询所有项目
         List<Project> projectList = projectMapper.selectByExample(projectExampleExample);
@@ -193,7 +201,7 @@ public class ProjectService {
         //重写字段值
         project.setCpId(project.getpId());
         project.setPbId(project.getpId() * 1000);
-        int updateResult = projectMapper.updateByPrimaryKey(project);
+        int updateResult = projectMapper.updateByPrimaryKeySelective(project);
         return updateResult > 0 ? true : false;
     }
 

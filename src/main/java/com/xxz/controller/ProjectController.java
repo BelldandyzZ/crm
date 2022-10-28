@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.net.URLDecoder;
 import java.util.*;
 
 @Controller
@@ -50,8 +52,14 @@ public class ProjectController {
 
     //条件查询
     @RequestMapping("/projects")
-    public String queryAll(Model model, String pName, String pMoeny, String pProgress, String pOwner,HttpSession session,
-                           @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
+    public String queryAll(Model model, String pName, String pMoeny, String pProgress, String pOwner, HttpSession session,
+                           @RequestParam(defaultValue = "1") Integer pageNum, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+
+
+        //设置编码
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+
 
         session.setAttribute("jobTypes", dicValueService.getAllJobType());
         session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
@@ -70,8 +78,6 @@ public class ProjectController {
         PageInfo<Project> proPageInfo = new PageInfo<>(projectList, 5);
         System.out.println("条件查询结果：" + proPageInfo);
         model.addAttribute("proPageInfo", proPageInfo);
-        //回显最新项目名称
-        session.setAttribute("pNames", projectService.getAllProjectName());
         //条件回显
         model.addAttribute("pName", pName);
         model.addAttribute("pMoeny", pMoeny);
@@ -103,6 +109,12 @@ public class ProjectController {
     public String addProject(HttpSession session, Project project, String[] cRenames){
         //(1)获取session域中的pbId
         //设置回款编号
+        System.out.println(project);
+        System.out.println(project);
+        System.out.println(project);
+        System.out.println(project);
+        System.out.println(project);
+        System.out.println(project);
         projectService.addProject(project, cRenames);
         return "redirect:/project/projects";
     }
