@@ -44,7 +44,6 @@
                                           <label>项目总金额</label>
                                           <input type="number" name="pMoeny" class="form-control"  placeholder="请输入项目总金额">
                                     </div>
-
                                   </span>
                                     </div>
                                     <div class="row">
@@ -75,8 +74,25 @@
                                                 <option th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}"></option>
                                         </select>
                                       </div>
+                                  </div>
+                              </span>
+                                        <span class="col-sm-6 col-md-6">
+                                  <div class="form-group">
+                                      <label>开始时间</label>
+                                      <div class="select2-purple">
+                                          <input type="date" name="" class="form-control"  placeholder="开始时间">
+                                      </div>
+                                  </div>
+                              </span>
 
-
+                                    </div>
+                                    <div class="row">
+                                        <span class="col-sm-6 col-md-6">
+                                  <div class="form-group">
+                                      <label>结束时间</label>
+                                      <div class="select2-purple">
+                                          <input required type="date" name="" class="form-control"  placeholder="结束时间">
+                                      </div>
                                   </div>
                               </span>
                                     </div>
@@ -153,10 +169,29 @@
                                             <option class="updateProCrenameItem" th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}"></option>
                                         </select>
                                       </div>
-
-
                                   </div>
                               </span>
+                                        <span class="col-sm-6 col-md-6">
+                                  <div class="form-group">
+                                      <label  for="cRenames">开始时间</label>
+                                      <div class="select2-purple">
+                                            <input type="date"  name="" class="form-control"  placeholder="开始时间">
+                                      </div>
+                                  </div>
+                              </span>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <span class="col-sm-6 col-md-6">
+                                  <div class="form-group">
+                                      <label>结束时间</label>
+                                      <div class="select2-purple">
+                                          <input required type="date" name="" class="form-control"  placeholder="结束时间">
+                                      </div>
+                                  </div>
+                              </span>
+
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -259,6 +294,8 @@
                                         <th>客户参与人员</th>
                                         <th>拜访记录</th>
                                         <th>回款总金额</th>
+                                        <th>开始时间</th>
+                                        <th>结束时间</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -273,6 +310,8 @@
                                         <td><a th:href="@{'/project/interview_record?cIds=' + ${pro.cIds} + '&pId=' + ${pro.pId}}">点击查看详情</a></td>
                                         <td><a th:href="@{'/project/payment_back?pbId=' + ${pro.pbId} + '&pId=' + ${pro.pId}}" class="card-link" th:text="${pro.total}"></a>
                                         </td>
+                                        <td>开始时间</td>
+                                        <td>结束时间</td>
                                         <td>
                                             <button  type="button" th:tar-id="${pro.pId}" class="btn  btn-danger btn-sm confirmsDelPro">删除</button>
                                             <button type="button" th:tar-id="${pro.pId}" class="btn  btn-sm btn-info updateProBtn" data-toggle="modal" data-target="#update_pro">修改</button>

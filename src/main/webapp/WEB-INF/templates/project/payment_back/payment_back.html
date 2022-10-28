@@ -39,6 +39,11 @@
                                           <input type="number"  name="pbMoney" class="form-control">
                                       </div>
                                   </span>
+                                        <span class="col-sm-6 col-md-6">
+                                       <div class="form-group">
+                                          <label>回款时间</label>
+                                          <input type="date"  name="" class="form-control">
+                                      </div>
                                   </span>
                                     </div>
 
@@ -79,14 +84,13 @@
                                           <input type="number" id="pbMoney"  name="pbMoney" class="form-control">
                                       </div>
                                   </span>
-<!--                                        <span class="col-sm-6 col-md-6">-->
-<!--                                       <div class="form-group">-->
-<!--                                          <label>录入顺序，可以不用写，数据库是自增的</label>-->
-<!--                                          <input type="text" id="pbOrder"  name="pbOrder" class="form-control">-->
-<!--                                      </div>-->
-<!--                                  </span>-->
 
-                                        </span>
+                                        <span class="col-sm-6 col-md-6">
+                                       <div class="form-group">
+                                          <label>回款时间</label>
+                                          <input type="date"  name="" class="form-control">
+                                      </div>
+                                  </span>
                                     </div>
 
 
@@ -136,22 +140,24 @@
                                     </div>
                                 </div>
 
-                                <!--                  <h1 th:text="${empList}"></h1>-->
-                                <!--                  <h1 th:text="${session.emp}"></h1>-->
-                                <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
                                 <table id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>录入顺序</th>
                                         <th>回款金额</th>
+                                        <th>回款时间</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="payback,paybackState:${payPageInfo.list}">
-                                        <td th:text="${paybackState.index+1}">2（第二次回款）</td>
-                                        <td th:text="${payback.pbMoney}">回款6w</td>
-                                        <td><button type="button" th:tar-id="${payback.pbId}" class="btn  btn-sm btn-info updatePayBtn" data-toggle="modal" data-target="#update_pay">修改</button></td>
+                                        <td th:text="${paybackState.index+1}"></td>
+                                        <td th:text="${payback.pbMoney}"></td>
+                                        <td>回款时间</td>
+                                        <td>
+                                            <button type="button" th:tar-id="${payback.pbId}" class="btn  btn-sm btn-info updatePayBtn" data-toggle="modal" data-target="#update_pay">修改</button>
+                                            <button type="button"  class="btn  btn-sm btn-danger " >删除</button>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
