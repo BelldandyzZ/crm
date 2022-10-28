@@ -101,8 +101,19 @@ public class DicValueController {
     @RequestMapping("/echartsData")
     @ResponseBody
     public List<String[]> echartsObjs(String empName,
-                                      @RequestParam(required = false) Date startTime,
-                                      @RequestParam(required = false)Date endTime ) throws UnsupportedEncodingException {//根据用户，时间断查询
+                                      String startTime,
+                                      String endTime ) throws UnsupportedEncodingException {//根据用户，时间断查询
+
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println(empName + "===" + startTime + "===" + endTime);
+
+
+
         List<EchartsObj> echartsObjs = new ArrayList<EchartsObj>();
         //获取所有员工信息
         List<Employee> employeeList = empService.queryAllEmp(empName, null, null);
@@ -125,6 +136,40 @@ public class DicValueController {
             Double allPreBackPriceInteger = Double.parseDouble(allPreBackPrice);
             //================================================
             for (Project project : projects) {
+                System.out.println("============================"+project.getStartTime()+"=========================");
+                String proStartTimeStr = "";
+                String[] proSplit = project.getStartTime().split("-");
+                for (String s : proSplit) {
+                    proStartTimeStr += s;
+                }
+                //==============================
+               if(startTime != null && !startTime.equals("")){
+                   String conStartTimeStr = "";
+                   String[] con_split = startTime.split("-");
+                   for (String s : con_split) {
+                       conStartTimeStr += s;
+                   }
+                   System.out.println(conStartTimeStr+"===conStartTimeStr");
+                   //如果项目启动时间小于目标条件时间，则跳过
+                   if(Integer.parseInt(proStartTimeStr) < Integer.parseInt(conStartTimeStr)){
+                       System.out.println("true");
+                       continue;
+                   }
+               }
+                if(endTime != null && !endTime.equals("")){
+                    String conEndTimeStr = "";
+                    String[] con_split = endTime.split("-");
+                    for (String s : con_split) {
+                        conEndTimeStr += s;
+                    }
+                    System.out.println(conEndTimeStr+"===conEndTimeStr");
+                    //如果项目启动时间小于目标条件时间，则跳过
+                    if(Integer.parseInt(proStartTimeStr) > Integer.parseInt(conEndTimeStr)){
+                        System.out.println("true");
+                        continue;
+                    }
+                }
+                //==============================
                 String pMoney = project.getpMoeny();
 //                //会不会有W
 //                if (pMoney.contains("W")){

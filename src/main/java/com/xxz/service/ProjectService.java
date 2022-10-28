@@ -41,6 +41,7 @@ public class ProjectService {
     @Autowired
     private ProjectService projectService;
 
+
     /*查询所有项目*/
     public List<Project> queryAllProject(String pName, String pMoeny, String pProgress, String pOwner) throws UnsupportedEncodingException {
         System.out.println(pName + "-" + pMoeny + "-" + pProgress + "-" + pOwner);
@@ -51,20 +52,16 @@ public class ProjectService {
         //追加条件
         //请求参数乱码解决
         if (pName != null){
-            pName = URLDecoder.decode(pName, "UTF-8");
             criteria.andPNameLike("%" + pName + "%");
         }
 
         if(pMoeny != null && !pMoeny.equals("")){
-            pMoeny = URLDecoder.decode(pMoeny, "UTF-8");
             criteria.andPMoenyGreaterThanOrEqualTo(pMoeny);
         }
         if(pProgress != null && !pProgress.equals("")){
-            pProgress = URLDecoder.decode(pProgress, "UTF-8");
             criteria.andPProgressEqualTo(pProgress);
         }
         if(pOwner != null && !pOwner.equals("")){
-            pOwner = URLDecoder.decode(pOwner, "UTF-8");
             criteria.andPOwnerEqualTo(pOwner);
         }
         //查询所有项目

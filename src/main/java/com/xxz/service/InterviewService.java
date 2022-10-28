@@ -31,6 +31,12 @@ public class InterviewService {
 
     /*查询所有*/
     public List<Interview> queryAllInterview(String iCompany, String cRename, String eRename){
+
+        System.out.println(iCompany + "-" + cRename + "="  + eRename);
+        System.out.println(iCompany + "-" + cRename + "="  + eRename);
+        System.out.println(iCompany + "-" + cRename + "="  + eRename);
+        System.out.println(iCompany + "-" + cRename + "="  + eRename);
+
         //样本
         InterviewExample interviewExample = new InterviewExample();
         //条件盒子
@@ -44,13 +50,17 @@ public class InterviewService {
             CustomerExample customerExample = new CustomerExample();
             customerExample.createCriteria().andCRenameLike("%" + cRename + "%");
             List<Customer> customers = customerMapper.selectByExample(customerExample);
-            //获取当前客户对应的所有拜访记录
-            List<Integer> cids = new ArrayList<>();
-            for (Customer customer : customers) {
-                cids.add(customer.getcId());
+            if(customers.size() > 0){
+                //获取当前客户对应的所有拜访记录
+                List<Integer> cids = new ArrayList<>();
+                for (Customer customer : customers) {
+                    cids.add(customer.getcId());
+                }
+                //包含cids
+                criteria.andCIdIn(cids);
+            }else {
+                criteria.andCIdEqualTo(99999999);
             }
-            //包含cids
-            criteria.andCIdIn(cids);
         }
         if(eRename != null && !eRename.equals("")){
             //样本

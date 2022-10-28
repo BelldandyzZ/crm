@@ -48,8 +48,8 @@
                                     <div class="col-sm-2">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="1">开始时间</label>
-                                            <input type="date" id="1" name="cName" class="form-control" placeholder="所在单位">
+                                            <label for="con_startTime">开始时间</label>
+                                            <input type="date" id="con_startTime" name="cName" class="form-control" placeholder="所在单位">
                                         </div>
                                     </div>
                                     <div class="col-sm-1">
@@ -61,8 +61,8 @@
                                     <div class="col-sm-2">
                                         <!-- text input -->
                                         <div class="form-group">
-                                            <label for="2">结束时间</label>
-                                            <input type="date" id="2" name="cName" class="form-control" placeholder="所在单位">
+                                            <label for="con_endTime">结束时间</label>
+                                            <input type="date" id="con_endTime" name="cName" class="form-control" placeholder="所在单位">
                                         </div>
                                     </div>
 
@@ -127,15 +127,21 @@
     };
 
     //定义报表刷新方法
-    function freshFun(url){
+    function freshFun(empName, startTime, endTime){
+        alert("正在渲染");
         // 指定图表的配置项和数据
-        $.get(url).done(function(data) {
+        $.ajax({
+            url:`/crm/dic/echartsData?empName=${empName}&startTime=${startTime}&endTime=${endTime}`,
+            success:(res)=>{
+                console.log(res)
+            }
+        }).done(function(res) {
             myChart.hideLoading();
             myChart.setOption({
                 legend: {},
                 tooltip: {},
                 dataset: {
-                    source:data
+                    source:res
                 },
 
                 xAxis: {name:'合同金额'  },
@@ -151,12 +157,20 @@
     }
 
     //执行刷新报表
-    let con_cRename = sessionStorage.getItem("con_cRename");
-    if(con_cRename){
-        this.freshFun("/crm/dic/echartsData?empName="+con_cRename);
-    }else{
-        this.freshFun("/crm/dic/echartsData");
+    // let con_cRename = sessionStorage.getItem("con_cRename");
+    // let con_startTime = sessionStorage.getItem("con_startTime");
+    // let con_endTime = sessionStorage.getItem("con_endTime");
+    // if(con_cRename){
+    //     this.freshFun("/crm/dic/echartsData?empName="+con_cRename+"&startTime="+con_startTime+"&endTime="+con_endTime);
+    // }else{
+    //     this.freshFun("/crm/dic/echartsData");
+    // }
+    let data = {
+        empName:"",
+        startTime:"2022-10-1",
+        endTime:"2022-11-1"
     }
+    this.freshFun("","","");
 
 
     myChart.on('click', function(params) {
@@ -166,10 +180,40 @@
 
     /*事件*/
     $('#cusConditionBtn').click(function (){
-        let con_cRename = $('#con_cRename').val();
-        //将条件存储在域中
-        sessionStorage.setItem("con_cRename", con_cRename);
-        location.href = "/crm/echarts/toIndex";
+
+        let empName = $('#con_cRename').val();
+        let startTime = $('#con_startTime').val();
+        let endTime = $('#con_endTime').val();
+        // //将条件存储在域中
+        // sessionStorage.setItem("con_cRename", con_cRename);
+        // sessionStorage.setItem("con_startTime", con_startTime);
+        // sessionStorage.setItem("con_endTime", con_endTime);
+        // alert("正在渲染")
+        // this.freshFun(con_cRename,con_startTime,con_endTime);
+        $.ajax({
+            url:`/crm/dic/echartsData?empName=${empName}&startTime=${startTime}&endTime=${endTime}`,
+            success:(res)=>{
+                console.log(res)
+            }
+        }).done(function(res) {
+            myChart.hideLoading();
+            myChart.setOption({
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    source:res
+                },
+
+                xAxis: {name:'合同金额'  },
+
+                yAxis: {type: 'category',name:'员工'},
+
+                series: [
+                    { type: 'bar' , stack: 'x'},
+                    { type: 'bar' , stack: 'x'}
+                ]
+            })
+        })
         //执行刷新报表
         // this.freshFun("/crm/dic/echartsData?empName="+con_cRename);
     })

@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 public interface DicValueMapper {
-
     @Select("select code from type_dic where type = #{type}")
     String selectCodeByType(@Param("type") String type);
 
