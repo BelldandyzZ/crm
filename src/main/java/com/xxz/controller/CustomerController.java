@@ -159,6 +159,9 @@ public class CustomerController {
         //设置响应头和响应体格式，告诉浏览器是什么文件，对应解析
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
+
+
+
         response.setHeader("Content-disposition", "attachment;filename="
                 + URLEncoder.encode("客户信息", "UTF-8") + ".xlsx");
         //获取目标数据

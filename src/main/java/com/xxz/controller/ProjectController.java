@@ -142,7 +142,7 @@ public class ProjectController {
         return "redirect:/project/projects";
     }
 
-//拜访模块===================================================================================
+    //拜访模块===================================================================================
 //拜访模块===================================================================================
 //拜访模块===================================================================================
 //    /project/interview_record
@@ -164,7 +164,7 @@ public class ProjectController {
     }
 
 
-//合同模块===================================================================================
+    //合同模块===================================================================================
 //合同模块===================================================================================
 //合同模块===================================================================================
 //    /project/contract/contract_record
@@ -340,13 +340,10 @@ public class ProjectController {
             if (ctfileName.length() > 25) {
                 ctfileName = ctfileName.substring(ctfileName.length() - 25, ctfileName.length());
             }
-            System.out.println(ctfileName);
             contract.setCtContractDocment(ctfileName);
             //获取当前工程下photo目录的真实路径
             String photoRealPath = servletContext.getRealPath("/contracts");
-            System.out.println(photoRealPath);
             File parentFile = new File(photoRealPath).getParentFile().getParentFile().getParentFile();
-            System.out.println(parentFile.getPath() + "\\src\\main\\webapp\\contracts");
 
             //E:\idea-workspace\crm\src\main\webapp\contracts
             photoRealPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts";
@@ -363,7 +360,6 @@ public class ProjectController {
             }
             //拼接目标文件上传的路径
             String targetFileUploadPath = photoRealPath + File.separator + ctfileName;
-            System.out.println(targetFileUploadPath);
             //上传文件(根据目标文件上传路径)
             ctContractDocmentFile.transferTo(new File(targetFileUploadPath));
         }
@@ -377,13 +373,11 @@ public class ProjectController {
             if (tdfileName.length() > 25) {
                 tdfileName = tdfileName.substring(tdfileName.length() - 25, tdfileName.length());
             }
-            System.out.println(tdfileName);
             contract.setCtTenderDocment(tdfileName);
             //获取ServletContext对象
             //获取当前工程下photo目录的真实路径
             String photoRealPath2 = servletContext.getRealPath("/tenders");
             File parentFile2 = new File(photoRealPath2).getParentFile().getParentFile().getParentFile();
-            System.out.println(parentFile2.getPath() + "\\src\\main\\webapp\\tenders");
             photoRealPath2 = parentFile2.getPath() + "\\src\\main\\webapp\\tenders";
             //创建photoPath所对应的File对象
             File file2 = new File(photoRealPath2);
@@ -415,7 +409,7 @@ public class ProjectController {
         return stringObjectHashMap;
     }
 
-//回款模块===================================================================================
+    //回款模块===================================================================================
 //回款模块===================================================================================
 //回款模块===================================================================================
 //    /project/payment_back?
@@ -427,7 +421,6 @@ public class ProjectController {
 //        Integer startPbId = Integer.valueOf(pbId.toString().substring(0,2)) * 100;
         Integer startPbId = pbId;
         Integer endPbId = startPbId + 999;
-        System.out.println("--------------start=" + startPbId + "------end=" + endPbId);
         PageHelper.startPage(pageNum,  10);
         List<PaymentBack> paymentBackList = projectService.PbIdBetweenStartAndEnd(startPbId, endPbId);
         PageInfo<PaymentBack> payPageInfo = new PageInfo<>(paymentBackList, 5);
@@ -438,9 +431,7 @@ public class ProjectController {
         for (PaymentBack paymentBack : paymentBackList) {
             pbIds.add(paymentBack.getPbId());
         }
-        System.out.println("[pbId=======================]" + pbId);
-        System.out.println("[pbIds=======================]" + pbIds);
-         //有回款最大编号才返回----添加的时候到session里面获取+1即可
+        //有回款最大编号才返回----添加的时候到session里面获取+1即可
         if(pbIds.size() > 0){
             session.setAttribute("max_pbId", pbIds.last());
         }else{

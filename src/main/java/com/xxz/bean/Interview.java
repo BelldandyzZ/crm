@@ -41,17 +41,17 @@ public class Interview implements Serializable {
     private Integer cId;
 
     //业务设置列------------------------------------
-    @ExcelProperty(value = "客户人员", index = 2)
+    @ExcelProperty(value = "客户人员", index = 1)
     private String cRename;
     public String getcRename() {return cRename;}
     public void setcRename(String cRename) {this.cRename = cRename;}
     //-------------------------------------------
-    @ExcelProperty(value = "拜访时间", index = 3)
+    @ExcelProperty(value = "拜访时间", index = 2)
     private String iVisitTime;
 //    @ExcelProperty(value = "拜访类型编号", index = 4)
     private Integer pId;
     //业务设置列------------------------------------
-    @ExcelProperty(value = "拜访类型", index = 5)
+    @ExcelProperty(value = "拜访类型", index = 3)
     private String pName;
     public String getpName() {return pName;}
     public void setpName(String pName) {this.pName = pName;}
@@ -59,16 +59,16 @@ public class Interview implements Serializable {
 //    @ExcelProperty(value = "我方员工编号", index = 6)
     private Integer eId;
     //业务设置列------------------------------------
-    @ExcelProperty(value = "我方人员", index = 7)
+    @ExcelProperty(value = "我方人员", index = 4)
     private String eRename;
     public String geteRename() {return eRename;}
     public void seteRename(String eRename) {this.eRename = eRename;}
     //-------------------------------------------
-    @ExcelProperty(value = "其他人员", index = 8)
+    @ExcelProperty(value = "其他人员", index = 5)
     private String iOthers;
-    @ExcelProperty(value = "内容摘要", index = 9)
+    @ExcelProperty(value = "内容摘要", index = 6)
     private String iContent;
-    @ExcelProperty(value = "下一步计划", index = 11)
+    @ExcelProperty(value = "下一步计划", index = 7)
     private String iNext;
 
     private static final long serialVersionUID = 1L;

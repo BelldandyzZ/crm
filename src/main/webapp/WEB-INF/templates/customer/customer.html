@@ -479,15 +479,6 @@
         $('.updateCusBtn').click(function (){
             let cId = $(this).attr("tar-id");
 
-            /*
-            *             <td th:text="${cus.cRename}">1</td>
-                   <td th:text="${cus.cName}">1</td>
-                   <td th:text="${cus.cDepart}">1</td>
-                   <td th:text="${cus.cJob}">1</td>
-                   <td th:text="${cus.cTele}">1</td>
-                   <td th:text="${cus.cPost}">1</td>
-                   <td th:text="${cus.cHobby}">1</td>
-                   <td th:text="${cus.cRemark}">1</td>*/
 
             $.ajax({
                 url: "/crm/customer/queryById/" + cId,

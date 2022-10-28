@@ -267,7 +267,7 @@
                                         <td><a th:href=" @{'/project/contract_record?pId=' + ${pro.pId}}" class="card-link" th:text="${pro.pName}"></a></td>
                                         <td th:text="${pro.pMoeny == null or pro.pMoeny == ''} ? '无' : ${pro.pMoeny}"></td>
                                         <td th:text="${pro.pProgress == null or pro.pProgress == ''} ? '无' : ${pro.pProgress} " ></td>
-                                        <td th:text="${pro.pOwner == null or pro.pOwner == ''} ? '无' : ${pro.pOwner} "></td>
+                                        <td th:text="${pro.pOwner == null or pro.pOwner == ''} ? 'fadsfdsa' : ${pro.pOwner} "></td>
                                         <td th:text="${pro.cRenames.size == 0} ? '无' : ${pro.cRenames}"></td>
 
                                         <td><a th:href="@{'/project/interview_record?cIds=' + ${pro.cIds} + '&pId=' + ${pro.pId}}">点击查看详情</a></td>
