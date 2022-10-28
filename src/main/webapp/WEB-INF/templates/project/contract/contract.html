@@ -35,7 +35,7 @@
                                        <div class="form-group">
                                            <input type="hidden" name="pId" th:value="${pId}">
                                           <label>合同金额</label>
-                                          <input type="text"  name="ctContractAmount" class="form-control">
+                                          <input type="number"  placeholder="请输入合同金额" name="ctContractAmount" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
@@ -49,7 +49,7 @@
                                       <span class="col-sm-6 col-md-6">
                                            <div class="form-group">
                                               <label>招标金额</label>
-                                              <input type="text"  name="ctTenderAmount" class="form-control">
+                                              <input type="number" placeholder="请输入招标金额"  name="ctTenderAmount" class="form-control">
                                           </div>
                                       </span>
                                         <span class="col-sm-6 col-md-6">
@@ -96,7 +96,7 @@
                                              <input type="hidden" name="pId" th:value="${pId}">
                                            <!--修改主键-->
                                             <input type="hidden" id="ctId" name="ctId" th:value="${ctId}">
-                                          <input type="text" id="ctContractAmount" name="rename" class="form-control">
+                                          <input type="number" placeholder="请输入合同金额" id="ctContractAmount" name="rename" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
@@ -110,7 +110,7 @@
                                       <span class="col-sm-6 col-md-6">
                                            <div class="form-group">
                                               <label>招标金额</label>
-                                              <input type="text" id="ctTenderAmount"  name="ctTenderAmount" class="form-control">
+                                              <input type="number" placeholder="请输入招标金额" id="ctTenderAmount"  name="ctTenderAmount" class="form-control">
                                           </div>
                                       </span>
                                         <span class="col-sm-6 col-md-6">
@@ -179,14 +179,15 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="con,conState:${conPageInfo.list}">
-                                        <td th:text="${con.ctContractAmount}"></td>
+                                        <td th:text="${con.ctContractAmount == null or con.ctContractAmount == ''} ? '无' :${con.ctContractAmount}"></td>
                                         <td>
                                             <a th:if="${con.ctContractDocment  != '' and con.ctContractDocment != null}" th:href="@{'/project/conownloadCon/'+${con.ctContractDocment}}">合同文件下载</a>
-<!--                                            <a th:if="${con.ctContractDocment} == null" href="javascript:void (0)">合同文件下载</a>-->
+                                            <a th:if="${con.ctContractDocment  == '' or con.ctContractDocment == null}">无</a>
                                         </td>
-                                        <td th:text="${con.ctTenderAmount}"></td>
+                                        <td th:text="${con.ctTenderAmount == null or con.ctTenderAmount == ''}? '无' : ${con.ctTenderAmount}"></td>
                                         <td>
                                             <a th:if="${con.ctTenderDocment  != '' and con.ctTenderDocment != null}" th:href="@{'/project/conownloadTen/'+${con.ctTenderDocment}}">招标文件下载</a>
+                                            <a th:if="${con.ctTenderDocment  == '' or con.ctTenderDocment == null}">无</a>
                                         </td>
                                         <td>
                                             <button type="button" th:tar-id="${con.ctId}" class="btn  btn-sm btn-info updateConBtn" data-toggle="modal" data-target="#update_con">修改</button>

@@ -383,22 +383,6 @@
                               <button th:if="${session.permissions.contains('1040')}" type="button" th:tar-id="${cus.cId}" class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button>
                           </td>
                     </tr>
-<!--                  <tr>-->
-<!--                      <td>Jack</td>-->
-<!--                      <td>张家界航院</td>-->
-<!--                      <td>学校</td>-->
-<!--                      <td>教务处</td>-->
-<!--                      <td>教务处主任</td>-->
-<!--                      <td>10086</td>-->
-<!--                      <td>10086@qq.com</td>-->
-<!--                      <td>rap</td>-->
-<!--                      <td>爱好rap</td>-->
-<!--                      <td>-->
-<!--                          &lt;!&ndash;&ndash;&gt;-->
-<!--                          <button type="button" class="btn  btn-danger btn-sm confirmsCus">删除</button>-->
-<!--                          <button type="button"  class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button>-->
-<!--                      </td>-->
-<!--                  </tr>-->
                   </tbody>
                 </table>
                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
@@ -480,13 +464,10 @@
             console.log(cRename + "-" + cJob + "-" + cName)
             location.href = "/crm/customer/customers?cRename="+cRename+"&cJob="+cJob+"&cName="+cName;
         })
-        // $('#conditionBtn').click(function (){
-        //     $('#conForm').submit();
-        // })
 
         //删除的确定弹窗
         $(".confirmsCus").click(function () {
-            if(confirm("确定删除该记录？")){
+            if(confirm("删除该客户,对应的访谈记录会强制删除,确定删除该记录？")){
                 let cId = $(this).attr("tar-id");
                 location.href = "/crm/customer/del/" + cId;
             }

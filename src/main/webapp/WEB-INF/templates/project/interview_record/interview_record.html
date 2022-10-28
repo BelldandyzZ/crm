@@ -56,17 +56,17 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="itw,itwState:${itwRecordPageInfo.list}">
-                                        <td th:text="${itw.iCompany}">1</td>
+                                        <td th:text="${itw.iCompany == null or itw.iCompany == ''} ? '无' : ${itw.iCompany} "></td>
                                         <!--cId-->
-                                        <td th:text="${itw.cRename}">1</td>
-                                        <td th:text="${itw.iVisitTime}">1</td>
+                                        <td th:text="${itw.cRename == null or itw.cRename == ''} ? '无' : ${itw.cRename} "></td>
+                                        <td th:text="${itw.iVisitTime == null or itw.iVisitTime == ''} ? '无' : ${itw.iVisitTime} " ></td>
                                         <!--pId-->
-                                        <td th:text="${itw.pName}">1</td>
+                                        <td th:text="${itw.pName == null or itw.pName == ''} ? '无' : ${itw.pName} " ></td>
                                         <!--eId-->
-                                        <td th:text="${itw.eRename}">1</td>
-                                        <td th:text="${itw.iOthers}">1</td>
-                                        <td th:text="${itw.iContent}">1</td>
-                                        <td th:text="${itw.iNext}">1</td>
+                                        <td th:text="${itw.eRename == null or itw.eRename == ''} ? '无' : ${itw.eRename} " ></td>
+                                        <td th:text="${itw.iOthers == null or itw.iOthers == ''} ? '无' : ${itw.iOthers} " ></td>
+                                        <td th:text="${itw.iContent == null or itw.iContent == ''} ? '无' : ${itw.iContent} " ></td>
+                                        <td th:text="${itw.iNext == null or itw.iNext == ''} ? '无' : ${itw.iNext} " ></td>
                                     </tr>
 <!--                                    <tr>-->
 <!--                                        <td>1</td>-->

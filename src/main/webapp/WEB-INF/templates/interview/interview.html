@@ -35,15 +35,14 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label>客户单位</label>
-                                          <input type="text"  name="iCompany" class="form-control" required placeholder="请输入客户单位">
+                                          <label><span style="color: red">*</span>客户单位</label>
+                                          <input type="text"  name="iCompany"  class="form-control" required placeholder="请输入客户单位">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="">客户人员</label>
+                                          <label for=""><span style="color: red">*</span>客户人员</label>
                                           <div class="select2-purple">
-                                              <!--multiple="multiple"多选属性-->
                                         <select required name="cRenames" class="select2" multiple="multiple" data-placeholder="请选择客户人员" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                            <option th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}">全部</option>
                                         </select>
@@ -54,14 +53,14 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="iVisitTime">拜访时间</label>
+                                          <label for="iVisitTime"><span style="color: red">*</span>拜访时间</label>
                                           <input type="date" name="iVisitTime" class="form-control" required>
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label>拜访类型</label>
-                                          <select name="pName" class="form-control custom-select" required>
+                                          <select name="pName" class="form-control custom-select">
                                               <option value="0">日常访谈</option>
                                               <option value="-1">其他</option>
                                               <option th:each="pname:${session.pNames}" th:text="${pname}" th:value="${pname}"></option>
@@ -72,8 +71,9 @@
                                     <div class="row">
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label>我方人员</label>
-                                      <select name="eRename" class="form-control custom-select" required>
+                                      <label><span style="color: red">*</span>我方人员</label>
+                                      <select  name="eRename" class="form-control custom-select" required>
+                                          <option value="">无</option>
                                          <option th:each="eRename,empState:${eRenameSet}" th:text="${eRename}" th:value="${eRename}">全部</option>
                                       </select>
                                   </div>
@@ -81,7 +81,7 @@
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label>其他人员</label>
-                                      <input type="text" name="iOthers" class="form-control" placeholder="请输入其他人员" required>
+                                      <input type="text" name="iOthers" class="form-control" placeholder="请输入其他人员" >
                                   </div>
                               </span>
                                     </div>
@@ -132,15 +132,15 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label>客户单位</label>
+                                          <label><span style="color: red">*</span>客户单位</label>
                                            <input type="hidden" id="iId" name="iId">
-                                          <input type="text" id="iCompany"  name="iCompany" class="form-control" required placeholder="请输入客户单位">
+                                          <input type="text" id="iCompany"   name="iCompany" class="form-control" required placeholder="请输入客户单位">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label>客户人员</label>
-                                           <select id="cRename" name="cRename" class="form-control custom-select" style="width: 100%;">
+                                          <label><span style="color: red">*</span>客户人员</label>
+                                           <select required id="cRename" name="cRename" class="form-control custom-select" style="width: 100%;">
                                                <option th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}">全部</option>
                                             </select>
                                       </div>
@@ -149,8 +149,8 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="iVisitTime">拜访时间</label>
-                                          <input id="iVisitTime" type="date"  name="iVisitTime" class="form-control" required>
+                                          <label for="iVisitTime"><span style="color: red">*</span>拜访时间</label>
+                                          <input  id="iVisitTime" type="date"  name="iVisitTime" class="form-control" required>
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
@@ -167,8 +167,8 @@
                                     <div class="row">
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="owner">我方人员</label>
-                                      <select id="owner" name="eRename" class="form-control custom-select" required>
+                                      <label for="owner"><span style="color: red">*</span>我方人员</label>
+                                      <select id="owner" required  name="eRename" class="form-control custom-select" >
                                          <option th:each="eRename,empState:${eRenameSet}" th:text="${eRename}" th:value="${eRename}">全部</option>
                                       </select>
 
@@ -177,7 +177,7 @@
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
                                       <label for="iOthers">其他人员</label>
-                                      <input type="text" id="iOthers"  name="iOthers" class="form-control" placeholder="请输入其他人员" required>
+                                      <input type="text" id="iOthers"  name="iOthers" class="form-control" placeholder="请输入其他人员" >
                                   </div>
                               </span>
                                     </div>
@@ -232,10 +232,6 @@
                                         <div class="form-group">
                                             <label for="con_iCompany">客户单位</label>
                                             <input type="text" id="con_iCompany" th:value="${iCompany}" name="iCompany" class="form-control" placeholder="请输入客户单位" value="">
-<!--                                            <select id="con_iCompany" name="iCompany" class="form-control">-->
-<!--                                                <option value="">全部</option>-->
-<!--                                                <option th:each="company,cusState:${companySet}" th:text="${company}" th:value="${company}">全部</option>-->
-<!--                                            </select>-->
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
@@ -243,10 +239,6 @@
                                         <div class="form-group">
                                             <label for="con_cRename">客户名称</label>
                                             <input type="text" id="con_cRename"th:value="${cRename}" name="cRename" class="form-control" placeholder="请输入客户名称">
-<!--                                            <select id="con_cRename" name="cRename" class="form-control">-->
-<!--                                                <option value="">全部</option>-->
-<!--                                                <option th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}">全部</option>-->
-<!--                                            </select>-->
                                         </div>
 
                                     </div>
@@ -297,9 +289,6 @@
                                     </div>
                                 </div>
 
-                                <!--                  <h1 th:text="${empList}"></h1>-->
-                                <!--                  <h1 th:text="${session.emp}"></h1>-->
-                                <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
                                 <table id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
@@ -316,17 +305,17 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="itw,itwState:${itwPageInfo.list}">
-                                        <td th:text="${itw.iCompany}">1</td>
+                                        <td th:text="${itw.iCompany == null or itw.iCompany == ''} ? '无' : ${itw.iCompany} "></td>
                                         <!--cId-->
-                                        <td th:text="${itw.cRename}">1</td>
-                                        <td th:text="${itw.iVisitTime}">1</td>
+                                        <td th:text="${itw.cRename == null or itw.cRename == ''} ? '无' : ${itw.cRename} "></td>
+                                        <td th:text="${itw.iVisitTime == null or itw.iVisitTime == ''} ? '无' : ${itw.iVisitTime} " ></td>
                                         <!--pId-->
-                                        <td th:text="${itw.pName}">1</td>
+                                        <td th:text="${itw.pName == null or itw.pName == ''} ? '无' : ${itw.pName} " ></td>
                                         <!--eId-->
-                                        <td th:text="${itw.eRename}">1</td>
-                                        <td th:text="${itw.iOthers}">1</td>
-                                        <td th:text="${itw.iContent}">1</td>
-                                        <td th:text="${itw.iNext}">1</td>
+                                        <td th:text="${itw.eRename == null or itw.eRename == ''} ? '无' : ${itw.eRename} " ></td>
+                                        <td th:text="${itw.iOthers == null or itw.iOthers == ''} ? '无' : ${itw.iOthers} " ></td>
+                                        <td th:text="${itw.iContent == null or itw.iContent == ''} ? '无' : ${itw.iContent} " ></td>
+                                        <td th:text="${itw.iNext == null or itw.iNext == ''} ? '无' : ${itw.iNext} " ></td>
                                         <td>
                                             <button type="button" th:tar-id="${itw.iId}" class="btn  btn-danger btn-sm confirmsItw">删除</button>
                                             <button type="button" th:tar-id="${itw.iId}" class="btn  btn-sm btn-info updateItwBtn" data-toggle="modal" data-target="#update_itw">修改</button>

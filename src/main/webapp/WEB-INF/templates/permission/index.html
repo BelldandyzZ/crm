@@ -46,7 +46,7 @@
                     <tr>
                         <th>编号</th>
                         <th>角色名</th>
-                        <th>备注</th>
+                        <th>角色备注</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -56,7 +56,7 @@
                         <td th:text="${role.rName}"></td>
                         <td th:text="${role.rRemark}"></td>
                         <td>
-                            <a type="button" th:href="@{'/permission/eraseRole/'+${role.rId}}" class="btn  btn-danger btn-sm confirms">删除</a>
+                            <a type="button" th:data-id="${role.rId}" class="btn  btn-danger btn-sm confirms delete_role">删除</a>
                             <a type="button"  th:data-id="${role.rId}" class="to_update btn  btn-sm btn-info updateEmpBtn" data-toggle="modal">修改</a>
                             <a type="button"  th:data-id="${role.rId}" class="btn  btn-primary btn-sm confirms openPermissionModal"  data-toggle="modal">资源绑定</a>
                         </td>
@@ -236,7 +236,6 @@
             let rId = $('#edit_rId').val();
             let rName = $('#edit_rName').val();
             let rRemark = $('#edit_rRemark').val();
-
             $.ajax({
                 url:encodeURI('permission/editRole'),
                 data:{rId,rName,rRemark},
@@ -299,6 +298,16 @@
 
 
         }
+
+        //删除角色
+        $('.delete_role').click(function () {
+            let isOk =  confirm("是否确定删除该角色");
+            let roleId = $(this).attr('data-id');
+            if(isOk){
+                location.href = "permission/eraseRole/"+roleId;
+            }
+            return false;
+        })
 
     })
 

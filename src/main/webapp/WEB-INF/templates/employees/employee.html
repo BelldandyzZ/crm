@@ -39,7 +39,7 @@
                                             <ul>
                                                 <li>操作仅针对Excel，仅支持后缀名为xlsx的文件。</li>
                                                 <li>请确认您的文件大小不超过5MB。</li>
-                                                <li>时间请采用xxxxx的格式填写</li>
+                                                <li>时间请采用xxxx-xx-xx的格式填写,如2000-01-01</li>
                                                 <li>默认情况下，字符编码是UTF-8 (统一码)，请确保您导入的文件使用的是正确的字符编码方式。</li>
                                                 <li>建议您在导入真实数据之前用测试文件测试文件导入功能。</li>
                                                 <li>
@@ -92,7 +92,7 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="rename">员工姓名</label>
+                                          <label for="rename"><span style="color: red">*</span>员工姓名</label>
                                           <input type="text"  name="rename" class="form-control" required placeholder="请输入员工姓名">
                                       </div>
                                   </span>
@@ -106,13 +106,13 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="eName">登录账户</label>
+                                          <label for="eName"><span style="color: red">*</span>登录账户</label>
                                           <input type="text"  name="eName" class="form-control" required placeholder="请输入登录账户">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="ePwd">登录密码</label>
+                                          <label for="ePwd"><span style="color: red">*</span>登录密码</label>
                                           <input type="text"  name="ePwd" class="form-control" required placeholder="请输入登录密码">
                                       </div>
                                   </span>
@@ -171,7 +171,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="">关闭</button>
-                        <button type="submit" class="btn btn-primary" id="">保存</button>
+                        <button type="submit" class="btn btn-primary" >保存</button>
                     </div>
                 </form>
             </div>
@@ -194,9 +194,9 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="rename">员工姓名</label>
+                                          <label for="rename"><span style="color:red;">*</span>员工姓名</label>
                                            <input type="hidden" id="eId" name="eId">
-                                          <input type="text" id="rename" name="rename" class="form-control" placeholder="请输入员工姓名">
+                                          <input required type="text" id="rename" name="rename" class="form-control" placeholder="请输入员工姓名">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
@@ -209,14 +209,14 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label for="eName">登录账户</label>
-                                          <input type="text" placeholder="请输入登录账户" id="eName" name="eName" class="form-control">
+                                          <label for="eName"><span style="color:red;">*</span>登录账户</label>
+                                          <input type="text" required placeholder="请输入登录账户" id="eName" name="eName" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="ePwd">登录密码</label>
-                                          <input type="text" id="ePwd" name="ePwd" class="form-control" placeholder="请输入登录密码">
+                                          <label for="ePwd"><span style="color:red;">*</span>登录密码</label>
+                                          <input type="text" required id="ePwd" name="ePwd" class="form-control" placeholder="请输入登录密码">
                                       </div>
                                   </span>
                                     </div>
@@ -244,8 +244,8 @@
                                         </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label for="eJob">所任职务</label>
-                                      <select id="eJob" name="eJob" class="form-control custom-select">
+                                      <label for="eJob"><span style="color:red;">*</span>所任职务</label>
+                                      <select id="eJob"  name="eJob" required class="form-control custom-select">
                                           <option th:each="job:${session.jobTypes}" th:text="${job}" th:value="${job}">售后</option>
                                       </select>
                                   </div>
@@ -273,7 +273,7 @@
                     </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="">关闭</button>
-                    <button type="submit" class="btn btn-primary" id="">保存</button>
+                    <button type="submit" class="btn btn-primary" >保存</button>
                 </div>
                 </form>
             </div>
@@ -298,7 +298,6 @@
                                         <div class="select2-purple">
                                             <input type="hidden" id="emp_id">
                                             <select required id="roleContainer" class="select2" multiple="multiple" data-placeholder="选择" data-dropdown-css-class="select2-purple" style="width: 100%;">
-
                                             </select>
 
                                         </div>
@@ -398,8 +397,6 @@
                                     </div>
                                 </div>
 
-                                <!--                  <h1 th:text="${empList}"></h1>-->
-                                <!--                  <h1 th:text="${session.emp}"></h1>-->
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
                                 <table id="table_data" class="table table-bordered table-hover">
                                     <thead>
@@ -418,15 +415,15 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="emp,empState : ${empPageInfo.list}">
-                                        <td th:text="${emp.rename}"></td>
-                                        <td th:text="${emp.eName}"></td>
-                                        <td th:text="${emp.eBirthday}"></td>
-                                        <td th:text="${emp.eSchool}"></td>
-                                        <td th:text="${emp.eJob}"></td>
-                                        <td th:text="${emp.eStartTime}"></td>
-                                        <td th:text="${emp.eSocialPosition}"></td>
-                                        <td th:text="${emp.eHonor}"></td>
-                                        <td th:text="${emp.eRemark}"></td>
+                                        <td th:text="${emp.rename == null or emp.rename == ''} ? '无' : ${emp.rename}"></td>
+                                        <td th:text="${emp.eName == null or emp.eName == ''}  ? '无' : ${emp.eName}"></td>
+                                        <td th:text="${emp.eBirthday == null or emp.eBirthday == ''}  ? '无' : ${emp.eBirthday}"></td>
+                                        <td th:text="${emp.eSchool == null or emp.eSchool == ''}  ? '无' : ${emp.eSchool}"></td>
+                                        <td th:text="${emp.eJob == null or emp.eJob == ''}  ? '无' : ${emp.eJob}"></td>
+                                        <td th:text="${emp.eStartTime == null or emp.eStartTime == ''} ? '无' : ${emp.eStartTime}"></td>
+                                        <td th:text="${emp.eSocialPosition == null or emp.eSocialPosition == ''} ? '无' : ${emp.eSocialPosition}"></td>
+                                        <td th:text="${emp.eHonor == null or emp.eHonor == ''} ? '无' : ${emp.eHonor}"></td>
+                                        <td th:text="${emp.eRemark == null or emp.eRemark == ''} ? '无' : ${emp.eRemark}"></td>
                                         <td>
                                             <button type="button" th:tar-id="${emp.eId}" class="btn  btn-danger btn-sm confirms">删除</button>
                                             <button type="button" th:tar-id="${emp.eId}" class="btn  btn-sm btn-info updateEmpBtn" data-toggle="modal" data-target="#update_emp">修改</button>
@@ -589,7 +586,6 @@
                     for(role of empOfRoleList){
                         empOfRoleArr.push(role.rId);
                     }
-                    console.log('empOfRoleArr:'+empOfRoleArr)
                     $('.select2').val(empOfRoleArr).trigger('change');
                     $('#roleModal').modal('show');
                 }
@@ -617,40 +613,6 @@
             })
         })
 
-
-
-/*
-
-        //数据的分页
-        $('#table_data').DataTable(
-          {
-          "language": {
-            "sProcessing": "处理中...",
-           "sLengthMenu": "显示 _MENU_ 项结果",
-           "sZeroRecords": "没有匹配结果",
-           "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-           "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-           "sInfoPostFix": "",
-           "sSearch": "搜索:",
-           "sUrl": "",
-           "sEmptyTable": "表中数据为空",
-           "sLoadingRecords": "载入中...",
-           "sInfoThousands": ",",
-            "oPaginate":{
-              "sFirst": "首页",
-               "sPrevious": "上页",
-               "sNext": "下页",
-               "sLast": "末页"
-            }
-            },
-          "paging": true,
-          "lengthChange": false,
-          "searching": false,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false,
-          "responsive": true,
-        });*/
     });
 </script>
 </body>

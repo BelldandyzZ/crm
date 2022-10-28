@@ -35,14 +35,14 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label>项目名称</label>
-                                            <input type="text" name="pName" class="form-control" required placeholder="请输入项目名称">
+                                          <label><span style="color: red">*</span>项目名称</label>
+                                            <input required type="text" name="pName" class="form-control"  placeholder="请输入项目名称">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label>项目总金额</label>
-                                          <input type="text" name="pMoeny" class="form-control" required placeholder="请输入项目总金额">
+                                          <input type="number" name="pMoeny" class="form-control"  placeholder="请输入项目总金额">
                                     </div>
 
                                   </span>
@@ -51,28 +51,28 @@
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
                                           <label>项目进度</label>
-                                          <select name="pProgress" class="form-control custom-select" required>
+                                          <select name="pProgress" class="form-control custom-select" >
                                                <option th:each="job:${session.progressTypes}" th:text="${job}" th:value="${job}">售后</option>
                                             </select>
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label >项目负责人</label>
-                                          <select  name="pOwner" class="form-control custom-select">
+                                          <label ><span style="color: red">*</span>项目负责人</label>
+                                          <select required name="pOwner" class="form-control custom-select">
+                                              <option value="" selected>无</option>
                                                  <option th:each="eRename,empState:${eRenameSet}" th:text="${eRename}" th:value="${eRename}">全部</option>
-                                      </select>
+                                            </select>
                                       </div>
                                   </span>
                                     </div>
                                     <div class="row">
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label>客户参与人员</label>
+                                      <label><span style="color: red">*</span>客户参与人员</label>
                                       <div class="select2-purple">
-                                          <select class="select2" name="cRenames" multiple="multiple" data-placeholder="选择"
-                                                  data-dropdown-css-class="select2-purple" style="width: 100%;" required>
-                                          <option th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}">全部</option>
+                                          <select required class="select2" name="cRenames" multiple="multiple" data-placeholder="选择"  data-dropdown-css-class="select2-purple" style="width: 100%;" >
+                                                <option th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}"></option>
                                         </select>
                                       </div>
 
@@ -112,14 +112,14 @@
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
                                            <input id="pId" name="pId" type="hidden">
-                                          <label for="pName">项目名称</label>
-                                            <input type="text" id="pName" name="pName" class="form-control" required placeholder="请输入项目名称">
+                                          <label for="pName"><span style="color: red">*</span>项目名称</label>
+                                            <input required  type="text" id="pName" name="pName" class="form-control"  placeholder="请输入项目名称">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
                                           <label for="pMoeny">项目总金额</label>
-                                          <input type="text" id="pMoeny" name="pMoeny" class="form-control" required placeholder="请输入项目总金额">
+                                          <input type="number" id="pMoeny" name="pMoeny" class="form-control"  placeholder="请输入项目总金额">
 
                                     </div>
 
@@ -130,15 +130,16 @@
                                        <div class="form-group">
                                           <label for="pProgress">项目进度</label>
                                           <select id="pProgress" name="pProgress" class="form-control custom-select">
-                                                 <option th:each="job:${session.progressTypes}" th:text="${job}" th:value="${job}" >售后</option>
+                                                 <option th:each="job:${session.progressTypes}" th:text="${job}" th:value="${job}" ></option>
                                             </select>
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
                                       <div class="form-group">
-                                          <label for="pOwner">项目负责人</label>
-                                          <select id="pOwner" name="pOwner" class="form-control custom-select" required>
-                                               <option th:each="eRename,empState:${eRenameSet}" th:text="${eRename}" th:value="${eRename}">全部</option>
+                                          <label for="pOwner"><span style="color: red">*</span>项目负责人</label>
+                                          <select required id="pOwner" name="pOwner" class="form-control custom-select" >
+                                              <option value="">无</option>
+                                               <option th:each="eRename,empState:${eRenameSet}" th:text="${eRename}" th:value="${eRename}"></option>
                                       </select>
                                       </div>
                                   </span>
@@ -146,11 +147,10 @@
                                     <div class="row">
                               <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label id="laberCrename" for="cRenames"></label>
+                                      <label id="laberCrename" for="cRenames"><span style="color: red">*</span>客户参与人员</label>
                                       <div class="select2-purple">
-                                          <select class="select2" id="cRenames" name="cRenames" multiple="multiple" data-placeholder="选择"
-                                                  data-dropdown-css-class="select2-purple" style="width: 100%;" required>
-                                            <option class="updateProCrenameItem" th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}">全部</option>
+                                          <select required class="select2"  id="cRenames" name="cRenames" multiple="multiple" data-placeholder="选择"  data-dropdown-css-class="select2-purple" style="width: 100%;" >
+                                            <option class="updateProCrenameItem" th:each="cRename,cusState:${cRenameSet}" th:text="${cRename}" th:value="${cRename}"></option>
                                         </select>
                                       </div>
 
@@ -197,11 +197,9 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_pMoeny">项目总金额</label>
-                                            <input type="text" id="con_pMoeny" th:value="${pMoeny}" name="pMoeny" class="form-control" placeholder="项目总金额">
+                                            <input type="number" id="con_pMoeny" th:value="${pMoeny}" name="pMoeny" class="form-control" placeholder="项目总金额">
                                         </div>
-
                                     </div>
-
                                     <div class="col-sm-2">
                                         <!-- text input -->
                                         <div class="form-group">
@@ -251,9 +249,6 @@
                             <div class="card-body">
 
 
-                                <!--                  <h1 th:text="${empList}"></h1>-->
-                                <!--                  <h1 th:text="${session.emp}"></h1>-->
-                                <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
                                 <table id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
@@ -269,22 +264,14 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="pro,proState:${proPageInfo.list}">
-                                        <td><a th:href=" @{'/project/contract_record?pId=' + ${pro.pId}}" class="card-link" th:text="${pro.pName}">工地项目(点击查看对应的合同表)</a></td>
-                                        <td th:text="${pro.pMoeny}">100w</td>
-                                        <td th:text="${pro.pProgress}">招标</td>
-                                        <td th:text="${pro.pOwner}">我是员工A</td>
-                                        <!--cpId：th:text="${pro.cRenames}"-->
-                                        <td th:if="${pro.cRenames.size == 0}">待定</td>
-                                        <td th:if="${pro.cRenames.size != 0}" th:text="${pro.cRenames}">
-<!--                                            <span th:each="cRename:${pro.cRenames}" th:text="${cRename}"></span>|-->
-<!--                                            <select class="form-control custom-select">-->
-<!--                                                <option style="display: block;height: 50px;line-height: 50px;" th:each="cRename : ${pro.cRenames}" th:text="${cRename}" th:value="${cRename}"></option>-->
-<!--                                            </select>-->
-                                        </td>
-                                        <!--下啦-->
-<!--                                        <td><a th:href="@{'/interview/interviews?cRename=' + ${pro.cRename}}">拜访记录（点击查看详情）</a></td>-->
+                                        <td><a th:href=" @{'/project/contract_record?pId=' + ${pro.pId}}" class="card-link" th:text="${pro.pName}"></a></td>
+                                        <td th:text="${pro.pMoeny == null or pro.pMoeny == ''} ? '无' : ${pro.pMoeny}"></td>
+                                        <td th:text="${pro.pProgress == null or pro.pProgress == ''} ? '无' : ${pro.pProgress} " ></td>
+                                        <td th:text="${pro.pOwner == null or pro.pOwner == ''} ? '无' : ${pro.pOwner} "></td>
+                                        <td th:text="${pro.cRenames.size == 0} ? '无' : ${pro.cRenames}"></td>
+
                                         <td><a th:href="@{'/project/interview_record?cIds=' + ${pro.cIds} + '&pId=' + ${pro.pId}}">点击查看详情</a></td>
-                                        <td><a th:href="@{'/project/payment_back?pbId=' + ${pro.pbId} + '&pId=' + ${pro.pId}}" class="card-link" th:text="${pro.total}">2004534</a>
+                                        <td><a th:href="@{'/project/payment_back?pbId=' + ${pro.pbId} + '&pId=' + ${pro.pId}}" class="card-link" th:text="${pro.total}"></a>
                                         </td>
                                         <td>
                                             <button  type="button" th:tar-id="${pro.pId}" class="btn  btn-danger btn-sm confirmsDelPro">删除</button>
@@ -365,7 +352,6 @@
         let pMoeny = $('#con_pMoeny').val();
         let pProgress = $('#con_pProgress').val();
         let pOwner = $('#con_pOwner').val();
-        console.log(pName + "-" + pMoeny + "-" + pProgress + "-" + pOwner)
         location.href = "/crm/project/projects?pName="+pName+"&pMoeny="+pMoeny+"&pProgress="+pProgress+"&pOwner="+pOwner;
     })
 
@@ -373,48 +359,23 @@
     //修改按钮
     $('.updateProBtn').click(function (){
         let pId = $(this).attr("tar-id");
- /*
-        <td><a th:href=" @{'/project/contract_record?pId=' + ${pro.pId}}" class="card-link" th:text="${pro.pName}">工地项目(点击查看对应的合同表)</a></td>
-        <td th:text="${pro.pMoeny}">100w</td>
-        <td th:text="${pro.pProgress}">招标</td>
-        <td th:text="${pro.pOwner}">我是员工A</td>
-        <!--cpId-->
-        <td th:text="${pro.cRenames}">
-<!--        <span th:each="cRename,${pro.cRenames}" th:text="${cRename}"></span>|-->
-        </td>
-<!--    <td><a th:href="@{'/interview/interviews?cRename=' + ${pro.cRename}}">拜访记录（点击查看详情）</a></td>-->
-        <td><a th:href="@{'/project/interview_record?cIds=' + ${pro.cIds}}">拜访记录（点击查看详情）</a></td>
-        <td><a th:href="@{'/project/payment_back?pbId=' + ${pro.pbId} + '&pId=' + ${pro.pId}}" class="card-link">回款金额之和：55w(点击查看对应的回款记录)</a>
-        </td>
-  * */
+
         $.ajax({
             url: "/crm/project/queryById/" + pId,
             type: "get",
             datatype: "json",
             success: function (res){
-                console.log(res);
                 let pro = res.data;
                 $('#pId').val(pro.pId);
                 $('#pName').val(pro.pName);
                 $('#pMoeny').val(pro.pMoeny);
                 $('#pProgress').val(pro.pProgress);
                 $('#pOwner').val(pro.pOwner);
-                $('#laberCrename').text('客户参与人员[' + pro.cRenames + ']')
-                //便利判断
-                // $('.updateProCrenameItem').each(function (){
-                //     for (let i = 0; i < pro.cRenames.length; i++){
-                //         if($(this).text() == pro.cRenames[i]){
-                //             console.log($(this).text() == pro.cRenames[i])
-                //             // console.log($(this).text())
-                //             // console.log(pro.cRenames[i])
-                //             console.log("selected:" + $(this).prop("selected"))
-                //             $(this).prop("selected", true);
-                //             // selected="false"
-                //         }
-                //     }
-                // })
-                // alert(pro.cRenames[0]);
-                // $('#cRenames').val(pro.cRenames[0]);
+                let idArr = [];
+                for(let id of pro.cRenames){
+                    idArr.push(id);
+                }
+                $('.select2').val(idArr).trigger('change');
             }
         })
     })
@@ -439,36 +400,6 @@
            }
         })
 
-        //数据的分页
-        // $('#table_data').DataTable(
-        //     {
-        //         "language": {
-        //             "sProcessing": "处理中...",
-        //             "sLengthMenu": "显示 _MENU_ 项结果",
-        //             "sZeroRecords": "没有匹配结果",
-        //             "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-        //             "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-        //             "sInfoPostFix": "",
-        //             "sSearch": "搜索:",
-        //             "sUrl": "",
-        //             "sEmptyTable": "表中数据为空",
-        //             "sLoadingRecords": "载入中...",
-        //             "sInfoThousands": ",",
-        //             "oPaginate": {
-        //                 "sFirst": "首页",
-        //                 "sPrevious": "上页",
-        //                 "sNext": "下页",
-        //                 "sLast": "末页"
-        //             }
-        //         },
-        //         "paging": true,
-        //         "lengthChange": false,
-        //         "searching": false,
-        //         "ordering": true,
-        //         "info": true,
-        //         "autoWidth": false,
-        //         "responsive": true,
-        //     });
     });
 </script>
 </body>
