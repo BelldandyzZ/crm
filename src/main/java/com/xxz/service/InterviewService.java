@@ -84,7 +84,7 @@ public class InterviewService {
                     interview.setcRename(customer.getcRename());
                 }else{
 //                    interviewList.remove(interview);
-                    delItws.add(interview);
+//                    delItws.add(interview);
 //                    interviewMapper.deleteByPrimaryKey(interview.getiId());
                     continue;
                 }
@@ -96,7 +96,7 @@ public class InterviewService {
                     interview.seteRename(employee.getRename());
                 }else{
 //                    interviewList.remove(interview);
-                    delItws.add(interview);
+//                    delItws.add(interview);
 //                    interviewMapper.deleteByPrimaryKey(interview.getiId());
                     continue;
                 }
@@ -108,7 +108,7 @@ public class InterviewService {
                     interview.setpName(project.getpName());
                 }else {
 //                    interviewList.remove(interview);
-                    delItws.add(interview);
+//                    delItws.add(interview);
 //                    interviewMapper.deleteByPrimaryKey(interview.getiId());
                     continue;
                 }
@@ -125,15 +125,35 @@ public class InterviewService {
         Interview interview = interviewMapper.selectByPrimaryKey(cId);
         interview.seteRename(employeeMapper.selectByPrimaryKey(interview.geteId()).getRename());
         interview.setcRename(customerMapper.selectByPrimaryKey(interview.getcId()).getcRename());
-        interview.setpName(projectMapper.selectByPrimaryKey(interview.getpId()).getpName());
+        if(interview.getpId() != 0 && interview.getpId() != -1){
+            interview.setpName(projectMapper.selectByPrimaryKey(interview.getpId()).getpName());
+        }else {
+            interview.setpName(interview.getpId() + "");
+        }
         return interview;
     }
 
     /*新增拜访*/
     public void itwAdd(Interview interview, String[] cRenames, String eRename){
-        ProjectExample projectExample = new ProjectExample();
-        projectExample.createCriteria().andPNameEqualTo(interview.getpName());
-        interview.setpId(projectMapper.selectByExample(projectExample).get(0).getpId());
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("======================="+interview.getpName()+"===========================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+        System.out.println("===================================================");
+
+        if(!interview.getpName().equals("0") && !interview.getpName().equals("-1")){
+            ProjectExample projectExample = new ProjectExample();
+            projectExample.createCriteria().andPNameEqualTo(interview.getpName());
+            List<Project> projects = projectMapper.selectByExample(projectExample);
+            if(projects.size() > 0){
+                interview.setpId(projects.get(0).getpId());
+            }
+        }else{
+            interview.setpId(Integer.valueOf(interview.getpName()));
+        }
         //获取eid并且设置到interview对象中添加到数据库
         if (eRename != null && !eRename.equals("")){
             EmployeeExample employeeExample = new EmployeeExample();

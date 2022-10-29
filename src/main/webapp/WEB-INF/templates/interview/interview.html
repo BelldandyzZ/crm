@@ -158,8 +158,8 @@
                                       <div class="form-group">
                                           <label>拜访类型</label>
                                           <select id="pName" name="pName" class="form-control custom-select">
-<!--                                              <option value="0">日常访谈</option>-->
-<!--                                              <option value="-1">其他</option>-->
+                                               <option value="0">[日常访谈]</option>
+                                              <option value="-1">[其他]</option>
                                               <option th:each="pname:${session.pNames}" th:text="${pname}" th:value="${pname}"></option>
                                           </select>
                                       </div>

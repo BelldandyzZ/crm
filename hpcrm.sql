@@ -28,7 +28,7 @@ CREATE TABLE `contract` (
   `ct_tender_docment` varchar(100) DEFAULT NULL COMMENT '标书文件url',
   `p_id` int(11) DEFAULT NULL COMMENT '项目合同相关信息对应的项目',
   PRIMARY KEY (`ct_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contract` */
 
@@ -154,7 +154,7 @@ CREATE TABLE `interview` (
   `i_content` varchar(255) DEFAULT NULL COMMENT '内容摘要',
   `i_next` varchar(255) DEFAULT NULL COMMENT '下一步计划',
   PRIMARY KEY (`i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 /*Data for the table `interview` */
 
@@ -171,7 +171,8 @@ insert  into `interview`(`i_id`,`i_company`,`c_id`,`i_visit_time`,`p_id`,`e_id`,
 (25,'厚朴公司',1,'2022-10-14',5,1,'jack|marry','123','123'),
 (28,'厚朴公司123',2,'2022-10-14',9,6,'jack|marry','牛逼','揍你'),
 (29,'厚朴公司123',1,'2022-10-14',9,6,'jack|marry','牛逼','揍你'),
-(35,'000',2,'2022-10-26',12,2,'123','123','123');
+(37,'的期望',2,'2022-10-29',NULL,3,'jack|marry','去问驱蚊器','请问请问'),
+(38,'大大大大大大',2,'2022-10-29',-1,4,'jack|marry','顶顶顶顶顶','大大大大大大');
 
 /*Table structure for table `menu` */
 
@@ -231,7 +232,7 @@ CREATE TABLE `payment_back` (
   `pb_order` int(11) NOT NULL AUTO_INCREMENT COMMENT '录入顺序，自增',
   `pb_time` char(10) DEFAULT NULL COMMENT '回款时间',
   KEY `pb_order` (`pb_order`)
-) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8;
 
 /*Data for the table `payment_back` */
 
