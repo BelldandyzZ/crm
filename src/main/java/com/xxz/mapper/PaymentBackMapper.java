@@ -21,6 +21,6 @@ public interface PaymentBackMapper {
 
     int updateByExample(@Param("record") PaymentBack record, @Param("example") PaymentBackExample example);
 
-    @Update("update payment_back set pb_money = #{pbMoney}, pb_order = #{pbOrder} where pb_id = #{pbId}")
+    @Update("update payment_back set pb_money = #{pbMoney}, pb_order = #{pbOrder}, pb_time = #{pbTime} where pb_id = #{pbId}")
     int updatePayBack(PaymentBack record);
 }

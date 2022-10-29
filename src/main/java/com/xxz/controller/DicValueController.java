@@ -102,7 +102,7 @@ public class DicValueController {
     @ResponseBody
     public List<String[]> echartsObjs(String empName,
                                       String startTime,
-                                      String endTime ) throws UnsupportedEncodingException {//根据用户，时间断查询
+                                      String endTime) throws UnsupportedEncodingException {//根据用户，时间断查询
 
         System.out.println("==============================================");
         System.out.println("==============================================");
@@ -111,8 +111,6 @@ public class DicValueController {
         System.out.println("==============================================");
         System.out.println("==============================================");
         System.out.println(empName + "===" + startTime + "===" + endTime);
-
-
 
         List<EchartsObj> echartsObjs = new ArrayList<EchartsObj>();
         //获取所有员工信息
@@ -234,6 +232,151 @@ public class DicValueController {
 //                System.out.println(s);
 //            }
 //        }
+        return data;
+    }
+
+    /*统计报表2*/
+    @RequestMapping("/echartsDataDetail")
+    @ResponseBody
+    public List<String[]> echartsDataDtail(String empName,
+                                      String startTime,
+                                      String endTime
+            , Integer eId, HttpSession session, Model model) throws UnsupportedEncodingException {//根据用户，时间断查询
+
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println(empName + "===" + startTime + "===" + endTime);
+
+
+        EchartsObj echartsObjs = new EchartsObj();
+        //获取所有员工信息
+        Employee employee = empService.queryById(eId);
+
+        //回显条件
+//        session.setAttribute("eRname", employee.getRename());
+//        model.addAttribute("empName", employee.getRename());
+            //通过每个员工获取每个员工所有项目总金额总回款
+            List<Project> projects = projectService.queryAllProject(null, null, null, employee.getRename());
+
+        List<EchartsObj> echartsObjList = new ArrayList<>();
+
+
+
+
+            for (Project project : projects) {
+                System.out.println("============================"+project.getStartTime()+"=========================");
+                String proStartTimeStr = "";
+                if(project.getStartTime() != null){
+                    String[] proSplit = project.getStartTime().split("-");
+                    for (String s : proSplit) {
+                        proStartTimeStr += s;
+                    }
+                }
+                //==============================
+                if(startTime != null && !startTime.equals("")){
+                    String conStartTimeStr = "";
+                    String[] con_split = startTime.split("-");
+                    for (String s : con_split) {
+                        conStartTimeStr += s;
+                    }
+                    System.out.println(conStartTimeStr+"===conStartTimeStr");
+                    //如果项目启动时间小于目标条件时间，则跳过
+                    if(Integer.parseInt(proStartTimeStr) < Integer.parseInt(conStartTimeStr)){
+                        System.out.println("true");
+                        continue;
+                    }
+                }
+                if(endTime != null && !endTime.equals("")){
+                    String conEndTimeStr = "";
+                    String[] con_split = endTime.split("-");
+                    for (String s : con_split) {
+                        conEndTimeStr += s;
+                    }
+                    System.out.println(conEndTimeStr+"===conEndTimeStr");
+                    //如果项目启动时间小于目标条件时间，则跳过
+                    if(Integer.parseInt(proStartTimeStr) > Integer.parseInt(conEndTimeStr)){
+                        System.out.println("true");
+                        continue;
+                    }
+                }
+
+
+
+                EchartsObj echartsObj = new EchartsObj();
+                echartsObj.setEmpName(project.getpName());
+                echartsObj.seteId(project.getpId());
+                //累加所有项目金额
+                //所有金额 - 回款金额 = 待回款金额
+                String allPrice = "0"; //所有金额
+                Double allPriceInterger = Double.parseDouble(allPrice);
+                String allBackPrice = "0"; //回款金额
+                Double allBackPriceInteger = Double.parseDouble(allBackPrice);
+                String allPreBackPrice = "0"; //待回款金额
+                Double allPreBackPriceInteger = Double.parseDouble(allPreBackPrice);
+                //================================================
+
+                //==============================
+                String pMoney = project.getpMoeny();
+//                //会不会有W
+//                if (pMoney.contains("W")){
+//
+//                }
+                allPriceInterger += Double.parseDouble(pMoney);
+
+                //计算当前项目回款金额
+                Integer pbId = project.getPbId(); //当前项目PBId
+                PaymentBackExample paymentBackExample = new PaymentBackExample();
+                paymentBackExample.createCriteria().andPbIdBetween(pbId, pbId+999);
+                //当前项目所有回款
+                List<PaymentBack> paymentBacks = paymentBackMapper.selectByExample(paymentBackExample);
+                //累加
+                for (PaymentBack paymentBack : paymentBacks) {
+                    allBackPriceInteger += Double.parseDouble(paymentBack.getPbMoney() + "");
+                }
+                //
+
+
+                //==============================================================
+                allPreBackPriceInteger = allPriceInterger - allBackPriceInteger;
+                allPrice = allPriceInterger + "";
+                allBackPrice = allBackPriceInteger + "";
+                allPreBackPrice = allPreBackPriceInteger + "";
+                //追加到每一个对象EchartsOBj中
+                echartsObj.setBackPrice(allBackPrice);
+                echartsObj.setPreBackPrice(allPreBackPrice);
+
+                echartsObjList.add(echartsObj);
+            }
+//        System.out.println("========================================================");
+//        System.out.println("========================================================");
+//        System.out.println("========================================================");
+//        System.out.println("========================================================");
+//        System.out.println(echartsObjs);
+        //将数据打成OBJ数组
+        Object[] objectsArr = echartsObjList.toArray();
+//        Object[] objects = new Object[objectsArr.length + 1];
+        List<String[]> data = new ArrayList<>();
+        /*追加前缀*/
+        String[] echartsObj = new String[3];
+        echartsObj[0] = "empName";
+        echartsObj[1] = "回款金额";
+        echartsObj[2] = "待回款金额";
+//        objects[0] = echartsObj;
+        data.add(echartsObj);
+        //后续数据追加
+        for (EchartsObj obj : echartsObjList) {
+            String[] echartsObj2 = new String[4];
+            echartsObj2[0] = obj.getEmpName();
+            echartsObj2[1] = obj.getBackPrice();
+            echartsObj2[2] = obj.getPreBackPrice();
+            echartsObj2[3] = String.valueOf(obj.geteId());
+            //            objects[i + 1] = echartsObj2;
+            data.add(echartsObj2);
+        }
         return data;
     }
 }

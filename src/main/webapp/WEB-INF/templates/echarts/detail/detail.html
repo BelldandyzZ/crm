@@ -36,37 +36,39 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
                                 <div class="row" >
-                                    <div class="col-sm-3">
-                                        <!-- text input -->
-                                        <div class="form-group">
-                                            <label for="con_cRename">项目名称</label>
-                                            <input type="text" id="con_cRename" name="cRename" class="form-control" placeholder="姓名">
-                                        </div>
-                                    </div>
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <a  class="btn btn-primary" th:href="@{/echarts/toIndex}">
+                                                        返回
+                                                    </a>
+                                                </div>
+                                            </div>
                                     <div class="col-sm-2">
-                                        <!-- text input -->
                                         <div class="form-group">
-                                            <label for="1">开始时间</label>
-                                            <input type="date" id="1" name="cName" class="form-control" placeholder="所在单位">
+                                            <h1 id="titleName" >empName</h1>
                                         </div>
                                     </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label style="color: white">.</label>
-                                            <input class="form-control" value="至" style="border: white;background: white" readonly="readonly">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <!-- text input -->
-                                        <div class="form-group">
-                                            <label for="2">结束时间</label>
-                                            <input type="date" id="2" name="cName" class="form-control" placeholder="所在单位">
-                                        </div>
-                                    </div>
-
-
+                                            <div class="col-sm-2">
+                                                <!-- text input -->
+                                                <div class="form-group">
+                                                    <label for="con_startTime">开始时间</label>
+                                                    <input type="date" id="con_startTime" name="cName" class="form-control" placeholder="所在单位">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="form-group">
+                                                    <label style="color: white">.</label>
+                                                    <input class="form-control" value="至" style="border: white;background: white" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <!-- text input -->
+                                                <div class="form-group">
+                                                    <label for="con_endTime">结束时间</label>
+                                                    <input type="date" id="con_endTime" name="cName" class="form-control" placeholder="所在单位">
+                                                </div>
+                                            </div>
 
                                     <div class="col-sm-1">
                                         <!--这个label没用，纯当作占位符用来布局-->
@@ -74,8 +76,8 @@
                                         <div class="form-group">
                                             <button type="button" id="cusConditionBtn" class="btn btn-block btn-default">搜索</button>
                                         </div>
+                                        <input id="hiddenEid" type="hidden" name="" th:value="${eId}">
                                     </div>
-
                                 </div>
                                 <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
                             </div>
@@ -127,7 +129,14 @@
     };
 
     // 指定图表的配置项和数据
-    $.get('/crm/dic/echartsData').done(function(data) {
+    let eId = sessionStorage.getItem("eId");
+
+    let empName = sessionStorage.getItem("empName");
+
+        $('#titleName').text(empName);
+
+
+    $.get('/crm/dic/echartsDataDetail?eId='+eId).done(function(data) {
         myChart.hideLoading();
         myChart.setOption({
             legend: {},
@@ -150,6 +159,47 @@
     myChart.on('click', function(params) {
         console.log(params.value.id);
     });
+
+
+    /*事件*/
+    $('#cusConditionBtn').click(function (){
+
+        let startTime = $('#con_startTime').val();
+        let endTime = $('#con_endTime').val();
+        console.log(startTime)
+        console.log(endTime)
+        console.log(sessionStorage.getItem("eId"))
+        // //将条件存储在域中
+        // sessionStorage.setItem("con_cRename", con_cRename);
+        // sessionStorage.setItem("con_startTime", con_startTime);
+        // sessionStorage.setItem("con_endTime", con_endTime);
+        // alert("正在渲染")
+        // this.freshFun(con_cRename,con_startTime,con_endTime);
+        $.ajax({
+            url:`/crm/dic/echartsDataDetail?eId=${sessionStorage.getItem("eId")}&startTime=${startTime}&endTime=${endTime}`,
+            success:(res)=>{
+                console.log(res)
+            }
+        }).done(function(res) {
+            myChart.hideLoading();
+            myChart.setOption({
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    source:res
+                },
+
+                xAxis: {name:'合同金额'  },
+
+                yAxis: {type: 'category',name:'项目名'},
+
+                series: [
+                    { type: 'bar' , stack: 'x'},
+                    { type: 'bar' , stack: 'x'}
+                ]
+            })
+        })
+    })
 </script>
 </body>
 </html>

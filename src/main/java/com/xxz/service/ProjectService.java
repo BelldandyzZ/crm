@@ -360,7 +360,12 @@ public class ProjectService {
         List<PaymentBack> paymentBacks = paymentBackMapper.selectByExample(paymentBackExample);
         PaymentBack payment = paymentBacks.get(0);
         payment.setPbMoney(paymentBack.getPbMoney());
-        int updateResult = paymentBackMapper.updatePayBack(payment);
+//        int updateResult = paymentBackMapper.updatePayBack(payment);
+
+
+        PaymentBackExample paymentBackExample1 = new PaymentBackExample();
+        paymentBackExample1.createCriteria().andPbIdEqualTo(paymentBack.getPbId());
+        int updateResult = paymentBackMapper.updateByExampleSelective(paymentBack, paymentBackExample1);
         return updateResult > 0 ? true : false;
     }
 

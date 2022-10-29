@@ -128,7 +128,6 @@
 
     //定义报表刷新方法
     function freshFun(empName, startTime, endTime){
-        alert("正在渲染");
         // 指定图表的配置项和数据
         $.ajax({
             url:`/crm/dic/echartsData?empName=${empName}&startTime=${startTime}&endTime=${endTime}`,
@@ -174,8 +173,37 @@
 
 
     myChart.on('click', function(params) {
-        console.log(params.value.id);
+        console.log(params.value[3]);
+        console.log(params.value[0]);
+        //存储到localStorage
+        sessionStorage.setItem("eId", params.value[3]);
+        sessionStorage.setItem("empName", params.value[0]);
         window.location.href = "/crm/echarts/detail";
+        // location.href = "/crm/dic/echartsData?eId="+params.value[3];
+/*        $.ajax({
+            url:`/crm/dic/echartsDataDetail?eId=${params.value[3]}`,
+            success:(res)=>{
+                console.log(res)
+            }
+        }).done(function(res) {
+            myChart.hideLoading();
+            myChart.setOption({
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    source:res
+                },
+
+                xAxis: {name:'合同金额'  },
+
+                yAxis: {type: 'category',name:'员工'},
+
+                series: [
+                    { type: 'bar' , stack: 'x'},
+                    { type: 'bar' , stack: 'x'}
+                ]
+            })
+        })*/
     });
 
     /*事件*/

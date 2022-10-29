@@ -42,7 +42,7 @@
                                         <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
                                           <label>回款时间</label>
-                                          <input type="date"  name="" class="form-control">
+                                          <input  type="date"  name="pbTime" class="form-control">
                                       </div>
                                   </span>
                                     </div>
@@ -88,7 +88,7 @@
                                         <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
                                           <label>回款时间</label>
-                                          <input type="date"  name="" class="form-control">
+                                          <input id="pbTime" type="date"  name="pbTime" class="form-control">
                                       </div>
                                   </span>
                                     </div>
@@ -153,7 +153,7 @@
                                     <tr th:each="payback,paybackState:${payPageInfo.list}">
                                         <td th:text="${paybackState.index+1}"></td>
                                         <td th:text="${payback.pbMoney}"></td>
-                                        <td>回款时间</td>
+                                        <td th:text="${payback.pbTime}">回款时间</td>
                                         <td>
                                             <button type="button" th:tar-id="${payback.pbId}" class="btn  btn-sm btn-info updatePayBtn" data-toggle="modal" data-target="#update_pay">修改</button>
                                             <button type="button" th:tar-id="${payback.pbId}"  class="btn  btn-sm btn-danger delete_payment_back" >删除</button>
@@ -268,6 +268,7 @@
                 success: function (res){
                     console.log(res);
                     let pb = res.data;
+                    $('#pbTime').val(pb.pbTime);
                     $('#pbMoney').val(pb.pbMoney);
                     $('#pbOrder').val(pb.pbOrder);
                     $('#pbId').val(pb.pbId);

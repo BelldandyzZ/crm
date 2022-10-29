@@ -9,6 +9,16 @@ public class PaymentBack implements Serializable {
 
     private Integer pbOrder;
 
+    private String pbTime;
+
+    public String getPbTime() {
+        return pbTime;
+    }
+
+    public void setPbTime(String pbTime) {
+        this.pbTime = pbTime;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getPbId() {
@@ -37,15 +47,11 @@ public class PaymentBack implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", pbId=").append(pbId);
-        sb.append(", pbMoney=").append(pbMoney);
-        sb.append(", pbOrder=").append(pbOrder);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "PaymentBack{" +
+                "pbId=" + pbId +
+                ", pbMoney=" + pbMoney +
+                ", pbOrder=" + pbOrder +
+                ", pbTime='" + pbTime + '\'' +
+                '}';
     }
 }
