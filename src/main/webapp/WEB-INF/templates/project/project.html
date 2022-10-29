@@ -221,21 +221,21 @@
                             <div class="card-header">
                                 <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
                                 <div class="row">
-                                    <div class="col-sm-2">
+                                    <div th:if="${session.permissions.contains('3010')}" class="col-sm-2">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_pName">项目名称</label>
                                             <input type="text" id="con_pName" th:value="${pName}" name="pName" class="form-control" placeholder="项目名称">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div th:if="${session.permissions.contains('3010')}" class="col-sm-2">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_pMoeny">项目总金额</label>
                                             <input type="text" id="con_pMoeny" th:value="${pMoeny}" name="pMoeny" class="form-control" placeholder="项目总金额">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div th:if="${session.permissions.contains('3010')}" class="col-sm-2">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_pProgress">项目完成度</label>
@@ -245,9 +245,8 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
-                                        <!-- text input -->
-                                        <div class="form-group">
+                                    <div  class="col-sm-2">
+                                    <div th:if="${session.permissions.contains('3010')}" class="form-group">
                                             <label for="con_pOwner">项目负责人</label>
 <!--                                            <input type="text"  name="pOwner" class="form-control" placeholder="项目负责人">-->
                                             <select id="con_pOwner" th:value="${pOwner}" name="pOwner" class="form-control custom-select" required>
@@ -255,10 +254,9 @@
                                                 <option th:each="eRename,empState:${eRenameSet}" th:text="${eRename}" th:value="${eRename}">全部</option>
                                             </select>
                                         </div>
-                                    </div>
+                                </div>
 
-
-                                    <div class="col-sm-1">
+                                    <div th:if="${session.permissions.contains('3010')}" class="col-sm-1">
                                         <!--这个label没用，纯当作占位符用来布局-->
                                         <label style="color: white">.</label>
                                         <div class="form-group">
@@ -266,11 +264,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-1">
+                                    <div th:if="${session.permissions.contains('3020')}"  class="col-sm-1">
                                         <!--这个label没用，纯当作占位符用来布局-->
                                         <label style="color: white">.</label>
                                         <div class="form-group">
-                                            <button class="btn btn-primary" data-toggle="modal" data-target="#add_emp">
+                                            <button th:if="${session.permissions.contains('3020')}" class="btn btn-primary" data-toggle="modal" data-target="#add_emp">
                                                 添加
                                             </button>
                                         </div>
@@ -284,7 +282,7 @@
                             <div class="card-body">
 
 
-                                <table id="table_data" class="table table-bordered table-hover">
+                                <table th:if="${session.permissions.contains('3010')}" id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>项目名称</th>
@@ -313,14 +311,14 @@
                                         <td th:text="${pro.startTime}">开始时间</td>
                                         <td th:text="${pro.endTime}">结束时间</td>
                                         <td>
-                                            <button  type="button" th:tar-id="${pro.pId}" class="btn  btn-danger btn-sm confirmsDelPro">删除</button>
-                                            <button type="button" th:tar-id="${pro.pId}" class="btn  btn-sm btn-info updateProBtn" data-toggle="modal" data-target="#update_pro">修改</button>
+                                            <button th:if="${session.permissions.contains('3040')}" type="button" th:tar-id="${pro.pId}" class="btn  btn-danger btn-sm confirmsDelPro">删除</button>
+                                            <button th:if="${session.permissions.contains('3030')}" type="button" th:tar-id="${pro.pId}" class="btn  btn-sm btn-info updateProBtn" data-toggle="modal" data-target="#update_pro">修改</button>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
-                                <nav>
+                                <nav th:if="${session.permissions.contains('3010')}">
                                     <ul class="mypagination">
                                         <li><a>
                                             总页码：<span th:text="${proPageInfo.pages}"></span>&nbsp;&nbsp;&nbsp;

@@ -29,7 +29,7 @@
 
     <!--视图跳转控制器-->
     <mvc:view-controller path="/" view-name="login"/>
-    <mvc:view-controller path="/index" view-name="index"/>
+<!--    <mvc:view-controller path="/index" view-name="index"/>-->
     <mvc:view-controller path="/echarts/toIndex" view-name="echarts/echartsMenu"/>
     <mvc:view-controller path="/echarts/detail" view-name="echarts/detail/detail"/>
     <mvc:view-controller path="/permission/toIndex" view-name="permission/index"/>

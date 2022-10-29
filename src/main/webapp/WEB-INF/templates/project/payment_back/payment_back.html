@@ -131,7 +131,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-8"></div>
-                                    <div class="col-sm-2">
+                                    <div th:if="${session.permissions.contains('306020')}" class="col-sm-2">
                                         <div class="form-group">
                                             <button  class="btn btn-primary" data-toggle="modal" data-target="#add_pay">
                                                 添加回款记录
@@ -140,7 +140,7 @@
                                     </div>
                                 </div>
 
-                                <table id="table_data" class="table table-bordered table-hover">
+                                <table th:if="${session.permissions.contains('306010')}" id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>录入顺序</th>
@@ -155,15 +155,16 @@
                                         <td th:text="${payback.pbMoney}"></td>
                                         <td th:text="${payback.pbTime}">回款时间</td>
                                         <td>
-                                            <button type="button" th:tar-id="${payback.pbId}" class="btn  btn-sm btn-info updatePayBtn" data-toggle="modal" data-target="#update_pay">修改</button>
-                                            <button type="button" th:tar-id="${payback.pbId}"  class="btn  btn-sm btn-danger delete_payment_back" >删除</button>
+                                            <button  th:if="${session.permissions.contains('306040')}" type="button" th:tar-id="${payback.pbId}" class="btn  btn-sm btn-info updatePayBtn" data-toggle="modal" data-target="#update_pay">修改</button>
+                                            <button th:if="${session.permissions.contains('306030')}" type="button" th:tar-id="${payback.pbId}"  class="btn  btn-sm btn-danger delete_payment_back" >删除</button>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
-                                <p th:if="${payPageInfo.total == 0}">本项目没有回款数据哦！要添加对应回款记录才有哦！
-                                </p>
-                                <nav>
+                                <div th:if="${session.permissions.contains('306010')}"> <p  th:if="${payPageInfo.total == 0}">本项目没有回款数据哦！要添加对应回款记录才有哦！
+                                </p></div>
+
+                                <nav th:if="${session.permissions.contains('306010')}">
                                     <ul class="mypagination">
                                         <li><a>
                                             总页码：<span th:text="${payPageInfo.pages}"></span>&nbsp;&nbsp;&nbsp;
@@ -204,10 +205,7 @@
 
         </section>
 
-        <!-- 回到顶部 -->
-        <a id="back-to-top" th:href="@{#}" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
-            <i class="fas fa-chevron-up"></i>
-        </a>
+
     </div>
     <!-- /.content-wrapper -->
 </div>

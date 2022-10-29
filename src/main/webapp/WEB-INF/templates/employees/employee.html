@@ -333,14 +333,14 @@
                             <div class="card-header">
                                 <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
                                 <div class="row" >
-                                    <div class="col-sm-3">
+                                    <div th:if="${session.permissions.contains('502010')}" class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_rename">员工姓名</label>
                                             <input type="text" id="con_rename" th:value="${rename}" name="rename" class="form-control" placeholder="请输入员工姓名">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div th:if="${session.permissions.contains('502010')}" class="col-sm-3">
                                         <!-- text input -->
 
                                         <div class="form-group">
@@ -352,7 +352,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
+                                    <div th:if="${session.permissions.contains('502010')}" class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_eBirthday">入司时间</label>
@@ -360,7 +360,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-1">
+                                    <div th:if="${session.permissions.contains('502010')}" class="col-sm-1">
                                         <!--这个label没用，纯当作占位符用来布局-->
                                         <label style="color: white">.</label>
                                         <div class="form-group">
@@ -368,7 +368,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-1">
+                                    <div th:if="${session.permissions.contains('502020')}" class="col-sm-1">
                                         <!--这个label没用，纯当作占位符用来布局-->
                                         <label style="color: white">.</label>
                                         <div class="form-group">
@@ -384,13 +384,13 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-8"></div>
-                                    <div class="col-sm-2 ">
+                                    <div th:if="${session.permissions.contains('502050')}" class="col-sm-2 ">
                                         <button type="button" data-toggle="modal" data-target="#empInportModel" class="btn btn-block btn-default">
                                             <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
                                             导入员工信息
                                         </button>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div th:if="${session.permissions.contains('502060')}" class="col-sm-2">
                                         <button type="button" id="empExcelOutputBtn" class="btn btn-block btn-default">
                                             <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>导出员工信息
                                         </button>
@@ -398,7 +398,7 @@
                                 </div>
 
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
-                                <table id="table_data" class="table table-bordered table-hover">
+                                <table th:if="${session.permissions.contains('502010')}" id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>员工姓名</th>
@@ -425,14 +425,14 @@
                                         <td th:text="${emp.eHonor == null or emp.eHonor == ''} ? '无' : ${emp.eHonor}"></td>
                                         <td th:text="${emp.eRemark == null or emp.eRemark == ''} ? '无' : ${emp.eRemark}"></td>
                                         <td>
-                                            <button type="button" th:tar-id="${emp.eId}" class="btn  btn-danger btn-sm confirms">删除</button>
-                                            <button type="button" th:tar-id="${emp.eId}" class="btn  btn-sm btn-info updateEmpBtn" data-toggle="modal" data-target="#update_emp">修改</button>
-                                            <button type="button" th:tar-id="${emp.eId}" class='btn  btn-sm btn-default toAddRole' id="saveRole">授权</button>
+                                            <button th:if="${session.permissions.contains('502040')}" type="button" th:tar-id="${emp.eId}" class="btn  btn-danger btn-sm confirms">删除</button>
+                                            <button th:if="${session.permissions.contains('502030')}" type="button" th:tar-id="${emp.eId}" class="btn  btn-sm btn-info updateEmpBtn" data-toggle="modal" data-target="#update_emp">修改</button>
+                                            <button th:if="${session.permissions.contains('502070')}" type="button" th:tar-id="${emp.eId}" class='btn  btn-sm btn-default toAddRole' id="saveRole">授权</button>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
-                                <nav>
+                                <nav th:if="${session.permissions.contains('502010')}">
                                     <ul class="mypagination">
                                         <li><a>
                                             总页码：<span th:text="${empPageInfo.pages}"></span>&nbsp;&nbsp;&nbsp;

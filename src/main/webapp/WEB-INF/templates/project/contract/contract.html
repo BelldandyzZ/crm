@@ -158,7 +158,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-8"></div>
-                                    <div class="col-sm-2">
+                                    <div th:if="${session.permissions.contains('305020')}" class="col-sm-2">
                                         <div class="form-group">
                                             <button  class="btn btn-primary" data-toggle="modal" data-target="#add_con">
                                                 添加合同信息
@@ -167,7 +167,7 @@
                                     </div>
                                 </div>
 
-                                <table id="table_data" class="table table-bordered table-hover">
+                                <table th:if="${session.permissions.contains('305010')}" id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>合同金额</th>
@@ -190,16 +190,19 @@
                                             <a th:if="${con.ctTenderDocment  == '' or con.ctTenderDocment == null}">无</a>
                                         </td>
                                         <td>
-                                            <button type="button" th:tar-id="${con.ctId}" class="btn  btn-sm btn-info updateConBtn" data-toggle="modal" data-target="#update_con">修改</button>
-                                            <button type="button"  th:tar-id="${con.ctId}" class="btn  btn-sm btn-danger delete_contract" >删除</button>
+                                            <button th:if="${session.permissions.contains('305040')}" type="button" th:tar-id="${con.ctId}" class="btn  btn-sm btn-info updateConBtn" data-toggle="modal" data-target="#update_con">修改</button>
+                                            <button th:if="${session.permissions.contains('305030')}" type="button"  th:tar-id="${con.ctId}" class="btn  btn-sm btn-danger delete_contract" >删除</button>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
-                                <p th:if="${conPageInfo.total == 0}">本项目没有合同数据哦！要添加对应合同记录才有哦！
-                                </p>
+                                <div th:if="${session.permissions.contains('305010')}">
+                                    <p th:if="${conPageInfo.total == 0}">本项目没有合同数据哦！要添加对应合同记录才有哦！
+                                    </p>
+                                </div>
+
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
-                                <nav>
+                                <nav th:if="${session.permissions.contains('305010')}">
                                     <ul class="mypagination">
                                         <li><a>
                                             总页码：<span th:text="${conPageInfo.pages}"></span>&nbsp;&nbsp;&nbsp;

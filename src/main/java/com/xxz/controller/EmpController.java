@@ -6,6 +6,7 @@ import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xxz.annotations.Permission;
 import com.xxz.bean.*;
 import com.xxz.exception.AsyncResp;
 import com.xxz.exception.enums.AppExceptionCodeMsg;
@@ -64,11 +65,10 @@ public class EmpController {
             session.setAttribute("allType", dicValueService.getAllType());
             /*------------------------登录成功查看员工对应的权限---------------------------*/
 
-            List<String> permissions =  roleService.queryAllMenuByEmpId(employee.geteId());
-            session.setAttribute("permissions",permissions);
+
 
             /*------------------------登录成功查看员工对应的权限---------------------------*/
-            return "redirect:/index";
+            return "redirect:/emp/index";
         }else{
             attr.addFlashAttribute("loginMsg",AppExceptionCodeMsg.LOGIN_EXCEPTION.getMsg());
             attr.addFlashAttribute("loginName", ename);
@@ -76,8 +76,17 @@ public class EmpController {
         }
     }
 
+    @RequestMapping("/index")
+    public String toIndex(HttpSession session){
+        Employee emp = (Employee) session.getAttribute("emp");
+        List<String> permissions =  roleService.queryAllMenuByEmpId(emp.geteId());
+        session.setAttribute("permissions",permissions);
+        return "index";
+    }
+
     //条件查询
     @RequestMapping("/emps")
+    @Permission("502010")
     public String queryAll(Model model,String rename, String eJob, String eBirthday, HttpSession session,
                           @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
 
@@ -108,6 +117,7 @@ public class EmpController {
     //id查询
     @RequestMapping("/queryById/{eId}")
     @ResponseBody
+    @Permission("502010")
     public Map<String,Object> queryById(@PathVariable("eId") Integer eId, HttpServletResponse response) throws IOException {
 
         Employee employee = empService.queryById(eId);
@@ -119,6 +129,7 @@ public class EmpController {
     }
 
     //新增员工
+    @Permission("502020")
     @RequestMapping("/add")
     public String empAdd(Employee employee){
         System.out.println("add emp..." + employee);
@@ -133,6 +144,7 @@ public class EmpController {
     }
 
     //删除员工
+    @Permission("502040")
     @RequestMapping("/del/{eId}")
     public String empDel(@PathVariable("eId") Integer eId){
         System.out.println(eId);
@@ -148,6 +160,7 @@ public class EmpController {
     }
 
     //修改
+    @Permission("502030")
     @RequestMapping("/update")
     public String empUpdate(Employee employee){
         //展示emp
@@ -248,6 +261,7 @@ public class EmpController {
      */
     @RequestMapping("addRole")
     @ResponseBody
+    @Permission("502070")
     public AsyncResp addRole(@RequestParam("roleId") String[] roleIds,String empId){
         ArrayList<EmpRole> empRoles = new ArrayList<>(16);
         for (String roleId : roleIds) {

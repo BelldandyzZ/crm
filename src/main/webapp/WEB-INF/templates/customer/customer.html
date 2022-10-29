@@ -304,8 +304,7 @@
 
                     </div>
                     <div th:if="${session.permissions.contains('1010')}" class="col-sm-3">
-                        <!-- text input -->
-                        <div class="form-group">
+                    <div class="form-group">
                             <label for="con_cName">客户单位</label>
                             <input type="text" id="con_cName" name="cName" th:value="${cName}"  class="form-control" placeholder="客户单位">
                         </div>
@@ -317,9 +316,7 @@
                             <button type="button" id="cusConditionBtn" class="btn btn-block btn-default">搜索</button>
                         </div>
                     </div>
-
                     <div class="col-sm-1">
-                        <!--这个label没用，纯当作占位符用来布局-->
                         <label style="color: white">.</label>
                         <div class="form-group">
                             <button th:if="${session.permissions.contains('1020')}" class="btn btn-primary" data-toggle="modal" data-target="#add_emp">
@@ -349,8 +346,6 @@
                   </div>
                 </div>
 
-<!--                  <h1 th:text="${empList}"></h1>-->
-<!--                  <h1 th:text="${session.emp}"></h1>-->
                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
                 <table th:if="${session.permissions.contains('1010')}" id="table_data" class="table table-bordered table-hover">
                   <thead>
@@ -479,13 +474,11 @@
         $('.updateCusBtn').click(function (){
             let cId = $(this).attr("tar-id");
 
-
             $.ajax({
                 url: "/crm/customer/queryById/" + cId,
                 type: "get",
                 datatype: "json",
                 success: function (res){
-                    console.log(res);
                     let cus = res.data;
                     $('#cId').val(cus.cId);
                     $('#cRename').val(cus.cRename);
@@ -497,41 +490,9 @@
                     $('#cHobby').val(cus.cHobby);
                     $('#cRemark').val(cus.cRemark);
                     $('#c_cie_type').val(cus.cCieType);
-
                 }
             })
         })
-
-        //数据的分页
-        // $('#table_data').DataTable(
-        //   {
-        //   "language": {
-        //     "sProcessing": "处理中...",
-        //    "sLengthMenu": "显示 _MENU_ 项结果",
-        //    "sZeroRecords": "没有匹配结果",
-        //    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-        //    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-        //    "sInfoPostFix": "",
-        //    "sSearch": "搜索:",
-        //    "sUrl": "",
-        //    "sEmptyTable": "表中数据为空",
-        //    "sLoadingRecords": "载入中...",
-        //    "sInfoThousands": ",",
-        //     "oPaginate":{
-        //       "sFirst": "首页",
-        //        "sPrevious": "上页",
-        //        "sNext": "下页",
-        //        "sLast": "末页"
-        //     }
-        //     },
-        //   "paging": true,
-        //   "lengthChange": false,
-        //   "searching": false,
-        //   "ordering": true,
-        //   "info": true,
-        //   "autoWidth": false,
-        //   "responsive": true,
-        // });
   });
 </script>
 </body>

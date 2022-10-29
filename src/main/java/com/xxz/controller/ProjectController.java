@@ -3,6 +3,7 @@ package com.xxz.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xxz.annotations.Permission;
 import com.xxz.bean.*;
 import com.xxz.mapper.*;
 import com.xxz.service.*;
@@ -47,13 +48,11 @@ public class ProjectController {
     @Autowired
     private DicValueService dicValueService;
 
-    @Autowired
-    private RoleService roleService;
 
     //条件查询
+    @Permission("3010")
     @RequestMapping("/projects")
-    public String queryAll(Model model, String pName, String pMoeny, String pProgress, String pOwner, HttpSession session,
-                           @RequestParam(defaultValue = "1") Integer pageNum, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+    public String queryAll(Model model, String pName, String pMoeny, String pProgress, String pOwner, HttpSession session,  @RequestParam(defaultValue = "1") Integer pageNum, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 
 
         //设置编码
@@ -76,7 +75,6 @@ public class ProjectController {
         //工具条件查询
         List<Project> projectList = projectService.queryAllProject(pName, pMoeny, pProgress, pOwner);
         PageInfo<Project> proPageInfo = new PageInfo<>(projectList, 5);
-        System.out.println("条件查询结果：" + proPageInfo);
         model.addAttribute("proPageInfo", proPageInfo);
         //条件回显
         model.addAttribute("pName", pName);
@@ -106,21 +104,17 @@ public class ProjectController {
 
     //添加回款业务
     @RequestMapping("/add")
+    @Permission("3020")
     public String addProject(HttpSession session, Project project, String[] cRenames){
         //(1)获取session域中的pbId
         //设置回款编号
-        System.out.println(project);
-        System.out.println(project);
-        System.out.println(project);
-        System.out.println(project);
-        System.out.println(project);
-        System.out.println(project);
         projectService.addProject(project, cRenames);
         return "redirect:/project/projects";
     }
 
     //添加回款业务
     @RequestMapping("/del/{pId}")
+    @Permission("3040")
     public String delProject(@PathVariable("pId") Integer pId){
         //(1)获取session域中的pbId
         //设置回款编号
@@ -132,6 +126,7 @@ public class ProjectController {
     //根据编号pid查询
     @RequestMapping("/queryById/{pId}")
     @ResponseBody
+    @Permission("3010")
     public Map<String,Object> queryById(@PathVariable("pId") Integer pId){
         Project project = projectService.queryById(pId);
         //============================================
@@ -144,21 +139,18 @@ public class ProjectController {
 
     //修改项目
     @RequestMapping("/update")
+    @Permission("3040")
     public String updateProject(Project project, String[] cRenames){
         boolean result = projectService.updateProject(project, cRenames);
-        if(result){
-            System.out.println("操作成功！");
-        }else {
-            System.out.println("操作失败！");
-        }
+
         return "redirect:/project/projects";
     }
 
-    //拜访模块===================================================================================
 //拜访模块===================================================================================
 //拜访模块===================================================================================
 //    /project/interview_record
     @RequestMapping("/interview_record")
+    @Permission("2010")
     public String interview_recor(Model model, @RequestParam(required = false) String cIds, Integer pId,
                                   @RequestParam(defaultValue = "1") Integer pageNum){
         //查询当前项目对应的所有拜访记录
@@ -166,21 +158,17 @@ public class ProjectController {
         PageHelper.startPage(pageNum,  10);
         PageInfo<Interview> itwRecordPageInfo = new PageInfo<>(currentInterviewList, 5);
         model.addAttribute("itwRecordPageInfo", itwRecordPageInfo);
-
-
-        System.out.println("================================================");
-        System.out.println(itwRecordPageInfo.getList());
         //条件回显
         model.addAttribute("pId", pId);
         return "project/interview_record/interview_record";
     }
 
 
-    //合同模块===================================================================================
 //合同模块===================================================================================
 //合同模块===================================================================================
 //    /project/contract/contract_record
     @RequestMapping("/contract_record")
+    @Permission("305010")
     public String contract_record(Model model, Integer pId,
                                   @RequestParam(defaultValue = "1") Integer pageNum){
         PageHelper.startPage(pageNum,  10);
@@ -198,16 +186,12 @@ public class ProjectController {
     @RequestMapping("/conownloadCon/{fileName}")
     public ResponseEntity<byte[]> conownloadCon(HttpSession session,@PathVariable("fileName") String fileName) throws IOException {
         //使用ResponseEntity实现文件下载功能
-        System.out.println("[fileName]=============================================================");
-        System.out.println("[fileName=]" + fileName);
         //获取ServletContext对象
         ServletContext servletContext = session.getServletContext();
         //获取服务器中文件的真实路径img/1.jpg-->(img + File.separator分隔符 + 1.jpg)
         //获取当前工程下photo目录的真实路径
         String realPath = servletContext.getRealPath("/contracts");
-        System.out.println(realPath);
         File parentFile = new File(realPath).getParentFile().getParentFile().getParentFile();
-        System.out.println(parentFile.getPath() + "\\src\\main\\webapp\\contracts");
         realPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts\\" + fileName;//--/contracts/test1.doc
         //创建输入流（根据目标文件获取输入流）
         InputStream in = new FileInputStream(realPath);
@@ -342,6 +326,7 @@ public class ProjectController {
 
     //    updateContract
     @RequestMapping("/updateContract")
+    @Permission("305040")
     public String updateContract(Integer pId,MultipartFile ctContractDocmentFile, MultipartFile ctTenderDocmentFile, Contract contract, HttpSession session) throws IOException {
         //获取ServletContext对象
         ServletContext servletContext = session.getServletContext();
@@ -413,6 +398,7 @@ public class ProjectController {
 
     @RequestMapping("/queryConById/{ctId}")
     @ResponseBody
+    @Permission("305010")
     public Map<String,Object> queryConById(@PathVariable("ctId") Integer ctId, HttpServletResponse response) throws IOException {
         Contract contract = projectService.queryConById(ctId);
         Map<String, Object> stringObjectHashMap = new HashMap<>();
@@ -422,10 +408,10 @@ public class ProjectController {
     }
 
     //回款模块===================================================================================
-//回款模块===================================================================================
-//回款模块===================================================================================
-//    /project/payment_back?
+    //回款模块===================================================================================
+
     @RequestMapping("/payment_back")
+    @Permission("306010")
     public String payment_back(Model model, HttpSession session, Integer pbId,
                                @RequestParam(required = false) Integer pId,
                                @RequestParam(defaultValue = "1") Integer pageNum){
@@ -456,6 +442,7 @@ public class ProjectController {
     }
 
     //添加回款业务
+    @Permission("306020")
     @RequestMapping("/addPayBack")
     public String addPayMent(HttpSession session, PaymentBack paymentBack){
         //session获取最大pbid
@@ -467,8 +454,9 @@ public class ProjectController {
         projectService.addPayMent(paymentBack);
         return "redirect:/project/payment_back?pbId=" + now_pbId;
     }
+
     //查询回款业务
-//    url: "/crm/project/payBackQueryById/" + pbId,
+    @Permission("306010")
     @RequestMapping("payBackQueryById/{pbId}")
     @ResponseBody
     public Map<String,Object> payBackQueryById(@PathVariable("pbId") Integer pbId){
@@ -481,6 +469,7 @@ public class ProjectController {
     }
 
     //修改回款信息
+    @Permission("306040")
     @RequestMapping("/payBackUpdate")
     private String payBackUpdate(PaymentBack paymentBack,HttpSession session){
         System.out.println(paymentBack);
@@ -491,8 +480,8 @@ public class ProjectController {
     }
 
 
-
     //删除回款
+    @Permission("306030")
     @RequestMapping("/remove/{paymentBackId}")
     public String erasePaymentbackById(HttpSession session,@PathVariable("paymentBackId") Integer id){
         System.out.println("id = " + id);
@@ -502,13 +491,12 @@ public class ProjectController {
     }
 
     //删除合同
+    @Permission("305030")
     @RequestMapping("/eraseContractById/{currentpId}/{ctId}")
     public String eraseContractById(@PathVariable("currentpId") Integer currentpId,@PathVariable("ctId") Integer ctId){
         int res = projectService.removeContractById(ctId);
         return "redirect:/project/contract_record?pId=" + currentpId;
     }
-
-
 
 
 

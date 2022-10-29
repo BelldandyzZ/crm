@@ -31,16 +31,11 @@ public class CustomerController {
     private CustomerService customerService;
 
     @Autowired
-    private EmpService empService;
-
-    @Autowired
     private DicValueService dicValueService;
 
     @Autowired
     private ProjectService projectService;
 
-    @Autowired
-    private RoleService roleService;
 
     //条件查询
     @RequestMapping("/customers")
@@ -55,11 +50,9 @@ public class CustomerController {
         session.setAttribute("pNames", projectService.getAllProjectName());
         session.setAttribute("allType", dicValueService.getAllType());
 //=====================================================================================================
-        System.out.println("queryAll-customers-confition:" + cRename + "-" + cName + "-" + cJob);
         PageHelper.startPage(pageNum,  10);
         List<Customer> customerList = customerService.queryAllCus(cRename, cName, cJob);
         PageInfo<Customer> cusPageInfo = new PageInfo<>(customerList, 5);
-        System.out.println("条件查询结果：" + cusPageInfo);
         model.addAttribute("cusPageInfo", cusPageInfo);
         //条件导出excel
         session.setAttribute("customerListExcel", customerList);
@@ -79,7 +72,6 @@ public class CustomerController {
         Map<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("code","200");
         stringObjectHashMap.put("data",customer);
-//        response.getWriter().println(Customer);
         return stringObjectHashMap;
     }
 
@@ -87,14 +79,8 @@ public class CustomerController {
     @RequestMapping("/add")
     @Permission("1020")
     public String cusAdd(Customer customer){
-        System.out.println("add cus..." + customer);
         //调用接口将数据添加到数据库
         boolean result = customerService.cusAdd(customer);
-        if (result){
-            System.out.println("cus操作成功！");
-        }else {
-            System.out.println("cus操作成功！");
-        }
         return "redirect:/customer/customers";
     }
 
@@ -102,14 +88,8 @@ public class CustomerController {
     @RequestMapping("/del/{eId}")
     @Permission("1030")
     public String cusDel(@PathVariable("eId") Integer eId){
-        System.out.println(eId);
         //删除业务
         boolean result = customerService.cusDel(eId);
-        if (result){
-            System.out.println("cus操作成功！");
-        }else {
-            System.out.println("cus操作成功！");
-        }
         //重定向到empList界面展示最新数据
         return "redirect:/customer/customers";
     }
@@ -118,23 +98,15 @@ public class CustomerController {
     @RequestMapping("/update")
     @Permission("1040")
     public String cusUpdate(Customer customer){
-        //展示emp
-        System.out.println(customer);
         //调用目标接口实现信息修改
         boolean result = customerService.cusUpdate(customer);
-        if (result){
-            System.out.println("cus操作成功！");
-        }else {
-            System.out.println("cus操作成功！");
-        }
-        //重定向到empMenu界面
         return "redirect:/customer/customers";
     }
 
     /*excel导入导出*/
+    @Permission("1050")
     @RequestMapping(value = "/excelInport", method = RequestMethod.POST)
     public String excelInport(MultipartFile activityFile){
-        System.out.println("文件名：" + activityFile.getOriginalFilename());
         // 解析Excel
         ExcelReader excelReader = null;
         try {
@@ -159,8 +131,6 @@ public class CustomerController {
         //设置响应头和响应体格式，告诉浏览器是什么文件，对应解析
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
-
-
 
         response.setHeader("Content-disposition", "attachment;filename="
                 + URLEncoder.encode("客户信息", "UTF-8") + ".xlsx");

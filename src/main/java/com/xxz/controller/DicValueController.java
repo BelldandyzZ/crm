@@ -1,5 +1,6 @@
 package com.xxz.controller;
 
+import com.xxz.annotations.Permission;
 import com.xxz.bean.*;
 import com.xxz.bean.vo.EchartsObj;
 import com.xxz.mapper.PaymentBackMapper;
@@ -38,12 +39,11 @@ public class DicValueController {
     @Autowired
     PaymentBackMapper paymentBackMapper;
 
-    @Autowired
-    private RoleService roleService;
 
 
     /*查询所有*/
     @RequestMapping("/dics")
+    @Permission("501010")
     public String queryAllDic(Model model , String vValue, String type, HttpSession session){
         session.setAttribute("jobTypes", dicValueService.getAllJobType());
         session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
@@ -65,6 +65,7 @@ public class DicValueController {
     }
 
     /*新增*/
+    @Permission("501020")
     @RequestMapping("/add")
     public String add(DicValue dicValue, String type){
         boolean result = dicValueService.add(dicValue, type);
@@ -74,6 +75,7 @@ public class DicValueController {
     /*根据vId查询进行修改*/
     @RequestMapping("/queryById/{vId}")
     @ResponseBody
+    @Permission("501010")
     public Map<String,Object> queryById(@PathVariable("vId") Integer vId, HttpServletResponse response) throws IOException {
 
         DicValue dicValue = dicValueService.queryById(vId);
@@ -85,32 +87,28 @@ public class DicValueController {
 
     /*修改*/
     @RequestMapping("/update")
+    @Permission("501030")
     public String update(DicValue dicValue, String type){
-        System.out.println(dicValue);
         boolean result = dicValueService.update(dicValue, type);
         return "redirect:/dic/dics";
     }
     /*删除*/
     @RequestMapping("/del/{vId}")
+    @Permission("501040")
     public String del(@PathVariable("vId") Integer vId){
         boolean result = dicValueService.del(vId);
         return "redirect:/dic/dics";
     }
 
+
     /*统计报表*/
     @RequestMapping("/echartsData")
     @ResponseBody
+    @Permission("40")
     public List<String[]> echartsObjs(String empName,
                                       String startTime,
                                       String endTime) throws UnsupportedEncodingException {//根据用户，时间断查询
 
-        System.out.println("==============================================");
-        System.out.println("==============================================");
-        System.out.println("==============================================");
-        System.out.println("==============================================");
-        System.out.println("==============================================");
-        System.out.println("==============================================");
-        System.out.println(empName + "===" + startTime + "===" + endTime);
 
         List<EchartsObj> echartsObjs = new ArrayList<EchartsObj>();
         //获取所有员工信息
@@ -196,12 +194,7 @@ public class DicValueController {
             echartsObj.setBackPrice(allBackPrice);
             echartsObj.setPreBackPrice(allPreBackPrice);
         }
-//        System.out.println("========================================================");
-//        System.out.println("========================================================");
-//        System.out.println("========================================================");
-//        System.out.println("========================================================");
-//        System.out.println(echartsObjs);
-        //将数据打成OBJ数组
+
         Object[] objectsArr = echartsObjs.toArray();
 //        Object[] objects = new Object[objectsArr.length + 1];
         List<String[]> data = new ArrayList<>();
@@ -222,34 +215,18 @@ public class DicValueController {
             //            objects[i + 1] = echartsObj2;
             data.add(echartsObj2);
         }
-//        System.out.println("========================================================");
-//        System.out.println("========================================================");
-//        System.out.println("========================================================");
-//        System.out.println("========================================================");
-//        System.out.println(data);
-//        for (String[] datum : data) {
-//            for (String s : datum) {
-//                System.out.println(s);
-//            }
-//        }
+
         return data;
     }
 
     /*统计报表2*/
     @RequestMapping("/echartsDataDetail")
     @ResponseBody
+    @Permission("40")
     public List<String[]> echartsDataDtail(String empName,
                                       String startTime,
                                       String endTime
             , Integer eId, HttpSession session, Model model) throws UnsupportedEncodingException {//根据用户，时间断查询
-
-        System.out.println("==============================================");
-        System.out.println("==============================================");
-        System.out.println("==============================================");
-        System.out.println("==============================================");
-        System.out.println("==============================================");
-        System.out.println("==============================================");
-        System.out.println(empName + "===" + startTime + "===" + endTime);
 
 
         EchartsObj echartsObjs = new EchartsObj();

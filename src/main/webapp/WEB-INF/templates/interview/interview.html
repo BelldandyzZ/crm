@@ -228,14 +228,14 @@
                             <div class="card-header">
                                 <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
                                 <div class="row" >
-                                    <div class="col-sm-3">
+                                    <div th:if="${session.permissions.contains('2010')}" class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_iCompany">客户单位</label>
                                             <input type="text" id="con_iCompany" th:value="${iCompany}" name="iCompany" class="form-control" placeholder="请输入客户单位" value="">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div th:if="${session.permissions.contains('2010')}" class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_cRename">客户名称</label>
@@ -243,8 +243,7 @@
                                         </div>
 
                                     </div>
-
-                                    <div class="col-sm-3">
+                                    <div th:if="${session.permissions.contains('2010')}" class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_eRename">我方人员</label>
@@ -254,18 +253,14 @@
                                             </select>
                                         </div>
                                     </div>
-
-
-
-                                    <div class="col-sm-1">
+                                    <div th:if="${session.permissions.contains('2010')}" class="col-sm-1">
                                         <!--这个label没用，纯当作占位符用来布局-->
                                         <label style="color: white">.</label>
                                         <div class="form-group">
                                             <button type="button" id="itwConditionBtn" class="btn btn-block btn-default">搜索</button>
                                         </div>
                                     </div>
-
-                                    <div class="col-sm-1">
+                                    <div th:if="${session.permissions.contains('2020')}" class="col-sm-1">
                                         <!--这个label没用，纯当作占位符用来布局-->
                                         <label style="color: white">.</label>
                                         <div class="form-group">
@@ -274,8 +269,6 @@
                                             </button>
                                         </div>
                                     </div>
-
-
                                 </div>
                                 <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
                             </div>
@@ -283,14 +276,14 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-8"></div>
-                                    <div class="col-sm-2">
+                                    <div th:if="${session.permissions.contains('2030')}" class="col-sm-2">
                                         <button type="button" id="outputExcelBtn" class="btn btn-block btn-default">
                                             <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>导出访谈信息
                                         </button>
                                     </div>
                                 </div>
 
-                                <table id="table_data" class="table table-bordered table-hover">
+                                <table th:if="${session.permissions.contains('2010')}" id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>客户单位</th>
@@ -318,14 +311,14 @@
                                         <td th:text="${itw.iContent == null or itw.iContent == ''} ? '无' : ${itw.iContent} " ></td>
                                         <td th:text="${itw.iNext == null or itw.iNext == ''} ? '无' : ${itw.iNext} " ></td>
                                         <td>
-                                            <button type="button" th:tar-id="${itw.iId}" class="btn  btn-danger btn-sm confirmsItw">删除</button>
-                                            <button type="button" th:tar-id="${itw.iId}" class="btn  btn-sm btn-info updateItwBtn" data-toggle="modal" data-target="#update_itw">修改</button>
+                                            <button th:if="${session.permissions.contains('2040')}" type="button" th:tar-id="${itw.iId}" class="btn  btn-danger btn-sm confirmsItw">删除</button>
+                                            <button th:if="${session.permissions.contains('2050')}" type="button" th:tar-id="${itw.iId}" class="btn  btn-sm btn-info updateItwBtn" data-toggle="modal" data-target="#update_itw">修改</button>
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
-                                <nav>
+                                <nav th:if="${session.permissions.contains('2010')}">
                                     <ul class="mypagination">
                                         <li><a>
                                             总页码：<span th:text="${itwPageInfo.pages}"></span>&nbsp;&nbsp;&nbsp;
@@ -400,7 +393,6 @@
         let iCompany = $('#con_iCompany').val();
         let cRename = $('#con_cRename').val();
         let eRename = $('#con_eRename').val();
-        console.log(iCompany + "-" + cRename + "-" + eRename)
         location.href = "/crm/interview/interviews?iCompany="+iCompany+"&cRename="+cRename+"&eRename=" + eRename;
     })
 
@@ -431,7 +423,6 @@
             type: "get",
             datatype: "json",
             success: function (res){
-                console.log(res);
                 let itw = res.data;
                 $('#iId').val(itw.iId);
                 $('#iCompany').val(itw.iCompany);

@@ -41,7 +41,7 @@
                         <div class="card">
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="table_data" class="table table-bordered table-hover">
+                                <table th:if="${session.permissions.contains('2010')}" id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>客户单位</th>
@@ -80,10 +80,13 @@
 <!--                                    </tr>-->
                                     </tbody>
                                 </table>
-                                <p th:if="${itwRecordPageInfo.total == 0}">本项目没有拜访数据哦！要添加对应拜访记录才有哦！
-                                    <a th:href="@{/interview/interviews}">[去添加]</a>
-                                </p>
-                                <nav>
+                                <div th:if="${session.permissions.contains('2010')}">
+                                    <p th:if="${itwRecordPageInfo.total == 0}">本项目没有拜访数据哦！要添加对应拜访记录才有哦！
+                                        <a th:href="@{/interview/interviews}">[去添加]</a>
+                                    </p>
+                                </div>
+
+                                <nav th:if="${session.permissions.contains('2010')}">
                                     <ul class="mypagination">
                                         <li><a>
                                             总页码：<span th:text="${itwRecordPageInfo.pages}"></span>&nbsp;&nbsp;&nbsp;

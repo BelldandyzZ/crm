@@ -46,14 +46,6 @@
                                               </div>
                                           </span>
                                     </div>
-                                    <div class="row">
-                                        <ul>
-                                            <li>companyType：单位类型(如：学校/国企/政府机构/名气外企/其他)</li>
-                                            <li>progress：项目进度(如：意向/方案/招标/合同/回款/结束)</li>
-                                            <li>jobType：岗位类型(如：售前/售后/销售/商务/财务/其他)</li>
-                                            <li>schoolType：学校类型<span th:text="${session.schoolTypes}"></span></li>
-                                        </ul>
-                                    </div>
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -100,14 +92,7 @@
                                               </div>
                                           </span>
                                     </div>
-                                    <div class="row">
-                                        <ul>
-                                            <li>companyType：单位类型<span th:text="${session.companyTypes}"></span></li>
-                                            <li>progress：项目进度<span th:text="${session.progressTypes}"></span></li>
-                                            <li>jobType：岗位类型<span th:text="${session.jobTypes}"></span></li>
-                                            <li>schoolType：学校类型<span th:text="${session.schoolTypes}"></span></li>
-                                        </ul>
-                                    </div>
+
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -136,14 +121,14 @@
                             <div class="card-header">
                                 <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
                                 <div class="row" >
-                                    <div class="col-sm-3">
+                                    <div th:if="${session.permissions.contains('501010')}" class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_vValue">字段值</label>
                                             <input type="text" id="con_vValue" name="vValue" class="form-control" placeholder="请输入字段值">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div th:if="${session.permissions.contains('501010')}" class="col-sm-3">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="con_type">字段类型</label>
@@ -155,7 +140,7 @@
 
                                     </div>
 
-                                    <div class="col-sm-1">
+                                    <div th:if="${session.permissions.contains('501010')}" class="col-sm-1">
                                         <!--这个label没用，纯当作占位符用来布局-->
                                         <label style="color: white">.</label>
                                         <div class="form-group">
@@ -163,7 +148,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-1">
+                                    <div th:if="${session.permissions.contains('501020')}" class="col-sm-1">
                                         <!--这个label没用，纯当作占位符用来布局-->
                                         <label style="color: white">.</label>
                                         <div class="form-group">
@@ -173,31 +158,13 @@
                                         </div>
                                     </div>
 
-
                                 </div>
                                 <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-<!--                                <div class="row">-->
-<!--                                    <div class="col-sm-8"></div>-->
-<!--                                    <div class="col-sm-2 ">-->
-<!--                                        <button type="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#cusInportModel">-->
-<!--                                            <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>-->
-<!--                                            导入信息-->
-<!--                                        </button>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-sm-2">-->
-<!--                                        <button type="button" id="cusExcelOutputBtn" class="btn btn-block btn-default">-->
-<!--                                            <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>导出信息-->
-<!--                                        </button>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
-                                <!--                  <h1 th:text="${empList}"></h1>-->
-                                <!--                  <h1 th:text="${session.emp}"></h1>-->
                                 <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
-                                <table id="table_data" class="table table-bordered table-hover">
+                                <table th:if="${session.permissions.contains('501010')}" id="table_data" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>字典编号</th>
@@ -212,8 +179,8 @@
                                         <td th:text="${dic.vValue}">1</td>
                                         <td th:text="${dic.type}">1</td>
                                         <td>
-                                            <button type="button" th:tar-id="${dic.vId}" class="btn  btn-danger btn-sm confirmsCus">删除</button>
-                                            <button type="button" th:tar-id="${dic.vId}" class="btn  btn-sm btn-info updateDicBtn" data-toggle="modal" data-target="#update_dic">修改</button>
+                                            <button th:if="${session.permissions.contains('501040')}" type="button" th:tar-id="${dic.vId}" class="btn  btn-danger btn-sm confirmsCus">删除</button>
+                                            <button th:if="${session.permissions.contains('501030')}" type="button" th:tar-id="${dic.vId}" class="btn  btn-sm btn-info updateDicBtn" data-toggle="modal" data-target="#update_dic">修改</button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -234,10 +201,6 @@
 
         </section>
 
-        <!-- 回到顶部 -->
-        <a id="back-to-top" th:href="@{#}" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
-            <i class="fas fa-chevron-up"></i>
-        </a>
     </div>
     <!-- /.content-wrapper -->
 </div>
