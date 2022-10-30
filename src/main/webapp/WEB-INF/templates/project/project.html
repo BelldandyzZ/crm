@@ -78,9 +78,9 @@
                               </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label>开始时间</label>
+                                      <label><span style="color: red">*</span>开始时间</label>
                                       <div class="select2-purple">
-                                          <input type="date" name="startTime" class="form-control"  placeholder="开始时间">
+                                          <input required type="date" name="startTime" class="form-control"  placeholder="开始时间">
                                       </div>
                                   </div>
                               </span>
@@ -173,9 +173,9 @@
                               </span>
                                         <span class="col-sm-6 col-md-6">
                                   <div class="form-group">
-                                      <label  for="cRenames">开始时间</label>
+                                      <label  for="cRenames"> <span style="color: red">*</span>开始时间</label>
                                       <div class="select2-purple">
-                                            <input type="date" id="startTime"  name="startTime" class="form-control"  placeholder="开始时间">
+                                            <input required type="date" id="startTime"  name="startTime" class="form-control"  placeholder="开始时间">
                                       </div>
                                   </div>
                               </span>
@@ -302,14 +302,14 @@
                                         <td><a th:href=" @{'/project/contract_record?pId=' + ${pro.pId}}" class="card-link" th:text="${pro.pName}"></a></td>
                                         <td th:text="${pro.pMoeny == null or pro.pMoeny == ''} ? '无' : ${pro.pMoeny}"></td>
                                         <td th:text="${pro.pProgress == null or pro.pProgress == ''} ? '无' : ${pro.pProgress} " ></td>
-                                        <td th:text="${pro.pOwner == null or pro.pOwner == ''} ? 'fadsfdsa' : ${pro.pOwner} "></td>
+                                        <td th:text="${pro.pOwner == null or pro.pOwner == ''} ? '无' : ${pro.pOwner} "></td>
                                         <td th:text="${pro.cRenames.size == 0} ? '无' : ${pro.cRenames}"></td>
 
                                         <td><a th:href="@{'/project/interview_record?cIds=' + ${pro.cIds} + '&pId=' + ${pro.pId}}">点击查看详情</a></td>
                                         <td><a th:href="@{'/project/payment_back?pbId=' + ${pro.pbId} + '&pId=' + ${pro.pId}}" class="card-link" th:text="${pro.total}"></a>
                                         </td>
-                                        <td th:text="${pro.startTime}">开始时间</td>
-                                        <td th:text="${pro.endTime}">结束时间</td>
+                                        <td th:text="${pro.startTime == null or pro.startTime == ''} ? '无' : ${pro.startTime} " >开始时间</td>
+                                        <td th:text="${pro.endTime == null or pro.endTime == ''} ? '无' : ${pro.endTime} ">结束时间</td>
                                         <td>
                                             <button th:if="${session.permissions.contains('3040')}" type="button" th:tar-id="${pro.pId}" class="btn  btn-danger btn-sm confirmsDelPro">删除</button>
                                             <button th:if="${session.permissions.contains('3030')}" type="button" th:tar-id="${pro.pId}" class="btn  btn-sm btn-info updateProBtn" data-toggle="modal" data-target="#update_pro">修改</button>

@@ -16,6 +16,14 @@
 
     <link rel="stylesheet" th:href="@{/plugins/select2/css/select2.min.css}">
     <link rel="stylesheet" th:href="@{/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
+    <style>
+        #box{
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -423,7 +431,7 @@
                                         <td th:text="${emp.eStartTime == null or emp.eStartTime == ''} ? '无' : ${emp.eStartTime}"></td>
                                         <td th:text="${emp.eSocialPosition == null or emp.eSocialPosition == ''} ? '无' : ${emp.eSocialPosition}"></td>
                                         <td th:text="${emp.eHonor == null or emp.eHonor == ''} ? '无' : ${emp.eHonor}"></td>
-                                        <td th:text="${emp.eRemark == null or emp.eRemark == ''} ? '无' : ${emp.eRemark}"></td>
+                                        <td id="box" th:text="${emp.eRemark == null or emp.eRemark == ''} ? '无' : ${emp.eRemark}"></td>
                                         <td>
                                             <button th:if="${session.permissions.contains('502040')}" type="button" th:tar-id="${emp.eId}" class="btn  btn-danger btn-sm confirms">删除</button>
                                             <button th:if="${session.permissions.contains('502030')}" type="button" th:tar-id="${emp.eId}" class="btn  btn-sm btn-info updateEmpBtn" data-toggle="modal" data-target="#update_emp">修改</button>

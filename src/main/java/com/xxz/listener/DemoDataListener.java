@@ -20,7 +20,6 @@ public class DemoDataListener<E> extends AnalysisEventListener<E> {
     @Override
     public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
         //将表头信息导入集合（实际中不需要）
-        System.out.println("表头信息：" + headMap);
     }
 
     // 4.所有都读取完了，执行这个方法
@@ -33,18 +32,14 @@ public class DemoDataListener<E> extends AnalysisEventListener<E> {
     // 2.一行一行的读取内容（list集合），但是不读表头。
     @Override
     public void invoke(E e, AnalysisContext analysisContext) {
-//        System.out.println("==============Mapper：" + empService);
         //一般在这里进行导入集合操作（在项目中，一般所有业务操作，都在这个方法中进行）
         //EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet().doRead();
-        System.out.println("正在添加：" + e);
         if(e instanceof Employee){
             //员工业务类
             int state = empService.insertEmp((Employee) e);
-            System.out.println(state > 0 ? "插入成功！" : "插入失败！");
         }else if(e instanceof Customer){
             //客户业务类
             int state = customerService.insertCus((Customer) e);
-            System.out.println(state > 0 ? "插入成功！" : "插入失败！");
         }
 
     }

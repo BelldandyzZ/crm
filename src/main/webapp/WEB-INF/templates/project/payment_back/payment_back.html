@@ -34,9 +34,9 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label>回款金额</label>
-                                           <input type="hidden" name="pbId" th:value="${pbId}">
-                                          <input type="number"  name="pbMoney" class="form-control">
+                                          <label><span style="color: red">*</span>回款金额</label>
+                                           <input  type="hidden" name="pbId" th:value="${pbId}">
+                                          <input required type="number"  name="pbMoney" class="form-control">
                                       </div>
                                   </span>
                                         <span class="col-sm-6 col-md-6">
@@ -79,9 +79,9 @@
                                     <div class="row">
                                   <span class="col-sm-6 col-md-6">
                                        <div class="form-group">
-                                          <label>回款金额</label>
+                                          <label><span style="color: red">*</span>回款金额</label>
                                            <input type="hidden" id="pbId" name="pbId">
-                                          <input type="number" id="pbMoney"  name="pbMoney" class="form-control">
+                                          <input required type="number" id="pbMoney"  name="pbMoney" class="form-control">
                                       </div>
                                   </span>
 

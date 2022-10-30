@@ -42,13 +42,7 @@ public class CustomerController {
     @Permission("1010")
     public String queryAll(Model model, String cRename, String cName, String cJob, HttpSession session,
     @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
-        session.setAttribute("jobTypes", dicValueService.getAllJobType());
-        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
-        session.setAttribute("progressTypes", dicValueService.getAllProgress());
-        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
-        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
-        session.setAttribute("pNames", projectService.getAllProjectName());
-        session.setAttribute("allType", dicValueService.getAllType());
+
 //=====================================================================================================
         PageHelper.startPage(pageNum,  10);
         List<Customer> customerList = customerService.queryAllCus(cRename, cName, cJob);

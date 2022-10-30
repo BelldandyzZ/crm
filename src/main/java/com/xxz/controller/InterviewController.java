@@ -54,13 +54,7 @@ public class InterviewController {
     public String queryAll(Model model, String iCompany, String cRename, String eRename,HttpSession session,
                            @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
 
-        session.setAttribute("jobTypes", dicValueService.getAllJobType());
-        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
-        session.setAttribute("progressTypes", dicValueService.getAllProgress());
-        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
-        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
-        session.setAttribute("pNames", projectService.getAllProjectName());
-        session.setAttribute("allType", dicValueService.getAllType());
+
 //=====================================================================================================
 
 
@@ -138,6 +132,7 @@ public class InterviewController {
         //重定向到empMenu界面
         return "redirect:/interview/interviews";
     }
+
 
 
     //导出

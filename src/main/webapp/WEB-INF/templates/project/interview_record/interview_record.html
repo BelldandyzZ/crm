@@ -16,6 +16,14 @@
 
     <link rel="stylesheet" th:href="@{/plugins/select2/css/select2.min.css}">
     <link rel="stylesheet" th:href="@{/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
+    <style>
+        #box{
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -65,8 +73,8 @@
                                         <!--eId-->
                                         <td th:text="${itw.eRename == null or itw.eRename == ''} ? '无' : ${itw.eRename} " ></td>
                                         <td th:text="${itw.iOthers == null or itw.iOthers == ''} ? '无' : ${itw.iOthers} " ></td>
-                                        <td th:text="${itw.iContent == null or itw.iContent == ''} ? '无' : ${itw.iContent} " ></td>
-                                        <td th:text="${itw.iNext == null or itw.iNext == ''} ? '无' : ${itw.iNext} " ></td>
+                                        <td id="box" th:text="${itw.iContent == null or itw.iContent == ''} ? '无' : ${itw.iContent} " ></td>
+                                        <td id="box" th:text="${itw.iNext == null or itw.iNext == ''} ? '无' : ${itw.iNext} " ></td>
                                     </tr>
 <!--                                    <tr>-->
 <!--                                        <td>1</td>-->

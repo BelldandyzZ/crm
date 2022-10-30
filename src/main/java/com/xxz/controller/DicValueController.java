@@ -45,13 +45,7 @@ public class DicValueController {
     @RequestMapping("/dics")
     @Permission("501010")
     public String queryAllDic(Model model , String vValue, String type, HttpSession session){
-        session.setAttribute("jobTypes", dicValueService.getAllJobType());
-        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
-        session.setAttribute("progressTypes", dicValueService.getAllProgress());
-        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
-        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
-        session.setAttribute("pNames", projectService.getAllProjectName());
-        session.setAttribute("allType", dicValueService.getAllType());
+
 //=====================================================================================================
 
 
@@ -132,7 +126,6 @@ public class DicValueController {
             Double allPreBackPriceInteger = Double.parseDouble(allPreBackPrice);
             //================================================
             for (Project project : projects) {
-                System.out.println("============================"+project.getStartTime()+"=========================");
                 String proStartTimeStr = "";
                 String[] proSplit = project.getStartTime().split("-");
                 for (String s : proSplit) {
@@ -145,10 +138,8 @@ public class DicValueController {
                    for (String s : con_split) {
                        conStartTimeStr += s;
                    }
-                   System.out.println(conStartTimeStr+"===conStartTimeStr");
                    //如果项目启动时间小于目标条件时间，则跳过
                    if(Integer.parseInt(proStartTimeStr) < Integer.parseInt(conStartTimeStr)){
-                       System.out.println("true");
                        continue;
                    }
                }
@@ -158,10 +149,8 @@ public class DicValueController {
                     for (String s : con_split) {
                         conEndTimeStr += s;
                     }
-                    System.out.println(conEndTimeStr+"===conEndTimeStr");
                     //如果项目启动时间小于目标条件时间，则跳过
                     if(Integer.parseInt(proStartTimeStr) > Integer.parseInt(conEndTimeStr)){
-                        System.out.println("true");
                         continue;
                     }
                 }
@@ -245,7 +234,6 @@ public class DicValueController {
 
 
             for (Project project : projects) {
-                System.out.println("============================"+project.getStartTime()+"=========================");
                 String proStartTimeStr = "";
                 if(project.getStartTime() != null){
                     String[] proSplit = project.getStartTime().split("-");
@@ -260,10 +248,8 @@ public class DicValueController {
                     for (String s : con_split) {
                         conStartTimeStr += s;
                     }
-                    System.out.println(conStartTimeStr+"===conStartTimeStr");
                     //如果项目启动时间小于目标条件时间，则跳过
                     if(Integer.parseInt(proStartTimeStr) < Integer.parseInt(conStartTimeStr)){
-                        System.out.println("true");
                         continue;
                     }
                 }
@@ -273,10 +259,8 @@ public class DicValueController {
                     for (String s : con_split) {
                         conEndTimeStr += s;
                     }
-                    System.out.println(conEndTimeStr+"===conEndTimeStr");
                     //如果项目启动时间小于目标条件时间，则跳过
                     if(Integer.parseInt(proStartTimeStr) > Integer.parseInt(conEndTimeStr)){
-                        System.out.println("true");
                         continue;
                     }
                 }
@@ -328,11 +312,6 @@ public class DicValueController {
 
                 echartsObjList.add(echartsObj);
             }
-//        System.out.println("========================================================");
-//        System.out.println("========================================================");
-//        System.out.println("========================================================");
-//        System.out.println("========================================================");
-//        System.out.println(echartsObjs);
         //将数据打成OBJ数组
         Object[] objectsArr = echartsObjList.toArray();
 //        Object[] objects = new Object[objectsArr.length + 1];

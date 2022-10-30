@@ -60,13 +60,7 @@ public class ProjectController {
         response.setContentType("text/html;charset=utf-8");
 
 
-        session.setAttribute("jobTypes", dicValueService.getAllJobType());
-        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
-        session.setAttribute("progressTypes", dicValueService.getAllProgress());
-        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
-        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
-        session.setAttribute("pNames", projectService.getAllProjectName());
-        session.setAttribute("allType", dicValueService.getAllType());
+
 //=====================================================================================================
 
 
@@ -217,15 +211,11 @@ public class ProjectController {
     @RequestMapping("/conownloadTen/{fileName}")
     public ResponseEntity<byte[]> conownloadTen(HttpSession session,@PathVariable("fileName") String fileName) throws IOException {
         //使用ResponseEntity实现文件下载功能
-        System.out.println("[fileName]=============================================================");
-        System.out.println("[fileName=]" + fileName);
         //获取ServletContext对象
         ServletContext servletContext = session.getServletContext();
         //获取服务器中文件的真实路径img/1.jpg-->(img + File.separator分隔符 + 1.jpg)
         String realPath = servletContext.getRealPath("/tenders");
-        System.out.println(realPath);
         File parentFile = new File(realPath).getParentFile().getParentFile().getParentFile();
-        System.out.println(parentFile.getPath() + "\\src\\main\\webapp\\tenders");
         realPath = parentFile.getPath() + "\\src\\main\\webapp\\tenders\\" + fileName;//--/contracts/test1.doc
         //创建输入流（根据目标文件获取输入流）
         InputStream in = new FileInputStream(realPath);
@@ -259,13 +249,10 @@ public class ProjectController {
             if(ctfileName.length() > 25){
                 ctfileName = ctfileName.substring(ctfileName.length() - 25, ctfileName.length());
             }
-            System.out.println(ctfileName);
             contract.setCtContractDocment(ctfileName);
             //获取当前工程下photo目录的真实路径
             String photoRealPath = servletContext.getRealPath("/contracts");
-            System.out.println(photoRealPath);
             File parentFile = new File(photoRealPath).getParentFile().getParentFile().getParentFile();
-            System.out.println(parentFile.getPath() + "\\src\\main\\webapp\\contracts");
 
             //E:\idea-workspace\crm\src\main\webapp\contracts
             photoRealPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts";
@@ -282,7 +269,6 @@ public class ProjectController {
             }
             //拼接目标文件上传的路径
             String targetFileUploadPath = photoRealPath + File.separator + ctfileName;
-            System.out.println(targetFileUploadPath);
             //上传文件(根据目标文件上传路径)
             ctContractDocmentFile.transferTo(new File(targetFileUploadPath));
         }
@@ -296,13 +282,11 @@ public class ProjectController {
             if(tdfileName.length() > 25){
                 tdfileName = tdfileName.substring(tdfileName.length() - 25, tdfileName.length());
             }
-            System.out.println(tdfileName);
             contract.setCtTenderDocment(tdfileName);
             //获取ServletContext对象
             //获取当前工程下photo目录的真实路径
             String photoRealPath2 = servletContext.getRealPath("/tenders");
             File parentFile2 = new File(photoRealPath2).getParentFile().getParentFile().getParentFile();
-            System.out.println(parentFile2.getPath() + "\\src\\main\\webapp\\tenders");
             photoRealPath2 = parentFile2.getPath() + "\\src\\main\\webapp\\tenders";
             //创建photoPath所对应的File对象
             File file2 = new File(photoRealPath2);
@@ -390,7 +374,6 @@ public class ProjectController {
         }
         //=============================================
         //实现添加业务
-        System.out.println(contract);
         boolean result = projectService.contractUpdate(contract);
         //获取
         return "redirect:/project/contract_record?pId=" + pId;
@@ -472,7 +455,6 @@ public class ProjectController {
     @Permission("306040")
     @RequestMapping("/payBackUpdate")
     private String payBackUpdate(PaymentBack paymentBack,HttpSession session){
-        System.out.println(paymentBack);
         boolean result = projectService.payBackUpdate(paymentBack);
         //session获取当前pbid
         Integer now_pbId = (Integer) session.getAttribute("now_pbId");
@@ -484,7 +466,6 @@ public class ProjectController {
     @Permission("306030")
     @RequestMapping("/remove/{paymentBackId}")
     public String erasePaymentbackById(HttpSession session,@PathVariable("paymentBackId") Integer id){
-        System.out.println("id = " + id);
         projectService.removePaymentbackById(id);
         Integer now_pbId = (Integer) session.getAttribute("now_pbId");
         return "redirect:/project/payment_back?pbId=" + now_pbId;

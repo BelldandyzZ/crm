@@ -5,6 +5,7 @@
     <select id="selectAllRole" resultType="com.xxz.bean.Role">
         SELECT *
         FROM role
+--         WHERE r_name != '系统管理员'
     </select>
 
     <insert id="insertRole" parameterType="com.xxz.bean.Role">

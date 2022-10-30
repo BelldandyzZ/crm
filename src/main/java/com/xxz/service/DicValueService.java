@@ -30,8 +30,6 @@ public class DicValueService {
         if(type != null && !type.equals("")){
             String typeCode = dicValueMapper.selectCodeByType(type);
             criteria.andTypeCodeEqualTo(typeCode);
-            System.out.println(type);
-            System.out.println(typeCode);
         }
         List<DicValue> dicValues = dicValueMapper.selectByExample(dicValueExample);
         for (DicValue dicValue : dicValues) {

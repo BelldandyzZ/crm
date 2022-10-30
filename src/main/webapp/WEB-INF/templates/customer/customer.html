@@ -13,6 +13,14 @@
     <link rel="stylesheet" th:href="@{/dist/css/ionicons.min.css}">
   <!-- 主题样式 -->
   <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+    <style>
+        #box{
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -372,8 +380,8 @@
                      <td th:text="${cus.cTele == null or cus.cTele == ''} ? '无' : ${cus.cTele} " ></td>
                      <td th:text="${cus.cPost == null or cus.cPost == ''} ? '无' : ${cus.cPost} " ></td>
                      <td th:text="${cus.cHobby == null or cus.cHobby == ''} ? '无' : ${cus.cHobby} "></td>
-                     <td th:text="${cus.cRemark == null or cus.cRemark == ''} ? '无' : ${cus.cRemark} " ></td>
-                          <td>
+                     <td id="box" th:text="${cus.cRemark == null or cus.cRemark == ''} ? '无' : ${cus.cRemark} " ></td>
+                      <td>
                               <button th:if="${session.permissions.contains('1030')}" type="button" th:tar-id="${cus.cId}" class="btn  btn-danger btn-sm confirmsCus">删除</button>
                               <button th:if="${session.permissions.contains('1040')}" type="button" th:tar-id="${cus.cId}" class="btn  btn-sm btn-info updateCusBtn" data-toggle="modal" data-target="#update_emp">修改</button>
                           </td>

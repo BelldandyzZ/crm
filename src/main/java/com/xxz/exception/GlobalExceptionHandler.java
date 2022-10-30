@@ -23,10 +23,6 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
      */
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler, Exception e) {
 
-        //打印异常信息
-        System.out.println(e.getMessage());
-        System.out.println(e.getStackTrace());
-
 
         //首先判断是返回页面还是返回json，false默认返回页面
         boolean isReturnJson = false;

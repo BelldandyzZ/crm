@@ -59,12 +59,7 @@ public class EmpService {
         //查询
         List<Employee> employeeList = employeeMapper.selectByExample(employeeExample);
         //超管不展示
-//        for (Employee employee : employeeList) {
-//            if(employee.getRename().equals("超管")){
-//                employeeList.remove(employee);
-//                break;
-//            }
-//        }
+
         return employeeList;
     }
 

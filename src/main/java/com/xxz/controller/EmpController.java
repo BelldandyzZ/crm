@@ -78,6 +78,15 @@ public class EmpController {
 
     @RequestMapping("/index")
     public String toIndex(HttpSession session){
+
+        session.setAttribute("jobTypes", dicValueService.getAllJobType());
+        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
+        session.setAttribute("progressTypes", dicValueService.getAllProgress());
+        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
+        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
+        session.setAttribute("pNames", projectService.getAllProjectName());
+        session.setAttribute("allType", dicValueService.getAllType());
+
         Employee emp = (Employee) session.getAttribute("emp");
         List<String> permissions =  roleService.queryAllMenuByEmpId(emp.geteId());
         session.setAttribute("permissions",permissions);
@@ -90,20 +99,13 @@ public class EmpController {
     public String queryAll(Model model,String rename, String eJob, String eBirthday, HttpSession session,
                           @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
 
-        session.setAttribute("jobTypes", dicValueService.getAllJobType());
-        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
-        session.setAttribute("progressTypes", dicValueService.getAllProgress());
-        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
-        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
-        session.setAttribute("pNames", projectService.getAllProjectName());
-        session.setAttribute("allType", dicValueService.getAllType());
+
 //=====================================================================================================
 
 
         PageHelper.startPage(pageNum,  10);
         List<Employee> employeeList = empService.queryAllEmp(rename, eJob, eBirthday);
         PageInfo<Employee> empPageInfo = new PageInfo<>(employeeList, 5);
-        System.out.println("条件查询结果：" + empPageInfo.getList());
         model.addAttribute("empPageInfo", empPageInfo);
         //条件导出excel
         session.setAttribute("employeeListExcel", employeeList);
@@ -132,14 +134,9 @@ public class EmpController {
     @Permission("502020")
     @RequestMapping("/add")
     public String empAdd(Employee employee){
-        System.out.println("add emp..." + employee);
         //调用接口将数据添加到数据库
         boolean result = empService.empAdd(employee);
-        if (result){
-            System.out.println("emp操作成功！");
-        }else {
-            System.out.println("emp操作失败！");
-        }
+
         return "redirect:/emp/emps";
     }
 
@@ -147,14 +144,9 @@ public class EmpController {
     @Permission("502040")
     @RequestMapping("/del/{eId}")
     public String empDel(@PathVariable("eId") Integer eId){
-        System.out.println(eId);
         //删除业务
         boolean result = empService.empDel(eId);
-        if (result){
-            System.out.println("emp操作成功！");
-        }else {
-            System.out.println("emp操作失败！");
-        }
+
         //重定向到empList界面展示最新数据
         return "redirect:/emp/emps";
     }
@@ -164,14 +156,9 @@ public class EmpController {
     @RequestMapping("/update")
     public String empUpdate(Employee employee){
         //展示emp
-        System.out.println(employee);
         //调用目标接口实现信息修改
         boolean result = empService.empUpdate(employee);
-        if (result){
-            System.out.println("emp操作成功！");
-        }else {
-            System.out.println("emp操作失败！");
-        }
+      
         //重定向到empMenu界面
         return "redirect:/emp/emps";
     }
@@ -179,7 +166,6 @@ public class EmpController {
     /*excel导入导出*/
     @RequestMapping(value = "/excelInport", method = RequestMethod.POST)
     public String excelInport(MultipartFile activityFile){
-        System.out.println("文件名：" + activityFile.getOriginalFilename());
         // 解析Excel
         ExcelReader excelReader = null;
         try {
