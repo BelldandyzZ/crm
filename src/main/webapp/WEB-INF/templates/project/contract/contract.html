@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>合同信息</title>
+    <!-- 离线 Google 字体: Source Sans Pro -->
+    <link rel="stylesheet" th:href="@{'/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{/dist/css/ionicons.min.css}">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!--上传-->
+
+    <!--  新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗  -->
+    <div class="modal fade" id="add_con">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form th:action="@{/project/contractAdd}"  method="post" enctype="multipart/form-data" class="nav-link">
+                    <div class="modal-body">
+                        <div>
+                            <div class="card card-default">
+                                <div class="card-header">
+                                    <h3 class="card-title">添加合同信息</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                  <span class="col-sm-6 col-md-6">
+                                       <div class="form-group">
+                                           <input id="currentpId" type="hidden" name="pId" th:value="${pId}">
+                                          <label>合同金额</label>
+                                          <input type="number"  placeholder="请输入合同金额" name="ctContractAmount" class="form-control">
+                                      </div>
+                                  </span>
+                                        <span class="col-sm-6 col-md-6">
+                                      <div class="form-group">
+                                          <label>合同文件</label>
+                                          <input type="file"  name="ctContractDocmentFile" class="form-control">
+                                      </div>
+                                  </span>
+                                    </div>
+                                    <div class="row">
+                                      <span class="col-sm-6 col-md-6">
+                                           <div class="form-group">
+                                              <label>招标金额</label>
+                                              <input type="number" placeholder="请输入招标金额"  name="ctTenderAmount" class="form-control">
+                                          </div>
+                                      </span>
+                                        <span class="col-sm-6 col-md-6">
+                                      <div class="form-group">
+                                          <label>招标文件</label>
+                                          <input type="file"  name="ctTenderDocmentFile" class="form-control">
+                                      </div>
+                                  </span>
+                                    </div>
+
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="">关闭</button>
+                        <button type="submit" class="btn btn-primary" id="">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--   新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗新增弹窗-->
+
+    <!-- 修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗 -->
+    <div class="modal fade" id="update_con">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form th:action="@{/project/updateContract}"  method="post" enctype="multipart/form-data" class="nav-link" >
+                    <div class="modal-body">
+                        <div>
+                            <div class="card card-default">
+                                <div class="card-header">
+                                    <h3 class="card-title">修改合同信息</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                  <span class="col-sm-6 col-md-6">
+                                       <div class="form-group">
+                                          <label>合同金额</label>
+                                            <!--当前合同pId-->
+                                             <input type="hidden" name="pId" th:value="${pId}">
+                                           <!--修改主键-->
+                                            <input type="hidden" id="ctId" name="ctId" th:value="${ctId}">
+                                          <input type="number" placeholder="请输入合同金额" id="ctContractAmount" name="ctContractAmount" class="form-control">
+                                      </div>
+                                  </span>
+                                        <span class="col-sm-6 col-md-6">
+                                      <div class="form-group">
+                                          <label>合同文件</label>
+                                          <input type="file" id="ctContractDocment" name="ctContractDocmentFile" class="form-control">
+                                      </div>
+                                  </span>
+                                    </div>
+                                    <div class="row">
+                                      <span class="col-sm-6 col-md-6">
+                                           <div class="form-group">
+                                              <label>招标金额</label>
+                                              <input type="number" placeholder="请输入招标金额" id="ctTenderAmount"  name="ctTenderAmount" class="form-control">
+                                          </div>
+                                      </span>
+                                        <span class="col-sm-6 col-md-6">
+                                      <div class="form-group">
+                                          <label>招标文件</label>
+                                          <input type="file" id="ctTenderDocment"  name="ctTenderDocmentFile" class="form-control">
+                                      </div>
+                                  </span>
+                                    </div>
+
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="">关闭</button>
+                        <button type="submit" class="btn btn-primary" id="">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗修改弹窗 -->
+
+    <!-- Content Wrapper. 包含页面内容 -->
+    <div class="content-wrapper">
+        <!-- 主体内容 -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <a  class="btn btn-primary" th:href="@{/project/projects}">
+                                                返回
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8"></div>
+                                    <div th:if="${session.permissions.contains('305020')}" class="col-sm-2">
+                                        <div class="form-group">
+                                            <button  class="btn btn-primary" data-toggle="modal" data-target="#add_con">
+                                                添加合同信息
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <table th:if="${session.permissions.contains('305010')}" id="table_data" class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>合同金额</th>
+                                        <th>合同文件</th>
+                                        <th>招标金额</th>
+                                        <th>招标文件</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="con,conState:${conPageInfo.list}">
+                                        <td th:text="${con.ctContractAmount == null or con.ctContractAmount == ''} ? '无' :${con.ctContractAmount}"></td>
+                                        <td>
+                                            <a th:if="${con.ctContractDocment  != '' and con.ctContractDocment != null}" th:href="@{'/project/conownloadCon/'+${con.ctContractDocment}}">合同文件下载</a>
+                                            <a th:if="${con.ctContractDocment  == '' or con.ctContractDocment == null}">无</a>
+                                        </td>
+                                        <td th:text="${con.ctTenderAmount == null or con.ctTenderAmount == ''}? '无' : ${con.ctTenderAmount}"></td>
+                                        <td>
+                                            <a th:if="${con.ctTenderDocment  != '' and con.ctTenderDocment != null}" th:href="@{'/project/conownloadTen/'+${con.ctTenderDocment}}">招标文件下载</a>
+                                            <a th:if="${con.ctTenderDocment  == '' or con.ctTenderDocment == null}">无</a>
+                                        </td>
+                                        <td>
+                                            <button th:if="${session.permissions.contains('305040')}" type="button" th:tar-id="${con.ctId}" class="btn  btn-sm btn-info updateConBtn" data-toggle="modal" data-target="#update_con">修改</button>
+                                            <button th:if="${session.permissions.contains('305030')}" type="button"  th:tar-id="${con.ctId}" class="btn  btn-sm btn-danger delete_contract" >删除</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div th:if="${session.permissions.contains('305010')}">
+                                    <p th:if="${conPageInfo.total == 0}">本项目没有合同数据哦！要添加对应合同记录才有哦！
+                                    </p>
+                                </div>
+
+                                <!-- table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据table数据 -->
+                                <nav th:if="${session.permissions.contains('305010')}">
+                                    <ul class="mypagination">
+                                        <li><a>
+                                            总页码：<span th:text="${conPageInfo.pages}"></span>&nbsp;&nbsp;&nbsp;
+                                            总条数：<span th:text="${conPageInfo.total}"></span>
+                                        </a></li>
+
+                                        <li th:style="${conPageInfo.hasPreviousPage ? '' : 'display: none;'}">
+                                            <a th:href="@{'/project/contract_record?pageNum=' + ${conPageInfo.pageNum - 1} + '&pId=' + ${pId}}"
+                                               aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li th:each="pageNum : ${conPageInfo.navigatepageNums}"  >
+                                            <a th:href="@{'/project/contract_record?pageNum=' + ${pageNum} + '&pId=' + ${pId}}"
+                                               th:style="${conPageInfo.pageNum == pageNum ? 'background:#5faee3;' : ''}"
+                                               th:text="${pageNum}"></a></li>
+                                        <li th:style="${conPageInfo.hasNextPage ? '' : 'display: none;'}">
+                                            <a th:href="@{'/project/contract_record?pageNum=' + ${conPageInfo.pageNum + 1} + '&pId=' + ${pId}}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                        <!--                                        <li><a href="#">尾页</a></li>-->
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+
+                        <!-- /.card -->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- 回到顶部 -->
+        <a id="back-to-top" th:href="@{#}" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+            <i class="fas fa-chevron-up"></i>
+        </a>
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- DataTables  & Plugins -->
+<script th:src="@{/plugins/datatables/jquery.dataTables.js}"></script>
+<script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+
+<script>
+    //自动生成分页信息的插件，执行初始化代码
+    $(function () {
+
+        //excel导出(emp)
+        $('#empExcelOutputBtn').click(function (){
+            location.href = "/crm/emp/excelOutput";
+        })
+        //excel导入(emp)
+        // $('#empExcelInportBtn').click(function (){
+        //     $('#empInputForm').submit();
+        // })
+
+        //条件查询
+        $('#conditionBtn').click(function (){
+            let rename = $('#con_rename').val();
+            let eJob = $('#con_eJob').val();
+            let eBirthday = $('#con_eBirthday').val();
+            console.log(rename + "-" + eJob + "-" + eBirthday)
+            location.href = "/crm/emp/emps?rename="+rename+"&eJob="+eJob+"&eBirthday="+eBirthday;
+        })
+        // $('#conditionBtn').click(function (){
+        //     $('#conForm').submit();
+        // })
+
+        //删除的确定弹窗
+        $(".confirms").click(function () {
+            if(confirm("确定删除该记录？")){
+                let empId = $(this).attr("tar-id");
+                location.href = "/crm/emp/del/" + empId;
+            }
+
+        })
+
+        //修改按钮
+        $('.updateConBtn').click(function (){
+            let ctId = $(this).attr("tar-id");
+            $.ajax({
+                url: "/crm/project/queryConById/" + ctId,
+                type: "get",
+                datatype: "json",
+                success: function (res){
+                    console.log(res);
+                    let ct = res.data;
+                    $('#ctId').val(ct.ctId);
+                    $('#ctContractAmount').val(ct.ctContractAmount);
+                    $('#ctTenderAmount').val(ct.ctTenderAmount);
+                }
+            })
+        })
+
+
+        /*删除*/
+        $('.delete_contract').click(function () {
+            if(confirm("确定删除该记录？")){
+                let ctId = $(this).attr("tar-id");
+                let currentpId = $('#currentpId').val();
+
+                console.log(ctId)
+                console.log(currentpId)
+
+                location.href = "/crm/project/eraseContractById/" + currentpId+"/"+ctId;
+            }
+        })
+
+
+        //数据的分页
+        // $('#table_data').DataTable(
+        //   {
+        //   "language": {
+        //     "sProcessing": "处理中...",
+        //    "sLengthMenu": "显示 _MENU_ 项结果",
+        //    "sZeroRecords": "没有匹配结果",
+        //    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+        //    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+        //    "sInfoPostFix": "",
+        //    "sSearch": "搜索:",
+        //    "sUrl": "",
+        //    "sEmptyTable": "表中数据为空",
+        //    "sLoadingRecords": "载入中...",
+        //    "sInfoThousands": ",",
+        //     "oPaginate":{
+        //       "sFirst": "首页",
+        //        "sPrevious": "上页",
+        //        "sNext": "下页",
+        //        "sLast": "末页"
+        //     }
+        //     },
+        //   "paging": true,
+        //   "lengthChange": false,
+        //   "searching": false,
+        //   "ordering": true,
+        //   "info": true,
+        //   "autoWidth": false,
+        //   "responsive": true,
+        // });
+    });
+</script>
+</body>
+</html>

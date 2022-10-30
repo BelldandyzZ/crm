@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxz.mapper.EmployeeMapper" >
+  <!--开启二级缓存-->
+<!--  <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
+  <resultMap id="BaseResultMap" type="com.xxz.bean.Employee" >
+    <id column="e_id" property="eId" jdbcType="INTEGER" />
+    <result column="rename" property="rename" jdbcType="VARCHAR" />
+    <result column="e_name" property="eName" jdbcType="VARCHAR" />
+    <result column="e_pwd" property="ePwd" jdbcType="VARCHAR" />
+    <result column="e_birthday" property="eBirthday" jdbcType="CHAR" />
+    <result column="e_school" property="eSchool" jdbcType="VARCHAR" />
+    <result column="e_job" property="eJob" jdbcType="VARCHAR" />
+    <result column="e_start_time" property="eStartTime" jdbcType="CHAR" />
+    <result column="e_social_position" property="eSocialPosition" jdbcType="VARCHAR" />
+    <result column="e_honor" property="eHonor" jdbcType="VARCHAR" />
+    <result column="e_remark" property="eRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    e_id, `rename`, e_name, e_pwd, e_birthday, e_school, e_job, e_start_time, e_social_position, 
+    e_honor, e_remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xxz.bean.EmployeeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+<!--    <if test="orderByClause != null" >-->
+<!--      order by ${orderByClause}-->
+<!--    </if>-->
+order by e_id desc
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from employee
+    where e_id = #{eId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from employee
+    where e_id = #{eId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xxz.bean.EmployeeExample" >
+    delete from employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xxz.bean.Employee" >
+    insert into employee (e_id, `rename`, e_name, 
+      e_pwd, e_birthday, e_school, 
+      e_job, e_start_time, e_social_position, 
+      e_honor, e_remark)
+    values (#{eId,jdbcType=INTEGER}, #{rename,jdbcType=VARCHAR}, #{eName,jdbcType=VARCHAR}, 
+      #{ePwd,jdbcType=VARCHAR}, #{eBirthday,jdbcType=CHAR}, #{eSchool,jdbcType=VARCHAR}, 
+      #{eJob,jdbcType=VARCHAR}, #{eStartTime,jdbcType=CHAR}, #{eSocialPosition,jdbcType=VARCHAR}, 
+      #{eHonor,jdbcType=VARCHAR}, #{eRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xxz.bean.Employee" >
+    insert into employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        e_id,
+      </if>
+      <if test="rename != null" >
+        `rename`,
+      </if>
+      <if test="eName != null" >
+        e_name,
+      </if>
+      <if test="ePwd != null" >
+        e_pwd,
+      </if>
+      <if test="eBirthday != null" >
+        e_birthday,
+      </if>
+      <if test="eSchool != null" >
+        e_school,
+      </if>
+      <if test="eJob != null" >
+        e_job,
+      </if>
+      <if test="eStartTime != null" >
+        e_start_time,
+      </if>
+      <if test="eSocialPosition != null" >
+        e_social_position,
+      </if>
+      <if test="eHonor != null" >
+        e_honor,
+      </if>
+      <if test="eRemark != null" >
+        e_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eId != null" >
+        #{eId,jdbcType=INTEGER},
+      </if>
+      <if test="rename != null" >
+        #{rename,jdbcType=VARCHAR},
+      </if>
+      <if test="eName != null" >
+        #{eName,jdbcType=VARCHAR},
+      </if>
+      <if test="ePwd != null" >
+        #{ePwd,jdbcType=VARCHAR},
+      </if>
+      <if test="eBirthday != null" >
+        #{eBirthday,jdbcType=CHAR},
+      </if>
+      <if test="eSchool != null" >
+        #{eSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="eJob != null" >
+        #{eJob,jdbcType=VARCHAR},
+      </if>
+      <if test="eStartTime != null" >
+        #{eStartTime,jdbcType=CHAR},
+      </if>
+      <if test="eSocialPosition != null" >
+        #{eSocialPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="eHonor != null" >
+        #{eHonor,jdbcType=VARCHAR},
+      </if>
+      <if test="eRemark != null" >
+        #{eRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xxz.bean.EmployeeExample" resultType="java.lang.Integer" >
+    select count(*) from employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update employee
+    <set >
+      <if test="record.eId != null" >
+        e_id = #{record.eId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rename != null" >
+        `rename` = #{record.rename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eName != null" >
+        e_name = #{record.eName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ePwd != null" >
+        e_pwd = #{record.ePwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eBirthday != null" >
+        e_birthday = #{record.eBirthday,jdbcType=CHAR},
+      </if>
+      <if test="record.eSchool != null" >
+        e_school = #{record.eSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eJob != null" >
+        e_job = #{record.eJob,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eStartTime != null" >
+        e_start_time = #{record.eStartTime,jdbcType=CHAR},
+      </if>
+      <if test="record.eSocialPosition != null" >
+        e_social_position = #{record.eSocialPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eHonor != null" >
+        e_honor = #{record.eHonor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eRemark != null" >
+        e_remark = #{record.eRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update employee
+    set e_id = #{record.eId,jdbcType=INTEGER},
+      `rename` = #{record.rename,jdbcType=VARCHAR},
+      e_name = #{record.eName,jdbcType=VARCHAR},
+      e_pwd = #{record.ePwd,jdbcType=VARCHAR},
+      e_birthday = #{record.eBirthday,jdbcType=CHAR},
+      e_school = #{record.eSchool,jdbcType=VARCHAR},
+      e_job = #{record.eJob,jdbcType=VARCHAR},
+      e_start_time = #{record.eStartTime,jdbcType=CHAR},
+      e_social_position = #{record.eSocialPosition,jdbcType=VARCHAR},
+      e_honor = #{record.eHonor,jdbcType=VARCHAR},
+      e_remark = #{record.eRemark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xxz.bean.Employee" >
+    update employee
+    <set >
+      <if test="rename != null" >
+        `rename` = #{rename,jdbcType=VARCHAR},
+      </if>
+      <if test="eName != null" >
+        e_name = #{eName,jdbcType=VARCHAR},
+      </if>
+      <if test="ePwd != null" >
+        e_pwd = #{ePwd,jdbcType=VARCHAR},
+      </if>
+      <if test="eBirthday != null" >
+        e_birthday = #{eBirthday,jdbcType=CHAR},
+      </if>
+      <if test="eSchool != null" >
+        e_school = #{eSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="eJob != null" >
+        e_job = #{eJob,jdbcType=VARCHAR},
+      </if>
+      <if test="eStartTime != null" >
+        e_start_time = #{eStartTime,jdbcType=CHAR},
+      </if>
+      <if test="eSocialPosition != null" >
+        e_social_position = #{eSocialPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="eHonor != null" >
+        e_honor = #{eHonor,jdbcType=VARCHAR},
+      </if>
+      <if test="eRemark != null" >
+        e_remark = #{eRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where e_id = #{eId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xxz.bean.Employee" >
+    update employee
+    set `rename` = #{rename,jdbcType=VARCHAR},
+      e_name = #{eName,jdbcType=VARCHAR},
+      e_pwd = #{ePwd,jdbcType=VARCHAR},
+      e_birthday = #{eBirthday,jdbcType=CHAR},
+      e_school = #{eSchool,jdbcType=VARCHAR},
+      e_job = #{eJob,jdbcType=VARCHAR},
+      e_start_time = #{eStartTime,jdbcType=CHAR},
+      e_social_position = #{eSocialPosition,jdbcType=VARCHAR},
+      e_honor = #{eHonor,jdbcType=VARCHAR},
+      e_remark = #{eRemark,jdbcType=VARCHAR}
+    where e_id = #{eId,jdbcType=INTEGER}
+  </update>
+</mapper>

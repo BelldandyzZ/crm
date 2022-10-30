@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        #main,
+        html,
+        body {
+            width: 100%;
+        }
+        #main {
+            min-height: 800px;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>客户信息</title>
+    <!-- 离线 Google 字体: Source Sans Pro -->
+    <link rel="stylesheet" th:href="@{'/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{/dist/css/ionicons.min.css}">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+
+    <!-- Content Wrapper. 包含页面内容 -->
+    <div class="content-wrapper">
+        <!-- 主体内容 -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
+                                <div class="row" >
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label for="con_cRename">员工姓名</label>
+                                            <input type="text" id="con_cRename" name="cRename" class="form-control" placeholder="姓名">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label for="con_startTime">开始时间</label>
+                                            <input type="date" id="con_startTime" name="cName" class="form-control" placeholder="所在单位">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="form-group">
+                                            <label style="color: white">.</label>
+                                            <input class="form-control" value="至" style="border: white;background: white" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label for="con_endTime">结束时间</label>
+                                            <input type="date" id="con_endTime" name="cName" class="form-control" placeholder="所在单位">
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-1">
+                                        <!--这个label没用，纯当作占位符用来布局-->
+                                        <label style="color: white">.</label>
+                                        <div class="form-group">
+                                            <button type="button" id="cusConditionBtn" class="btn btn-block btn-default">搜索</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- 头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框头部搜索框 -->
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div id="main"></div>
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+
+                        <!-- /.card -->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- 回到顶部 -->
+        <a id="back-to-top" th:href="@{#}" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+            <i class="fas fa-chevron-up"></i>
+        </a>
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- DataTables  & Plugins -->
+<script th:src="@{/plugins/datatables/jquery.dataTables.js}"></script>
+<script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<script th:src="@{/plugins/echart/echarts.js}"></script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    window.onresize = function() {
+        myChart.resize();
+    };
+
+    //定义报表刷新方法
+    function freshFun(empName, startTime, endTime){
+        // 指定图表的配置项和数据
+        $.ajax({
+            url:`/crm/dic/echartsData?empName=${empName}&startTime=${startTime}&endTime=${endTime}`,
+            success:(res)=>{
+                console.log(res)
+            }
+        }).done(function(res) {
+            myChart.hideLoading();
+            myChart.setOption({
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    source:res
+                },
+
+                xAxis: {name:'合同金额'  },
+
+                yAxis: {type: 'category',name:'员工'},
+
+                series: [
+                    { type: 'bar' , stack: 'x'},
+                    { type: 'bar' , stack: 'x'}
+                ]
+            })
+        })
+    }
+
+    //执行刷新报表
+    // let con_cRename = sessionStorage.getItem("con_cRename");
+    // let con_startTime = sessionStorage.getItem("con_startTime");
+    // let con_endTime = sessionStorage.getItem("con_endTime");
+    // if(con_cRename){
+    //     this.freshFun("/crm/dic/echartsData?empName="+con_cRename+"&startTime="+con_startTime+"&endTime="+con_endTime);
+    // }else{
+    //     this.freshFun("/crm/dic/echartsData");
+    // }
+    let data = {
+        empName:"",
+        startTime:"2022-10-1",
+        endTime:"2022-11-1"
+    }
+    this.freshFun("","","");
+
+
+    myChart.on('click', function(params) {
+        console.log(params.value[3]);
+        console.log(params.value[0]);
+        //存储到localStorage
+        sessionStorage.setItem("eId", params.value[3]);
+        sessionStorage.setItem("empName", params.value[0]);
+        window.location.href = "/crm/echarts/detail";
+        // location.href = "/crm/dic/echartsData?eId="+params.value[3];
+/*        $.ajax({
+            url:`/crm/dic/echartsDataDetail?eId=${params.value[3]}`,
+            success:(res)=>{
+                console.log(res)
+            }
+        }).done(function(res) {
+            myChart.hideLoading();
+            myChart.setOption({
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    source:res
+                },
+
+                xAxis: {name:'合同金额'  },
+
+                yAxis: {type: 'category',name:'员工'},
+
+                series: [
+                    { type: 'bar' , stack: 'x'},
+                    { type: 'bar' , stack: 'x'}
+                ]
+            })
+        })*/
+    });
+
+    /*事件*/
+    $('#cusConditionBtn').click(function (){
+
+        let empName = $('#con_cRename').val();
+        let startTime = $('#con_startTime').val();
+        let endTime = $('#con_endTime').val();
+        // //将条件存储在域中
+        // sessionStorage.setItem("con_cRename", con_cRename);
+        // sessionStorage.setItem("con_startTime", con_startTime);
+        // sessionStorage.setItem("con_endTime", con_endTime);
+        // alert("正在渲染")
+        // this.freshFun(con_cRename,con_startTime,con_endTime);
+        $.ajax({
+            url:`/crm/dic/echartsData?empName=${empName}&startTime=${startTime}&endTime=${endTime}`,
+            success:(res)=>{
+                console.log(res)
+            }
+        }).done(function(res) {
+            myChart.hideLoading();
+            myChart.setOption({
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    source:res
+                },
+
+                xAxis: {name:'合同金额'  },
+
+                yAxis: {type: 'category',name:'员工'},
+
+                series: [
+                    { type: 'bar' , stack: 'x'},
+                    { type: 'bar' , stack: 'x'}
+                ]
+            })
+        })
+        //执行刷新报表
+        // this.freshFun("/crm/dic/echartsData?empName="+con_cRename);
+    })
+</script>
+</body>
+</html>
