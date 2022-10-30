@@ -150,22 +150,26 @@ public class ProjectService {
     /*根据编号pid查询项目*/
     public Project queryById(Integer pId){
         Project project = projectMapper.selectByPrimaryKey(pId);
-        //========================================================
-        CusProExample cusProExample = new CusProExample();
-        cusProExample.createCriteria().andCpIdEqualTo(project.getCpId());
-        List<CusPro> cusProList = cusProMapper.selectByExample(cusProExample);
-        List<String> cRenames = new ArrayList<>();
-        //给Project对象设置cIds拜访客户cId
-        if(cusProList.size() > 0){
-            for (CusPro cusPro : cusProList) {
-                Customer customer = customerMapper.selectByPrimaryKey(cusPro.getcId());
-                if(customer != null){
-                    cRenames.add(customer.getcRename());
+        //========================================================\
+        if(null != project){
+            CusProExample cusProExample = new CusProExample();
+            cusProExample.createCriteria().andCpIdEqualTo(project.getCpId());
+            //客户合同
+            List<CusPro> cusProList = cusProMapper.selectByExample(cusProExample);
+
+            List<String> cRenames = new ArrayList<>();
+            //给Project对象设置cIds拜访客户cId
+            if(cusProList.size() > 0){
+                for (CusPro cusPro : cusProList) {
+                    Customer customer = customerMapper.selectByPrimaryKey(cusPro.getcId());
+                    if(customer != null){
+                        cRenames.add(customer.getcRename());
+                    }
                 }
             }
-        }
-        if(cRenames.size() > 0){
-            project.setcRenames(cRenames);
+            if(cRenames.size() > 0){
+                project.setcRenames(cRenames);
+            }
         }
         return project;
     }

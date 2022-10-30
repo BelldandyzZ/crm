@@ -211,7 +211,12 @@ public class InterviewService {
         ProjectExample projectExample = new ProjectExample();
         projectExample.createCriteria().andPNameEqualTo(interview.getpName());
         List<Project> projects = projectMapper.selectByExample(projectExample);
-        interview.setpId(projects.get(0).getpId());
+        if(projects.size() > 0){
+            interview.setpId(projects.get(0).getpId());
+        }else{
+            interview.setpId(Integer.parseInt(interview.getpName()));
+        }
+
 
 
         int updateResult = interviewMapper.updateByPrimaryKeySelective(interview);
