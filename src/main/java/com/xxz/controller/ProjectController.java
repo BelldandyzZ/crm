@@ -58,12 +58,7 @@ public class ProjectController {
         //设置编码
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=utf-8");
-
-
-
 //=====================================================================================================
-
-
 
         PageHelper.startPage(pageNum,  10);
         //工具条件查询
@@ -184,6 +179,10 @@ public class ProjectController {
         ServletContext servletContext = session.getServletContext();
         //获取服务器中文件的真实路径img/1.jpg-->(img + File.separator分隔符 + 1.jpg)
         //获取当前工程下photo目录的真实路径
+        File file = new File(servletContext.getRealPath("/tenders"));
+        if(file.exists()){
+            file.mkdir();
+        }
         String realPath = servletContext.getRealPath("/contracts")+ File.separator + fileName;;
 //        File parentFile = new File(realPath).getParentFile().getParentFile().getParentFile();
 //        realPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts\\" + fileName;//--/contracts/test1.doc
@@ -214,10 +213,18 @@ public class ProjectController {
         //获取ServletContext对象
         ServletContext servletContext = session.getServletContext();
         //获取服务器中文件的真实路径img/1.jpg-->(img + File.separator分隔符 + 1.jpg)
+
+        File file = new File(servletContext.getRealPath("/tenders"));
+        if(file.exists()){
+            file.mkdir();
+        }
+
         String realPath = servletContext.getRealPath("/tenders") + File.separator + fileName;
 //        File parentFile = new File(realPath).getParentFile().getParentFile().getParentFile();
 //        realPath = parentFile.getPath() + "\\src\\main\\webapp\\tenders\\" + fileName;//--/contracts/test1.doc
         //创建输入流（根据目标文件获取输入流）
+
+        
         InputStream in = new FileInputStream(realPath);
         //创建字节数组(根据当前输入流可用字节数)
         byte[] bytes = new byte[in.available()];
