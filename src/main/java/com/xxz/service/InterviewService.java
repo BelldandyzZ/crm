@@ -107,6 +107,13 @@ public class InterviewService {
                 if(project != null){
                     interview.setpName(project.getpName());
                 }else {
+                    if(interview.getpId() == 0){
+                        interview.setpName("日常访谈");
+                    }
+                    if(interview.getpId() == -1){
+                        interview.setpName("其他");
+                    }
+
 //                    interviewList.remove(interview);
 //                    delItws.add(interview);
 //                    interviewMapper.deleteByPrimaryKey(interview.getiId());
