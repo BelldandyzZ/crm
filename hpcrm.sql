@@ -28,14 +28,13 @@ CREATE TABLE `contract` (
   `ct_tender_docment` varchar(100) DEFAULT NULL COMMENT '标书文件url',
   `p_id` int(11) DEFAULT NULL COMMENT '项目合同相关信息对应的项目',
   PRIMARY KEY (`ct_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 /*Data for the table `contract` */
 
 insert  into `contract`(`ct_id`,`ct_contract_amount`,`ct_contract_docment`,`ct_tender_amount`,`ct_tender_docment`,`p_id`) values 
-(6,'',NULL,'',NULL,13),
-(8,'1',NULL,'1',NULL,20),
-(9,'',NULL,'',NULL,43);
+(15,'12','-9849-58a9abed7461222.txt','','-81fb-136a4d9c4b8d222.txt',2),
+(16,'',NULL,'','-82aa-80c1af64522f222.txt',2);
 
 /*Table structure for table `cus_pro` */
 
@@ -101,7 +100,8 @@ insert  into `cus_pro`(`cp_id`,`p_id`,`c_id`) values
 (10,10,20),
 (11,11,23),
 (12,12,20),
-(12,12,13);
+(12,12,13),
+(2,2,26);
 
 /*Table structure for table `customer` */
 
@@ -119,24 +119,12 @@ CREATE TABLE `customer` (
   `c_hobby` varchar(255) DEFAULT NULL COMMENT '爱好',
   `c_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 /*Data for the table `customer` */
 
 insert  into `customer`(`c_id`,`c_rename`,`c_name`,`c_depart`,`c_cie_type`,`c_job`,`c_tele`,`c_post`,`c_hobby`,`c_remark`) values 
-(12,'张叫兽','湖南理工职业学院','信息工程','学校','教授','13233445654','10086@qq.com','唱跳Rap','这是一个教授'),
-(13,'刘砖家','湖南烟草公司','财务部','国企','财务','13344532331','10010@qq.com','抽烟','这是财务'),
-(14,'21','2121','','其他','教授','2121','','',''),
-(15,'1','2121','','其他','教授','21','','',''),
-(16,'2121','2121','','其他','教授','21','','',''),
-(17,'2121','2121','','其他','教授','21','','',''),
-(18,'2121','2121','','其他','教授','21','','',''),
-(19,'2121','2121','','其他','教授','21','','',''),
-(20,'2121','2121','','其他','教授','2121','','',''),
-(21,'211','2112','','其他','教授','2121','','',''),
-(22,'211','2112','','其他','教授','2121','','',''),
-(23,'211','2112','','其他','教授','2121','','',''),
-(25,'1','1','','其他','教授','1','','','');
+(26,'1','张家界航院','11','名气外企','教授','1232123','11','11','11');
 
 /*Table structure for table `emp_role` */
 
@@ -175,14 +163,13 @@ CREATE TABLE `employee` (
   `e_honor` varchar(255) DEFAULT NULL COMMENT '社会荣誉',
   `e_remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`e_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `employee` */
 
 insert  into `employee`(`e_id`,`rename`,`e_name`,`e_pwd`,`e_birthday`,`e_school`,`e_job`,`e_start_time`,`e_social_position`,`e_honor`,`e_remark`) values 
 (1,'系统管理员','admin','admin','2022-10-30','无','其他','2022-10-08','无','无','默认系统管理员，不能删除，修改'),
-(10,'陈伟名','cwm','123','2022-10-30','张家界航院','销售','2022-10-30','无','无','无'),
-(11,'彭潇','px','123','2022-10-30','','销售','','','','');
+(12,'1','marry','123','2022-10-31','张家界航院','其他','2022-10-31','','群众-无123','良好');
 
 /*Table structure for table `interview` */
 
@@ -199,17 +186,13 @@ CREATE TABLE `interview` (
   `i_content` varchar(255) DEFAULT NULL COMMENT '内容摘要',
   `i_next` varchar(255) DEFAULT NULL COMMENT '下一步计划',
   PRIMARY KEY (`i_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
 /*Data for the table `interview` */
 
 insert  into `interview`(`i_id`,`i_company`,`c_id`,`i_visit_time`,`p_id`,`e_id`,`i_others`,`i_content`,`i_next`) values 
-(41,'湖南烟草公司',13,'2022-10-30',0,10,'','',''),
-(43,'212',15,'2022-10-30',0,1,'','',''),
-(44,'2121',20,'2022-10-30',0,1,'','',''),
-(46,'2121',20,'2022-09-29',0,1,'','',''),
-(51,'湖南理工职业学院',20,'2022-10-21',23,11,'','',''),
-(52,'1',25,'2022-10-30',0,11,'','','');
+(55,'1111',26,'2022-10-31',-1,12,'13123','112312','1312312'),
+(56,'123123',26,'2022-10-31',0,12,'123','1','1');
 
 /*Table structure for table `menu` */
 
@@ -287,7 +270,7 @@ CREATE TABLE `payment_back` (
 
 insert  into `payment_back`(`pb_id`,`pb_money`,`pb_order`,`pb_time`) values 
 (44001,11,1,'2022-10-30'),
-(1001,11,2,'2022-10-30'),
+(1001,111111,2,'2022-10-30'),
 (12001,123,3,'');
 
 /*Table structure for table `project` */
@@ -305,12 +288,12 @@ CREATE TABLE `project` (
   `startTime` char(10) DEFAULT NULL COMMENT '项目开始时间',
   `endTime` char(10) DEFAULT NULL COMMENT '项目结束时间',
   PRIMARY KEY (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `project` */
 
 insert  into `project`(`p_id`,`p_name`,`p_moeny`,`p_progress`,`p_owner`,`cp_id`,`pb_id`,`startTime`,`endTime`) values 
-(1,'工地项目','100','施工','彭潇',1,1000,'2022-10-30','2022-11-30');
+(2,'1','1','施工','1',2,2000,'2022-10-31','');
 
 /*Table structure for table `role` */
 

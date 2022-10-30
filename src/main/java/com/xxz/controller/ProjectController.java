@@ -184,9 +184,9 @@ public class ProjectController {
         ServletContext servletContext = session.getServletContext();
         //获取服务器中文件的真实路径img/1.jpg-->(img + File.separator分隔符 + 1.jpg)
         //获取当前工程下photo目录的真实路径
-        String realPath = servletContext.getRealPath("/contracts");
-        File parentFile = new File(realPath).getParentFile().getParentFile().getParentFile();
-        realPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts\\" + fileName;//--/contracts/test1.doc
+        String realPath = servletContext.getRealPath("/contracts")+ File.separator + fileName;;
+//        File parentFile = new File(realPath).getParentFile().getParentFile().getParentFile();
+//        realPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts\\" + fileName;//--/contracts/test1.doc
         //创建输入流（根据目标文件获取输入流）
         InputStream in = new FileInputStream(realPath);
         //创建字节数组(根据当前输入流可用字节数)
@@ -214,9 +214,9 @@ public class ProjectController {
         //获取ServletContext对象
         ServletContext servletContext = session.getServletContext();
         //获取服务器中文件的真实路径img/1.jpg-->(img + File.separator分隔符 + 1.jpg)
-        String realPath = servletContext.getRealPath("/tenders");
-        File parentFile = new File(realPath).getParentFile().getParentFile().getParentFile();
-        realPath = parentFile.getPath() + "\\src\\main\\webapp\\tenders\\" + fileName;//--/contracts/test1.doc
+        String realPath = servletContext.getRealPath("/tenders") + File.separator + fileName;
+//        File parentFile = new File(realPath).getParentFile().getParentFile().getParentFile();
+//        realPath = parentFile.getPath() + "\\src\\main\\webapp\\tenders\\" + fileName;//--/contracts/test1.doc
         //创建输入流（根据目标文件获取输入流）
         InputStream in = new FileInputStream(realPath);
         //创建字节数组(根据当前输入流可用字节数)
@@ -252,11 +252,38 @@ public class ProjectController {
             contract.setCtContractDocment(ctfileName);
             //获取当前工程下photo目录的真实路径
             String photoRealPath = servletContext.getRealPath("/contracts");
-            File parentFile = new File(photoRealPath).getParentFile().getParentFile().getParentFile();
+            System.out.println("=============================================");
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println("=============================================");
+//            File parentFile = new File(photoRealPath).getParentFile().getParentFile().getParentFile();
+            File parentFile = new File(photoRealPath);
 
             //E:\idea-workspace\crm\src\main\webapp\contracts
-            photoRealPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts";
+//            photoRealPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts";
+            photoRealPath = parentFile.getPath();
+
+            System.out.println("=============================================");
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println(photoRealPath);
+            System.out.println("=============================================");
 /*
+
+
 我们项目中没有photo目录，但文件上传如果到tomcat服务器中,
 则可以给服务器部署的工程war包所运行的项目创建photo目录,专门用于存储客户端上传的文件
 */
@@ -286,8 +313,8 @@ public class ProjectController {
             //获取ServletContext对象
             //获取当前工程下photo目录的真实路径
             String photoRealPath2 = servletContext.getRealPath("/tenders");
-            File parentFile2 = new File(photoRealPath2).getParentFile().getParentFile().getParentFile();
-            photoRealPath2 = parentFile2.getPath() + "\\src\\main\\webapp\\tenders";
+//            File parentFile2 = new File(photoRealPath2).getParentFile().getParentFile().getParentFile();
+//            photoRealPath2 = parentFile2.getPath() + "\\src\\main\\webapp\\tenders";
             //创建photoPath所对应的File对象
             File file2 = new File(photoRealPath2);
             //判断file所对应目录是否存在(即部署的项目中，判断photo目录是否存在)
@@ -324,10 +351,10 @@ public class ProjectController {
             contract.setCtContractDocment(ctfileName);
             //获取当前工程下photo目录的真实路径
             String photoRealPath = servletContext.getRealPath("/contracts");
-            File parentFile = new File(photoRealPath).getParentFile().getParentFile().getParentFile();
+//            File parentFile = new File(photoRealPath).getParentFile().getParentFile().getParentFile();
 
             //E:\idea-workspace\crm\src\main\webapp\contracts
-            photoRealPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts";
+//            photoRealPath = parentFile.getPath() + "\\src\\main\\webapp\\contracts";
 /*
 我们项目中没有photo目录，但文件上传如果到tomcat服务器中,
 则可以给服务器部署的工程war包所运行的项目创建photo目录,专门用于存储客户端上传的文件
@@ -358,8 +385,8 @@ public class ProjectController {
             //获取ServletContext对象
             //获取当前工程下photo目录的真实路径
             String photoRealPath2 = servletContext.getRealPath("/tenders");
-            File parentFile2 = new File(photoRealPath2).getParentFile().getParentFile().getParentFile();
-            photoRealPath2 = parentFile2.getPath() + "\\src\\main\\webapp\\tenders";
+//            File parentFile2 = new File(photoRealPath2).getParentFile().getParentFile().getParentFile();
+//            photoRealPath2 = parentFile2.getPath() + "\\src\\main\\webapp\\tenders";
             //创建photoPath所对应的File对象
             File file2 = new File(photoRealPath2);
             //判断file所对应目录是否存在(即部署的项目中，判断photo目录是否存在)
