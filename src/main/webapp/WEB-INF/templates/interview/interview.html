@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>客户信息</title>
-
+    <base th:href="${#request.getContextPath()}+'/'">
     <!-- 离线 Google 字体: Source Sans Pro -->
-    <link rel="stylesheet" th:href="@{'/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'}">
+    <link rel="stylesheet" th:href="@{/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback}">
     <!-- Font Awesome -->
     <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
     <!-- Ionicons -->
@@ -17,12 +17,13 @@
     <link rel="stylesheet" th:href="@{/plugins/select2/css/select2.min.css}">
     <link rel="stylesheet" th:href="@{/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
     <style>
-        #box{
+        box_next,#box{
             max-width: 200px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -318,7 +319,7 @@
                                         <td th:text="${itw.eRename == null or itw.eRename == ''} ? '无' : ${itw.eRename} " ></td>
                                         <td th:text="${itw.iOthers == null or itw.iOthers == ''} ? '无' : ${itw.iOthers} " ></td>
                                         <td id="box" th:text="${itw.iContent == null or itw.iContent == ''} ? '无' : ${itw.iContent} " ></td>
-                                        <td id="box" th:text="${itw.iNext == null or itw.iNext == ''} ? '无' : ${itw.iNext} " ></td>
+                                        <td id="box_next" th:text="${itw.iNext == null or itw.iNext == ''} ? '无' : ${itw.iNext} " ></td>
                                         <td>
                                             <button th:if="${session.permissions.contains('2040')}" type="button" th:tar-id="${itw.iId}" class="btn  btn-danger btn-sm confirmsItw">删除</button>
                                             <button th:if="${session.permissions.contains('2050')}" type="button" th:tar-id="${itw.iId}" class="btn  btn-sm btn-info updateItwBtn" data-toggle="modal" data-target="#update_itw">修改</button>
@@ -394,7 +395,7 @@
 
     //excel导出
     $('#outputExcelBtn').click(function (){
-        location.href = "/crm/interview/excelOutput";
+        location.href = "interview/excelOutput";
     })
 
     //条件查询
@@ -402,7 +403,7 @@
         let iCompany = $('#con_iCompany').val();
         let cRename = $('#con_cRename').val();
         let eRename = $('#con_eRename').val();
-        location.href = "/crm/interview/interviews?iCompany="+iCompany+"&cRename="+cRename+"&eRename=" + eRename;
+        location.href = "interview/interviews?iCompany="+iCompany+"&cRename="+cRename+"&eRename=" + eRename;
     })
 
     //初始化 Select2 元素
@@ -418,7 +419,7 @@
         $(".confirmsItw").click(function () {
             if(confirm("确定删除该记录？")){
                 let attr = $(this).attr("tar-id");
-                location.href = "/crm/interview/del/" + attr;
+                location.href = "interview/del/" + attr;
             }
         })
     });
@@ -428,7 +429,7 @@
     $('.updateItwBtn').click(function (){
         let tarId = $(this).attr("tar-id");
         $.ajax({
-            url: "/crm/interview/queryById/" + tarId,
+            url: "interview/queryById/" + tarId,
             type: "get",
             datatype: "json",
             success: function (res){

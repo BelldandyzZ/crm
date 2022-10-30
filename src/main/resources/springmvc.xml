@@ -76,7 +76,12 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <!--拦截任意请求-->
-            <mvc:mapping path="/**"/>
+            <mvc:mapping path="/customer/**"/>
+            <mvc:mapping path="/dic/**"/>
+            <mvc:mapping path="/emp/**"/>
+            <mvc:mapping path="/interview/**"/>
+            <mvc:mapping path="/project/**"/>
+            <mvc:mapping path="/permission/**"/>
             <!--配置要排除的路径-->
             <mvc:exclude-mapping path="/"/>
             <mvc:exclude-mapping path="/emp/login"/>

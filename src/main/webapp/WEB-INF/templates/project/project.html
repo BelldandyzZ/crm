@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>客户信息</title>
-
+    <base th:href="${#request.getContextPath()}+'/'">
     <!-- 离线 Google 字体: Source Sans Pro -->
     <link rel="stylesheet" th:href="@{'/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'}">
     <!-- Font Awesome -->
@@ -389,7 +389,7 @@
         let pMoeny = $('#con_pMoeny').val();
         let pProgress = $('#con_pProgress').val();
         let pOwner = $('#con_pOwner').val();
-        location.href = "/crm/project/projects?pName="+pName+"&pMoeny="+pMoeny+"&pProgress="+pProgress+"&pOwner="+pOwner;
+        location.href = "project/projects?pName="+pName+"&pMoeny="+pMoeny+"&pProgress="+pProgress+"&pOwner="+pOwner;
     })
 
     //修改
@@ -398,7 +398,7 @@
         let pId = $(this).attr("tar-id");
 
         $.ajax({
-            url: "/crm/project/queryById/" + pId,
+            url: "project/queryById/" + pId,
             type: "get",
             datatype: "json",
             success: function (res){
@@ -435,7 +435,7 @@
         $(".confirmsDelPro").click(function () {
            if( confirm("确定删除该记录？")){
                let pId = $(this).attr("tar-id");
-                location.href = "/crm/project/del/"+pId;
+                location.href = "project/del/"+pId;
            }
         })
 

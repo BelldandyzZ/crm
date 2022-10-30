@@ -10,11 +10,6 @@ import lombok.Data;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import sun.plugin2.util.ColorUtil;
-
-import javax.swing.plaf.synth.ColorType;
-import java.awt.*;
-import java.awt.color.ColorSpace;
 import java.io.Serializable;
 
 @Data

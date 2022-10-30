@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>字段信息</title>
-
+    <base th:href="${#request.getContextPath()}+'/'">
     <!-- 离线 Google 字体: Source Sans Pro -->
     <link rel="stylesheet" th:href="@{'/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'}">
     <!-- Font Awesome -->
@@ -223,14 +223,14 @@
 
         //excel导出(emp)
         $('#cusExcelOutputBtn').click(function (){
-            location.href = "/crm/customer/excelOutput";
+            location.href = "customer/excelOutput";
         })
 
         //条件查询
         $('#cusConditionBtn').click(function (){
             let vValue = $('#con_vValue').val();
             let type = $('#con_type').val();
-            location.href = "/crm/dic/dics?vValue="+vValue+"&type="+type;
+            location.href = "dic/dics?vValue="+vValue+"&type="+type;
         })
         // $('#conditionBtn').click(function (){
         //     $('#conForm').submit();
@@ -240,7 +240,7 @@
         $(".confirmsCus").click(function () {
             if(confirm("确定删除该记录？")){
                 let vId = $(this).attr("tar-id");
-                location.href = "/crm/dic/del/" + vId;
+                location.href = "dic/del/" + vId;
             }
 
         })
@@ -250,7 +250,7 @@
         $('.updateDicBtn').click(function (){
             let vId = $(this).attr("tar-id");
             $.ajax({
-                url: "/crm/dic/queryById/" + vId,
+                url: "dic/queryById/" + vId,
                 type: "get",
                 datatype: "json",
                 success: function (res){

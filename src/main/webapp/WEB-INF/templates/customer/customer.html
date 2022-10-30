@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>客户信息</title>
-
+  <base th:href="${#request.getContextPath()}+'/'">
   <!-- 离线 Google 字体: Source Sans Pro -->
-  <link rel="stylesheet" th:href="@{'/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'}">
+  <link rel="stylesheet" th:href="@{/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback}">
   <!-- Font Awesome -->
   <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
   <!-- Ionicons -->
@@ -456,7 +456,7 @@
 
         //excel导出(emp)
         $('#cusExcelOutputBtn').click(function (){
-            location.href = "/crm/customer/excelOutput";
+            location.href = "customer/excelOutput";
         })
 
         //条件查询
@@ -464,15 +464,14 @@
             let cName = $('#con_cName').val();
             let cJob = $('#con_cJob').val();
             let cRename = $('#con_cRename').val();
-            console.log(cRename + "-" + cJob + "-" + cName)
-            location.href = "/crm/customer/customers?cRename="+cRename+"&cJob="+cJob+"&cName="+cName;
+            location.href = "customer/customers?cRename="+cRename+"&cJob="+cJob+"&cName="+cName;
         })
 
         //删除的确定弹窗
         $(".confirmsCus").click(function () {
             if(confirm("删除该客户,对应的访谈记录会强制删除,确定删除该记录？")){
                 let cId = $(this).attr("tar-id");
-                location.href = "/crm/customer/del/" + cId;
+                location.href = "customer/del/" + cId;
             }
 
         })
@@ -483,7 +482,7 @@
             let cId = $(this).attr("tar-id");
 
             $.ajax({
-                url: "/crm/customer/queryById/" + cId,
+                url: "customer/queryById/" + cId,
                 type: "get",
                 datatype: "json",
                 success: function (res){

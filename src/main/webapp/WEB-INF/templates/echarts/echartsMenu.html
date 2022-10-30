@@ -14,6 +14,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>客户信息</title>
+    <base th:href="${#request.getContextPath()}+'/'">
     <!-- 离线 Google 字体: Source Sans Pro -->
     <link rel="stylesheet" th:href="@{'/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'}">
     <!-- Font Awesome -->
@@ -130,7 +131,7 @@
     function freshFun(empName, startTime, endTime){
         // 指定图表的配置项和数据
         $.ajax({
-            url:`/crm/dic/echartsData?empName=${empName}&startTime=${startTime}&endTime=${endTime}`,
+            url:`dic/echartsData?empName=${empName}&startTime=${startTime}&endTime=${endTime}`,
             success:(res)=>{
                 console.log(res)
             }
@@ -160,9 +161,9 @@
     // let con_startTime = sessionStorage.getItem("con_startTime");
     // let con_endTime = sessionStorage.getItem("con_endTime");
     // if(con_cRename){
-    //     this.freshFun("/crm/dic/echartsData?empName="+con_cRename+"&startTime="+con_startTime+"&endTime="+con_endTime);
+    //     this.freshFun("dic/echartsData?empName="+con_cRename+"&startTime="+con_startTime+"&endTime="+con_endTime);
     // }else{
-    //     this.freshFun("/crm/dic/echartsData");
+    //     this.freshFun("dic/echartsData");
     // }
     let data = {
         empName:"",
@@ -178,10 +179,10 @@
         //存储到localStorage
         sessionStorage.setItem("eId", params.value[3]);
         sessionStorage.setItem("empName", params.value[0]);
-        window.location.href = "/crm/echarts/detail";
-        // location.href = "/crm/dic/echartsData?eId="+params.value[3];
+        window.location.href = "echarts/detail";
+        // location.href = "dic/echartsData?eId="+params.value[3];
 /*        $.ajax({
-            url:`/crm/dic/echartsDataDetail?eId=${params.value[3]}`,
+            url:`dic/echartsDataDetail?eId=${params.value[3]}`,
             success:(res)=>{
                 console.log(res)
             }
@@ -219,7 +220,7 @@
         // alert("正在渲染")
         // this.freshFun(con_cRename,con_startTime,con_endTime);
         $.ajax({
-            url:`/crm/dic/echartsData?empName=${empName}&startTime=${startTime}&endTime=${endTime}`,
+            url:`dic/echartsData?empName=${empName}&startTime=${startTime}&endTime=${endTime}`,
             success:(res)=>{
                 console.log(res)
             }
@@ -243,7 +244,7 @@
             })
         })
         //执行刷新报表
-        // this.freshFun("/crm/dic/echartsData?empName="+con_cRename);
+        // this.freshFun("dic/echartsData?empName="+con_cRename);
     })
 </script>
 </body>

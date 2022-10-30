@@ -14,6 +14,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>客户信息</title>
+    <base th:href="${#request.getContextPath()}+'/'">
     <!-- 离线 Google 字体: Source Sans Pro -->
     <link rel="stylesheet" th:href="@{'/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'}">
     <!-- Font Awesome -->
@@ -136,7 +137,7 @@
         $('#titleName').text(empName);
 
 
-    $.get('/crm/dic/echartsDataDetail?eId='+eId).done(function(data) {
+    $.get('dic/echartsDataDetail?eId='+eId).done(function(data) {
         myChart.hideLoading();
         myChart.setOption({
             legend: {},
@@ -176,7 +177,7 @@
         // alert("正在渲染")
         // this.freshFun(con_cRename,con_startTime,con_endTime);
         $.ajax({
-            url:`/crm/dic/echartsDataDetail?eId=${sessionStorage.getItem("eId")}&startTime=${startTime}&endTime=${endTime}`,
+            url:`dic/echartsDataDetail?eId=${sessionStorage.getItem("eId")}&startTime=${startTime}&endTime=${endTime}`,
             success:(res)=>{
                 console.log(res)
             }

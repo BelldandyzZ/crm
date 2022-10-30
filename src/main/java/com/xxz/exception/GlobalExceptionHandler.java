@@ -49,6 +49,7 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
     private ModelAndView viewHandler(Exception e) {
         //拦截的是系统异常，则不带任何信息直接跳转到错误页面
         ModelAndView mo = new ModelAndView();
+        mo.addObject("msg","系统忙，请稍后再试.....");
         mo.setViewName("/error/error");
 
         //如果拦截的异常是自定义的异常，则执行if语句块带着自定义异常信息跳转到错误页面

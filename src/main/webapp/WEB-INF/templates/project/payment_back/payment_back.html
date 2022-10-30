@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>合同信息</title>
-
+    <base th:href="${#request.getContextPath()}+'/'">
     <!-- 离线 Google 字体: Source Sans Pro -->
     <link rel="stylesheet" th:href="@{'/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700&display=fallback'}">
     <!-- Font Awesome -->
@@ -228,7 +228,7 @@
 
         //excel导出(emp)
         $('#empExcelOutputBtn').click(function (){
-            location.href = "/crm/emp/excelOutput";
+            location.href = "emp/excelOutput";
         })
         //excel导入(emp)
         // $('#empExcelInportBtn').click(function (){
@@ -241,7 +241,7 @@
             let eJob = $('#con_eJob').val();
             let eBirthday = $('#con_eBirthday').val();
             console.log(rename + "-" + eJob + "-" + eBirthday)
-            location.href = "/crm/emp/emps?rename="+rename+"&eJob="+eJob+"&eBirthday="+eBirthday;
+            location.href = "emp/emps?rename="+rename+"&eJob="+eJob+"&eBirthday="+eBirthday;
         })
         // $('#conditionBtn').click(function (){
         //     $('#conForm').submit();
@@ -251,7 +251,7 @@
         $(".confirms").click(function () {
             if(confirm("确定删除该记录？")){
                 let empId = $(this).attr("tar-id");
-                location.href = "/crm/emp/del/" + empId;
+                location.href = "emp/del/" + empId;
             }
 
         })
@@ -260,7 +260,7 @@
         $('.updatePayBtn').click(function (){
             let pbId = $(this).attr("tar-id");
             $.ajax({
-                url: "/crm/project/payBackQueryById/" + pbId,
+                url: "project/payBackQueryById/" + pbId,
                 type: "get",
                 datatype: "json",
                 success: function (res){
@@ -277,7 +277,7 @@
         $(".delete_payment_back").click(function () {
             if(confirm("确定删除该记录？")){
                 let paymentId = $(this).attr("tar-id");
-                location.href = "/crm/project/remove/" + paymentId;
+                location.href = "project/remove/" + paymentId;
             }
         })
 
