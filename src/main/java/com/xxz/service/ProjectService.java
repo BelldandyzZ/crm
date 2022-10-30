@@ -44,6 +44,7 @@ public class ProjectService {
 
     /*查询所有项目*/
     public List<Project> queryAllProject(String pName, String pMoeny, String pProgress, String pOwner) throws UnsupportedEncodingException {
+        System.out.println(pName + "-" + pMoeny + "-" + pProgress + "-" + pOwner);
         //样本
         ProjectExample projectExampleExample = new ProjectExample();
         //条件盒子
@@ -67,11 +68,8 @@ public class ProjectService {
         List<Project> projectList = projectMapper.selectByExample(projectExampleExample);
         for (Project project : projectList) {
             //判断该员工是否存在
-            String eName = project.getpOwner();
-            EmployeeExample employeeExample = new EmployeeExample();
-            employeeExample.createCriteria().andENameEqualTo(eName);
-            List<Employee> employeeList = employeeMapper.selectByExample(employeeExample);
-            if(employeeList.size() == 0){
+            Employee employee = employeeMapper.queryByEmpName(project.getpOwner());
+            if(null == employee){
                 project.setpOwner("待定");
             }
             //项目-客户表
@@ -94,6 +92,7 @@ public class ProjectService {
             //获取回款总金额
             Integer startPbId = project.getPbId();
             Integer endPbId = startPbId + 999;
+            System.out.println("--------------start=" + startPbId + "------end=" + endPbId);
             List<PaymentBack> paymentBacks = projectService.PbIdBetweenStartAndEnd(startPbId, endPbId);
             Integer total = 0;
             for (PaymentBack paymentBack : paymentBacks) {
@@ -122,6 +121,7 @@ public class ProjectService {
     public void addProject(Project project, String[] cRenames){
         //(1)获取session域中的pbId
         //设置回款编号
+        System.out.println(project);
         projectMapper.insertSelective(project);
         //返回生成的编号
         Integer newIndex = project.getpId();
@@ -258,6 +258,8 @@ public class ProjectService {
         currentInterviewList.removeAll(delItws);
 
         //输出查看过情况
+        System.out.println("===============================");
+        System.out.println(currentInterviewList);
 
         //返回现有的
         //倒叙
@@ -279,6 +281,7 @@ public class ProjectService {
     /*添加合同*/
     public boolean contractAdd(Contract contract){
         //实现添加业务
+        System.out.println(contract);
         int result = contractMapper.insertSelective(contract);
         return result>0 ? true : false;
     }
@@ -311,6 +314,7 @@ public class ProjectService {
             contract.setCtTenderAmount(tenStr);
         }
         //实现添加业务
+        System.out.println(contract);
         int result = contractMapper.updateByPrimaryKeySelective(contract);
         return result > 0 ? true : false;
     }

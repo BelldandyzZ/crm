@@ -49,7 +49,13 @@ public class RoleController {
     @RequestMapping("findAllRole")
     public String findAllRole(Model model, HttpSession session){
 
-
+        session.setAttribute("jobTypes", dicValueService.getAllJobType());
+        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
+        session.setAttribute("progressTypes", dicValueService.getAllProgress());
+        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
+        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
+        session.setAttribute("pNames", projectService.getAllProjectName());
+        session.setAttribute("allType", dicValueService.getAllType());
 //=====================================================================================================
 
 

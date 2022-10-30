@@ -34,7 +34,7 @@ import java.util.*;
 public class ProjectController {
 
     @Autowired
-    private ProjectService projectService;
+    ProjectService projectService;
 
     @Autowired
     private CustomerService customerService;
@@ -454,8 +454,14 @@ public class ProjectController {
     //修改回款信息
     @Permission("306040")
     @RequestMapping("/payBackUpdate")
-    private String payBackUpdate(PaymentBack paymentBack,HttpSession session){
-        boolean result = projectService.payBackUpdate(paymentBack);
+    public String payBackUpdate(PaymentBack paymentBack,HttpSession session){
+        System.out.println("=================================================");
+        System.out.println("=================================================");
+        System.out.println("=================================================");
+        System.out.println("=================================================");
+        System.out.println("=================================================");
+        System.out.println(paymentBack);
+        projectService.payBackUpdate(paymentBack);
         //session获取当前pbid
         Integer now_pbId = (Integer) session.getAttribute("now_pbId");
         return "redirect:/project/payment_back?pbId=" + now_pbId;

@@ -143,6 +143,15 @@ public class DicValueController {
                        continue;
                    }
                }
+
+
+                String proEndTimeStr = "";
+                if(project.getEndTime() != null){
+                    String[] proSplit2 = project.getEndTime().split("-");
+                    for (String s : proSplit2) {
+                        proEndTimeStr += s;
+                    }
+                }
                 if(endTime != null && !endTime.equals("")){
                     String conEndTimeStr = "";
                     String[] con_split = endTime.split("-");
@@ -150,7 +159,7 @@ public class DicValueController {
                         conEndTimeStr += s;
                     }
                     //如果项目启动时间小于目标条件时间，则跳过
-                    if(Integer.parseInt(proStartTimeStr) > Integer.parseInt(conEndTimeStr)){
+                    if(Integer.parseInt(proEndTimeStr) > Integer.parseInt(conEndTimeStr)){
                         continue;
                     }
                 }
@@ -160,7 +169,11 @@ public class DicValueController {
 //                if (pMoney.contains("W")){
 //
 //                }
-                allPriceInterger += Double.parseDouble(pMoney);
+                if(pMoney == null || pMoney.equals("")){
+                    allPriceInterger += new Double(0);
+                }else{
+                    allPriceInterger += Double.parseDouble(pMoney);
+                }
 
                 //计算当前项目回款金额
                 Integer pbId = project.getPbId(); //当前项目PBId
@@ -253,6 +266,15 @@ public class DicValueController {
                         continue;
                     }
                 }
+
+
+                String proEndTimeStr = "";
+                if(project.getEndTime() != null){
+                    String[] proSplit2 = project.getEndTime().split("-");
+                    for (String s : proSplit2) {
+                        proEndTimeStr += s;
+                    }
+                }
                 if(endTime != null && !endTime.equals("")){
                     String conEndTimeStr = "";
                     String[] con_split = endTime.split("-");
@@ -260,7 +282,7 @@ public class DicValueController {
                         conEndTimeStr += s;
                     }
                     //如果项目启动时间小于目标条件时间，则跳过
-                    if(Integer.parseInt(proStartTimeStr) > Integer.parseInt(conEndTimeStr)){
+                    if(Integer.parseInt(proEndTimeStr) > Integer.parseInt(conEndTimeStr)){
                         continue;
                     }
                 }
@@ -286,7 +308,12 @@ public class DicValueController {
 //                if (pMoney.contains("W")){
 //
 //                }
-                allPriceInterger += Double.parseDouble(pMoney);
+                if(pMoney == null || pMoney.equals("")){
+                    allPriceInterger += new Double(0);
+                }else{
+                    allPriceInterger += Double.parseDouble(pMoney);
+                }
+
 
                 //计算当前项目回款金额
                 Integer pbId = project.getPbId(); //当前项目PBId

@@ -59,7 +59,12 @@ public class EmpService {
         //查询
         List<Employee> employeeList = employeeMapper.selectByExample(employeeExample);
         //超管不展示
-
+        for (Employee employee : employeeList) {
+            if(employee.geteName().equals("admin")){
+                employeeList.remove(employee);
+                break;
+            }
+        }
         return employeeList;
     }
 

@@ -336,7 +336,7 @@
                                                th:style="${proPageInfo.pageNum == pageNum ? 'background:#5faee3;' : ''}"
                                                th:text="${pageNum}"></a></li>
                                         <li th:style="${proPageInfo.hasNextPage ? '' : 'display: none;'}">
-                                            <a th:href="@{'/project/projects?' + ${proPageInfo.pageNum + 1} + ${pName != null ? '&pName='+pName : ''} + ${pMoeny != null ? '&pMoeny='+pMoeny : ''} + ${pProgress != null ? '&pProgress='+pProgress : ''} + ${pOwner != null ? '&pOwner='+pOwner : ''}}" aria-label="Next">
+                                            <a th:href="@{'/project/projects?pageNum=' + ${proPageInfo.pageNum + 1} + ${pName != null ? '&pName='+pName : ''} + ${pMoeny != null ? '&pMoeny='+pMoeny : ''} + ${pProgress != null ? '&pProgress='+pProgress : ''} + ${pOwner != null ? '&pOwner='+pOwner : ''}}" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>

@@ -8,6 +8,9 @@ import org.apache.ibatis.annotations.Select;
 
 public interface EmployeeMapper {
 
+    @Select("SELECT * FROM employee WHERE `rename` = #{empName}")
+    public Employee queryByEmpName(@Param("empName") String empName);
+
     @Select("select * from employee where binary e_name=#{ename} and binary e_pwd=#{epwd}")
     Employee login(@Param("ename") String ename,@Param("epwd") String epwd );
 

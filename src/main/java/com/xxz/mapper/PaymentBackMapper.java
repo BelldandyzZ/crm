@@ -4,9 +4,14 @@ import com.xxz.bean.PaymentBack;
 import com.xxz.bean.PaymentBackExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 public interface PaymentBackMapper {
+
+    @Select("select * from payment_back where pb_id = #{pbId}}")
+    public PaymentBack queryByPbId(Integer pbId);
+
     int countByExample(PaymentBackExample example);
 
     int deleteByExample(PaymentBackExample example);

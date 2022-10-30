@@ -46,15 +46,21 @@ public class InterviewController {
     @Autowired
     private DicValueService dicValueService;
 
-
+    @Autowired
+    private RoleService roleService;
 
     //条件查询
-    @Permission("2010")
     @RequestMapping("/interviews")
     public String queryAll(Model model, String iCompany, String cRename, String eRename,HttpSession session,
                            @RequestParam(defaultValue = "1") Integer pageNum) throws UnsupportedEncodingException {
 
-
+        session.setAttribute("jobTypes", dicValueService.getAllJobType());
+        session.setAttribute("companyTypes", dicValueService.getAllCompanyType());
+        session.setAttribute("progressTypes", dicValueService.getAllProgress());
+        session.setAttribute("schoolTypes", dicValueService.getAllSchoolType());
+        session.setAttribute("dicvalueTypes", dicValueService.getAllDicType());
+        session.setAttribute("pNames", projectService.getAllProjectName());
+        session.setAttribute("allType", dicValueService.getAllType());
 //=====================================================================================================
 
 
@@ -93,7 +99,6 @@ public class InterviewController {
     }
 
     //id查询
-    @Permission("2010")
     @RequestMapping("/queryById/{iId}")
     @ResponseBody
     public Map<String,Object> queryById(@PathVariable("iId") Integer iId, HttpServletResponse response) throws IOException {
@@ -106,17 +111,18 @@ public class InterviewController {
     }
 
     //新增员工
-    @Permission("2020")
     @RequestMapping("/add")
     public String itwAdd(Interview interview, String[] cRenames, String eRename){
+        System.out.println("==============================================");
+        System.out.println("queryAll-interviews-confition:" + cRenames + "-" + eRename);
         interviewService.itwAdd(interview, cRenames,eRename);
         return "redirect:/interview/interviews";
     }
 
     //删除员工
-    @Permission("2040")
     @RequestMapping("/del/{iId}")
     public String cusDel(@PathVariable("iId") Integer iId){
+        System.out.println(iId);
         //删除业务
         boolean result = interviewService.itwDel(iId);
         //重定向到empList界面展示最新数据
@@ -124,7 +130,6 @@ public class InterviewController {
     }
 
     //修改
-    @Permission("2050")
     @RequestMapping("/update")
     public String cusUpdate(Interview interview){
         //调用目标接口实现信息修改
@@ -133,10 +138,32 @@ public class InterviewController {
         return "redirect:/interview/interviews";
     }
 
-
+    /*excel导入导出*/
+    @RequestMapping(value = "/excelInport", method = RequestMethod.POST)
+    public String excelInport(MultipartFile importFile){
+        System.out.println("文件名：" + importFile.getOriginalFilename());
+//        System.out.println("input.........................");
+//        String fileName = "E:\\员工信息表.xlsx";
+//        //EasyExcel.read(fileName, DemoData.class, new DemoDataListener()).sheet().doRead();
+//        EasyExcel.read(fileName, Employee.class, new DemoDataListener()).sheet().doRead();
+        // 解析Excel
+        ExcelReader excelReader = null;
+        try {
+            excelReader = EasyExcelFactory.read(importFile.getInputStream(), Interview.class, new DemoDataListener<Interview>()).build();
+            ReadSheet readSheet = EasyExcelFactory.readSheet(0).build();
+            excelReader.read(readSheet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (excelReader != null) {
+                excelReader.finish();
+            }
+        }
+        //重定向到empMenu界面
+        return "redirect:/interview/interviews";
+    }
 
     //导出
-    @Permission("2030")
     @RequestMapping("/excelOutput") //ResponseEntity<byte[]>
     public void excelOutput(HttpSession session, HttpServletResponse response) throws IOException {
         //设置响应头和响应体格式，告诉浏览器是什么文件，对应解析

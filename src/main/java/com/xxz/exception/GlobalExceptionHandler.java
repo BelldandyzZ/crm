@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@Component
+//@Component
 public class GlobalExceptionHandler implements HandlerExceptionResolver {
     @Override
 
